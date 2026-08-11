@@ -17,6 +17,8 @@ export default function robots(): MetadataRoute.Robots {
         "/api/",
         "/dev/",
         "/auth/",
+        // Persoonlijke afmeldlinks uit mailings.
+        "/afmelden",
       ],
     },
     sitemap: `${basis}/sitemap.xml`,

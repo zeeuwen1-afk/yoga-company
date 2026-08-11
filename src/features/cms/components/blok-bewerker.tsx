@@ -6,10 +6,11 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { FormMessage } from "@/components/ui/form-message";
 import { Input, Label, Textarea } from "@/components/ui/input";
-import { BeeldKiezer } from "./beeld-kiezer";
-import { RichtextEditor } from "./richtext-editor";
-import { bewaarConcept } from "../server/editor-acties";
+import { RichtextEditor } from "@/components/ui/richtext-editor";
 import type { Json } from "@/lib/supabase/types";
+
+import { BeeldKiezer } from "./beeld-kiezer";
+import { bewaarConcept } from "../server/editor-acties";
 
 /**
  * Eén bewerkbaar blok in de site-editor (BOUWPROMPT §14).
