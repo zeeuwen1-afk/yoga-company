@@ -290,7 +290,160 @@ Onder **Beheer → Logboek** zie je wie wat wanneer heeft gepubliceerd.
 
 ---
 
-## 10. Nog te documenteren
+## 10. Berichten voor sociale media (AI)
+
+Onder **Website → Social** stel je een bericht voor Instagram of Facebook op.
+Het werkt in drie stappen.
+
+### 1. Zeg waar het over gaat
+
+Beschrijf in je eigen woorden wat je wilt vertellen — bijvoorbeeld "de 200-uurs
+opleiding start in september, er zijn nog plekken". Kies daarbij een doel
+(informeren, inschrijvingen of inspiratie) en het platform. Dat doel bepaalt de
+toon: bij _inspiratie_ komt er geen uitnodiging onder, bij _inschrijvingen_
+juist wel.
+
+### 2. Kies uit drie varianten
+
+De AI schrijft drie berichten met verschillende invalshoeken. Boven elke variant
+staat in één zin waar hij op inzet, zodat je snel kunt kiezen. Klik op **Deze
+gebruiken** en de tekst komt in het bewerkveld te staan.
+
+### 3. Bijschaven, beeld erbij, plaatsen
+
+Lees de tekst na en pas hem aan. Kies eventueel een afbeelding; die komt in de
+`public-media`-opslag te staan.
+
+Daarna:
+
+- **Kopieer naar klembord** — plak de tekst in de app van Instagram of Facebook.
+- **Download afbeelding** — opent het beeld in een nieuw tabblad, zodat je het
+  kunt opslaan.
+- **Bewaar als concept** — het bericht verschijnt in het overzicht eronder.
+
+> **Jij bent verantwoordelijk voor wat er online komt te staan, niet de AI.**
+> Lees elk bericht na voordat je het plaatst.
+
+### Wat de AI niet mag schrijven
+
+De instructie ligt vast in code en is niet via het beheer aan te passen. Daarin
+staat onder meer: altijd Nederlands, de toon uit de huisstijl, en géén
+uitspraken over gezondheid, genezing of behandeling. Yoga Companie is een
+opleidingsinstituut, geen zorgverlener; "helpt tegen burn-out" is een belofte
+die we niet kunnen waarmaken en juridisch riskant is. Wat wél kan: beschrijven
+wat je in een les dóét en wat deelnemers leren.
+
+Weigert de AI een onderwerp, dan zegt het scherm dat. Formuleer het onderwerp
+dan anders.
+
+### Wat er naar Anthropic gaat
+
+Alleen het onderwerp dat jij intypt, plus de vaste instructie. Geen namen, geen
+e-mailadressen, geen inschrijvingen. Zet dus nooit klantgegevens in het
+onderwerpveld.
+
+### De koppeling inrichten
+
+Zet `ANTHROPIC_API_KEY` in de environment. Zonder die sleutel werkt het scherm
+gewoon — je schrijft de tekst dan zelf en gebruikt de rest van de tool.
+
+Optioneel kun je de tekst voor het model wisselen met `ANTHROPIC_MODEL`;
+standaard is dat `claude-sonnet-5`.
+
+### Rechtstreeks publiceren via Meta (optioneel)
+
+Achter de vlag `META_PUBLISHING_ENABLED=true` verschijnt bij elk bewaard bericht
+een knop **Publiceren**. Daarvoor is nodig:
+
+| Variabele                   | Wat                            |
+| --------------------------- | ------------------------------ |
+| `META_PUBLISHING_ENABLED`   | `true`                         |
+| `META_ACCESS_TOKEN`         | Long-lived page token          |
+| `META_PAGE_ID`              | De Facebook-pagina             |
+| `META_INSTAGRAM_ACCOUNT_ID` | Het Instagram Business-account |
+
+Meta vraagt hiervoor om een developer-app met app-review op de
+publish-permissies — een traject van weken. Tot die tijd werkt de tool volledig
+via kopiëren en handmatig plaatsen. Instagram publiceert niet zonder beeld, dus
+een afbeelding is bij deze route verplicht.
+
+---
+
+## 11. Mailings
+
+Onder **Website → Mailings** stuur je een bericht aan klanten.
+
+### Wie hem krijgt
+
+Uitsluitend klanten die daar toestemming voor gaven — in het scherm staat het
+aantal. Wie geen toestemming gaf, krijgt hem niet; daar is geen instelling voor.
+Klanten zetten hun toestemming zelf aan of uit in hun profiel.
+
+### Zo gaat het
+
+1. Schrijf onderwerp en bericht en klik **Bewaar als concept**.
+2. Klik bij het concept op **Proefmail naar mijzelf** en lees hem na in je eigen
+   mailprogramma.
+3. Klik op **Versturen**. Er volgt een bevestiging met het aantal ontvangers,
+   want versturen kan niet ongedaan worden gemaakt.
+
+De afmeldlink wordt automatisch onderaan toegevoegd — die hoef je er niet zelf
+bij te zetten. Elke ontvanger krijgt zijn eigen link.
+
+### Wat er wordt bewaard
+
+Het onderwerp, de inhoud, de verzenddatum en het _aantal_ ontvangers. Nooit wíé
+hem ontving: dat zou een tweede kopie van het klantenbestand zijn. Na twaalf
+maanden wordt de mailing automatisch opgeruimd (zie §12).
+
+### Inrichten
+
+| Variabele                    | Wat                       |
+| ---------------------------- | ------------------------- |
+| `RESEND_API_KEY`             | Zie §8                    |
+| `MAILING_UNSUBSCRIBE_SECRET` | Ondertekent de afmeldlink |
+
+Genereer het geheim met `openssl rand -base64 32`. Ontbreekt het, dan gaat er
+geen mailing uit: een mailing zonder werkende afmeldlink is geen optie.
+
+Verander dit geheim niet zomaar — afmeldlinks in eerder verstuurde mails werken
+dan niet meer. Moet het toch, laat klanten dan weten dat ze zich via hun profiel
+kunnen afmelden.
+
+---
+
+## 12. Bewaartermijnen opruimen
+
+Persoonsgegevens die hun doel hebben gediend, worden automatisch opgeruimd. Dit
+gebeurt op de eerste dag van elke maand om 03:00 via Vercel Cron.
+
+| Gegeven                | Termijn    |
+| ---------------------- | ---------- |
+| Contactberichten       | 12 maanden |
+| Mailings               | 12 maanden |
+| Audit log              | 24 maanden |
+| Soft-deleted profielen | 6 maanden  |
+
+Inschrijvingen en betaalreferenties blijven staan — die vallen onder de fiscale
+bewaarplicht van zeven jaar.
+
+Zet `CRON_SECRET` in de environment; Vercel stuurt hem automatisch mee. Zonder
+dat geheim antwoordt de route `404`, zodat hij voor de buitenwereld niet
+bestaat.
+
+Zelf een ronde draaien:
+
+```bash
+curl -H "Authorization: Bearer $CRON_SECRET" \
+  https://yogacompanie.nl/api/v1/cron/opschonen
+```
+
+Elke ronde schrijft een regel in het logboek met de aantallen. Zie `docs/avg.md`
+voor de onderbouwing van de termijnen.
+
+---
+
+## 13. Nog te documenteren
 
 Wordt aangevuld zodra de betreffende fase is opgeleverd:
 
@@ -298,4 +451,3 @@ Wordt aangevuld zodra de betreffende fase is opgeleverd:
 - Stripe live zetten en de webhook koppelen
 - Resend instellen als SMTP van Supabase Auth
 - Back-ups en de herstelprocedure
-- Bewaartermijnen en de opschoontaken (BOUWPROMPT §17.6)

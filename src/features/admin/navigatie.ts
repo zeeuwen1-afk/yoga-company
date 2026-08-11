@@ -54,24 +54,9 @@ export const ADMIN_NAVIGATIE: AdminNavGroep[] = [
   {
     titel: "Website",
     items: [
-      {
-        href: "/admin/site-editor",
-        label: "Site-editor",
-        icoon: FileText,
-        komtLater: "Fase 6",
-      },
-      {
-        href: "/admin/social",
-        label: "Social",
-        icoon: Share2,
-        komtLater: "Fase 7",
-      },
-      {
-        href: "/admin/mailings",
-        label: "Mailings",
-        icoon: Mail,
-        komtLater: "Fase 7",
-      },
+      { href: "/admin/site-editor", label: "Site-editor", icoon: FileText },
+      { href: "/admin/social", label: "Social", icoon: Share2 },
+      { href: "/admin/mailings", label: "Mailings", icoon: Mail },
     ],
   },
   {

@@ -307,23 +307,87 @@ tweestapsverificatie.
 
 ---
 
-## Fase 7 — AI-social & mailings ⬜ nog niet gestart
+## Fase 7 — AI-social & mailings ✅ afgerond
 
-- [ ] `/admin/social`: 3 NL-captionvarianten via de Anthropic API
-- [ ] Stap 1: kopiëren naar klembord en afbeelding downloaden
-- [ ] Stap 2: Meta Graph API achter `META_PUBLISHING_ENABLED`
-- [ ] Mailings met consent en afmeldlink
-- [ ] Opschoon-crons voor de bewaartermijnen uit §17.6
+- [x] `/admin/social`: onderwerp, doel en platform → 3 Nederlandse
+      captionvarianten via de Anthropic API
+- [x] Systeeminstructie met de merkstijl uit §5, altijd Nederlands, geen
+      gezondheids- of genezingsclaims — vastgelegd in code, niet aan te passen
+      via het beheer
+- [x] Antwoordvorm afgedwongen met een JSON-schema in plaats van een instructie
+- [x] Stap 1: kopiëren naar klembord en afbeelding downloaden; afbeelding
+      uploaden naar `public-media`
+- [x] Stap 2: Meta Graph API achter `META_PUBLISHING_ENABLED` — Instagram in
+      twee stappen (container, publiceren), Facebook via `/photos`
+- [x] Bewaarde berichten met status, fouttekst en verwijderen
+- [x] `/admin/mailings`: opstellen met richtext, proefmail naar jezelf,
+      versturen met bevestiging en het aantal ontvangers
+- [x] Ontvangerslijst uitsluitend uit `marketing_consent_at`; geen scherm waarin
+      een andere lijst kan worden opgegeven
+- [x] Ondertekende afmeldlink per ontvanger; zonder geheim gaat er geen mailing
+      uit
+- [x] Openbare afmeldpagina `/afmelden/[token]`, met één bevestiging
+- [x] Opschoontaak `opruimen_bewaartermijnen()` in de database +
+      `/api/v1/cron/opschonen` als trekker, maandelijks via Vercel Cron
+- [x] `docs/avg.md` met bewaartermijnen, datalocaties en rechten van betrokkenen
+- [x] `docs/beheer.md` §10–§12: social, mailings en het opruimen
 
 ### Definition of Done
 
-- [ ] AI genereert 3 Nederlandse varianten
-- [ ] Mailing gaat uitsluitend naar profielen met `marketing_consent_at`
-- [ ] Afmelden werkt
+- [x] **AI genereert 3 Nederlandse varianten** — het JSON-schema dwingt precies
+      drie varianten af, elk met invalshoek, tekst en hashtags. 12 unittests
+      bewaken dat de instructie blijft zeggen wat hij moet zeggen: Nederlands,
+      geen gezondheidsclaims, de merkstijl, en dat elke keuze uit het formulier
+      ook in de opdracht terechtkomt
+- [x] **Mailing gaat uitsluitend naar profielen met `marketing_consent_at`** —
+      de lijst wordt bij verzenden opgehaald met `marketing_consent_at not null`
+      én `deleted_at is null`; er is geen andere weg
+- [x] **Afmelden werkt** — 7 unittests op het token (verminkte handtekening, het
+      id van een ander onder een geldige handtekening, een ander geheim, lege
+      invoer) plus 4 e2e-tests op de openbare pagina
+- [x] **De opschoontaak voert de bewaartermijnen echt uit** — RLS-test
+      `10_bewaartermijnen.sql` zet oude en recente rijen naast elkaar en
+      controleert dat precies de oude verdwijnen, dat een klant de taak niet kan
+      aanroepen, en dat een tweede ronde niets dubbel doet
+- [x] 42 unittests, 156 Playwright-tests en 10 RLS-testbestanden groen
+- [x] `pnpm verify` en `pnpm build` slagen
+
+**De nieuwe test is gecontroleerd door hem te saboteren.** Met de bewaartermijn
+voor contactberichten op 120 maanden gezet sloeg `10_bewaartermijnen.sql`
+meteen alarm. Een groene test die niets vangt is waardeloos.
+
+**Afmelden gebeurt niet bij het openen van de pagina.** Mailprogramma's en
+scanners volgen links vooruit; dan zou iemand afgemeld raken die de mail alleen
+ontving. De pagina vraagt om één bevestiging. Het token is ondertekend met HMAC
+en niet opgeslagen — geen tabel met tokens, niets extra's om op te ruimen.
+
+**Wat de bundelgrootte blootlegde.** De afmeldpagina is openbaar en werd door de
+gedeelde `index.ts` van de mailing-feature op 255 kB gezet: die exporteert ook
+het beheerscherm, en dat trekt de TipTap-editor mee. Met een aparte, lichtere
+ingang (`features/mailing/publiek.ts`) staat de pagina op 131 kB — dezelfde
+oplossing als bij `features/progress/acties.ts` in Fase 4.
+
+**Wat er niet naar Anthropic gaat.** Alleen het onderwerp dat de beheerder zelf
+intypt, plus de vaste instructie. Geen namen, geen e-mailadressen, geen
+inschrijvingen. Het scherm en `docs/avg.md` zeggen dat er ook bij.
+
+**Afwijkingen van de specificatie, met reden.**
+
+| Wat               | Specificatie                           | Gebouwd                                                                                                                                                                             |
+| ----------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Model             | `claude-sonnet-4-6`                    | `claude-sonnet-5` (via `ANTHROPIC_MODEL` te wisselen). Zelfde prijsklasse, nieuwere versie; de spec is van vóór die uitgave                                                         |
+| Verzendmechanisme | Supabase Edge Function met batching    | Server action met batching van 5 tegelijk. Scheelt een tweede uitvoeromgeving in Deno; bij enkele duizenden ontvangers hoort dit alsnog naar een achtergrondtaak                    |
+| Opschoon-cron     | Supabase cron                          | Vercel Cron → route → databasefunctie. De logica staat in de database en is dus toetsbaar met de RLS-tests, ongeacht wie hem aanroept                                               |
+| Meta-tokens       | OAuth-flow, versleuteld in de database | Long-lived page token in de environment. Bij één pagina en één account eenvoudiger en veiliger: het staat nergens in onze database. Bij meerdere accounts hoort er een tokens-tabel |
+| Mailinglog        | Aparte logtabel                        | De `mailings`-tabel zélf is het log: inhoud, datum en het _aantal_ ontvangers. Een ontvangerslijst per mailing zou een tweede klantenbestand zijn (§2.5)                            |
 
 ---
 
-## Fase 8 — Optioneel/later ⬜
+## Fase 8 — Optioneel/later ⬜ bewust uitgesteld
+
+Op verzoek voorlopig niet uitgevoerd. Het is geen blokkade: §21 markeert deze
+fase als optioneel en niets uit Fase 0–7 hangt ervan af. Het platform is zonder
+deze punten volledig bruikbaar.
 
 - [ ] Wekelijks lesrooster + lesabonnementen (Stripe subscriptions)
 - [ ] Publieke API-keys met Bearer-auth
@@ -340,15 +404,23 @@ controles en instellingen die een echt account vereisen. Zolang ze openstaan
 werkt het platform lokaal, maar kan er niet betaald worden en gaat er geen
 e-mail uit.
 
-| #   | Account                                                         | Waarvoor                                                | Wat er daarna moet gebeuren                                                                                                                 | Handleiding             |
-| --- | --------------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| A1  | **Supabase** — regio **Frankfurt** ⚠️ achteraf niet te wijzigen | Database, inloggen, bestandsopslag                      | `pnpm db:migrate`, `supabase/seed.sql` inladen, `pnpm db:seed-admin`, en `SUPABASE_DB_URL=… pnpm test:rls` één keer tegen het echte project | `docs/beheer.md` §2, §3 |
-| A2  | **Stripe** — testmodus, iDEAL aanzetten                         | Betalingen                                              | Webhook koppelen, één test-iDEAL-betaling doen en die terugbetalen                                                                          | `docs/beheer.md` §7     |
-| A3  | **Resend** — domein `yogacompanie.nl`                           | E-mail                                                  | DNS-records zetten (SPF, DKIM, DMARC), en Supabase Auth via Resend laten versturen                                                          | `docs/beheer.md` §8     |
-| A4  | **GitHub**                                                      | Versiebeheer en CI                                      | Repository aanmaken en pushen; `.github/workflows/ci.yml` draait dan vanzelf                                                                | —                       |
-| A5  | **Vercel** — regio `fra1`                                       | Hosting                                                 | Koppelen aan de GitHub-repository en de environment variables zetten                                                                        | volgt                   |
-| A6  | **Anthropic**                                                   | AI-socialmediatool (Fase 7)                             | API-sleutel in `ANTHROPIC_API_KEY`                                                                                                          | volgt                   |
-| A7  | **Meta** — developer-app                                        | Publiceren op Facebook en Instagram (Fase 7, optioneel) | App-review op de publicatierechten; de tool werkt ook zonder                                                                                | volgt                   |
+| #   | Account                                                         | Waarvoor                                        | Wat er daarna moet gebeuren                                                                                                                 | Handleiding             |
+| --- | --------------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| A1  | **Supabase** — regio **Frankfurt** ⚠️ achteraf niet te wijzigen | Database, inloggen, bestandsopslag              | `pnpm db:migrate`, `supabase/seed.sql` inladen, `pnpm db:seed-admin`, en `SUPABASE_DB_URL=… pnpm test:rls` één keer tegen het echte project | `docs/beheer.md` §2, §3 |
+| A2  | **Stripe** — testmodus, iDEAL aanzetten                         | Betalingen                                      | Webhook koppelen, één test-iDEAL-betaling doen en die terugbetalen                                                                          | `docs/beheer.md` §7     |
+| A3  | **Resend** — domein `yogacompanie.nl`                           | E-mail                                          | DNS-records zetten (SPF, DKIM, DMARC), en Supabase Auth via Resend laten versturen                                                          | `docs/beheer.md` §8     |
+| A4  | **GitHub**                                                      | Versiebeheer en CI                              | Repository aanmaken en pushen; `.github/workflows/ci.yml` draait dan vanzelf                                                                | —                       |
+| A5  | **Vercel** — regio `fra1`                                       | Hosting                                         | Koppelen aan de GitHub-repository en de environment variables zetten                                                                        | volgt                   |
+| A6  | **Anthropic**                                                   | AI-socialmediatool                              | API-sleutel in `ANTHROPIC_API_KEY`                                                                                                          | `docs/beheer.md` §10    |
+| A7  | **Meta** — developer-app                                        | Publiceren op Facebook en Instagram (optioneel) | App-review op de publicatierechten; de tool werkt volledig zonder                                                                           | `docs/beheer.md` §10    |
+
+**Twee geheimen die je zelf genereert** (geen account nodig, wel nodig vóór
+livegang):
+
+| Variabele                    | Waarvoor                                  | Genereren                 |
+| ---------------------------- | ----------------------------------------- | ------------------------- |
+| `MAILING_UNSUBSCRIBE_SECRET` | Ondertekent de afmeldlink in elke mailing | `openssl rand -base64 32` |
+| `CRON_SECRET`                | Beschermt de maandelijkse opschoontaak    | `openssl rand -base64 32` |
 
 **Verwerkersovereenkomsten** (§17.8) tekent Pieter in de dashboards van
 Supabase, Vercel, Stripe, Resend, Anthropic en Meta.
@@ -358,7 +430,7 @@ Supabase, Vercel, Stripe, Resend, Anthropic en Meta.
 | Punt                          | Waarom                                                                                                 | Wat is er nodig                                                                                                   |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
 | Juridische teksten toetsen    | De privacyverklaring, algemene voorwaarden en cookiepagina zijn concept en tonen dat ook aan bezoekers | Laat een jurist ze nakijken, met name de annuleringstermijnen. Daarna de waarschuwing weghalen via de site-editor |
-| Contactgegevens en KvK        | Adres, telefoonnummer en KvK-nummer staan als placeholder in het CMS                                   | Invullen via de site-editor zodra die er is (Fase 6), of laat het me nu aanpassen                                 |
+| Contactgegevens en KvK        | Adres, telefoonnummer en KvK-nummer staan als placeholder in het CMS                                   | Invullen via de site-editor (**Website → Site-editor**), of laat het me aanpassen                                 |
 | Docentenbio's en testimonials | Placeholders                                                                                           | Aanleveren; ik zet ze in de seed                                                                                  |
 
 ### C. Technische aandachtspunten

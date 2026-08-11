@@ -9,6 +9,9 @@ import {
 } from "@/features/admin/components/ui";
 import { UitnodigenFormulier } from "@/features/crm/components/uitnodigen-formulier";
 import { haalKlanten } from "@/features/crm";
+import { afmeldsecretIngericht } from "@/features/mailing";
+import { metaIngericht } from "@/features/social";
+import { aiIngericht } from "@/lib/anthropic";
 import { mailIngericht } from "@/lib/notificatie";
 import { stripeIngericht } from "@/lib/stripe";
 
@@ -111,13 +114,18 @@ export default async function InstellingenPage() {
             />
             <Koppeling
               naam="Anthropic"
-              ingericht={Boolean(process.env.ANTHROPIC_API_KEY)}
-              toelichting="AI-hulp bij berichten voor sociale media (Fase 7)."
+              ingericht={aiIngericht()}
+              toelichting="AI-hulp bij berichten voor sociale media. Zie docs/beheer.md §10."
             />
             <Koppeling
               naam="Meta"
-              ingericht={process.env.META_PUBLISHING_ENABLED === "true"}
-              toelichting="Publiceren op Facebook en Instagram (Fase 7, optioneel)."
+              ingericht={metaIngericht()}
+              toelichting="Rechtstreeks publiceren op Facebook en Instagram. Optioneel; zonder deze koppeling werkt de socialmediatool volledig."
+            />
+            <Koppeling
+              naam="Afmeldlink mailings"
+              ingericht={afmeldsecretIngericht()}
+              toelichting="Ondertekent de afmeldlink. Zonder deze waarde gaat er geen mailing uit."
             />
           </ul>
         </Paneel>
@@ -126,8 +134,8 @@ export default async function InstellingenPage() {
           <div className="p-5">
             <p className="text-sm text-muted">
               Naam, adres, KvK-nummer en contactgegevens staan in de teksten van
-              de website en zijn straks aan te passen via de site-editor (Fase
-              6). Tot die tijd staan ze als startinhoud in{" "}
+              de website en zijn aan te passen via de site-editor. De
+              startinhoud staat in{" "}
               <span className="font-mono">src/content/blokken.ts</span>.
             </p>
           </div>
