@@ -34,7 +34,8 @@ fonts, pnpm scripts, ESLint/Prettier, CI-skeleton.
 - [x] `pnpm build` slaagt
 - [x] Playwright-smoketests slagen
 - [x] Designtokens zichtbaar op `/dev/styleguide`
-- [ ] CI groen op GitHub — **openstaand**: vereist git + een GitHub-repository (zie Openstaande punten)
+- [x] Git-repository aangemaakt met de eerste commits
+- [ ] CI groen op GitHub — **openstaand**: vereist een GitHub-repository (zie Openstaande punten)
 
 ---
 
@@ -167,8 +168,8 @@ TOTP-2FA, rollen, middleware, profieltrigger, seed-admin.
 
 ## Openstaande punten
 
-| Punt                 | Waarom                                                                                | Wat is er nodig                                                                                                          |
-| -------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Git ontbreekt        | macOS Command Line Tools zijn niet geïnstalleerd, dus er kan nog niet gecommit worden | Xcode Command Line Tools installeren (`xcode-select --install`, admin-wachtwoord), daarna `git init` en de eerste commit |
-| CI nog niet gedraaid | Er is nog geen GitHub-repository                                                      | Repository aanmaken en pushen; de workflow staat klaar                                                                   |
-| Next.js-versie       | Het bouwdocument schrijft Next 15 voor; inmiddels is Next 16 uit                      | Bewuste keuze: we volgen de specificatie. Upgrade naar 16 kan later in één stap                                          |
+| Punt                 | Waarom                                                                          | Wat is er nodig                                                                              |
+| -------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| CI nog niet gedraaid | Er is nog geen GitHub-repository, dus de workflow heeft nog niet gedraaid       | Repository op GitHub aanmaken en pushen; `.github/workflows/ci.yml` staat klaar              |
+| Next.js-versie       | Het bouwdocument schrijft Next 15 voor; inmiddels is Next 16 uitgebracht        | Bewuste keuze: we volgen de specificatie. Een upgrade naar 16 kan later in één stap          |
+| Node.js-locatie      | Node staat in `~/.local/node` (installatie zonder sudo), niet in een systeempad | Werkt via de `PATH`-regel in `~/.zshrc`. Open een nieuwe terminal voordat je `pnpm` gebruikt |
