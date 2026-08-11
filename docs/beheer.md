@@ -246,7 +246,51 @@ alleen dát er iets klaarstaat, de inhoud staat achter de inlog (§17.11).
 
 ---
 
-## 9. Nog te documenteren
+## 9. Teksten en beelden aanpassen (site-editor)
+
+Ga naar **Beheer → Site-editor**. Je kiest een pagina en past de onderdelen aan
+die daarop staan. De indeling van een pagina ligt vast; je wijzigt de inhoud,
+niet de structuur. Dat houdt de site consistent.
+
+**De werkwijze is altijd dezelfde:**
+
+1. **Bewerken.** Je wijziging wordt bewaard als _concept_. De website
+   verandert nog niet — bezoekers zien gewoon wat er stond.
+2. **Bekijken.** Rechts staat een voorvertoning van de pagina zoals hij wordt.
+   Sla een wijziging op om die te verversen.
+3. **Publiceren.** Eén klik op **Publiceren** zet alle concepten van die pagina
+   online. Binnen enkele seconden is het zichtbaar. Er hoeft niets uitgerold te
+   worden.
+
+Bevalt een concept toch niet, dan gooit **Concepten weggooien** ze weg. De
+website is dan onveranderd gebleven.
+
+### Wat je per onderdeel kunt aanpassen
+
+| Soort      | Wat je krijgt                                                    |
+| ---------- | ---------------------------------------------------------------- |
+| Tekst      | Een invoerveld voor één regel of een kort stuk tekst             |
+| Richtext   | Een editor met vet, cursief, een kop, een lijst en links         |
+| Afbeelding | Uploaden, met een verplichte beschrijving                        |
+| Lijst      | Vaste velden per item, bijvoorbeeld bij testimonials en docenten |
+
+De opmaakknoppen zijn bewust beperkt. Wie lettertypes en kleuren kan kiezen,
+maakt vroeg of laat een pagina die niet meer op de rest van de site lijkt; de
+huisstijl hoort in de code te zitten.
+
+### De beschrijving bij een afbeelding
+
+Die is verplicht en dat is geen pesterij: mensen die slecht zien krijgen de
+afbeelding voorgelezen, en zoekmachines gebruiken hem. Schrijf wat er te zien
+is — "docente begeleidt een deelnemer in een yin-houding", niet "foto1".
+
+### Elke publicatie staat in het logboek
+
+Onder **Beheer → Logboek** zie je wie wat wanneer heeft gepubliceerd.
+
+---
+
+## 10. Nog te documenteren
 
 Wordt aangevuld zodra de betreffende fase is opgeleverd:
 

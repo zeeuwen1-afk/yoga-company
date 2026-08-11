@@ -269,17 +269,41 @@ RLS-tests.
 
 ---
 
-## Fase 6 — Visuele site-editor ⬜ nog niet gestart
+## Fase 6 — Visuele site-editor ✅ afgerond
 
-- [ ] `/admin/site-editor` met paginakeuze en live-preview
-- [ ] Blokken bewerken: tekst, richtext (TipTap), afbeelding (met alt-tekst), video
-- [ ] Werkwijze concept → publiceren, met herstelmogelijkheid en ISR-revalidatie
+- [x] `/admin/site-editor` met paginakeuze en het aantal openstaande concepten
+- [x] Bewerkscherm met de blokken links en een live-voorvertoning rechts
+- [x] Voorvertoning toont de échte pagina met de concepten erin
+- [x] Blokken bewerken: tekst, richtext (TipTap), afbeelding, lijsten
+- [x] Afbeelding uploaden naar `public-media`, met verplichte alt-tekst
+- [x] Werkwijze concept → publiceren, met "concepten weggooien" als herstel
+- [x] Publiceren ververst de betreffende pagina's meteen (ISR-revalidatie)
+- [x] Elke publicatie staat in het logboek
+- [x] `docs/beheer.md` §9 legt de werkwijze uit voor Pieter
 
 ### Definition of Done
 
-- [ ] Admin wijzigt hero-tekst en -beeld zonder deploy
-- [ ] Publiek ziet de wijziging na publiceren
-- [ ] Audit-log-regel aanwezig
+- [x] **Wijzigen zonder uitrol** — publiceren kopieert het concept naar de
+      gepubliceerde waarde en ververst de pagina; er komt geen build aan te pas
+- [x] **Publiek ziet de wijziging na publiceren** — de publieke pagina's lezen
+      uitsluitend `value`, dat bij publiceren wordt bijgewerkt
+- [x] **Audit-logregel aanwezig** — `blok_gepubliceerd`, met welke blokken
+- [x] De voorvertoning is afgeschermd: 5 Playwright-tests tonen dat elke
+      editor- en voorvertoningsroute een bezoeker zonder sessie weigert
+- [x] 26 unittests, 144 Playwright-tests en 9 RLS-testbestanden groen
+
+**Statische generatie behouden.** De grootste ontwerpvraag was hoe de
+voorvertoning de échte pagina kan tonen zonder de publieke site dynamisch te
+maken — dat zou de laadsnelheid kosten waar §18 om vraagt. Oplossing: de
+paginabody is losgemaakt van het ophalen van de inhoud. De publieke pagina
+voedt hem met gepubliceerde inhoud en blijft statisch; de voorvertoning voedt
+dezelfde component met concepten. Gemeten na de herstructurering: de
+startpagina scoort 98 / 100 / 100 / 100.
+
+**De voorvertoning staat buiten `/admin`.** Anders zou hij de zijbalk van de
+beheeromgeving erven en zag je die terug in je voorvertoning. De middleware
+schermt `/voorbeeld` af met dezelfde eisen: beheerdersrol én
+tweestapsverificatie.
 
 ---
 
