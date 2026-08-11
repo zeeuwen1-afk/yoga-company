@@ -218,18 +218,54 @@ foreign keys, waardoor Supabase geneste queries niet kon typeren en alles op
 
 ---
 
-## Fase 5 — Admin: CRM & beheer ⬜ nog niet gestart
+## Fase 5 — Admin: CRM & beheer ✅ afgerond
 
-- [ ] Dashboard, klanten (CRM), inschrijvingen, aanbod, digitale content
-- [ ] Aanvragen, berichten, contactberichten, instellingen
-- [ ] Voortgangsmatrix met CSV-export
-- [ ] Audit log op elke admin-mutatie
-- [ ] AVG-export en AVG-verwijdering (anonimiseren)
+- [x] Beheer-shell met zijbalk, uitklapbaar op een klein scherm
+- [x] Dashboard: omzet deze maand, actieve klanten, openstaande aanvragen,
+      ongelezen berichten, nieuwste inschrijvingen, laatste contactberichten
+- [x] Klantenlijst met zoeken op naam of e-mail en filters op rol en status
+- [x] Klantdossier: gegevens, inschrijvingen, gesprek, aanvragen, interne
+      notities, voortgang, consentstatus en het logboek van die klant
+- [x] Klant uitnodigen (activatielink, nooit een wachtwoord)
+- [x] Deactiveren, heractiveren en rol wijzigen
+- [x] AVG-verwijdering: anonimiseren in de database, auth-account opheffen
+- [x] Klantexport als JSON, inclusief de interne notities
+- [x] Inschrijvingen met statusfilters, handmatig op betaald zetten en
+      betaallink maken
+- [x] Voortgangsmatrix per opleiding, met CSV-export voor Excel
+- [x] Aanbodbeheer: aanmaken, bewerken, zichtbaar of verborgen zetten
+- [x] Lesmateriaal: modules en lesonderdelen, met upload naar de beveiligde
+      opslag rechtstreeks vanuit de browser
+- [x] Aanvragen behandelen, berichteninbox, contactberichten
+- [x] Instellingen: beheerders en de status van elke koppeling
+- [x] Logboek met filters, en per klant op de klantpagina
 
 ### Definition of Done
 
-- [ ] Volledige klantlevenscyclus werkt: uitnodigen → inschrijven → monitoren → exporteren → verwijderen
-- [ ] Elke stap staat in het audit log
+- [x] **Volledige klantlevenscyclus werkt** — uitnodigen (`/admin/klanten`) →
+      inschrijven (handmatig of via Stripe) → monitoren
+      (`/admin/monitoring/[slug]`) → exporteren (JSON) → verwijderen (AVG)
+- [x] **Elke stap staat in het logboek** — 24 soorten handelingen worden
+      vastgelegd met wie, wanneer en waarom; het logboek is onveranderlijk
+- [x] **AVG-verwijdering doet wat het belooft** — RLS-test `09` controleert dat
+      naam, e-mailadres, telefoonnummer, berichten, aanvragen, notities en
+      voortgang verdwijnen, en dat de inschrijvingen blijven staan voor de
+      boekhouding. De functie is herhaalbaar
+- [x] **De laatste beheerder kan niet verdwijnen** — niet via de rolfunctie,
+      niet via deactiveren, en niet door de tabel rechtstreeks bij te werken
+- [x] 26 unittests, 128 Playwright-tests en 9 RLS-testbestanden groen
+- [x] `pnpm verify` en `pnpm build` slagen
+
+**Twee testfouten die de suite zelf blootlegde.** `tests.mutation_blocked` ving
+`check_violation` niet op, waardoor de bescherming van de laatste beheerder als
+testfout gold in plaats van als geslaagde blokkade. En de anonimiseringstest is
+gecontroleerd door hem te saboteren: met het vervangen van het e-mailadres
+verwijderd sloeg hij meteen alarm.
+
+**Waarom de AVG-verwijdering in de database staat en niet in de code.** Ze
+gebeurt in één transactie, dus half werk is onmogelijk; de rechtencontrole zit
+in de functie zelf en kan niet worden overgeslagen; en ze is toetsbaar met de
+RLS-tests.
 
 ---
 
