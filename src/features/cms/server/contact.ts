@@ -2,6 +2,11 @@
 
 import { headers } from "next/headers";
 
+import {
+  ContactBevestigingMail,
+  ContactNotificatieMail,
+} from "@/emails/templates";
+import { publicEnv } from "@/lib/env";
 import { adminAdres, verstuurMail } from "@/lib/notificatie";
 import { begrens, bezoekerSleutel } from "@/lib/rate-limit";
 import { createClient } from "@/lib/supabase/server";
@@ -72,14 +77,28 @@ export async function verstuurContactbericht(
     };
   }
 
-  // De inhoud van het bericht gaat bewust niet mee in de notificatie; de admin
-  // leest hem in de beheeromgeving (BOUWPROMPT §10.6, §17.11).
-  await verstuurMail({
-    aan: adminAdres(),
-    onderwerp: "Nieuw contactbericht via de website",
-    tekst:
-      "Er is een nieuw contactbericht binnengekomen. Log in op de beheeromgeving om het te lezen.",
-  });
+  // Twee mails: een bevestiging naar de afzender en een notificatie naar de
+  // admin (BOUWPROMPT §10.5). De inhoud van het bericht gaat bewust niet mee
+  // in de notificatie; de admin leest hem achter zijn inlog (§17.11).
+  //
+  // Beide zijn niet blokkerend: het bericht staat al in de database, dus een
+  // mail die niet weggaat mag de bezoeker geen foutmelding opleveren.
+  const basis = publicEnv().NEXT_PUBLIC_SITE_URL;
+
+  await Promise.all([
+    verstuurMail({
+      aan: parsed.data.email,
+      onderwerp: "We hebben je bericht ontvangen",
+      template: ContactBevestigingMail({ naam: parsed.data.name }),
+    }),
+    verstuurMail({
+      aan: adminAdres(),
+      onderwerp: "Nieuw contactbericht via de website",
+      template: ContactNotificatieMail({
+        beheerUrl: `${basis}/admin/contactberichten`,
+      }),
+    }),
+  ]);
 
   return { status: "gelukt", bericht: BEVESTIGING };
 }

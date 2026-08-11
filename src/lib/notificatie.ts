@@ -1,38 +1,101 @@
 import "server-only";
 
+import { render } from "@react-email/render";
+import { Resend } from "resend";
+
 /**
- * Verzenden van e-mail.
+ * Verzenden van e-mail via Resend (BOUWPROMPT §10).
  *
- * In Fase 3 wordt dit ingevuld met Resend en React Email-templates
- * (BOUWPROMPT §10). Tot die tijd is dit een bewuste no-op: het platform mag
- * niet omvallen omdat de mailkoppeling er nog niet is, en een contactbericht
- * dat in de database staat is nooit verloren — de admin ziet het in Fase 5 ook
- * in het overzicht.
+ * Twee uitgangspunten:
  *
- * Er wordt met opzet geen inhoud gelogd: geen persoonsgegevens in platte logs
- * (§17.11).
+ *  - **Nooit blokkerend.** Een mail die niet weggaat mag geen betaling of
+ *    inschrijving laten mislukken. Functies hier gooien niet; ze melden of het
+ *    gelukt is en laten de aanroeper doorgaan.
+ *  - **Geen persoonsgegevens in logs** (§17.11). We loggen het onderwerp en de
+ *    uitkomst, nooit het adres of de inhoud.
+ *
+ * Ontbreekt `RESEND_API_KEY`, dan wordt er niets verstuurd en zegt de functie
+ * dat eerlijk. Zo werkt de applicatie ook lokaal en in CI.
  */
 
-export type Bericht = {
-  aan: string;
-  onderwerp: string;
-  tekst: string;
-};
+let client: Resend | null = null;
 
-export async function verstuurMail(bericht: Bericht): Promise<boolean> {
-  if (!process.env.RESEND_API_KEY) {
-    console.info(
-      `[mail] Niet verstuurd: RESEND_API_KEY ontbreekt (onderwerp: ${bericht.onderwerp})`,
-    );
-    return false;
-  }
+function resend(): Resend | null {
+  if (!process.env.RESEND_API_KEY) return null;
+  client ??= new Resend(process.env.RESEND_API_KEY);
+  return client;
+}
 
-  // Fase 3: Resend-aanroep met React Email-template.
-  console.info(`[mail] Nog niet geïmplementeerd (Fase 3)`);
-  return false;
+export function mailIngericht(): boolean {
+  return Boolean(process.env.RESEND_API_KEY);
+}
+
+function afzender(): string {
+  return process.env.EMAIL_FROM ?? "Yoga Companie <info@yogacompanie.nl>";
 }
 
 /** Het adres waarop Yoga Companie notificaties ontvangt. */
 export function adminAdres(): string {
   return process.env.SEED_ADMIN_EMAIL ?? "info@yogacompanie.nl";
+}
+
+export type MailResultaat = {
+  verstuurd: boolean;
+  reden?: string;
+};
+
+/**
+ * Verstuurt een React-template als e-mail. Er gaat altijd een tekstversie mee:
+ * niet elke ontvanger leest HTML, en spamfilters kijken ernaar.
+ */
+export async function verstuurMail({
+  aan,
+  onderwerp,
+  template,
+}: {
+  aan: string | string[];
+  onderwerp: string;
+  template: React.ReactElement;
+}): Promise<MailResultaat> {
+  const dienst = resend();
+
+  if (!dienst) {
+    console.info(
+      `[mail] niet verstuurd, RESEND_API_KEY ontbreekt: ${onderwerp}`,
+    );
+    return { verstuurd: false, reden: "mailkoppeling niet ingericht" };
+  }
+
+  try {
+    const [html, tekst] = await Promise.all([
+      render(template),
+      render(template, { plainText: true }),
+    ]);
+
+    const { error } = await dienst.emails.send({
+      from: afzender(),
+      to: Array.isArray(aan) ? aan : [aan],
+      subject: onderwerp,
+      html,
+      text: tekst,
+    });
+
+    if (error) {
+      console.error(`[mail] verzenden mislukt: ${onderwerp} — ${error.name}`);
+      return { verstuurd: false, reden: error.message };
+    }
+
+    console.info(`[mail] verstuurd: ${onderwerp}`);
+    return { verstuurd: true };
+  } catch (fout) {
+    console.error(
+      `[mail] verzenden mislukt: ${onderwerp} — ${
+        fout instanceof Error ? fout.message : "onbekende fout"
+      }`,
+    );
+    return {
+      verstuurd: false,
+      reden: fout instanceof Error ? fout.message : "onbekende fout",
+    };
+  }
 }
