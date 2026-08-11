@@ -1,4 +1,9 @@
 /**
  * Publieke ingang van de cms-feature (BOUWPROMPT §4).
  */
-export { haalPagina, bekendePaginas, type Pagina } from "./server/queries";
+export {
+  haalPagina,
+  haalConceptPagina,
+  bekendePaginas,
+  type Pagina,
+} from "./server/queries";

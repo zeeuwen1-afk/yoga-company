@@ -68,6 +68,38 @@ export async function haalPagina(pageKey: string): Promise<Pagina> {
   return maakPagina(waarden);
 }
 
+/**
+ * Dezelfde pagina, maar met de concepten erover heen (BOUWPROMPT §14).
+ *
+ * Alleen bereikbaar voor beheerders: `content_blocks` — waar `draft_value` in
+ * staat — is door RLS afgeschermd. Deze functie leest daarom met de sessie van
+ * de ingelogde beheerder in plaats van met de publieke client.
+ *
+ * Bewust een aparte functie en geen optie op `haalPagina`: de publieke pagina's
+ * worden statisch gegenereerd, en zouden dat verliezen zodra ze een sessie
+ * moeten lezen om te bepalen wat ze tonen.
+ */
+export async function haalConceptPagina(pageKey: string): Promise<Pagina> {
+  const waarden = blokkenVanPagina(pageKey);
+
+  const { createClient } = await import("@/lib/supabase/server");
+  const supabase = await createClient();
+
+  const { data } = await supabase
+    .from("content_blocks")
+    .select("block_key, value, draft_value")
+    .eq("page_key", pageKey);
+
+  for (const rij of data ?? []) {
+    // Een concept wint van de gepubliceerde waarde; is er geen concept, dan
+    // toont de voorvertoning wat er nu online staat.
+    const waarde = rij.draft_value ?? rij.value;
+    waarden.set(rij.block_key, waarde as unknown as BlokWaarde);
+  }
+
+  return maakPagina(waarden);
+}
+
 /** Alle pagina's waarvan blokken bestaan — voor de site-editor in Fase 6. */
 export function bekendePaginas() {
   return [...new Set(BLOKKEN.map((blok) => blok.page_key))];

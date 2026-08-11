@@ -28,7 +28,10 @@ function redirect(request: NextRequest, pad: string, params?: URLSearchParams) {
 export async function middleware(request: NextRequest) {
   const pad = request.nextUrl.pathname;
   const isPortaal = pad.startsWith("/portaal");
-  const isAdmin = pad.startsWith("/admin");
+  // De voorvertoning van de site-editor staat buiten /admin omdat hij anders
+  // de zijbalk van het beheer zou erven, maar krijgt dezelfde bescherming:
+  // hij toont ongepubliceerde inhoud (BOUWPROMPT §14).
+  const isAdmin = pad.startsWith("/admin") || pad.startsWith("/voorbeeld");
 
   // Publieke pagina's raken de database niet: dat scheelt een netwerkronde per
   // verzoek en houdt de publieke site onafhankelijk van Supabase. De sessie

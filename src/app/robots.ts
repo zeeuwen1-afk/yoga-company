@@ -10,7 +10,14 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
       // De afgeschermde delen horen niet in een zoekmachine thuis.
-      disallow: ["/portaal", "/admin", "/api/", "/dev/", "/auth/"],
+      disallow: [
+        "/portaal",
+        "/admin",
+        "/voorbeeld",
+        "/api/",
+        "/dev/",
+        "/auth/",
+      ],
     },
     sitemap: `${basis}/sitemap.xml`,
     host: basis,
