@@ -8,6 +8,55 @@ Bron: `BOUWPROMPT.md` (paragraafverwijzingen hieronder verwijzen daarnaar).
 
 ---
 
+## 📍 Waar we gebleven zijn — 11 augustus 2026
+
+**Fase 0 tot en met 7 zijn af.** Alles is gebouwd en getest: 42 unittests, 158
+Playwright-tests, 10 RLS-testbestanden, `pnpm verify` en `pnpm build` groen.
+Fase 8 is bewust uitgesteld en blokkeert niets.
+
+**Waar we mee bezig waren:** een demo van de beheerschermen. Die kan nog niet.
+De publieke site draait lokaal, maar `/admin/*` en `/portaal/*` zitten achter
+inloggen, en `.env.local` bevat placeholder-waarden — er is nog geen echt
+Supabase-project. Dat is punt A1 hieronder.
+
+### Actie voor Pieter (ongeveer 15 minuten)
+
+1. Maak op [supabase.com](https://supabase.com) een gratis project aan.
+   **Region: Central EU (Frankfurt).** ⚠️ Dit is een AVG-eis en kan achteraf
+   niet meer worden gewijzigd — het is de enige stap die echt onomkeerbaar is.
+   Bewaar het databasewachtwoord in een wachtwoordmanager.
+2. Geef deze vier waarden door uit **Project Settings**:
+
+   | Variabele                       | Waar                               |
+   | ------------------------------- | ---------------------------------- |
+   | `NEXT_PUBLIC_SUPABASE_URL`      | API → Project URL                  |
+   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | API → `anon` `public`              |
+   | `SUPABASE_SERVICE_ROLE_KEY`     | API → `service_role` (geheim)      |
+   | `SUPABASE_DB_URL`               | Database → Connection string (URI) |
+
+3. Optioneel voor de AI-tool: een sleutel op
+   [console.anthropic.com](https://console.anthropic.com) → `ANTHROPIC_API_KEY`
+   (punt A6). Zonder die sleutel werkt het socialscherm gewoon; je schrijft de
+   tekst dan zelf.
+
+Deze waarden gaan in `.env.local`, dat niet in git staat.
+
+### Wat ik daarna doe
+
+- `pnpm db:migrate` — het schema erop zetten
+- `supabase/seed.sql` inladen — 7 cursussen en 37 tekstblokken
+- `SUPABASE_DB_URL=… pnpm test:rls` één keer tegen het échte project draaien;
+  de lokale testdatabase bootst Supabase na, maar ís het niet
+- `pnpm db:seed-admin` — jouw beheerdersaccount (uitnodiging, nooit een
+  wachtwoord)
+- Daarna log je in, stel je tweestapsverificatie in, en werkt alles: klanten,
+  site-editor, social en mailings
+
+Ook nog nodig vóór livegang, maar niet voor de demo: `MAILING_UNSUBSCRIBE_SECRET`
+en `CRON_SECRET`, allebei te maken met `openssl rand -base64 32`.
+
+---
+
 ## Fase 0 — Fundament ✅ afgerond
 
 Next.js 15 + TS strict + Tailwind 4 + shadcn-basis, designtokens, layout-shell,
