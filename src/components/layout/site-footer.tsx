@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { haalPagina } from "@/features/cms";
+import { haalPagina, type Pagina } from "@/features/cms";
 
 const legal = [
   { href: "/privacyverklaring", label: "Privacyverklaring" },
@@ -17,8 +17,14 @@ const navigatie = [
 
 type Gegeven = { label: string; waarde: string };
 
-export async function SiteFooter() {
-  const pagina = await haalPagina("footer");
+/**
+ * De paginavoet leest zijn inhoud normaal zelf op. De site-editor geeft hem
+ * mee, zodat de voorvertoning ook de concepten van de voet laat zien (§14).
+ */
+export async function SiteFooter({
+  pagina: gegeven,
+}: { pagina?: Pagina } = {}) {
+  const pagina = gegeven ?? (await haalPagina("footer"));
   const gegevens = pagina.lijst<Gegeven>("bedrijfsgegevens");
 
   return (

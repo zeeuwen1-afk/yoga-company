@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 
-import { Sectie, SectieKop } from "@/components/layout/sectie";
 import { haalPagina } from "@/features/cms";
-import { haalAanbod } from "@/features/courses";
-import { CursusRooster } from "@/features/courses/components/cursus-kaart";
+import { OverzichtInhoud } from "@/features/cms/paginas/eenvoudige-paginas";
+import { CursusRooster, haalAanbod } from "@/features/courses";
 
 export const revalidate = 300;
 
@@ -21,14 +20,8 @@ export default async function TrainingenPage() {
   ]);
 
   return (
-    <Sectie>
-      <SectieKop
-        titel={pagina.tekst("titel")}
-        inleiding={pagina.tekst("inleiding")}
-      />
-      <div className="mt-12">
-        <CursusRooster cursussen={trainingen} />
-      </div>
-    </Sectie>
+    <OverzichtInhoud pagina={pagina}>
+      <CursusRooster cursussen={trainingen} />
+    </OverzichtInhoud>
   );
 }

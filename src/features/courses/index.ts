@@ -9,3 +9,5 @@ export {
 } from "./server/queries";
 
 export { formateerPrijs } from "./prijs";
+
+export { CursusKaart, CursusRooster } from "./components/cursus-kaart";
