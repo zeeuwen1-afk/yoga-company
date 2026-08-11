@@ -1,56 +1,171 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { ArrowRight, Inbox, MessageSquare, PlayCircle } from "lucide-react";
 
-import { uitloggen } from "@/features/auth/server/actions";
-import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
+import { Card, CardContent } from "@/components/ui/card";
+import { haalMijnOpleidingen } from "@/features/content";
+import { haalOngelezenAantal } from "@/features/messages";
+import { haalLaatstBekeken } from "@/features/progress";
+import { haalOpenAanvragen } from "@/features/requests";
 import { createClient } from "@/lib/supabase/server";
+import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
 
 export const metadata: Metadata = {
   title: "Mijn omgeving",
   robots: { index: false, follow: false },
 };
 
-// De volledige inrichting van het portaal volgt in Fase 4 (BOUWPROMPT §11).
-export default async function PortaalPage() {
-  const supabase = await createClient();
-  const user = await huidigeGebruiker(supabase);
+export const dynamic = "force-dynamic";
 
-  if (!user) redirect("/inloggen?vervolg=/portaal");
+function minuten(seconden: number | null) {
+  if (!seconden) return null;
+  return `${Math.floor(seconden / 60)} min`;
+}
+
+export default async function PortaalDashboard() {
+  const supabase = await createClient();
+  const gebruiker = await huidigeGebruiker(supabase);
 
   const { data: profiel } = await supabase
     .from("profiles")
-    .select("first_name, role")
-    .eq("id", user.id)
+    .select("first_name")
+    .eq("id", gebruiker?.id ?? "")
     .maybeSingle();
 
+  const [laatst, opleidingen, ongelezen, openAanvragen] = await Promise.all([
+    haalLaatstBekeken(),
+    haalMijnOpleidingen(),
+    haalOngelezenAantal(),
+    haalOpenAanvragen(),
+  ]);
+
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-      <h1 className="text-4xl">Hallo {profiel?.first_name ?? "daar"}</h1>
-      <p className="mt-4 text-muted">
-        Je bent ingelogd. Je opleidingen, voortgang en berichten verschijnen
-        hier zodra Fase 4 is opgeleverd.
-      </p>
-
-      <div className="mt-8 flex flex-wrap items-center gap-4">
-        {profiel?.role === "admin" ? (
-          <Link
-            href="/admin"
-            className="inline-flex h-11 items-center rounded-lg border border-line px-5 font-semibold text-green-dark transition-colors hover:bg-sand-light"
-          >
-            Naar beheer
-          </Link>
-        ) : null}
-
-        <form action={uitloggen}>
-          <button
-            type="submit"
-            className="h-11 text-sm text-muted underline hover:text-green"
-          >
-            Uitloggen
-          </button>
-        </form>
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl sm:text-4xl">
+          Hallo {profiel?.first_name ?? "daar"}
+        </h1>
+        <p className="mt-2 text-muted">
+          Fijn dat je er bent. Hier vind je alles wat bij je opleiding hoort.
+        </p>
       </div>
+
+      {/* Verder waar je gebleven was (§11) --------------------------------- */}
+      {laatst ? (
+        <Card className="bg-white">
+          <CardContent className="p-6">
+            <p className="text-sm font-semibold text-muted">
+              Verder waar je gebleven was
+            </p>
+            <h2 className="mt-2 text-xl">{laatst.itemTitel}</h2>
+            <p className="mt-1 text-sm text-muted">
+              {laatst.cursusTitel}
+              {laatst.positieSeconden > 0 && minuten(laatst.positieSeconden)
+                ? ` · je stopte op ${minuten(laatst.positieSeconden)}`
+                : null}
+            </p>
+            <Link
+              href={`/portaal/opleidingen/${laatst.cursusSlug}/${laatst.itemId}`}
+              className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg bg-green px-5 font-semibold text-cream transition-colors hover:bg-green-dark"
+            >
+              <PlayCircle className="size-5" aria-hidden />
+              Verder gaan
+            </Link>
+          </CardContent>
+        </Card>
+      ) : null}
+
+      {/* Mijn opleidingen -------------------------------------------------- */}
+      <section>
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 className="text-2xl">Mijn opleidingen</h2>
+          {opleidingen.length > 0 ? (
+            <Link
+              href="/portaal/opleidingen"
+              className="text-sm font-semibold text-green underline"
+            >
+              Alles bekijken
+            </Link>
+          ) : null}
+        </div>
+
+        {opleidingen.length === 0 ? (
+          <Card className="mt-4 bg-white">
+            <CardContent className="p-6">
+              <p>Je hebt nog geen opleiding lopen.</p>
+              <p className="mt-2 text-sm text-muted">
+                Zodra je je hebt ingeschreven en de betaling rond is, vind je je
+                lesmateriaal hier terug.
+              </p>
+              <Link
+                href="/opleidingen"
+                className="mt-4 inline-flex items-center gap-1.5 font-semibold text-green underline"
+              >
+                Bekijk het aanbod
+                <ArrowRight className="size-4" aria-hidden />
+              </Link>
+            </CardContent>
+          </Card>
+        ) : (
+          <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+            {opleidingen.slice(0, 4).map((opleiding) => (
+              <li key={opleiding.enrollmentId} className="relative flex">
+                <Card className="flex-1 bg-white transition-colors hover:border-green/40">
+                  <CardContent className="p-5">
+                    <h3 className="text-lg">
+                      <Link
+                        href={`/portaal/opleidingen/${opleiding.slug}`}
+                        className="transition-colors hover:text-green"
+                      >
+                        <span className="absolute inset-0" aria-hidden />
+                        {opleiding.titel}
+                      </Link>
+                    </h3>
+                    <p className="mt-1 text-sm text-muted">
+                      {opleiding.heeftContent
+                        ? "Lesmateriaal beschikbaar"
+                        : "Fysieke opleiding"}
+                    </p>
+                  </CardContent>
+                </Card>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      {/* Berichten en aanvragen -------------------------------------------- */}
+      <section className="grid gap-4 sm:grid-cols-2">
+        <Link
+          href="/portaal/berichten"
+          className="flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-white p-5 transition-colors hover:border-green/40"
+        >
+          <MessageSquare className="size-6 shrink-0 text-green" aria-hidden />
+          <span>
+            <span className="block font-semibold">Berichten</span>
+            <span className="block text-sm text-muted">
+              {ongelezen > 0
+                ? `${ongelezen} ongelezen ${ongelezen === 1 ? "bericht" : "berichten"}`
+                : "Geen nieuwe berichten"}
+            </span>
+          </span>
+        </Link>
+
+        <Link
+          href="/portaal/aanvragen"
+          className="flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-white p-5 transition-colors hover:border-green/40"
+        >
+          <Inbox className="size-6 shrink-0 text-green" aria-hidden />
+          <span>
+            <span className="block font-semibold">Aanvragen</span>
+            <span className="block text-sm text-muted">
+              {openAanvragen > 0
+                ? `${openAanvragen} loopt nog`
+                : "Niets openstaand"}
+            </span>
+          </span>
+        </Link>
+      </section>
     </div>
   );
 }
