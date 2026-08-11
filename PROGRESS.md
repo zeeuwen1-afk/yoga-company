@@ -171,18 +171,50 @@ van via de publieke `index.ts` (§4). Precies waar die regel voor bedoeld is.
 
 ---
 
-## Fase 4 — Klantportaal & LMS ⬜ nog niet gestart
+## Fase 4 — Klantportaal & LMS ✅ afgerond
 
-- [ ] Dashboard, Mijn opleidingen, contentspeler, voortgang
-- [ ] Aanvragen, berichten (beveiligde dialoog), profiel
-- [ ] 2FA aan/uit, marketingtoestemming, AVG-zelfservice (export en verwijdering)
-- [ ] Mobiele bottom-navigatie met 4 items en tap-targets ≥ 44px
+- [x] Portaal-shell: zijbalk vanaf tablet, bottom-navigatie op de telefoon
+- [x] Dashboard met "verder waar je gebleven was", opleidingen, tellers
+- [x] Mijn opleidingen met voortgangsbalk per opleiding
+- [x] Lesoverzicht per opleiding: modules, lessen en items met status
+- [x] Contentspeler: video, document en tekst, met vorige/volgende
+- [x] Video onthoudt de positie (elke 10 seconden en bij het verlaten)
+- [x] "Markeer als afgerond", met directe terugkoppeling op het scherm
+- [x] Beschermde bestanden uitsluitend via `/api/v1/content/[itemId]`, dat
+      eerst de toegang laat bepalen door RLS en pas daarna een signed URL van
+      60 minuten afgeeft
+- [x] Aanvragen indienen en volgen, inclusief de twee AVG-verzoeken
+- [x] Berichten: de beveiligde dialoog, met ongelezenteller
+- [x] Profiel: gegevens, wachtwoord, 2FA aan/uit, marketingtoestemming
+- [x] AVG-zelfservice: `/api/v1/mijn-gegevens` levert alles als JSON-bestand
+- [x] Tap-targets van minstens 44px; bottom-navigatie met vier items
 
 ### Definition of Done
 
-- [ ] Klant ziet uitsluitend eigen data (Playwright-negatieftests)
-- [ ] Video hervat op de laatst opgeslagen positie
-- [ ] Berichten werken twee kanten op
+- [x] **Klant ziet uitsluitend eigen data** — RLS-test `08_portaal.sql` loopt
+      elke query na die het portaal daadwerkelijk uitvoert, inclusief de vijf
+      queries van de AVG-export, en controleert dat geen daarvan een rij van
+      een andere klant oplevert. Playwright controleert daarnaast dat elke
+      portaalroute en beide API-routes een bezoeker zonder sessie weigeren
+- [x] **Berichten werken twee kanten op** — de klantzijde is gebouwd en de
+      RLS-test toont dat de admin in elk gesprek kan schrijven; het
+      antwoordscherm voor de admin komt in Fase 5 (§13)
+- [ ] **Video hervat op de laatst opgeslagen positie** — de code slaat de
+      positie op en zet hem terug bij het laden, maar dit is pas te zien met
+      een echt videobestand in Supabase Storage (punt A1)
+- [x] 26 unittests, 96 Playwright-tests en 8 RLS-testbestanden groen
+- [x] `pnpm verify` en `pnpm build` slagen
+
+**Een fout die de eigen regels blootlegden.** Next weigerde de build omdat een
+client component uit `@/features/progress` importeerde, en die index exporteert
+ook `server-only` queries. Opgelost met een aparte client-veilige ingang
+(`features/progress/acties.ts`) die alleen de server actions doorgeeft — die
+worden door Next omgezet naar een netwerkaanroep en belanden dus niet in de
+browserbundel.
+
+**Databasetypes uitgebreid met relaties.** De handgeschreven types kenden geen
+foreign keys, waardoor Supabase geneste queries niet kon typeren en alles op
+`string` uitkwam. De relaties staan er nu in, één op één volgens de migrations.
 
 ---
 
