@@ -67,6 +67,10 @@ begin
   return v_rows = 0;
 exception
   when insufficient_privilege then return true;
+  when check_violation then
+    -- Een databaseregel die de mutatie tegenhoudt, zoals de bescherming van
+    -- de laatste beheerder.
+    return true;
   when raise_exception then
     -- Een guard-trigger die de mutatie tegenhoudt.
     return true;

@@ -329,6 +329,20 @@ export type Database = {
     Functions: {
       is_admin: { Args: Record<string, never>; Returns: boolean };
       has_course_access: { Args: { p_course_id: string }; Returns: boolean };
+      course_id_for_lesson: { Args: { p_lesson_id: string }; Returns: string };
+      // AVG-functies; de rechtencontrole zit in de functies zelf (§17.7).
+      anonimiseer_profiel: {
+        Args: { p_profile_id: string };
+        Returns: undefined;
+      };
+      zet_profiel_actief: {
+        Args: { p_profile_id: string; p_actief: boolean };
+        Returns: undefined;
+      };
+      zet_profiel_rol: {
+        Args: { p_profile_id: string; p_rol: UserRole };
+        Returns: undefined;
+      };
     };
     Enums: {
       user_role: UserRole;
