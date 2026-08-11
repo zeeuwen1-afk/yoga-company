@@ -50,6 +50,12 @@ const eslintConfig = [
     },
   },
   {
+    // E-mails zijn losstaande HTML-documenten, geen pagina's van de site. Ze
+    // hebben daarom een eigen <head> nodig; de Next-regel gaat hier niet op.
+    files: ["src/emails/**/*.tsx"],
+    rules: { "@next/next/no-head-element": "off" },
+  },
+  {
     // UI-componenten kennen geen database (BOUWPROMPT §4).
     files: ["src/components/**/*.{ts,tsx}"],
     rules: {

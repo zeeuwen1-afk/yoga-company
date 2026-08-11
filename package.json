@@ -27,6 +27,7 @@
     "verify": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm test:rls && pnpm db:check-seed"
   },
   "dependencies": {
+    "@react-email/render": "^2.1.0",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.2",
     "@zxcvbn-ts/core": "^4.1.2",
@@ -38,7 +39,9 @@
     "next": "15.5.23",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "resend": "^6.18.1",
     "server-only": "^0.0.1",
+    "stripe": "^22.4.0",
     "tailwind-merge": "^3.6.0",
     "zod": "^4.4.3"
   },

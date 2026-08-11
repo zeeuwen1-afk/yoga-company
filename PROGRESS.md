@@ -127,19 +127,47 @@ staat nu alleen in productie aan.
 
 ---
 
-## Fase 3 — Betalingen & e-mail ⬜ nog niet gestart
+## Fase 3 — Betalingen & e-mail 🟡 code klaar, wacht op Stripe- en Resend-account
 
-- [ ] Stripe Checkout (iDEAL + kaart) met enrollments
-- [ ] Webhook `/api/v1/webhooks/stripe` met signature-verificatie, idempotent
-- [ ] Succes- en annuleringspagina's
-- [ ] Resend + React Email-templates (§10, nrs. 1 t/m 6)
-- [ ] Admin: betaallink maken / handmatig op betaald zetten (met audit-log)
+- [x] Stripe Checkout met iDEAL en creditcard, gekoppeld aan `enrollments`
+- [x] Webhook `/api/v1/webhooks/stripe` met verplichte handtekeningcontrole
+- [x] Idempotente verwerking van vier gebeurtenissen: betaling voltooid,
+      iDEAL later geslaagd, iDEAL mislukt, terugbetaald
+- [x] Inschrijfpagina `/inschrijven/[slug]`, alleen met account
+- [x] Succespagina die geduldig is bij iDEAL-betalingen die nog lopen
+- [x] Annulering: terug naar de inschrijfpagina met een geruststellende melding
+- [x] Resend aangesloten; verzenden is nooit blokkerend
+- [x] E-mailtemplates (§10): inschrijfbevestiging, contactbevestiging,
+      contactnotificatie, nieuw bericht, mailing
+- [x] Admin: betaallink maken en handmatig op betaald zetten, beide met
+      audit-logregel inclusief reden
+- [x] `docs/beheer.md` uitgebreid met het inrichten van Stripe en Resend
 
 ### Definition of Done
 
-- [ ] Test-iDEAL-betaling zet de enrollment op betaald en verstuurt de juiste mail
-- [ ] Webhook is idempotent
-- [ ] Negatieve tests groen
+- [x] **Webhook is idempotent** — 9 unittests; een tweede aflevering van
+      dezelfde gebeurtenis verandert niets en overschrijft de betaaldatum niet
+- [x] **Negatieve tests groen** — 5 tests op de handtekening (ontbrekend,
+      vervalst, ander geheim, aangepaste payload, verlopen) plus 3 e2e-tests
+      die aantonen dat de webhook geen details prijsgeeft
+- [x] **Een klant kan zichzelf niet op betaald zetten** — RLS-test
+      `07_betalingen.sql`: status, betaaldatum en bedrag zijn allemaal
+      afgeschermd, en toegang tot content volgt de status
+- [ ] **Test-iDEAL-betaling zet de inschrijving op betaald** — vereist een
+      Stripe-account in testmodus; zie `docs/beheer.md` §7
+- [x] 26 unittests en 74 Playwright-tests groen
+- [x] `pnpm verify` en `pnpm build` slagen
+
+**Afwijking van de specificatie.** Het bouwdocument schrijft React Email voor.
+Het componentenpakket `@react-email/components` is echter in álle versies door
+de makers als niet-ondersteund gemarkeerd. De renderer (`@react-email/render`)
+wordt wél onderhouden en is gebruikt; de bouwstenen in `src/emails/` zijn zelf
+geschreven, e-mailveilig met tabellen en in de huisstijl uit §5. Een verlaten
+pakket hoort niet in een platform dat jaren mee moet.
+
+**Wat de eigen architectuurregel ving.** ESLint blokkeerde twee imports waarin
+`enrollments` rechtstreeks in de `server/`-map van `payments` greep in plaats
+van via de publieke `index.ts` (§4). Precies waar die regel voor bedoeld is.
 
 ---
 

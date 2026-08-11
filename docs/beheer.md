@@ -149,7 +149,104 @@ Voor de e2e-tests eenmalig: `pnpm exec playwright install chromium webkit`.
 
 ---
 
-## 7. Nog te documenteren
+## 7. Betalingen (Stripe)
+
+### Testmodus inrichten
+
+1. Maak een account op [stripe.com](https://stripe.com) en blijf in
+   **testmodus** (schakelaar rechtsboven).
+2. Zet in `.env.local` uit **Developers → API keys**:
+   - `STRIPE_SECRET_KEY` — de secret key, begint met `sk_test_`
+   - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` — de publishable key
+3. Zet **iDEAL** aan onder Settings → Payment methods.
+
+### De webhook koppelen
+
+De webhook is de enige manier waarop een inschrijving op betaald komt. Zonder
+werkende webhook blijft elke betaling in afwachting staan.
+
+Lokaal, met de Stripe CLI:
+
+```bash
+stripe listen --forward-to localhost:3000/api/v1/webhooks/stripe
+```
+
+De CLI toont een `whsec_…`; zet die in `.env.local` als
+`STRIPE_WEBHOOK_SECRET`. Een betaling naspelen kan met:
+
+```bash
+stripe trigger checkout.session.completed
+```
+
+In productie: **Developers → Webhooks → Add endpoint**, adres
+`https://<jouw-domein>/api/v1/webhooks/stripe`, met deze gebeurtenissen:
+
+| Gebeurtenis                                | Wat er gebeurt                                        |
+| ------------------------------------------ | ----------------------------------------------------- |
+| `checkout.session.completed`               | Inschrijving op betaald, bevestigingsmail             |
+| `checkout.session.async_payment_succeeded` | iDEAL-betaling die later slaagt                       |
+| `checkout.session.async_payment_failed`    | iDEAL-betaling die alsnog mislukt                     |
+| `charge.refunded`                          | Inschrijving geannuleerd, vastgelegd in het audit log |
+
+De verwerking is idempotent: dezelfde gebeurtenis tweemaal afleveren verandert
+niets extra's. Faalt de verwerking, dan geeft de webhook een 500 zodat Stripe
+het opnieuw probeert.
+
+### Terugbetalen en termijnen
+
+Terugbetalen doe je in het Stripe-dashboard; de webhook zet de inschrijving
+daarna automatisch op geannuleerd en de toegang tot digitale content vervalt.
+
+Voor betalen in termijnen zijn er twee mogelijkheden in de beheeromgeving: een
+losse **betaallink** maken, of een inschrijving **handmatig op betaald** zetten.
+Beide worden vastgelegd in het audit log, met de reden erbij.
+
+### Live gaan
+
+Zet de schakelaar in Stripe op live, vervang de sleutels door de `sk_live_`- en
+`pk_live_`-varianten, en maak een nieuwe webhook aan voor het productieadres —
+die heeft een eigen `whsec_`. Doe eerst één echte betaling van een klein bedrag
+en betaal die daarna terug, om te zien dat beide kanten werken.
+
+---
+
+## 8. E-mail (Resend)
+
+1. Maak een account op [resend.com](https://resend.com) en voeg het domein
+   `yogacompanie.nl` toe.
+2. Zet de DNS-records die Resend toont (SPF, DKIM en DMARC). Zonder die records
+   komen mails in de spammap terecht.
+3. Zet in `.env.local`:
+   - `RESEND_API_KEY`
+   - `EMAIL_FROM="Yoga Companie <info@yogacompanie.nl>"`
+
+Ontbreekt de sleutel, dan wordt er niets verstuurd en gaat de rest gewoon door:
+een mail die niet weggaat mag nooit een betaling of inschrijving laten
+mislukken. In het logboek staat dan wat er niet verstuurd is.
+
+### Welke mails het platform verstuurt
+
+| Mail                 | Wanneer                                                    |
+| -------------------- | ---------------------------------------------------------- |
+| Accountverificatie   | Bij registratie — verstuurd door Supabase Auth             |
+| Wachtwoordherstel    | Bij een herstelverzoek — verstuurd door Supabase Auth      |
+| Inschrijfbevestiging | Na een geslaagde betaling                                  |
+| Contactbevestiging   | Naar de afzender van het contactformulier                  |
+| Contactnotificatie   | Naar jou, zonder de inhoud van het bericht                 |
+| Nieuw bericht        | Bij een bericht in de beveiligde dialoog, zonder de inhoud |
+
+De twee mails van Supabase Auth stel je in onder **Authentication → Emails** in
+het Supabase-dashboard. Laat Supabase via Resend versturen door onder
+**Project Settings → Authentication → SMTP Settings** de SMTP-gegevens van
+Resend in te vullen; anders komen die mails van Supabase zelf en ogen ze
+anders dan de rest.
+
+Berichten met persoonsgegevens gaan nooit per mail mee: de notificatie meldt
+alleen dát er iets klaarstaat, de inhoud staat achter de inlog (§17.11).
+
+---
+
+## 9. Nog te documenteren
 
 Wordt aangevuld zodra de betreffende fase is opgeleverd:
 
