@@ -39,29 +39,38 @@ fonts, pnpm scripts, ESLint/Prettier, CI-skeleton.
 
 ---
 
-## Fase 1 — Database & auth ⬜ nog niet gestart
+## Fase 1 — Database & auth 🟡 code klaar, wacht op Supabase-project
 
 Migrations (§6) + RLS + RLS-tests, Supabase-clients, registratie/login/reset,
 TOTP-2FA, rollen, middleware, profieltrigger, seed-admin.
 
-- [ ] Supabase-project aangemaakt in regio **Frankfurt (eu-central-1)**
-- [ ] Migration met het volledige schema uit §6
-- [ ] `enable row level security` + policies op **elke** tabel
-- [ ] Helperfunctie `is_admin()`
-- [ ] Storage buckets: `public-media`, `protected-content` (privé), `avatars` (privé)
-- [ ] RLS-testsuite in `supabase/tests/rls/`
-- [ ] Supabase-clients (browser, server, service-role) in `src/lib/supabase/`
-- [ ] Registratie, login, wachtwoord-reset met e-mailverificatie
-- [ ] TOTP-2FA: verplicht voor admin (aal2), optioneel voor klant
-- [ ] `src/middleware.ts`: `/portaal/*` en `/admin/*` afschermen
-- [ ] Trigger die bij registratie een `profiles`- en `conversations`-rij aanmaakt
-- [ ] Seed-admin via `SEED_ADMIN_EMAIL` (invite-flow, nooit een wachtwoord in seed)
+- [ ] **Supabase-project aangemaakt in regio Frankfurt (eu-central-1)** — actie voor Pieter
+- [x] Migration met het volledige schema uit §6 (`20260811190000_schema.sql`)
+- [x] `enable row level security` + policies op **elke** tabel (`…190100_rls.sql`)
+- [x] Helperfuncties `is_admin()`, `has_course_access()`, `course_id_for_lesson()`
+- [x] Storage buckets: `public-media`, `protected-content` (privé), `avatars` (privé)
+- [x] RLS-testsuite in `supabase/tests/rls/` (5 testbestanden) + runner
+- [x] Supabase-clients (browser, server, service-role) in `src/lib/supabase/`
+- [x] Registratie, login, wachtwoord-reset met e-mailverificatie
+- [x] Wachtwoordeis van 12 tekens met zxcvbn-sterkte-indicator
+- [x] Honeypot op registratie- en wachtwoordformulieren
+- [x] TOTP-2FA: verplicht voor admin (aal2), optioneel voor klant
+- [x] `src/middleware.ts`: `/portaal/*` en `/admin/*` afschermen
+- [x] Trigger die bij registratie een `profiles`- en `conversations`-rij aanmaakt
+- [x] Seed-admin via `SEED_ADMIN_EMAIL` (invite-flow, nooit een wachtwoord in seed)
+- [x] `docs/beheer.md` met de opzet- en beheerprocedures
 
 ### Definition of Done
 
-- [ ] RLS-tests groen
-- [ ] Admin komt niet in `/admin` zonder 2FA
-- [ ] Klantregistratie werkt end-to-end
+- [ ] **RLS-tests groen** — vereist een database; draai `pnpm test:rls`
+- [ ] **Admin komt niet in `/admin` zonder 2FA** — te controleren na `pnpm db:seed-admin`
+- [ ] **Klantregistratie werkt end-to-end** — vereist een database
+- [x] Afgeschermde routes sturen een bezoeker zonder sessie weg (Playwright, 22 tests groen)
+- [x] `pnpm verify` en `pnpm build` slagen
+
+> De code is compleet. De drie openstaande punten zijn geen ontbrekend werk maar
+> controles die een echte database nodig hebben. Zodra het Supabase-project er
+> is: `pnpm db:migrate`, `pnpm test:rls`, `pnpm db:seed-admin`.
 
 ---
 
