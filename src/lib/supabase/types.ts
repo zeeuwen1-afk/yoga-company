@@ -27,11 +27,42 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
-type Table<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
+type Relatie = {
+  foreignKeyName: string;
+  columns: string[];
+  isOneToOne: boolean;
+  referencedRelation: string;
+  referencedColumns: string[];
+};
+
+type Table<
+  Row,
+  Relaties extends Relatie[] = [],
+  Insert = Partial<Row>,
+  Update = Partial<Row>,
+> = {
   Row: Row;
   Insert: Insert;
   Update: Update;
-  Relationships: [];
+  Relationships: Relaties;
+};
+
+/**
+ * De relaties tussen de tabellen. Zonder deze opgave kan Supabase geneste
+ * queries (`lessons ( content_items ( … ) )`) niet typeren en valt alles terug
+ * op `string`. Ze volgen één op één de foreign keys uit de migrations.
+ */
+type FK<
+  Naam extends string,
+  Kolom extends string,
+  Doel extends string,
+  Uniek extends boolean = false,
+> = {
+  foreignKeyName: Naam;
+  columns: [Kolom];
+  isOneToOne: Uniek;
+  referencedRelation: Doel;
+  referencedColumns: ["id"];
 };
 
 export type Profile = {
@@ -211,21 +242,83 @@ export type Database = {
   public: {
     Tables: {
       profiles: Table<Profile>;
-      crm_notes: Table<CrmNote>;
+      crm_notes: Table<
+        CrmNote,
+        [
+          FK<"crm_notes_profile_id_fkey", "profile_id", "profiles">,
+          FK<"crm_notes_author_id_fkey", "author_id", "profiles">,
+        ]
+      >;
       courses: Table<Course>;
-      course_modules: Table<CourseModule>;
-      lessons: Table<Lesson>;
-      content_items: Table<ContentItem>;
-      enrollments: Table<Enrollment>;
-      progress: Table<Progress>;
-      requests: Table<Request>;
-      conversations: Table<Conversation>;
-      messages: Table<Message>;
-      content_blocks: Table<ContentBlock>;
+      course_modules: Table<
+        CourseModule,
+        [FK<"course_modules_course_id_fkey", "course_id", "courses">]
+      >;
+      lessons: Table<
+        Lesson,
+        [FK<"lessons_module_id_fkey", "module_id", "course_modules">]
+      >;
+      content_items: Table<
+        ContentItem,
+        [FK<"content_items_lesson_id_fkey", "lesson_id", "lessons">]
+      >;
+      enrollments: Table<
+        Enrollment,
+        [
+          FK<"enrollments_profile_id_fkey", "profile_id", "profiles">,
+          FK<"enrollments_course_id_fkey", "course_id", "courses">,
+        ]
+      >;
+      progress: Table<
+        Progress,
+        [
+          FK<"progress_profile_id_fkey", "profile_id", "profiles">,
+          FK<
+            "progress_content_item_id_fkey",
+            "content_item_id",
+            "content_items"
+          >,
+        ]
+      >;
+      requests: Table<
+        Request,
+        [
+          FK<"requests_profile_id_fkey", "profile_id", "profiles">,
+          FK<"requests_handled_by_fkey", "handled_by", "profiles">,
+        ]
+      >;
+      conversations: Table<
+        Conversation,
+        [FK<"conversations_profile_id_fkey", "profile_id", "profiles", true>]
+      >;
+      messages: Table<
+        Message,
+        [
+          FK<
+            "messages_conversation_id_fkey",
+            "conversation_id",
+            "conversations"
+          >,
+          FK<"messages_sender_id_fkey", "sender_id", "profiles">,
+        ]
+      >;
+      content_blocks: Table<
+        ContentBlock,
+        [FK<"content_blocks_updated_by_fkey", "updated_by", "profiles">]
+      >;
       contact_messages: Table<ContactMessage>;
-      mailings: Table<Mailing>;
-      social_posts: Table<SocialPost>;
-      audit_log: Table<AuditLogEntry>;
+      mailings: Table<
+        Mailing,
+        [FK<"mailings_created_by_fkey", "created_by", "profiles">]
+      >;
+      social_posts: Table<
+        SocialPost,
+        [FK<"social_posts_created_by_fkey", "created_by", "profiles">]
+      >;
+      audit_log: Table<
+        AuditLogEntry,
+        [FK<"audit_log_actor_id_fkey", "actor_id", "profiles">]
+      >;
     };
     Views: {
       content_blocks_public: {
