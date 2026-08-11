@@ -37,4 +37,19 @@ test.describe("Fundament", () => {
       page.getByText("--color-green", { exact: true }),
     ).toBeVisible();
   });
+
+  test("een onbekend adres toont een Nederlandse 404 met navigatie", async ({
+    page,
+  }) => {
+    const response = await page.goto("/bestaat-niet");
+
+    expect(response?.status()).toBe(404);
+    await expect(
+      page.getByRole("heading", { name: "Deze pagina bestaat niet", level: 1 }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Naar de startpagina" }),
+    ).toBeVisible();
+    await expect(page.getByRole("contentinfo")).toBeVisible();
+  });
 });
