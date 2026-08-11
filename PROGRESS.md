@@ -241,8 +241,39 @@ van via de publieke `index.ts` (§4). Precies waar die regel voor bedoeld is.
 
 ## Openstaande punten
 
-| Punt                 | Waarom                                                                          | Wat is er nodig                                                                              |
-| -------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| CI nog niet gedraaid | Er is nog geen GitHub-repository, dus de workflow heeft nog niet gedraaid       | Repository op GitHub aanmaken en pushen; `.github/workflows/ci.yml` staat klaar              |
-| Next.js-versie       | Het bouwdocument schrijft Next 15 voor; inmiddels is Next 16 uitgebracht        | Bewuste keuze: we volgen de specificatie. Een upgrade naar 16 kan later in één stap          |
-| Node.js-locatie      | Node staat in `~/.local/node` (installatie zonder sudo), niet in een systeempad | Werkt via de `PATH`-regel in `~/.zshrc`. Open een nieuwe terminal voordat je `pnpm` gebruikt |
+### A. Accounts aanmaken — actie voor Pieter
+
+Bewust uitgesteld. De code is volledig gebouwd en getest; deze punten zijn
+controles en instellingen die een echt account vereisen. Zolang ze openstaan
+werkt het platform lokaal, maar kan er niet betaald worden en gaat er geen
+e-mail uit.
+
+| #   | Account                                                         | Waarvoor                                                | Wat er daarna moet gebeuren                                                                                                                 | Handleiding             |
+| --- | --------------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| A1  | **Supabase** — regio **Frankfurt** ⚠️ achteraf niet te wijzigen | Database, inloggen, bestandsopslag                      | `pnpm db:migrate`, `supabase/seed.sql` inladen, `pnpm db:seed-admin`, en `SUPABASE_DB_URL=… pnpm test:rls` één keer tegen het echte project | `docs/beheer.md` §2, §3 |
+| A2  | **Stripe** — testmodus, iDEAL aanzetten                         | Betalingen                                              | Webhook koppelen, één test-iDEAL-betaling doen en die terugbetalen                                                                          | `docs/beheer.md` §7     |
+| A3  | **Resend** — domein `yogacompanie.nl`                           | E-mail                                                  | DNS-records zetten (SPF, DKIM, DMARC), en Supabase Auth via Resend laten versturen                                                          | `docs/beheer.md` §8     |
+| A4  | **GitHub**                                                      | Versiebeheer en CI                                      | Repository aanmaken en pushen; `.github/workflows/ci.yml` draait dan vanzelf                                                                | —                       |
+| A5  | **Vercel** — regio `fra1`                                       | Hosting                                                 | Koppelen aan de GitHub-repository en de environment variables zetten                                                                        | volgt                   |
+| A6  | **Anthropic**                                                   | AI-socialmediatool (Fase 7)                             | API-sleutel in `ANTHROPIC_API_KEY`                                                                                                          | volgt                   |
+| A7  | **Meta** — developer-app                                        | Publiceren op Facebook en Instagram (Fase 7, optioneel) | App-review op de publicatierechten; de tool werkt ook zonder                                                                                | volgt                   |
+
+**Verwerkersovereenkomsten** (§17.8) tekent Pieter in de dashboards van
+Supabase, Vercel, Stripe, Resend, Anthropic en Meta.
+
+### B. Nog af te ronden werk
+
+| Punt                          | Waarom                                                                                                 | Wat is er nodig                                                                                                   |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| Juridische teksten toetsen    | De privacyverklaring, algemene voorwaarden en cookiepagina zijn concept en tonen dat ook aan bezoekers | Laat een jurist ze nakijken, met name de annuleringstermijnen. Daarna de waarschuwing weghalen via de site-editor |
+| Contactgegevens en KvK        | Adres, telefoonnummer en KvK-nummer staan als placeholder in het CMS                                   | Invullen via de site-editor zodra die er is (Fase 6), of laat het me nu aanpassen                                 |
+| Docentenbio's en testimonials | Placeholders                                                                                           | Aanleveren; ik zet ze in de seed                                                                                  |
+
+### C. Technische aandachtspunten
+
+| Punt            | Waarom                                                                                              | Wat is er nodig                                                                              |
+| --------------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Next.js-versie  | Het bouwdocument schrijft Next 15 voor; inmiddels is Next 16 uitgebracht                            | Bewuste keuze: we volgen de specificatie. Een upgrade naar 16 kan later in één stap          |
+| React Email     | `@react-email/components` is door de makers verlaten; we gebruiken de renderer met eigen bouwstenen | Geen actie; wel goed om te weten bij het aanpassen van e-mails                               |
+| Node.js-locatie | Node staat in `~/.local/node` (installatie zonder sudo), niet in een systeempad                     | Werkt via de `PATH`-regel in `~/.zshrc`. Open een nieuwe terminal voordat je `pnpm` gebruikt |
+| `.next` gedeeld | `pnpm build` en `pnpm dev` delen die map                                                            | Draai `pnpm clean` als je van de een naar de ander schakelt                                  |
