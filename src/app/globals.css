@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+ * Yoga Companie — design tokens (BOUWPROMPT §5)
+ * Rustig, warm en professioneel. Contrasten voldoen aan WCAG AA.
+ * De site kent bewust één vaste (lichte) verschijningsvorm.
+ * ------------------------------------------------------------------------- */
+
+@theme {
+  /* Merkkleuren */
+  --color-green: #2e4a3b; /* primair — koppen, knoppen */
+  --color-green-dark: #22382c; /* hover, koppen donker */
+  --color-sand: #eae1ce; /* secundaire vlakken */
+  --color-sand-light: #f4eedf; /* zachte kaders */
+  --color-cream: #faf6ec; /* paginaachtergrond secties */
+  --color-ink: #2b2a26; /* bodytekst */
+  --color-muted: #6e6a5c; /* bijschriften */
+  --color-line: #d9d0bc; /* lijnen, borders */
+  --color-error: #9c3d2e;
+  --color-success: #3e6b4f;
+
+  /* Semantische aliassen (gebruikt door de UI-componenten) */
+  --color-background: #ffffff;
+  --color-foreground: var(--color-ink);
+  --color-primary: var(--color-green);
+  --color-primary-foreground: var(--color-cream);
+  --color-secondary: var(--color-sand);
+  --color-secondary-foreground: var(--color-green-dark);
+  --color-border: var(--color-line);
+  --color-ring: var(--color-green);
+
+  /* Typografie */
+  --font-serif: var(--font-eb-garamond), ui-serif, Georgia, serif;
+  --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Vorm */
+  --radius-card: 12px;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-green-dark);
+    text-wrap: balance;
+  }
+
+  /* Duidelijk zichtbare focus voor toetsenbordnavigatie (WCAG 2.1 AA) */
+  :focus-visible {
+    outline: 2px solid var(--color-green);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-sand);
+    color: var(--color-green-dark);
+  }
+}
+
+/* Respecteer de systeemvoorkeur voor minder beweging (BOUWPROMPT §18) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
