@@ -121,7 +121,12 @@ security definer
 set search_path = public
 as $$
 begin
-  if is_admin() then
+  -- Admins mogen alles. Ontbreekt er een gebruikerssessie, dan komt de
+  -- wijziging server-side binnen via de service-role (uitnodigen van een
+  -- beheerder, AVG-verwijdering) en laten we hem ook door. Een klant of
+  -- anonieme bezoeker heeft altijd wél een sessie of komt door RLS niet eens
+  -- tot hier, dus dit opent geen deur.
+  if is_admin() or auth.uid() is null then
     return new;
   end if;
 

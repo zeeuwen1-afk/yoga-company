@@ -46,6 +46,11 @@ jobs:
       - name: Unittests
         run: pnpm test
 
+      - name: Beveiligingstests (RLS)
+        # Draait de echte migrations tegen een lokale wegwerpdatabase en
+        # controleert de klantscheiding. Geen Supabase-project nodig.
+        run: pnpm test:rls
+
       - name: Build
         run: pnpm build
 

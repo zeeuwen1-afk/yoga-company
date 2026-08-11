@@ -7,6 +7,10 @@
 
 create schema if not exists tests;
 
+-- De testgebruikers roepen deze hulpfuncties aan terwijl ze in de huid van een
+-- klant of een anonieme bezoeker zitten; die hebben dus toegang nodig.
+grant usage on schema tests to anon, authenticated;
+
 -- Doe alsof we een bepaalde ingelogde gebruiker zijn.
 create or replace function tests.act_as(p_uid uuid) returns void
 language plpgsql as $$
@@ -50,6 +54,9 @@ $$;
 
 -- True wanneer de mutatie is tegengehouden: ofwel geweigerd door RLS, ofwel
 -- zonder effect gebleven omdat de rij buiten het zicht van de gebruiker viel.
+--
+-- Andere fouten worden bewust NIET opgevangen. Zou dat wel gebeuren, dan telt
+-- een typefout in de test als "netjes geblokkeerd" en bewijst de suite niets.
 create or replace function tests.mutation_blocked(p_sql text) returns boolean
 language plpgsql as $$
 declare
@@ -60,7 +67,9 @@ begin
   return v_rows = 0;
 exception
   when insufficient_privilege then return true;
-  when others then return true;
+  when raise_exception then
+    -- Een guard-trigger die de mutatie tegenhoudt.
+    return true;
 end;
 $$;
 

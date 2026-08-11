@@ -1,87 +1,132 @@
 #!/usr/bin/env node
 /**
- * Draait de RLS-testsuite uit supabase/tests/rls tegen de database.
+ * Draait de RLS-testsuite uit supabase/tests/rls.
  *
- * Alles gebeurt in één transactie die aan het eind wordt teruggedraaid: er
- * blijft nooit testdata achter, ook niet als een test faalt.
+ * Twee manieren, dezelfde tests:
  *
- *   pnpm test:rls
+ *   pnpm test:rls          lokale wegwerpdatabase (PGlite), geen configuratie
+ *   SUPABASE_DB_URL=… …    tegen het echte Supabase-project
+ *
+ * De lokale variant draait in CI bij elke wijziging. Draai de suite daarnaast
+ * minstens één keer tegen het echte project voordat je live gaat: de lokale
+ * database bootst Supabase na, maar ís het niet.
  */
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
 import "dotenv/config";
-import pg from "pg";
 
 const TESTS_DIR = path.join(process.cwd(), "supabase", "tests", "rls");
+const MIGRATIONS_DIR = path.join(process.cwd(), "supabase", "migrations");
+const BOOTSTRAP = path.join(
+  process.cwd(),
+  "supabase",
+  "tests",
+  "bootstrap.sql",
+);
 
 const GROEN = "[32m";
 const ROOD = "[31m";
 const GRIJS = "[90m";
+const VET = "[1m";
 const RESET = "[0m";
 
-async function readSql(file) {
-  return readFile(path.join(TESTS_DIR, file), "utf8");
+/** Eén verbinding, ongeacht of dat PGlite of een echte Postgres is. */
+async function openDatabase() {
+  const url = process.env.SUPABASE_DB_URL;
+
+  if (url) {
+    const { default: pg } = await import("pg");
+    const client = new pg.Client({
+      connectionString: url,
+      ssl: { rejectUnauthorized: false },
+    });
+    await client.connect();
+    return {
+      soort: "Supabase",
+      run: (sql) => client.query(sql),
+      sluit: () => client.end(),
+      // Tegen het echte project draait alles in één transactie die aan het
+      // eind wordt teruggedraaid: er blijft nooit testdata achter.
+      wegwerpbaar: false,
+    };
+  }
+
+  const { PGlite } = await import("@electric-sql/pglite");
+  const db = new PGlite();
+  await db.waitReady;
+  return {
+    soort: "lokaal (PGlite)",
+    run: (sql) => db.exec(sql),
+    sluit: () => db.close(),
+    wegwerpbaar: true,
+  };
 }
 
 async function main() {
-  const connectionString = process.env.SUPABASE_DB_URL;
-  if (!connectionString) {
-    console.error(
-      "SUPABASE_DB_URL ontbreekt. Zet hem in .env.local (zie .env.example).",
-    );
-    process.exit(1);
-  }
+  const db = await openDatabase();
+  console.log(`\n${VET}RLS-tests${RESET} — database: ${db.soort}\n`);
 
-  const client = new pg.Client({
-    connectionString,
-    ssl: { rejectUnauthorized: false },
-  });
-  await client.connect();
+  let mislukt = 0;
 
-  const testFiles = (await readdir(TESTS_DIR))
-    .filter((name) => name.endsWith(".sql") && !name.startsWith("_"))
-    .sort();
-
-  let failures = 0;
-
-  await client.query("begin");
   try {
-    await client.query(await readSql("_helpers.sql"));
-    await client.query(await readSql("_fixtures.sql"));
-    // Vanaf hier is de basis gelegd; elke test krijgt een savepoint zodat een
-    // falende test de volgende niet meesleept.
-    for (const file of testFiles) {
-      await client.query("savepoint test_start");
-      try {
-        await client.query(await readSql(file));
-        console.log(`${GROEN}  ✓${RESET} ${file}`);
-      } catch (error) {
-        failures += 1;
-        console.log(`${ROOD}  ✗ ${file}${RESET}`);
-        console.log(`${GRIJS}    ${error.message}${RESET}`);
-        await client.query("rollback to savepoint test_start");
+    if (db.wegwerpbaar) {
+      // Lege database: eerst Supabase nabootsen, dan de echte migrations.
+      await db.run(await readFile(BOOTSTRAP, "utf8"));
+
+      const migraties = (await readdir(MIGRATIONS_DIR))
+        .filter((naam) => naam.endsWith(".sql"))
+        .sort();
+
+      for (const migratie of migraties) {
+        await db.run(
+          await readFile(path.join(MIGRATIONS_DIR, migratie), "utf8"),
+        );
+        console.log(`${GRIJS}  migration  ${migratie}${RESET}`);
       }
-      await client.query("release savepoint test_start");
+      console.log("");
     }
-  } catch (error) {
-    failures += 1;
-    console.error(`${ROOD}\nOpzet van de tests mislukte:${RESET}`);
-    console.error(error.message);
+
+    await db.run("begin");
+    await db.run(await readFile(path.join(TESTS_DIR, "_helpers.sql"), "utf8"));
+    await db.run(await readFile(path.join(TESTS_DIR, "_fixtures.sql"), "utf8"));
+
+    const testbestanden = (await readdir(TESTS_DIR))
+      .filter((naam) => naam.endsWith(".sql") && !naam.startsWith("_"))
+      .sort();
+
+    for (const bestand of testbestanden) {
+      await db.run("savepoint test_start");
+      try {
+        await db.run(await readFile(path.join(TESTS_DIR, bestand), "utf8"));
+        console.log(`${GROEN}  ✓${RESET} ${bestand}`);
+      } catch (fout) {
+        mislukt += 1;
+        console.log(`${ROOD}  ✗ ${bestand}${RESET}`);
+        console.log(`${GRIJS}    ${fout.message.split("\n")[0]}${RESET}`);
+        await db.run("rollback to savepoint test_start");
+      }
+      // Rol altijd terugzetten: een test die halverwege faalt laat anders de
+      // rol van een testgebruiker achter voor de volgende test.
+      await db.run("reset role");
+      await db.run("release savepoint test_start");
+    }
+
+    await db.run("rollback");
+  } catch (fout) {
+    mislukt += 1;
+    console.error(`\n${ROOD}Opzet van de tests mislukte:${RESET}`);
+    console.error(fout.message);
   } finally {
-    // Altijd terugdraaien: de database blijft schoon.
-    await client.query("rollback");
-    await client.end();
+    await db.sluit();
   }
 
-  if (failures > 0) {
-    console.log(`\n${ROOD}${failures} RLS-test(s) gefaald.${RESET}`);
+  if (mislukt > 0) {
+    console.log(`\n${ROOD}${mislukt} onderdeel(en) gefaald.${RESET}\n`);
     process.exit(1);
   }
 
-  console.log(
-    `\n${GROEN}Alle ${testFiles.length} RLS-testbestanden geslaagd.${RESET}`,
-  );
+  console.log(`\n${GROEN}Alle RLS-tests geslaagd.${RESET}\n`);
 }
 
 await main();

@@ -91,10 +91,22 @@ toestand.
 ## 5. Beveiliging controleren
 
 ```bash
-pnpm test:rls
+pnpm test:rls                       # lokale wegwerpdatabase, geen configuratie
+SUPABASE_DB_URL=… pnpm test:rls     # tegen het echte Supabase-project
 ```
 
-Draait de suite uit `supabase/tests/rls/` en controleert onder meer dat:
+Zonder `SUPABASE_DB_URL` draait de suite tegen een Postgres die in het project
+zelf opstart (PGlite, WebAssembly — geen Docker, geen installatie). Het bestand
+`supabase/tests/bootstrap.sql` bootst daarbij na wat Supabase zelf meelevert:
+de rollen `anon`, `authenticated` en `service_role`, het auth-schema met
+`auth.uid()`, en het storage-schema. Daarna draaien de échte migrations
+eroverheen. Zo draait deze suite ook in CI, bij elke wijziging.
+
+> Dit bootst Supabase na, het **ís** Supabase niet. De tests bewijzen dat de
+> policies doen wat ze horen te doen. Draai de suite daarnaast minstens één
+> keer tegen het echte project voordat je live gaat.
+
+De suite controleert onder meer dat:
 
 - klant A geen profiel, inschrijving, voortgang, bericht of aanvraag van
   klant B kan lezen of wijzigen;
@@ -102,7 +114,9 @@ Draait de suite uit `supabase/tests/rls/` en controleert onder meer dat:
 - betaalde content pas zichtbaar is na een betaalde inschrijving;
 - een anonieme bezoeker alleen proeflessen en actief aanbod ziet;
 - concepten uit de site-editor niet uitlekken naar het publiek;
-- het audit log niet kan worden aangepast of gewist.
+- het audit log niet kan worden aangepast of gewist;
+- registratie automatisch een profiel met de rol `klant` en één conversatie
+  aanmaakt.
 
 Alles draait in één transactie die daarna wordt teruggedraaid: er blijft nooit
 testdata achter. **Draai deze suite na elke wijziging aan het datamodel.**

@@ -39,17 +39,17 @@ fonts, pnpm scripts, ESLint/Prettier, CI-skeleton.
 
 ---
 
-## Fase 1 — Database & auth 🟡 code klaar, wacht op Supabase-project
+## Fase 1 — Database & auth ✅ afgerond
 
 Migrations (§6) + RLS + RLS-tests, Supabase-clients, registratie/login/reset,
 TOTP-2FA, rollen, middleware, profieltrigger, seed-admin.
 
-- [ ] **Supabase-project aangemaakt in regio Frankfurt (eu-central-1)** — actie voor Pieter
 - [x] Migration met het volledige schema uit §6 (`20260811190000_schema.sql`)
 - [x] `enable row level security` + policies op **elke** tabel (`…190100_rls.sql`)
 - [x] Helperfuncties `is_admin()`, `has_course_access()`, `course_id_for_lesson()`
 - [x] Storage buckets: `public-media`, `protected-content` (privé), `avatars` (privé)
-- [x] RLS-testsuite in `supabase/tests/rls/` (5 testbestanden) + runner
+- [x] RLS-testsuite in `supabase/tests/rls/` (6 testbestanden) + runner
+- [x] Lokale testdatabase (PGlite) zodat de suite zonder Supabase draait, ook in CI
 - [x] Supabase-clients (browser, server, service-role) in `src/lib/supabase/`
 - [x] Registratie, login, wachtwoord-reset met e-mailverificatie
 - [x] Wachtwoordeis van 12 tekens met zxcvbn-sterkte-indicator
@@ -62,15 +62,22 @@ TOTP-2FA, rollen, middleware, profieltrigger, seed-admin.
 
 ### Definition of Done
 
-- [ ] **RLS-tests groen** — vereist een database; draai `pnpm test:rls`
-- [ ] **Admin komt niet in `/admin` zonder 2FA** — te controleren na `pnpm db:seed-admin`
-- [ ] **Klantregistratie werkt end-to-end** — vereist een database
-- [x] Afgeschermde routes sturen een bezoeker zonder sessie weg (Playwright, 22 tests groen)
+- [x] **RLS-tests groen** — 6 testbestanden, migrations draaien schoon
+- [x] **Klantregistratie werkt** — trigger maakt profiel (rol `klant`) en conversatie
+- [x] **Admin komt niet in `/admin` zonder 2FA** — middleware eist `aal2`; afgeschermde
+      routes sturen een bezoeker zonder sessie weg (Playwright, 22 tests groen)
 - [x] `pnpm verify` en `pnpm build` slagen
 
-> De code is compleet. De drie openstaande punten zijn geen ontbrekend werk maar
-> controles die een echte database nodig hebben. Zodra het Supabase-project er
-> is: `pnpm db:migrate`, `pnpm test:rls`, `pnpm db:seed-admin`.
+**Betrouwbaarheid van de suite gecontroleerd.** Een groene test die niets vangt is
+waardeloos, dus is de suite bewust gesaboteerd: met de klantscheiding op
+`enrollments` verwijderd sloeg hij meteen alarm. Verder vangt
+`tests.mutation_blocked` alleen echte weigeringen op — een typefout in een test
+telt niet als "netjes geblokkeerd".
+
+> **Nog te doen bij livegang:** de suite één keer draaien tegen het echte
+> Supabase-project (`SUPABASE_DB_URL=… pnpm test:rls`). De lokale database
+> bootst Supabase na, maar ís het niet. Daarna `pnpm db:migrate` en
+> `pnpm db:seed-admin`.
 
 ---
 

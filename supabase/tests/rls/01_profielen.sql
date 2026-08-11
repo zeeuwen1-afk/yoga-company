@@ -38,9 +38,14 @@ begin
 
   perform tests.expect(
     tests.mutation_blocked(format(
-      'update profiles set deleted_at = null where id = %L', v_klant_a
+      'update profiles set deleted_at = now() where id = %L', v_klant_a
     )),
-    'klant A kan de eigen verwijderstatus niet aanpassen'
+    'klant A kan zichzelf niet op verwijderd zetten'
+  );
+
+  perform tests.expect(
+    (select deleted_at from profiles where id = v_klant_a) is null,
+    'de verwijderstatus van klant A is onveranderd gebleven'
   );
 
   -- De toegestane velden moeten wél werken.
