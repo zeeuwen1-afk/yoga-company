@@ -27,6 +27,7 @@
     "verify": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm test:rls && pnpm db:check-seed"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.116.0",
     "@react-email/render": "^2.1.0",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.2",
