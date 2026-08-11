@@ -11,6 +11,9 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    // Nodig omdat src/content door Node rechtstreeks wordt uitgevoerd voor het
+    // genereren van de seed; die imports dragen een .ts-extensie.
+    "allowImportingTsExtensions": true,
     "jsx": "preserve",
     "incremental": true,
     "plugins": [

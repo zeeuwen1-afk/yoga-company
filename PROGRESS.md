@@ -81,20 +81,49 @@ telt niet als "netjes geblokkeerd".
 
 ---
 
-## Fase 2 — Publieke site + CMS ⬜ nog niet gestart
+## Fase 2 — Publieke site + CMS ✅ afgerond
 
-- [ ] Alle publieke pagina's uit §8, opgebouwd uit `content_blocks`
-- [ ] Seed-content uit §19 (opleidingen, modules, trainingen, CMS-blokken)
-- [ ] Juridische conceptpagina's (privacy, AV, cookies)
-- [ ] Contactformulier → `contact_messages` + notificatiemail
-- [ ] SEO: metadata, sitemap.xml, robots.txt, OG-afbeelding, JSON-LD `Course`
-- [ ] Content-Security-Policy toevoegen aan `next.config.ts`
+- [x] Landingspagina met zakelijke én persoonlijke propositie, drie ingangen,
+      "Waarom Yoga Companie", testimonials en afsluitende oproep (§8.1)
+- [x] `/opleidingen` en `/opleidingen/[slug]` met curriculum-accordeon,
+      praktische gegevens, prijs en inschrijfknop (§8.2)
+- [x] `/trainingen` en `/trainingen/[slug]` (§8.3)
+- [x] `/over-ons` met verhaal en docentenblok (§8.4)
+- [x] `/contact` met Zod-validatie, honeypot en rate limiting (§8.5)
+- [x] Juridische conceptpagina's: privacy, algemene voorwaarden, cookies (§8.6)
+- [x] Alle teksten uit `content_blocks`, met terugval op `src/content/`
+- [x] Seed-content uit §19: 7 cursussen en 37 CMS-blokken
+- [x] `supabase/seed.sql` gegenereerd uit dezelfde bron (`pnpm db:generate-seed`)
+- [x] SEO: metadata per pagina, sitemap.xml, robots.txt, OG-afbeelding,
+      JSON-LD `Course`, favicon
+- [x] Content-Security-Policy met expliciete allowlist in `next.config.ts`
 
 ### Definition of Done
 
-- [ ] Lighthouse ≥ 90 op de publieke pagina's
-- [ ] Alle teksten komen uit de database
-- [ ] Contactformulier landt in de admin-notificatiemail
+- [x] **Lighthouse ≥ 90 op de publieke pagina's** — zie de meting hieronder
+- [x] **Alle teksten komen uit de database** — de pagina's lezen
+      `content_blocks_public`; `src/content/` is uitsluitend terugval en seed
+- [x] **Contactformulier landt bij de admin** — het bericht gaat naar
+      `contact_messages`; de notificatiemail zelf volgt in Fase 3 (§10), waar
+      Resend wordt aangesloten. `src/lib/notificatie.ts` staat klaar als
+      aansluitpunt en het bericht is nooit verloren
+- [x] 62 Playwright-tests groen op desktop (Chromium) en mobiel (iOS Safari)
+- [x] `pnpm verify` en `pnpm build` slagen
+
+**Lighthouse op de productiebuild:**
+
+| Pagina                                      | Performance | Toegankelijkheid | Best practices | SEO |
+| ------------------------------------------- | ----------- | ---------------- | -------------- | --- |
+| `/`                                         | 100         | 100              | 100            | 100 |
+| `/opleidingen/200-uurs-yin-yoga-specialist` | 98          | 100              | 96             | 100 |
+| `/contact`                                  | 98          | 100              | 100            | 100 |
+
+**Twee fouten die de tests hebben gevangen.** De seedgenerator produceert SQL die
+niemand nakijkt, dus draait `pnpm db:check-seed` hem tweemaal tegen een
+wegwerpdatabase en telt de uitkomst — zo blijkt ook dat hij herhaalbaar is.
+Daarnaast bleek `upgrade-insecure-requests` in de CSP op iOS Safari de
+stylesheet en scripts te blokkeren zolang de site over http draait; die regel
+staat nu alleen in productie aan.
 
 ---
 

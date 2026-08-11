@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import Link from "next/link";
 
 import {
   FieldError,
@@ -64,12 +65,12 @@ export function WachtwoordHerstellenFormulier() {
     return (
       <div className="mt-6 space-y-4">
         <FormMessage variant="gelukt">{resultaat.bericht}</FormMessage>
-        <a
+        <Link
           href="/portaal"
           className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-green font-semibold text-cream transition-colors hover:bg-green-dark"
         >
           Naar mijn omgeving
-        </a>
+        </Link>
       </div>
     );
   }

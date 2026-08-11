@@ -22,7 +22,9 @@
     "test:rls": "node scripts/rls-test.mjs",
     "db:migrate": "node scripts/db-migrate.mjs",
     "db:seed-admin": "node scripts/seed-admin.mjs",
-    "verify": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm test:rls"
+    "db:generate-seed": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-seed.mjs",
+    "db:check-seed": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/seed-check.mjs",
+    "verify": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm test:rls && pnpm db:check-seed"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.4",

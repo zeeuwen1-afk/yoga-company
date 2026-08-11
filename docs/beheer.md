@@ -41,12 +41,18 @@ pnpm dev                       # http://localhost:3000
    | `SUPABASE_SERVICE_ROLE_KEY`     | API → `service_role` (geheim)      |
    | `SUPABASE_DB_URL`               | Database → Connection string (URI) |
 
-3. Pas het schema toe en controleer de beveiliging:
+3. Pas het schema toe, laad de startinhoud en controleer de beveiliging:
 
    ```bash
    pnpm db:migrate     # voert supabase/migrations uit
    pnpm test:rls       # controleert de klantscheiding
    ```
+
+   Laad daarna `supabase/seed.sql` in via de SQL-editor van Supabase, of met
+   `psql "$SUPABASE_DB_URL" -f supabase/seed.sql`. Dat zet het aanbod en alle
+   teksten van de site klaar. De seed is herhaalbaar, maar overschrijft
+   wijzigingen die je later via de beheeromgeving maakt — draai hem dus alleen
+   bij het opzetten.
 
 De `service_role`-sleutel omzeilt alle beveiliging. Zet hem nooit in code, in
 een `NEXT_PUBLIC_`-variabele of in een client component.
@@ -125,17 +131,19 @@ testdata achter. **Draai deze suite na elke wijziging aan het datamodel.**
 
 ## 6. Alle commando's
 
-| Commando                    | Wat het doet                         |
-| --------------------------- | ------------------------------------ |
-| `pnpm dev`                  | Ontwikkelserver                      |
-| `pnpm build` / `pnpm start` | Productiebuild en -server            |
-| `pnpm clean`                | Verwijdert `.next`                   |
-| `pnpm verify`               | Typecheck, lint, opmaak en unittests |
-| `pnpm test`                 | Unittests (Vitest)                   |
-| `pnpm test:e2e`             | End-to-end-tests (Playwright)        |
-| `pnpm test:rls`             | Beveiligingstests tegen de database  |
-| `pnpm db:migrate`           | Migrations toepassen                 |
-| `pnpm db:seed-admin`        | Eerste beheerder uitnodigen          |
+| Commando                    | Wat het doet                                    |
+| --------------------------- | ----------------------------------------------- |
+| `pnpm dev`                  | Ontwikkelserver                                 |
+| `pnpm build` / `pnpm start` | Productiebuild en -server                       |
+| `pnpm clean`                | Verwijdert `.next`                              |
+| `pnpm verify`               | Typecheck, lint, opmaak en unittests            |
+| `pnpm test`                 | Unittests (Vitest)                              |
+| `pnpm test:e2e`             | End-to-end-tests (Playwright)                   |
+| `pnpm test:rls`             | Beveiligingstests tegen de database             |
+| `pnpm db:migrate`           | Migrations toepassen                            |
+| `pnpm db:generate-seed`     | Schrijft `supabase/seed.sql` uit `src/content/` |
+| `pnpm db:check-seed`        | Controleert dat de seed draait en klopt         |
+| `pnpm db:seed-admin`        | Eerste beheerder uitnodigen                     |
 
 Voor de e2e-tests eenmalig: `pnpm exec playwright install chromium webkit`.
 
