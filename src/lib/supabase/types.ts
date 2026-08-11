@@ -213,6 +213,10 @@ export type Mailing = {
   scheduled_at: string | null;
   sent_at: string | null;
   created_by: string | null;
+  created_at: string;
+  /** Hoeveel mensen de mailing ontvingen — nooit wie (§17.6). */
+  recipient_count: number;
+  error: string | null;
 };
 
 export type SocialPost = {
@@ -226,6 +230,8 @@ export type SocialPost = {
   error: string | null;
   created_by: string | null;
   created_at: string;
+  topic: string | null;
+  goal: string | null;
 };
 
 export type AuditLogEntry = {
@@ -342,6 +348,16 @@ export type Database = {
       zet_profiel_rol: {
         Args: { p_profile_id: string; p_rol: UserRole };
         Returns: undefined;
+      };
+      // Maandelijkse opschoontaak (§17.6); geeft terug wat er is opgeruimd.
+      opruimen_bewaartermijnen: {
+        Args: Record<string, never>;
+        Returns: {
+          contactberichten: number;
+          mailings: number;
+          profielen: number;
+          auditregels: number;
+        };
       };
     };
     Enums: {

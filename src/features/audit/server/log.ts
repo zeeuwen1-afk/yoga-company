@@ -40,7 +40,16 @@ export type AuditActie =
   | "aanvraag_status_gewijzigd"
   | "bericht_verstuurd"
   | "contactbericht_verwijderd"
-  | "blok_gepubliceerd";
+  | "blok_gepubliceerd"
+  | "social_gegenereerd"
+  | "social_bewaard"
+  | "social_gepubliceerd"
+  | "social_verwijderd"
+  | "mailing_bewaard"
+  | "mailing_verstuurd"
+  | "mailing_verwijderd"
+  | "mailing_afmelding"
+  | "bewaartermijnen_opgeschoond";
 
 export async function schrijfAudit(
   supabase: SupabaseClient<Database>,
