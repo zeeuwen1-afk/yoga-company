@@ -1,5 +1,6 @@
 import {
   BookOpen,
+  CalendarDays,
   ClipboardList,
   FileText,
   Inbox,
@@ -49,7 +50,10 @@ export const ADMIN_NAVIGATIE: AdminNavGroep[] = [
   },
   {
     titel: "Aanbod",
-    items: [{ href: "/admin/aanbod", label: "Opleidingen", icoon: BookOpen }],
+    items: [
+      { href: "/admin/aanbod", label: "Opleidingen", icoon: BookOpen },
+      { href: "/admin/lessen", label: "Lesrooster", icoon: CalendarDays },
+    ],
   },
   {
     titel: "Website",

@@ -22,6 +22,7 @@
     "test:rls": "node scripts/rls-test.mjs",
     "brand:assets": "node scripts/brand-assets.mjs",
     "db:migrate": "node scripts/db-migrate.mjs",
+    "db:seed": "node scripts/db-seed.mjs",
     "db:seed-admin": "node scripts/seed-admin.mjs",
     "db:generate-seed": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-seed.mjs",
     "db:check-seed": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/seed-check.mjs",

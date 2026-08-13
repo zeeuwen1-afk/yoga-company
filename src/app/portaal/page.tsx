@@ -1,8 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Inbox, MessageSquare, PlayCircle } from "lucide-react";
+import {
+  ArrowRight,
+  CalendarDays,
+  Inbox,
+  MessageSquare,
+  PlayCircle,
+} from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  BOEKING_LABEL,
+  formateerDag,
+  formateerTijdvak,
+  haalVolgendeBoeking,
+} from "@/features/bookings";
 import { haalMijnOpleidingen } from "@/features/content";
 import { haalOngelezenAantal } from "@/features/messages";
 import { haalLaatstBekeken } from "@/features/progress";
@@ -32,12 +44,14 @@ export default async function PortaalDashboard() {
     .eq("id", gebruiker?.id ?? "")
     .maybeSingle();
 
-  const [laatst, opleidingen, ongelezen, openAanvragen] = await Promise.all([
-    haalLaatstBekeken(),
-    haalMijnOpleidingen(),
-    haalOngelezenAantal(),
-    haalOpenAanvragen(),
-  ]);
+  const [laatst, opleidingen, ongelezen, openAanvragen, volgendeLes] =
+    await Promise.all([
+      haalLaatstBekeken(),
+      haalMijnOpleidingen(),
+      haalOngelezenAantal(),
+      haalOpenAanvragen(),
+      haalVolgendeBoeking(),
+    ]);
 
   return (
     <div className="space-y-8">
@@ -49,6 +63,39 @@ export default async function PortaalDashboard() {
           Fijn dat je er bent. Hier vind je alles wat bij je opleiding hoort.
         </p>
       </div>
+
+      {/* De eerstvolgende les waarvoor je staat ingeschreven (§7.3) -------- */}
+      {volgendeLes ? (
+        <Card className="bg-white">
+          <CardContent className="p-6">
+            <p className="flex items-center gap-2 text-sm font-semibold text-muted">
+              <CalendarDays className="size-4" aria-hidden />
+              Je eerstvolgende les
+            </p>
+            <h2 className="mt-2 text-xl">{volgendeLes.les.titel}</h2>
+            <p className="mt-1 text-sm text-muted first-letter:uppercase">
+              {formateerDag(volgendeLes.les.begintOp)} ·{" "}
+              {formateerTijdvak(
+                volgendeLes.les.begintOp,
+                volgendeLes.les.duurMinuten,
+              )}{" "}
+              · {volgendeLes.les.locatie}
+            </p>
+            <p className="mt-2 text-sm font-semibold text-green-dark">
+              {volgendeLes.les.afgelastOp
+                ? "Deze les gaat niet door"
+                : BOEKING_LABEL[volgendeLes.status]}
+            </p>
+            <Link
+              href="/portaal/lessen"
+              className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg border border-line-strong px-5 font-semibold text-green-dark transition-colors hover:bg-sand-light"
+            >
+              Naar het rooster
+              <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </CardContent>
+        </Card>
+      ) : null}
 
       {/* Verder waar je gebleven was (§11) --------------------------------- */}
       {laatst ? (

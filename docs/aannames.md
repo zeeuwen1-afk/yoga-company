@@ -99,3 +99,35 @@ wordt op de overzichtspagina afgeleid uit de prijzen in de database (vier losse
 modules min de bundelprijs). Wijzigt de beheerder later een prijs in de admin,
 dan klopt het getoonde voordeel meteen mee in plaats van stilletjes te gaan
 liegen. Het voordeel wordt alleen getoond als élke module ook los te koop is.
+
+## A10 — Het rooster heet `class_sessions`, niet `lessons`
+
+§6 noemt de tabel voor het lesrooster `lessons`. Die naam is al bezet: in de
+bestaande database is `lessons` het lesmateriaal bínnen een opleiding. Twee
+totaal verschillende dingen die in het Nederlands allebei "les" heten.
+Hernoemen van de bestaande tabel zou het hele lesmateriaal, de voortgang en de
+contentspeler raken; het rooster heet daarom `class_sessions`. Op het scherm
+staat gewoon "les". Zie `docs/lessen-en-boekingen.md`.
+
+## A11 — Boeken en annuleren lopen via databasefuncties
+
+§6 beschrijft `bookings` als een gewone tabel. Boeken is echter tellen en dan
+schrijven; twee mensen tegelijk zetten er anders dertien in een les van twaalf.
+`boek_les()` vergrendelt daarom eerst de lesregel. Klanten hebben bewust geen
+insert- of update-recht op `bookings` — alleen leesrecht op hun eigen rijen.
+
+## A12 — De annuleertermijn is vier uur
+
+§7.3 zegt "annuleren binnen de regels" maar noemt geen termijn. Gekozen: tot
+vier uur voor aanvang. Daarna is de plek al ingepland en kan een wachtlijster
+niet meer fatsoenlijk worden opgeroepen. Aan te passen in
+`annuleer_boeking` (`supabase/migrations/20260813130000_…`) en in
+`ANNULEERTERMIJN_UREN` in de servicelaag.
+
+## A13 — Het Supabase-project staat in Ierland, niet in Frankfurt
+
+Er is een bestaand, leeg project hergebruikt in plaats van een nieuw project
+aangemaakt: de organisatie zit op twee projecten en een derde kost $10 per
+maand. Dat project staat in `eu-west-1` (Ierland). Beide regio's liggen in de
+EU, dus §3 en `docs/avg.md` kloppen; de regio van een bestaand project is niet
+te wijzigen. Zie `docs/supabase-project.md`.

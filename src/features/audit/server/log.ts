@@ -49,6 +49,10 @@ export type AuditActie =
   | "mailing_verstuurd"
   | "mailing_verwijderd"
   | "mailing_afmelding"
+  | "les_aangemaakt"
+  | "les_bijgewerkt"
+  | "les_afgelast"
+  | "aanwezigheid_gemarkeerd"
   | "bewaartermijnen_opgeschoond";
 
 export async function schrijfAudit(

@@ -12,6 +12,7 @@ const legal = [
 const navigatie = [
   { href: "/opleidingen", label: "Opleidingen" },
   { href: "/trainingen", label: "Trainingen" },
+  { href: "/lessen", label: "Lessen" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },
 ];

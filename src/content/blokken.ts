@@ -238,6 +238,22 @@ export const BLOKKEN: BlokSeed[] = [
     },
   },
   {
+    page_key: "lessen",
+    block_key: "titel",
+    kind: "text",
+    omschrijving: "Kop van de lessenpagina",
+    value: { text: "Yogalessen" },
+  },
+  {
+    page_key: "lessen",
+    block_key: "inleiding",
+    kind: "text",
+    omschrijving: "Inleidende tekst boven het weekrooster",
+    value: {
+      text: "Wekelijkse lessen in kleine groepen. Kijk wanneer het je uitkomt en boek je plek — met een account gaat dat in één klik.",
+    },
+  },
+  {
     page_key: "trainingen",
     block_key: "titel",
     kind: "text",

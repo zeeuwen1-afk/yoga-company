@@ -18,6 +18,8 @@ export type RequestStatus = "open" | "in_behandeling" | "afgerond";
 export type BlockKind = "text" | "richtext" | "image" | "video";
 export type ContentKind = "video" | "pdf" | "tekst";
 export type PostStatus = "concept" | "gepland" | "gepubliceerd" | "mislukt";
+export type BookingStatus =
+  "geboekt" | "wachtlijst" | "geannuleerd" | "niet_verschenen";
 
 export type Json =
   | string
@@ -188,6 +190,47 @@ export type ContentBlockPublic = {
   updated_at: string;
 };
 
+/**
+ * Een geroosterde yogales. Let op het verschil met `Lesson`: dat is
+ * lesmateriaal binnen een opleiding, dit is een les op een tijdstip.
+ */
+export type ClassSession = {
+  id: string;
+  title: string;
+  description: string | null;
+  starts_at: string;
+  duration_minutes: number;
+  location: string;
+  capacity: number;
+  cancelled_at: string | null;
+  cancellation_reason: string | null;
+  is_published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+/** Het rooster zoals bezoekers het zien: zonder wie er geboekt heeft. */
+export type ClassSessionPublic = {
+  id: string;
+  title: string;
+  description: string | null;
+  starts_at: string;
+  duration_minutes: number;
+  location: string;
+  capacity: number;
+  cancelled_at: string | null;
+  free_spots: number;
+};
+
+export type Booking = {
+  id: string;
+  class_session_id: string;
+  profile_id: string;
+  status: BookingStatus;
+  created_at: string;
+  cancelled_at: string | null;
+};
+
 export type CrmNote = {
   id: string;
   profile_id: string;
@@ -325,10 +368,26 @@ export type Database = {
         AuditLogEntry,
         [FK<"audit_log_actor_id_fkey", "actor_id", "profiles">]
       >;
+      class_sessions: Table<ClassSession>;
+      bookings: Table<
+        Booking,
+        [
+          FK<
+            "bookings_class_session_id_fkey",
+            "class_session_id",
+            "class_sessions"
+          >,
+          FK<"bookings_profile_id_fkey", "profile_id", "profiles">,
+        ]
+      >;
     };
     Views: {
       content_blocks_public: {
         Row: ContentBlockPublic;
+        Relationships: [];
+      };
+      class_sessions_public: {
+        Row: ClassSessionPublic;
         Relationships: [];
       };
     };
@@ -349,6 +408,11 @@ export type Database = {
         Args: { p_profile_id: string; p_rol: UserRole };
         Returns: undefined;
       };
+      // Lesrooster. Boeken en annuleren lopen bewust via functies: alleen zo
+      // is de capaciteit onder gelijktijdige boekers houdbaar.
+      vrije_plekken: { Args: { p_session_id: string }; Returns: number };
+      boek_les: { Args: { p_session_id: string }; Returns: BookingStatus };
+      annuleer_boeking: { Args: { p_session_id: string }; Returns: undefined };
       // Maandelijkse opschoontaak (§17.6); geeft terug wat er is opgeruimd.
       opruimen_bewaartermijnen: {
         Args: Record<string, never>;
@@ -369,6 +433,7 @@ export type Database = {
       block_kind: BlockKind;
       content_kind: ContentKind;
       post_status: PostStatus;
+      booking_status: BookingStatus;
     };
     CompositeTypes: Record<string, never>;
   };

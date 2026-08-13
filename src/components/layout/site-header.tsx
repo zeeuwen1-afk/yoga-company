@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 const navigation = [
   { href: "/opleidingen", label: "Opleidingen" },
   { href: "/trainingen", label: "Trainingen" },
+  { href: "/lessen", label: "Lessen" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },
 ];
@@ -20,11 +21,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-background">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link
-          href="/"
-          className="flex items-center"
-          aria-label="YogaCompany, naar de startpagina"
-        >
+        <Link href="/" className="flex items-center" aria-label="YogaCompany">
           {/* Het horizontale logo in de header (§2). De ondertitel staat in
               het beeld, dus de link krijgt een eigen toegankelijke naam. */}
           <Image

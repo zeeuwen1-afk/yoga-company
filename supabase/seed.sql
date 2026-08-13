@@ -786,6 +786,18 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('lessen', 'titel', 'text', '{"text":"Yogalessen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('lessen', 'inleiding', 'text', '{"text":"Wekelijkse lessen in kleine groepen. Kijk wanneer het je uitkomt en boek je plek — met een account gaat dat in één klik."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('trainingen', 'titel', 'text', '{"text":"Trainingen"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
