@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
@@ -21,9 +22,19 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link
           href="/"
-          className="font-serif text-xl leading-none font-semibold text-green-dark"
+          className="flex items-center"
+          aria-label="YogaCompany, naar de startpagina"
         >
-          YogaCompany
+          {/* Het horizontale logo in de header (§2). De ondertitel staat in
+              het beeld, dus de link krijgt een eigen toegankelijke naam. */}
+          <Image
+            src="/brand/logo-horizontaal.png"
+            alt=""
+            width={1200}
+            height={326}
+            priority
+            className="h-9 w-auto sm:h-10"
+          />
         </Link>
 
         <nav

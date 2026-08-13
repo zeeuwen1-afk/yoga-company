@@ -20,6 +20,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:rls": "node scripts/rls-test.mjs",
+    "brand:assets": "node scripts/brand-assets.mjs",
     "db:migrate": "node scripts/db-migrate.mjs",
     "db:seed-admin": "node scripts/seed-admin.mjs",
     "db:generate-seed": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-seed.mjs",

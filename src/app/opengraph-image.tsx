@@ -5,7 +5,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 /**
- * Deelafbeelding voor sociale media, in de huisstijl uit §5. Wordt bij het
+ * Deelafbeelding voor sociale media, in de huisstijl uit §2 van de bouwprompt. Wordt bij het
  * bouwen gegenereerd, dus er hoeft geen bestand beheerd te worden.
  */
 export default function OpenGraphImage() {
@@ -17,12 +17,12 @@ export default function OpenGraphImage() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        backgroundColor: "#FAF6EC",
+        backgroundColor: "#F9F7F1",
         padding: "80px",
         fontFamily: "serif",
       }}
     >
-      <div style={{ display: "flex", fontSize: 34, color: "#6E6A5C" }}>
+      <div style={{ display: "flex", fontSize: 34, color: "#667268" }}>
         YogaCompany
       </div>
 
@@ -37,13 +37,13 @@ export default function OpenGraphImage() {
           style={{
             fontSize: 82,
             lineHeight: 1.1,
-            color: "#22382C",
+            color: "#23322B",
             maxWidth: "900px",
           }}
         >
           Opleidingsinstituut voor yoga
         </div>
-        <div style={{ fontSize: 36, color: "#6E6A5C" }}>
+        <div style={{ fontSize: 36, color: "#667268" }}>
           Opleidingen, trainingen en yogalessen
         </div>
       </div>
@@ -53,7 +53,7 @@ export default function OpenGraphImage() {
           display: "flex",
           height: "10px",
           width: "220px",
-          backgroundColor: "#2E4A3B",
+          backgroundColor: "#2F4239",
         }}
       />
     </div>,
