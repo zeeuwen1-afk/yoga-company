@@ -208,7 +208,7 @@ export async function totpAanmelden() {
 
   const { data, error } = await supabase.auth.mfa.enroll({
     factorType: "totp",
-    friendlyName: `Yoga Companie ${new Date().toISOString().slice(0, 10)}`,
+    friendlyName: `YogaCompany ${new Date().toISOString().slice(0, 10)}`,
   });
 
   if (error || !data) {

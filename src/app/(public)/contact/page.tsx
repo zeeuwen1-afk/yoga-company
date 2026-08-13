@@ -8,7 +8,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Een vraag over een yogaopleiding of training? Stuur Yoga Companie een bericht — we reageren meestal binnen twee werkdagen.",
+    "Een vraag over een yogaopleiding of training? Stuur YogaCompany een bericht — we reageren meestal binnen twee werkdagen.",
   alternates: { canonical: "/contact" },
 };
 

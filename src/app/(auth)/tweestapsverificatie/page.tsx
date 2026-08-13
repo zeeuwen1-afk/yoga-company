@@ -54,7 +54,7 @@ export default async function TweestapsverificatiePage({
           ? "Vul de code in uit je authenticator-app."
           : isAdmin
             ? "Voor beheerders is tweestapsverificatie verplicht. Koppel eerst een authenticator-app om verder te gaan."
-            : "Een extra slot op je account: naast je wachtwoord vraagt Yoga Companie voortaan om een code uit je app."}
+            : "Een extra slot op je account: naast je wachtwoord vraagt YogaCompany voortaan om een code uit je app."}
       </p>
 
       <TweestapsFormulier bestaandeFactorId={bestaande?.id} vervolg={vervolg} />

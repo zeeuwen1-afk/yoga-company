@@ -17,7 +17,7 @@ export function PortaalTopbalk({
           href="/portaal"
           className="font-serif text-xl leading-none font-semibold text-green-dark"
         >
-          Yoga Companie
+          YogaCompany
         </Link>
 
         <div className="flex items-center gap-4">

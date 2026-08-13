@@ -29,7 +29,7 @@ export async function generateMetadata({
     description: cursus.samenvatting.slice(0, 160),
     alternates: { canonical: `/opleidingen/${cursus.slug}` },
     openGraph: {
-      title: `${cursus.titel} · Yoga Companie`,
+      title: `${cursus.titel} · YogaCompany`,
       description: cursus.samenvatting,
       type: "website",
       locale: "nl_NL",

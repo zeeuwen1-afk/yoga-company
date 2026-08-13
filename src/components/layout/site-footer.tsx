@@ -32,7 +32,7 @@ export async function SiteFooter({
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
           <p className="font-serif text-lg font-semibold text-green-dark">
-            Yoga Companie
+            YogaCompany
           </p>
           <p className="mt-2 max-w-xs text-sm text-muted">
             {pagina.tekst("over")}
@@ -85,7 +85,7 @@ export async function SiteFooter({
 
       <div className="border-t border-line">
         <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-muted sm:px-6">
-          © {new Date().getFullYear()} Yoga Companie. Alle rechten voorbehouden.
+          © {new Date().getFullYear()} YogaCompany. Alle rechten voorbehouden.
         </p>
       </div>
     </footer>

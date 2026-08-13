@@ -79,7 +79,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "hero_titel",
     kind: "text",
     omschrijving: "Grote kop bovenaan de startpagina",
-    value: { text: "Yoga Companie — opleidingsinstituut voor yoga" },
+    value: { text: "YogaCompany — opleidingsinstituut voor yoga" },
   },
   {
     page_key: "home",
@@ -142,8 +142,8 @@ export const BLOKKEN: BlokSeed[] = [
     page_key: "home",
     block_key: "waarom_titel",
     kind: "text",
-    omschrijving: "Kop van het blok Waarom Yoga Companie",
-    value: { text: "Waarom Yoga Companie" },
+    omschrijving: "Kop van het blok Waarom YogaCompany",
+    value: { text: "Waarom YogaCompany" },
   },
   {
     page_key: "home",
@@ -262,7 +262,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "titel",
     kind: "text",
     omschrijving: "Kop van de over-onspagina",
-    value: { text: "Over Yoga Companie" },
+    value: { text: "Over YogaCompany" },
   },
   {
     page_key: "over-ons",
@@ -270,7 +270,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "richtext",
     omschrijving: "Het verhaal en de filosofie",
     value: {
-      html: "<p>Yoga Companie is een opleidingsinstituut voor yoga. We leiden op, we trainen, en we geven les — in die volgorde van nadruk.</p><p>Wat ons bindt is een manier van kijken: yoga is geen prestatie. Een houding die er goed uitziet zegt niets als het lichaam eronder gespannen blijft. We leren onze deelnemers kijken naar de mens tegenover hen, niet naar de vorm.</p><p>Daarom werken we in kleine groepen. Daarom duren onze opleidingen langer dan strikt nodig. En daarom kun je onze modules los volgen: niet iedereen heeft hetzelfde tempo, en dat hoeft ook niet.</p>",
+      html: "<p>YogaCompany is een opleidingsinstituut voor yoga. We leiden op, we trainen, en we geven les — in die volgorde van nadruk.</p><p>Wat ons bindt is een manier van kijken: yoga is geen prestatie. Een houding die er goed uitziet zegt niets als het lichaam eronder gespannen blijft. We leren onze deelnemers kijken naar de mens tegenover hen, niet naar de vorm.</p><p>Daarom werken we in kleine groepen. Daarom duren onze opleidingen langer dan strikt nodig. En daarom kun je onze modules los volgen: niet iedereen heeft hetzelfde tempo, en dat hoeft ook niet.</p>",
     },
   },
   {
@@ -336,7 +336,7 @@ export const BLOKKEN: BlokSeed[] = [
     page_key: "footer",
     block_key: "over",
     kind: "text",
-    omschrijving: "Korte zin over Yoga Companie in de paginavoet",
+    omschrijving: "Korte zin over YogaCompany in de paginavoet",
     value: {
       text: "Opleidingsinstituut voor yoga. Opleidingen, trainingen en yogalessen.",
     },

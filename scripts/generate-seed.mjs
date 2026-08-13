@@ -34,7 +34,7 @@ const json = (waarde) =>
 const regels = [];
 
 regels.push(`-- =============================================================================
--- Yoga Companie — startinhoud (BOUWPROMPT §19)
+-- YogaCompany — startinhoud (BOUWPROMPT §19)
 --
 -- GEGENEREERD BESTAND. Niet met de hand aanpassen.
 -- Wijzig de inhoud in src/content/ en draai: pnpm db:generate-seed

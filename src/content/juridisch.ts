@@ -21,7 +21,7 @@ export type JuridischeTekst = {
 
 const PRIVACY = `
 <h2>1. Wie zijn wij</h2>
-<p>Yoga Companie is verantwoordelijk voor de verwerking van je persoonsgegevens zoals beschreven in deze verklaring. Je bereikt ons via info@yogacompanie.nl.</p>
+<p>YogaCompany is verantwoordelijk voor de verwerking van je persoonsgegevens zoals beschreven in deze verklaring. Je bereikt ons via info@yogacompanie.nl.</p>
 
 <h2>2. Welke gegevens we verwerken</h2>
 <p>We verwerken zo min mogelijk gegevens. Concreet gaat het om:</p>
@@ -73,7 +73,7 @@ const PRIVACY = `
 
 const VOORWAARDEN = `
 <h2>1. Waar deze voorwaarden over gaan</h2>
-<p>Deze voorwaarden gelden voor alle opleidingen, trainingen, lessen en digitale content van Yoga Companie.</p>
+<p>Deze voorwaarden gelden voor alle opleidingen, trainingen, lessen en digitale content van YogaCompany.</p>
 
 <h2>2. Inschrijven</h2>
 <p>Je schrijft je in via de website. De inschrijving is definitief zodra we je betaling hebben ontvangen en je van ons een bevestiging per e-mail hebt gekregen. Plaatsing gebeurt op volgorde van betaling; onze groepen zijn klein, dus vol is vol.</p>
@@ -116,7 +116,7 @@ const VOORWAARDEN = `
 
 const COOKIES = `
 <h2>Kort gezegd</h2>
-<p>We volgen je niet. Yoga Companie gebruikt geen advertentiecookies, geen statistiekcookies en geen trackers van derden. Daarom krijg je bij ons geen cookiemelding: die is alleen verplicht voor cookies die wij niet gebruiken.</p>
+<p>We volgen je niet. YogaCompany gebruikt geen advertentiecookies, geen statistiekcookies en geen trackers van derden. Daarom krijg je bij ons geen cookiemelding: die is alleen verplicht voor cookies die wij niet gebruiken.</p>
 
 <h2>Welke cookies dan wel</h2>
 <p>Alleen cookies die nodig zijn om de site te laten werken:</p>
@@ -138,7 +138,7 @@ export const JURIDISCHE_TEKSTEN: JuridischeTekst[] = [
     pageKey: "privacyverklaring",
     titel: "Privacyverklaring",
     omschrijving:
-      "Welke persoonsgegevens Yoga Companie verwerkt, waarom, hoe lang en met wie ze worden gedeeld.",
+      "Welke persoonsgegevens YogaCompany verwerkt, waarom, hoe lang en met wie ze worden gedeeld.",
     inleiding:
       "We verwerken zo min mogelijk gegevens, en alleen wat nodig is om je opleiding te kunnen geven. Hieronder lees je precies wat, waarom en hoe lang.",
     html: PRIVACY,
@@ -147,7 +147,7 @@ export const JURIDISCHE_TEKSTEN: JuridischeTekst[] = [
     pageKey: "algemene-voorwaarden",
     titel: "Algemene voorwaarden",
     omschrijving:
-      "De voorwaarden voor opleidingen, trainingen, lessen en digitale content van Yoga Companie.",
+      "De voorwaarden voor opleidingen, trainingen, lessen en digitale content van YogaCompany.",
     inleiding:
       "Deze voorwaarden gelden voor alles wat we aanbieden. We hebben ze zo kort en leesbaar mogelijk gehouden.",
     html: VOORWAARDEN,
@@ -156,7 +156,7 @@ export const JURIDISCHE_TEKSTEN: JuridischeTekst[] = [
     pageKey: "cookies",
     titel: "Cookies",
     omschrijving:
-      "Yoga Companie gebruikt uitsluitend functionele cookies en volgt bezoekers niet.",
+      "YogaCompany gebruikt uitsluitend functionele cookies en volgt bezoekers niet.",
     inleiding:
       "Een korte pagina, want er valt weinig te melden: we gebruiken alleen cookies die nodig zijn om de site te laten werken.",
     html: COOKIES,

@@ -60,7 +60,7 @@ async function main() {
 
   const { data, error } = await supabase.auth.admin.inviteUserByEmail(email, {
     redirectTo: `${siteUrl}/auth/bevestigen?volgende=/wachtwoord-herstellen`,
-    data: { first_name: "Beheerder", last_name: "Yoga Companie" },
+    data: { first_name: "Beheerder", last_name: "YogaCompany" },
   });
 
   if (error) throw new Error(error.message);

@@ -1,5 +1,5 @@
 -- =============================================================================
--- Yoga Companie — basisschema (BOUWPROMPT §6)
+-- YogaCompany — basisschema (BOUWPROMPT §6)
 --
 -- Dataminimalisatie is leidend: elk veld hieronder heeft een aantoonbaar doel.
 -- Voeg geen kolommen toe zonder een noodzaak-notitie in de migration die ze

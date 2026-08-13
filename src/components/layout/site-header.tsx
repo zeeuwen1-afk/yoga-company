@@ -23,7 +23,7 @@ export function SiteHeader() {
           href="/"
           className="font-serif text-xl leading-none font-semibold text-green-dark"
         >
-          Yoga Companie
+          YogaCompany
         </Link>
 
         <nav

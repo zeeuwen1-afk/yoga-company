@@ -1,5 +1,5 @@
 -- =============================================================================
--- Yoga Companie — triggers (BOUWPROMPT §7)
+-- YogaCompany — triggers (BOUWPROMPT §7)
 --
 -- Bij registratie ontstaan automatisch een profielrij en een conversatie, zodat
 -- de beveiligde dialoog vanaf het eerste moment bestaat en er nooit een

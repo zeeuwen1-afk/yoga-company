@@ -8,7 +8,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Over ons",
   description:
-    "Yoga Companie is een opleidingsinstituut voor yoga. Kleine groepen, praktijkgericht, en een manier van kijken waarin yoga geen prestatie is.",
+    "YogaCompany is een opleidingsinstituut voor yoga. Kleine groepen, praktijkgericht, en een manier van kijken waarin yoga geen prestatie is.",
   alternates: { canonical: "/over-ons" },
 };
 

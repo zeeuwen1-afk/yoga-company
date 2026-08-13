@@ -1,6 +1,6 @@
-# Yoga Companie Platform
+# YogaCompany Platform
 
-Platform voor Yoga Companie, opleidingsinstituut voor yoga: publieke site,
+Platform voor YogaCompany, opleidingsinstituut voor yoga: publieke site,
 klantportaal met digitale content en een adminomgeving met CRM.
 
 De volledige specificatie staat in `BOUWPROMPT.md`, de voortgang in

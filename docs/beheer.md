@@ -1,4 +1,4 @@
-# Beheerhandleiding — Yoga Companie
+# Beheerhandleiding — YogaCompany
 
 Praktisch naslagwerk voor het opzetten, draaien en onderhouden van het
 platform. Aangevuld per fase.
@@ -218,7 +218,7 @@ en betaal die daarna terug, om te zien dat beide kanten werken.
    komen mails in de spammap terecht.
 3. Zet in `.env.local`:
    - `RESEND_API_KEY`
-   - `EMAIL_FROM="Yoga Companie <info@yogacompanie.nl>"`
+   - `EMAIL_FROM="YogaCompany <info@yogacompanie.nl>"`
 
 Ontbreekt de sleutel, dan wordt er niets verstuurd en gaat de rest gewoon door:
 een mail die niet weggaat mag nooit een betaling of inschrijving laten
@@ -328,7 +328,7 @@ Daarna:
 
 De instructie ligt vast in code en is niet via het beheer aan te passen. Daarin
 staat onder meer: altijd Nederlands, de toon uit de huisstijl, en géén
-uitspraken over gezondheid, genezing of behandeling. Yoga Companie is een
+uitspraken over gezondheid, genezing of behandeling. YogaCompany is een
 opleidingsinstituut, geen zorgverlener; "helpt tegen burn-out" is een belofte
 die we niet kunnen waarmaken en juridisch riskant is. Wat wél kan: beschrijven
 wat je in een les dóét en wat deelnemers leren.

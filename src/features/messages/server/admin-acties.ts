@@ -84,7 +84,7 @@ export async function beantwoordKlant(
   if (klant) {
     await verstuurMail({
       aan: klant.email,
-      onderwerp: "Je hebt een bericht van Yoga Companie",
+      onderwerp: "Je hebt een bericht van YogaCompany",
       template: NieuwBerichtMail({
         voornaam: klant.first_name,
         portaalUrl: `${publicEnv().NEXT_PUBLIC_SITE_URL}/portaal/berichten`,

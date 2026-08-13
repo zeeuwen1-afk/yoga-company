@@ -140,9 +140,7 @@ export default async function KlantDetailPage({
                               : "mt-1 text-xs text-cream/70"
                           }
                         >
-                          {bericht.vanKlant
-                            ? profiel.voornaam
-                            : "Yoga Companie"}{" "}
+                          {bericht.vanKlant ? profiel.voornaam : "YogaCompany"}{" "}
                           · {datumTijd(bericht.verstuurdOp)}
                         </p>
                       </div>

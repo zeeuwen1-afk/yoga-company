@@ -107,11 +107,11 @@ export function NieuwBerichtMail({
   portaalUrl: string;
 }) {
   return (
-    <Mail voorvertoning="Je hebt een bericht van Yoga Companie">
+    <Mail voorvertoning="Je hebt een bericht van YogaCompany">
       <Kop>Je hebt een bericht</Kop>
       <Alinea>Hallo {voornaam},</Alinea>
       <Alinea>
-        Er staat een bericht van Yoga Companie voor je klaar. Log in om het te
+        Er staat een bericht van YogaCompany voor je klaar. Log in om het te
         lezen en te beantwoorden.
       </Alinea>
       <Knop href={portaalUrl}>Lees je bericht</Knop>
@@ -133,7 +133,7 @@ export function MailingMail({
   afmeldUrl: string;
 }) {
   return (
-    <Mail voorvertoning="Nieuws van Yoga Companie">
+    <Mail voorvertoning="Nieuws van YogaCompany">
       <div dangerouslySetInnerHTML={{ __html: inhoudHtml }} />
       <Scheiding />
       <Alinea gedempt>

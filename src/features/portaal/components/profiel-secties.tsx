@@ -161,9 +161,9 @@ export function TweestapsSchakelaar({
     return (
       <div>
         <p className="text-sm text-muted">
-          Met tweestapsverificatie vraagt Yoga Companie naast je wachtwoord om
-          een code uit een app op je telefoon. Zelfs als iemand je wachtwoord
-          kent, komt hij er dan niet in.
+          Met tweestapsverificatie vraagt YogaCompany naast je wachtwoord om een
+          code uit een app op je telefoon. Zelfs als iemand je wachtwoord kent,
+          komt hij er dan niet in.
         </p>
         <Link
           href="/tweestapsverificatie?vervolg=/portaal/profiel"

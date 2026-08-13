@@ -79,7 +79,7 @@ export async function verstuurBericht(
 }
 
 /**
- * Markeert de berichten van Yoga Companie als gelezen. Gebeurt bij het openen
+ * Markeert de berichten van YogaCompany als gelezen. Gebeurt bij het openen
  * van het gesprek, zodat de teller klopt met wat de klant heeft gezien.
  */
 export async function markeerBerichtenGelezen() {

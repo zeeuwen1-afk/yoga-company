@@ -1,4 +1,4 @@
-# Voortgang — Yoga Companie Platform
+# Voortgang — YogaCompany Platform
 
 Dit bestand is de waarheid over de voortgang. Een fase is pas klaar als **elk**
 punt onder de Definition of Done is afgevinkt. Begin nooit aan een volgende fase
@@ -133,7 +133,7 @@ telt niet als "netjes geblokkeerd".
 ## Fase 2 — Publieke site + CMS ✅ afgerond
 
 - [x] Landingspagina met zakelijke én persoonlijke propositie, drie ingangen,
-      "Waarom Yoga Companie", testimonials en afsluitende oproep (§8.1)
+      "Waarom YogaCompany", testimonials en afsluitende oproep (§8.1)
 - [x] `/opleidingen` en `/opleidingen/[slug]` met curriculum-accordeon,
       praktische gegevens, prijs en inschrijfknop (§8.2)
 - [x] `/trainingen` en `/trainingen/[slug]` (§8.3)

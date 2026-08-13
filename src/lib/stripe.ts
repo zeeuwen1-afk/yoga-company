@@ -24,7 +24,7 @@ export function stripe(): Stripe {
     // verandert. Bewust bijwerken, niet automatisch meebewegen. Deze versie
     // hoort bij stripe@22; controleer hem bij een SDK-upgrade.
     apiVersion: "2026-07-29.dahlia",
-    appInfo: { name: "Yoga Companie", version: "1.0.0" },
+    appInfo: { name: "YogaCompany", version: "1.0.0" },
   });
 
   return client;

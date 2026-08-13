@@ -1,5 +1,5 @@
 -- =============================================================================
--- Yoga Companie — storage buckets (BOUWPROMPT §6)
+-- YogaCompany — storage buckets (BOUWPROMPT §6)
 --
 -- `protected-content` is privé. Bestanden daaruit worden nooit rechtstreeks
 -- geserveerd: een server-route controleert eerst de inschrijving en geeft dan

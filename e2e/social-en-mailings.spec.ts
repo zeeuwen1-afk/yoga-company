@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
  * Social, mailings en de opschoontaak (BOUWPROMPT §15, §10.7, §17.6).
  *
  * De socialmediatool en de mailings bevatten klantgegevens en de mogelijkheid
- * om namens Yoga Companie te publiceren. Ze horen dus achter dezelfde deur als
+ * om namens YogaCompany te publiceren. Ze horen dus achter dezelfde deur als
  * de rest van het beheer. De afmeldpagina is juist bewust openbaar — anders
  * zou afmelden een inlog vereisen, en dat is geen afmelden.
  */

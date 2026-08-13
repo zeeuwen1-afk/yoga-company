@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
 
 /**
- * De beveiligde dialoog met Yoga Companie (BOUWPROMPT §11).
+ * De beveiligde dialoog met YogaCompany (BOUWPROMPT §11).
  *
  * Elke klant heeft precies één conversatie, aangemaakt bij registratie. RLS
  * zorgt dat alleen de eigen conversatie zichtbaar is; de queries hieronder
@@ -38,7 +38,7 @@ export async function haalGesprek(): Promise<Bericht[]> {
   }));
 }
 
-/** Aantal ongelezen berichten van Yoga Companie aan deze klant. */
+/** Aantal ongelezen berichten van YogaCompany aan deze klant. */
 export async function haalOngelezenAantal(): Promise<number> {
   const supabase = await createClient();
   const gebruiker = await huidigeGebruiker(supabase);

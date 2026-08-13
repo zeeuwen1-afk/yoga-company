@@ -8,23 +8,26 @@ test.describe("Fundament", () => {
 
     await expect(
       page.getByRole("heading", {
-        name: "Yoga Companie — opleidingsinstituut voor yoga",
+        name: "YogaCompany — opleidingsinstituut voor yoga",
         level: 1,
       }),
     ).toBeVisible();
 
-    await expect(page.getByRole("contentinfo")).toContainText("Yoga Companie");
+    await expect(page.getByRole("contentinfo")).toContainText("YogaCompany");
     await expect(page.locator("html")).toHaveAttribute("lang", "nl");
   });
 
   test("de designtokens zijn toegepast op de body", async ({ page }) => {
     await page.goto("/");
 
-    const kleur = await page.evaluate(
-      () => getComputedStyle(document.body).color,
-    );
-    // --color-ink = #2B2A26
-    expect(kleur).toBe("rgb(43, 42, 38)");
+    const { kleur, achtergrond } = await page.evaluate(() => {
+      const stijl = getComputedStyle(document.body);
+      return { kleur: stijl.color, achtergrond: stijl.backgroundColor };
+    });
+    // --color-ink = #2F4239
+    expect(kleur).toBe("rgb(47, 66, 57)");
+    // --color-paper = #F9F7F1
+    expect(achtergrond).toBe("rgb(249, 247, 241)");
   });
 
   test("de styleguide toont de kleurtokens", async ({ page }) => {

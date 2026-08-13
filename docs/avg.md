@@ -1,6 +1,6 @@
 # AVG — bewaartermijnen en persoonsgegevens
 
-Dit document beschrijft welke persoonsgegevens Yoga Companie bewaart, waarom, en
+Dit document beschrijft welke persoonsgegevens YogaCompany bewaart, waarom, en
 hoe lang. Het hoort bij BOUWPROMPT §17 en is de bron waar de privacyverklaring
 naar verwijst.
 

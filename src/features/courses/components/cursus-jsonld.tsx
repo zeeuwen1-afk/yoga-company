@@ -21,7 +21,7 @@ export function CursusJsonLd({ cursus }: { cursus: Cursus }) {
     inLanguage: "nl-NL",
     provider: {
       "@type": "Organization",
-      name: "Yoga Companie",
+      name: "YogaCompany",
       url: basis,
     },
     offers: {

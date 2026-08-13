@@ -20,24 +20,35 @@ export const metadata: Metadata = {
 const colors = [
   {
     token: "--color-green",
-    value: "#2E4A3B",
-    use: "primair — koppen, knoppen",
+    value: "#2F4239",
+    use: "nachtgroen, primair — koppen, knoppen, footer",
   },
   {
     token: "--color-green-dark",
-    value: "#22382C",
+    value: "#23322B",
     use: "hover, koppen donker",
   },
-  { token: "--color-sand", value: "#EAE1CE", use: "secundaire vlakken" },
-  { token: "--color-sand-light", value: "#F4EEDF", use: "zachte kaders" },
+  { token: "--color-sage", value: "#A9BCA1", use: "salie, secundair accent" },
+  { token: "--color-sand", value: "#DCCBA8", use: "zand, warm accent" },
+  {
+    token: "--color-sand-light",
+    value: "#E7DCC2",
+    use: "zand licht, warm accent",
+  },
+  { token: "--color-paper", value: "#F9F7F1", use: "paginaachtergrond" },
   {
     token: "--color-cream",
-    value: "#FAF6EC",
-    use: "paginaachtergrond secties",
+    value: "#F2EEE4",
+    use: "tintvlakken en tekst op groen",
   },
-  { token: "--color-ink", value: "#2B2A26", use: "bodytekst" },
-  { token: "--color-muted", value: "#6E6A5C", use: "bijschriften" },
-  { token: "--color-line", value: "#D9D0BC", use: "lijnen, borders" },
+  { token: "--color-ink", value: "#2F4239", use: "bodytekst" },
+  { token: "--color-muted", value: "#667268", use: "bijschriften" },
+  { token: "--color-line", value: "#D8D3C4", use: "lijnen, kaders" },
+  {
+    token: "--color-line-strong",
+    value: "#7C8579",
+    use: "randen van formuliervelden",
+  },
   { token: "--color-error", value: "#9C3D2E", use: "foutmeldingen" },
   { token: "--color-success", value: "#3E6B4F", use: "bevestigingen" },
 ];
@@ -67,7 +78,7 @@ export default function StyleguidePage() {
     <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
       <h1 className="text-4xl">Styleguide</h1>
       <p className="mt-3 max-w-2xl text-muted">
-        De designtokens en basiscomponenten van Yoga Companie. Deze pagina is
+        De designtokens en basiscomponenten van YogaCompany. Deze pagina is
         alleen tijdens ontwikkeling bereikbaar.
       </p>
 
@@ -98,17 +109,18 @@ export default function StyleguidePage() {
 
       <Section title="Typografie">
         <div className="space-y-4">
-          <h1 className="text-5xl">Kop 1 — EB Garamond 600</h1>
-          <h2 className="text-3xl">Kop 2 — EB Garamond 600</h2>
-          <h3 className="text-xl">Kop 3 — EB Garamond 600</h3>
+          <h1 className="text-5xl">Kop 1 — Cormorant Garamond 600</h1>
+          <h2 className="text-3xl">Kop 2 — Cormorant Garamond 600</h2>
+          <h3 className="text-xl">Kop 3 — Cormorant Garamond 600</h3>
           <p className="max-w-2xl">
-            Bodytekst in Source Sans 3, 16px met een ruime regelafstand van 1,6.
-            Rustig, warm en direct — we schrijven in de je-vorm en houden het
-            kort. Elke pagina heeft één duidelijke call-to-action.
+            Bodytekst in Jost, 16px met een ruime regelafstand van 1,6. Rustig,
+            warm en direct — we schrijven in de je-vorm en houden het kort. Elke
+            pagina heeft één duidelijke call-to-action.
           </p>
           <p className="max-w-2xl text-sm text-muted">
             Bijschrift in de gedempte kleur, voor toelichtingen en metadata.
           </p>
+          <p className="label-klein">Label in kleinkapitaal</p>
         </div>
       </Section>
 
@@ -141,7 +153,7 @@ export default function StyleguidePage() {
                 Van de basis van Yin Yoga naar specialist in herstel en
                 revalidatie.
               </p>
-              <p className="mt-3 font-semibold text-green-dark">€ 2.995</p>
+              <p className="mt-3 font-semibold text-green-dark">€ 2.795</p>
             </CardContent>
             <CardFooter>
               <Button size="sm">Bekijk opleiding</Button>

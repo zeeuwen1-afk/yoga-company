@@ -22,7 +22,7 @@ test.describe("Landingspagina", () => {
     }
 
     await expect(
-      page.getByRole("heading", { name: "Waarom Yoga Companie", level: 2 }),
+      page.getByRole("heading", { name: "Waarom YogaCompany", level: 2 }),
     ).toBeVisible();
     await expect(page.getByText("Maximaal twaalf deelnemers")).toBeVisible();
   });
@@ -30,7 +30,7 @@ test.describe("Landingspagina", () => {
   test("toont opleidingen met prijs", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByText("€ 2.995").first()).toBeVisible();
+    await expect(page.getByText("€ 2.795").first()).toBeVisible();
   });
 
   test("toont drie ervaringen van deelnemers", async ({ page }) => {
@@ -54,7 +54,11 @@ test.describe("Opleidingen", () => {
     // De volledige opleiding plus de vier losse modules. Tellen op de links
     // naar detailpagina's, zodat de lijsten in de paginavoet niet meetellen.
     await expect(page.locator('main a[href^="/opleidingen/"]')).toHaveCount(5);
-    await expect(page.getByText("€ 845").first()).toBeVisible();
+    await expect(page.getByText("€ 795").first()).toBeVisible();
+
+    // De bundel wordt getoond met het voordeel ten opzichte van vier losse
+    // modules: 4 × € 795 = € 3.180, min € 2.795 (§7.1 van de bouwprompt).
+    await expect(page.getByText("bespaar € 385")).toBeVisible();
   });
 
   test("de detailpagina toont curriculum, praktische gegevens en prijs", async ({
@@ -69,7 +73,7 @@ test.describe("Opleidingen", () => {
       }),
     ).toBeVisible();
 
-    await expect(page.getByText("€ 2.995")).toBeVisible();
+    await expect(page.getByText("€ 2.795")).toBeVisible();
     await expect(
       page.getByText("Betalen in termijnen is mogelijk"),
     ).toBeVisible();
@@ -119,9 +123,9 @@ test.describe("Opleidingen", () => {
     const data = JSON.parse(jsonLd ?? "{}");
 
     expect(data["@type"]).toBe("Course");
-    expect(data.offers.price).toBe("2995.00");
+    expect(data.offers.price).toBe("2795.00");
     expect(data.offers.priceCurrency).toBe("EUR");
-    expect(data.provider.name).toBe("Yoga Companie");
+    expect(data.provider.name).toBe("YogaCompany");
   });
 });
 

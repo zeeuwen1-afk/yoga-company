@@ -19,7 +19,12 @@ const GROEN = "[32m";
 const ROOD = "[31m";
 const RESET = "[0m";
 
-const { AANBOD } = await import("../src/content/aanbod.ts");
+const {
+  AANBOD,
+  MODULE_PRIJS_CENTEN,
+  OPLEIDING_PRIJS_CENTEN,
+  OPLEIDING_KORTING_CENTEN,
+} = await import("../src/content/aanbod.ts");
 const { BLOKKEN } = await import("../src/content/blokken.ts");
 
 const db = new PGlite();
@@ -83,21 +88,41 @@ try {
     "select title, price_cents, jsonb_array_length(curriculum) as modules from courses where slug = '200-uurs-yin-yoga-specialist'",
   );
   const rij = hoofdopleiding.rows[0];
+  const euro = (centen) => `€ ${(centen / 100).toLocaleString("nl-NL")}`;
   controleer(
-    rij?.price_cents === 299500,
-    `de 200-uurs opleiding staat op € 2.995 (gevonden: ${rij?.price_cents})`,
+    rij?.price_cents === OPLEIDING_PRIJS_CENTEN,
+    `de 200-uurs opleiding staat op ${euro(OPLEIDING_PRIJS_CENTEN)} (gevonden: ${rij?.price_cents})`,
   );
   controleer(
     Number(rij?.modules) === 4,
     `het curriculum telt vier modules (gevonden: ${rij?.modules})`,
   );
 
-  const losseModules = await tel(
-    "select count(*)::int as n from courses where slug like 'yin-niveau-%'",
+  const losseModules = await db.query(
+    "select price_cents from courses where slug like 'yin-niveau-%'",
   );
   controleer(
-    losseModules === 4,
-    `de vier losse modules staan er (gevonden: ${losseModules})`,
+    losseModules.rows.length === 4,
+    `de vier losse modules staan er (gevonden: ${losseModules.rows.length})`,
+  );
+  const afwijkendePrijs = losseModules.rows.filter(
+    (module) => module.price_cents !== MODULE_PRIJS_CENTEN,
+  );
+  controleer(
+    afwijkendePrijs.length === 0,
+    `elke losse module staat op ${euro(MODULE_PRIJS_CENTEN)} (afwijkend: ${afwijkendePrijs.length})`,
+  );
+
+  // §7.1 van de bouwprompt belooft de bezoeker een voordeel op de bundel. Dat
+  // klopt alleen zolang vier losse modules samen duurder zijn dan de opleiding.
+  const samenLos = losseModules.rows.reduce(
+    (totaal, module) => totaal + module.price_cents,
+    0,
+  );
+  controleer(
+    samenLos - OPLEIDING_PRIJS_CENTEN === OPLEIDING_KORTING_CENTEN &&
+      OPLEIDING_KORTING_CENTEN > 0,
+    `de bundel scheelt ${euro(OPLEIDING_KORTING_CENTEN)} ten opzichte van vier losse modules (gevonden: ${euro(samenLos - OPLEIDING_PRIJS_CENTEN)})`,
   );
 
   const eerstJijWeken = await tel(`
