@@ -22,13 +22,16 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-line bg-background">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" className="flex items-center" aria-label="YogaCompany">
-          {/* Het horizontale logo in de header (§2). De ondertitel staat in
-              het beeld, dus de link krijgt een eigen toegankelijke naam. */}
+          {/* De compacte variant: merkteken en woordmerk, zonder de
+              ondertitel. In een balk van veertig pixels hoog zou die op vier
+              pixels uitkomen — onleesbaar klein is erger dan weglaten. De
+              volledige variant staat in de paginavoet. Het beeld draagt geen
+              tekst voor schermlezers, vandaar de aria-label op de link. */}
           <Image
-            src="/brand/logo-horizontaal.png"
+            src="/brand/logo-compact.png"
             alt=""
-            width={1200}
-            height={326}
+            width={900}
+            height={248}
             priority
             className="h-9 w-auto sm:h-10"
           />

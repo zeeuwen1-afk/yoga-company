@@ -346,45 +346,67 @@ const tekstblok = snij(
   bbox(bron, scheidingen[0][1], geheel.y + geheel.hoogte),
 );
 
+// De tweede lege band scheidt het woordmerk van de ondertitel. Dat woordmerk
+// hebben we apart nodig: in een balk van veertig pixels hoog is de ondertitel
+// niet meer te lezen en wordt hij ruis in plaats van informatie.
+const woordmerk = snij(
+  bron,
+  scheidingen.length > 1
+    ? bbox(bron, scheidingen[0][1], scheidingen[1][0])
+    : bbox(bron, scheidingen[0][1], geheel.y + geheel.hoogte),
+);
+
+/** Zet merkteken en tekst naast elkaar, verticaal gecentreerd. */
+function naastElkaar(links, rechts) {
+  const tussenruimte = Math.round(links.width * 0.22);
+  const doel = leegBeeld(
+    links.width + tussenruimte + rechts.width,
+    Math.max(links.height, rechts.height),
+  );
+  plak(doel, links, 0, Math.round((doel.height - links.height) / 2));
+  plak(
+    doel,
+    rechts,
+    links.width + tussenruimte,
+    Math.round((doel.height - rechts.height) / 2),
+  );
+  return doel;
+}
+
 // 1. Gestapeld — het aangeleverde logo, alleen bijgesneden.
 const gestapeld = snij(bron, geheel);
 await bewaar("logo-gestapeld.png", schaal(gestapeld, 1200));
 
-// 2. Horizontaal — merkteken links, tekst rechts, op ware verhouding.
-const tussenruimte = Math.round(merkteken.width * 0.22);
-const horizontaal = leegBeeld(
-  merkteken.width + tussenruimte + tekstblok.width,
-  Math.max(merkteken.height, tekstblok.height),
-);
-plak(
-  horizontaal,
-  merkteken,
-  0,
-  Math.round((horizontaal.height - merkteken.height) / 2),
-);
-plak(
-  horizontaal,
-  tekstblok,
-  merkteken.width + tussenruimte,
-  Math.round((horizontaal.height - tekstblok.height) / 2),
-);
+// 2. Horizontaal — merkteken links, tekst met ondertitel rechts. Voor plekken
+//    waar het logo groot genoeg staat om de ondertitel te kunnen lezen.
+const horizontaal = naastElkaar(merkteken, tekstblok);
 await bewaar("logo-horizontaal.png", schaal(horizontaal, 1200));
 
-// 3. Donker — dezelfde horizontale opbouw, voor de groene voettekst en balken.
+// 3. Compact — hetzelfde, maar zonder ondertitel. Dit is de variant voor de
+//    header: daar is de balk veertig pixels hoog en zou de ondertitel op vier
+//    pixels uitkomen. Onleesbaar klein is erger dan weglaten.
+const compact = naastElkaar(merkteken, woordmerk);
+await bewaar("logo-compact.png", schaal(compact, 900));
+
+// 4. Donker — dezelfde opbouw, voor het nachtgroen in de paginavoet.
 await bewaar(
   "logo-horizontaal-donker.png",
   schaal(voorDonkereAchtergrond(horizontaal), 1200),
+);
+await bewaar(
+  "logo-compact-donker.png",
+  schaal(voorDonkereAchtergrond(compact), 900),
 );
 await bewaar(
   "logo-gestapeld-donker.png",
   schaal(voorDonkereAchtergrond(gestapeld), 1200),
 );
 
-// 4. Merkteken los, vierkant — voor favicons, avatars en socialprofielen.
+// 5. Merkteken los, vierkant — voor favicons, avatars en socialprofielen.
 const icoon = vierkant(merkteken);
 await bewaar("icoon.png", schaal(icoon, 512));
 
-// 5. Favicons volgens de conventies van de App Router.
+// 6. Favicons volgens de conventies van de App Router.
 await bewaar("icon.png", schaal(icoon, 32), path.join(ROOT, "src", "app"));
 await bewaar(
   "apple-icon.png",
