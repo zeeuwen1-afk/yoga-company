@@ -202,13 +202,33 @@ export async function wachtwoordHerstellen(
 
 // --- Tweestapsverificatie (TOTP) ---------------------------------------------
 
-/** Start het koppelen van een authenticator-app; levert QR-code en geheim. */
+/**
+ * Start het koppelen van een authenticator-app; levert QR-code en geheim.
+ *
+ * Eerst worden onbevestigde factoren opgeruimd. Wie het instellen halverwege
+ * afbreekt — tab dicht, telefoon niet bij de hand — laat er namelijk een
+ * staan, en Supabase eist dat de naam per gebruiker uniek is. Zonder deze
+ * opruiming mislukte een tweede poging op dezelfde dag, en omdat het beheer
+ * zonder tweestapsverificatie niet toegankelijk is, zat de beheerder daarmee
+ * buitengesloten tot de volgende dag.
+ *
+ * Alleen `unverified` factoren gaan weg. Een werkende factor blijft staan;
+ * die weghalen zou de beveiliging juist uitzetten.
+ */
 export async function totpAanmelden() {
   const supabase = await createClient();
 
+  const { data: bestaande } = await supabase.auth.mfa.listFactors();
+  for (const factor of bestaande?.all ?? []) {
+    if (factor.status === "unverified") {
+      await supabase.auth.mfa.unenroll({ factorId: factor.id });
+    }
+  }
+
   const { data, error } = await supabase.auth.mfa.enroll({
     factorType: "totp",
-    friendlyName: `YogaCompany ${new Date().toISOString().slice(0, 10)}`,
+    // Tijdstip erbij, zodat twee pogingen nooit dezelfde naam krijgen.
+    friendlyName: `YogaCompany ${new Date().toISOString().slice(0, 16).replace("T", " ")}`,
   });
 
   if (error || !data) {
