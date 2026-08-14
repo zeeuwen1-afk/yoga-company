@@ -185,3 +185,19 @@ correctheidsfout, en een instructief onderscheid:
 
 Aangepast in `bookings`, `requests`, `progress`, `content` en `messages`.
 Berichten hebben geen `profile_id`; die filteren via de conversatie.
+
+## A17 — Palet "Helder water" en vier stockfoto's
+
+Op 14 augustus 2026 door de opdrachtgever gekozen uit drie voorstellen. Het
+nachtgroen uit §2 van de bouwprompt is daarmee vervangen door zeegroen; de
+opbouw van het palet (één diepe kleur, warm zand, lichte achtergrond) blijft
+zoals §2 hem beschrijft. Alle combinaties halen WCAG AA — de berekening staat
+in `docs/huisstijl.md`.
+
+Het logo is meegekleurd. De bron-PDF blijft nachtgroen; `brand-assets.mjs`
+zet hem om naar de merkkleuren, zodat een volgende kleurwijziging weer één
+plek is.
+
+De vier foto's komen van Unsplash en zijn **tijdelijk**, tot er eigen beeld is.
+Op Over ons staat bewust geen foto: die pagina moet persoonlijk zijn, en dat
+was ook de wens van de opdrachtgever.

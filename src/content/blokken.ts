@@ -101,8 +101,11 @@ export const BLOKKEN: BlokSeed[] = [
     page_key: "home",
     block_key: "hero_beeld",
     kind: "image",
-    omschrijving: "Foto naast of achter de hero",
-    value: { url: "", alt: "" },
+    omschrijving: "Foto naast de hero",
+    value: {
+      url: "/beeld/hero-gordijn.jpg",
+      alt: "De schaduw van een plant op een linnen gordijn",
+    },
   },
 
   {
@@ -238,6 +241,16 @@ export const BLOKKEN: BlokSeed[] = [
     },
   },
   {
+    page_key: "opleidingen",
+    block_key: "beeld",
+    kind: "image",
+    omschrijving: "Sfeerbeeld boven het overzicht",
+    value: {
+      url: "/beeld/opleidingen-lattenwand.jpg",
+      alt: "Zacht licht op een wand van verticale houten latten",
+    },
+  },
+  {
     page_key: "lessen",
     block_key: "titel",
     kind: "text",
@@ -254,11 +267,31 @@ export const BLOKKEN: BlokSeed[] = [
     },
   },
   {
+    page_key: "lessen",
+    block_key: "beeld",
+    kind: "image",
+    omschrijving: "Sfeerbeeld boven het weekrooster",
+    value: {
+      url: "/beeld/lessen-studio.jpg",
+      alt: "Een rustige ruimte met een houten bank, twee zitkussens en een rond raam",
+    },
+  },
+  {
     page_key: "trainingen",
     block_key: "titel",
     kind: "text",
     omschrijving: "Kop van de trainingenpagina",
     value: { text: "Trainingen" },
+  },
+  {
+    page_key: "trainingen",
+    block_key: "beeld",
+    kind: "image",
+    omschrijving: "Sfeerbeeld boven het overzicht",
+    value: {
+      url: "/beeld/trainingen-blad.jpg",
+      alt: "De schaduw van een plant op een lichte muur",
+    },
   },
   {
     page_key: "trainingen",

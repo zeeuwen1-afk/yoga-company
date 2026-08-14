@@ -714,7 +714,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'hero_beeld', 'image', '{"url":"","alt":""}'::jsonb)
+values ('home', 'hero_beeld', 'image', '{"url":"/beeld/hero-gordijn.jpg","alt":"De schaduw van een plant op een linnen gordijn"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -786,6 +786,12 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('opleidingen', 'beeld', 'image', '{"url":"/beeld/opleidingen-lattenwand.jpg","alt":"Zacht licht op een wand van verticale houten latten"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('lessen', 'titel', 'text', '{"text":"Yogalessen"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
@@ -798,7 +804,19 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('lessen', 'beeld', 'image', '{"url":"/beeld/lessen-studio.jpg","alt":"Een rustige ruimte met een houten bank, twee zitkussens en een rond raam"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('trainingen', 'titel', 'text', '{"text":"Trainingen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('trainingen', 'beeld', 'image', '{"url":"/beeld/trainingen-blad.jpg","alt":"De schaduw van een plant op een lichte muur"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

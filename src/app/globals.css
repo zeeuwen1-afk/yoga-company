@@ -11,18 +11,22 @@
  * ------------------------------------------------------------------------- */
 
 @theme {
-  /* Merkkleuren — §2 van de bouwprompt */
-  --color-green: #2f4239; /* nachtgroen, primair — koppen, knoppen, footer */
-  --color-green-dark: #23322b; /* hover en diepere koppen */
-  --color-sage: #a9bca1; /* salie, secundair accent */
-  --color-sand: #dccba8; /* zand, warm accent */
-  --color-sand-light: #e7dcc2; /* zand licht, warm accent */
-  --color-paper: #f9f7f1; /* paginaachtergrond */
-  --color-cream: #f2eee4; /* warme off-white: tintvlakken en tekst op groen */
-  --color-ink: #2f4239; /* bodytekst */
-  --color-muted: #667268; /* bijschriften — zie noot over contrast hieronder */
-  --color-line: #d8d3c4; /* decoratieve lijnen en kaders */
-  --color-line-strong: #7c8579; /* randen van formuliervelden (WCAG 1.4.11) */
+  /* Merkkleuren — palet "Helder water", vastgesteld 14 augustus 2026.
+   * Zeegroen met warm zand: koeler en helderder dan het nachtgroen waarmee
+   * we begonnen, met het zand erin om te voorkomen dat het kil wordt.
+   * Elke combinatie die in de applicatie voorkomt haalt WCAG AA; de
+   * berekening staat in docs/huisstijl.md. */
+  --color-green: #1f5551; /* zeegroen, primair — koppen, knoppen, footer */
+  --color-green-dark: #163f3c; /* hover en diepere koppen */
+  --color-sage: #a0cbc4; /* salie, secundair accent */
+  --color-sand: #e6d9c0; /* zand, warm accent */
+  --color-sand-light: #f1e9d9; /* zand licht, warm accent */
+  --color-paper: #f6faf9; /* paginaachtergrond */
+  --color-cream: #eaf3f1; /* warme off-white: tintvlakken en tekst op groen */
+  --color-ink: #14332f; /* bodytekst */
+  --color-muted: #566e6a; /* bijschriften — zie noot over contrast hieronder */
+  --color-line: #d3e2df; /* decoratieve lijnen en kaders */
+  --color-line-strong: #748c88; /* randen van formuliervelden (WCAG 1.4.11) */
   --color-error: #9c3d2e;
   --color-success: #3e6b4f;
 
@@ -45,10 +49,9 @@
 }
 
 /* Noot over --color-muted.
- * De bouwprompt noemt #6E7A70 voor subtekst, maar dat haalt op --color-paper
- * een contrast van 4,22:1 en blijft daarmee onder de WCAG AA-eis van 4,5:1 die
- * dezelfde paragraaf stelt. De tint is daarom iets verdiept naar #667268
- * (4,73:1). Zie docs/aannames.md. */
+ * Bijschriften zijn de krapste tekstcombinatie op de pagina: #566E6A op
+ * --color-paper haalt 5,21:1, ruim boven de AA-eis van 4,5:1. Wie deze tint
+ * ooit lichter maakt, moet dat opnieuw narekenen. */
 
 @layer base {
   :root {

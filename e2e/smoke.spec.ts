@@ -24,10 +24,10 @@ test.describe("Fundament", () => {
       const stijl = getComputedStyle(document.body);
       return { kleur: stijl.color, achtergrond: stijl.backgroundColor };
     });
-    // --color-ink = #2F4239
-    expect(kleur).toBe("rgb(47, 66, 57)");
-    // --color-paper = #F9F7F1
-    expect(achtergrond).toBe("rgb(249, 247, 241)");
+    // --color-ink = #14332F
+    expect(kleur).toBe("rgb(20, 51, 47)");
+    // --color-paper = #F6FAF9
+    expect(achtergrond).toBe("rgb(246, 250, 249)");
   });
 
   test("de styleguide toont de kleurtokens", async ({ page }) => {

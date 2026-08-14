@@ -21,6 +21,7 @@
     "test:e2e": "playwright test",
     "test:rls": "node scripts/rls-test.mjs",
     "brand:assets": "node scripts/brand-assets.mjs",
+    "beeld:ophalen": "node scripts/beeld-ophalen.mjs",
     "db:migrate": "node scripts/db-migrate.mjs",
     "db:seed": "node scripts/db-seed.mjs",
     "db:seed-admin": "node scripts/seed-admin.mjs",

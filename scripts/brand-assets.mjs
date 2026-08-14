@@ -21,11 +21,25 @@ const ROOT = process.cwd();
 const BRON = path.join(ROOT, "brand-bron", "logo-yogacompany-gestapeld.pdf");
 const UIT = path.join(ROOT, "public", "brand");
 
-// De merkkleuren zoals ze letterlijk in het logo staan (§2).
-const NACHTGROEN = [0x2f, 0x42, 0x39];
-const SALIE = [0xa9, 0xbc, 0xa1];
-const ONDERTITEL = [0x77, 0x84, 0x72];
-const PAPER = [0xf9, 0xf7, 0xf1];
+/**
+ * De kleuren zoals ze in het aangeleverde logo stáán. Dit is de bron; hij
+ * verandert niet mee met de huisstijl.
+ */
+const BRON_GROEN = [0x2f, 0x42, 0x39];
+const BRON_SALIE = [0xa9, 0xbc, 0xa1];
+const BRON_ONDERTITEL = [0x77, 0x84, 0x72];
+
+/**
+ * De kleuren van de huidige huisstijl, palet "Helder water". Het logo is
+ * getekend in het oorspronkelijke nachtgroen; hier wordt het omgezet naar de
+ * merkkleuren die ook in `globals.css` staan. Wijzigt de huisstijl, dan
+ * veranderen deze drie waarden mee en levert `pnpm brand:assets` het merk
+ * opnieuw in de juiste tinten.
+ */
+const MERK_GROEN = [0x1f, 0x55, 0x51];
+const MERK_SALIE = [0xa0, 0xcb, 0xc4];
+const MERK_ONDERTITEL = [0x6f, 0x99, 0x93];
+const PAPER = [0xf6, 0xfa, 0xf9];
 
 // ---------------------------------------------------------------------------
 // De bitmap uit de PDF halen
@@ -231,16 +245,16 @@ function voorDonkereAchtergrond(beeld) {
   const data = Buffer.from(beeld.data);
   for (let i = 0; i < data.length; i += 4) {
     if (data[i + 3] === 0) continue;
-    const naarGroen = afstand(data, i, NACHTGROEN);
-    const naarSalie = afstand(data, i, SALIE);
-    const naarOndertitel = afstand(data, i, ONDERTITEL);
+    const naarGroen = afstand(data, i, MERK_GROEN);
+    const naarSalie = afstand(data, i, MERK_SALIE);
+    const naarOndertitel = afstand(data, i, MERK_ONDERTITEL);
     const kleinste = Math.min(naarGroen, naarSalie, naarOndertitel);
     const nieuw =
       kleinste === naarGroen
         ? PAPER
         : kleinste === naarOndertitel
-          ? SALIE
-          : SALIE;
+          ? MERK_SALIE
+          : MERK_SALIE;
     data[i] = nieuw[0];
     data[i + 1] = nieuw[1];
     data[i + 2] = nieuw[2];
@@ -308,6 +322,27 @@ async function bewaar(naam, beeld, map = UIT) {
 }
 
 const bron = await leesLogo();
+
+// Het logo is getekend in nachtgroen; de huisstijl is inmiddels zeegroen.
+// Elke pixel wordt toegewezen aan de dichtstbijzijnde bronkleur en krijgt de
+// bijbehorende merkkleur. Dat werkt omdat het logo uit vlakke kleuren bestaat:
+// alleen de randen zijn halfdoorzichtig, en die houden hun alfa.
+for (let i = 0; i < bron.data.length; i += 4) {
+  if (bron.data[i + 3] === 0) continue;
+  const naarGroen = afstand(bron.data, i, BRON_GROEN);
+  const naarSalie = afstand(bron.data, i, BRON_SALIE);
+  const naarOndertitel = afstand(bron.data, i, BRON_ONDERTITEL);
+  const kleinste = Math.min(naarGroen, naarSalie, naarOndertitel);
+  const nieuw =
+    kleinste === naarGroen
+      ? MERK_GROEN
+      : kleinste === naarSalie
+        ? MERK_SALIE
+        : MERK_ONDERTITEL;
+  bron.data[i] = nieuw[0];
+  bron.data[i + 1] = nieuw[1];
+  bron.data[i + 2] = nieuw[2];
+}
 await mkdir(UIT, { recursive: true });
 console.log(
   `Bron: ${path.relative(ROOT, BRON)} — ${bron.width}×${bron.height}`,
