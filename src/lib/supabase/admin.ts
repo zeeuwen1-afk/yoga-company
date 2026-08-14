@@ -9,7 +9,7 @@ import type { Database } from "./types";
 /**
  * Client met de service-role key. Deze omzeilt Row Level Security volledig en
  * mag daarom uitsluitend server-side worden gebruikt, voor handelingen die
- * niet aan een ingelogde gebruiker hangen: de Stripe-webhook, het uitnodigen
+ * niet aan een ingelogde gebruiker hangen: de Mollie-webhook, het uitnodigen
  * van accounts en AVG-verwijdering (BOUWPROMPT §17.1).
  *
  * Gebruik in alle andere gevallen `createClient()` uit `./server`, zodat RLS

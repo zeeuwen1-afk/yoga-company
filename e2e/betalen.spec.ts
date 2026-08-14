@@ -1,10 +1,10 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * Betaalflow (BOUWPROMPT §9). Zonder Stripe-sleutels kan er geen echte
- * betaling worden gedaan; wat hier wordt gecontroleerd is alles eromheen:
- * dat inschrijven een account vereist, dat de webhook niet te misleiden is, en
- * dat de detailpagina naar de juiste plek wijst.
+ * Betaalflow (bouwprompt §7.6). Zonder Mollie-sleutel kan er geen echte
+ * betaling worden gedaan; wat hier wordt gecontroleerd is alles eromheen: dat
+ * inschrijven een account vereist, dat de webhook niets aanneemt van wie hem
+ * aanroept, en dat de detailpagina naar de juiste plek wijst.
  */
 
 test.describe("Inschrijven", () => {
@@ -43,44 +43,62 @@ test.describe("Inschrijven", () => {
   });
 });
 
-test.describe("Stripe-webhook", () => {
-  test("weigert een verzoek zonder handtekening", async ({ request }) => {
-    const antwoord = await request.post("/api/v1/webhooks/stripe", {
-      data: { type: "checkout.session.completed" },
-    });
+test.describe("Mollie-webhook", () => {
+  /**
+   * Mollie ondertekent zijn webhooks niet; hij stuurt alleen `id=tr_xxx`. De
+   * beveiliging zit er dus niet in dat we het verzoek controleren, maar dat we
+   * de status zélf ophalen bij Mollie. Deze tests leggen vast dat er niets uit
+   * het verzoek wordt overgenomen.
+   */
 
-    expect(antwoord.status()).toBe(400);
-    const body = await antwoord.json();
-    expect(body.error).toBeTruthy();
-    expect(body.data).toBeNull();
-  });
-
-  test("weigert een verzonnen handtekening", async ({ request }) => {
-    const antwoord = await request.post("/api/v1/webhooks/stripe", {
-      headers: {
-        "stripe-signature": "t=1,v1=verzonnen",
-        "content-type": "application/json",
-      },
-      data: JSON.stringify({
-        type: "checkout.session.completed",
-        data: { object: { id: "cs_nep", payment_status: "paid" } },
-      }),
+  test("weigert een verzoek zonder betaal-id", async ({ request }) => {
+    const antwoord = await request.post("/api/v1/webhooks/mollie", {
+      form: {},
     });
 
     expect(antwoord.status()).toBe(400);
   });
 
-  test("verraadt niet waaróm de handtekening wordt geweigerd", async ({
+  test("weigert een id dat er niet uitziet als een Mollie-betaling", async ({
     request,
   }) => {
-    const antwoord = await request.post("/api/v1/webhooks/stripe", {
-      headers: { "stripe-signature": "t=1,v1=verzonnen" },
-      data: "{}",
+    const antwoord = await request.post("/api/v1/webhooks/mollie", {
+      form: { id: "'; drop table orders; --" },
     });
 
+    expect(antwoord.status()).toBe(400);
+  });
+
+  test("neemt geen status aan die in het verzoek wordt meegestuurd", async ({
+    request,
+  }) => {
+    // Wie dit adres kent zou anders een bestelling op betaald kunnen zetten.
+    const antwoord = await request.post("/api/v1/webhooks/mollie", {
+      form: {
+        id: "tr_verzonnen123",
+        status: "paid",
+        amount: "2795.00",
+      },
+    });
+
+    // Zonder sleutel komt de verwerking niet verder dan een nette bevestiging;
+    // mét sleutel loopt de opvraging bij Mollie stuk op een onbekend id. In
+    // geen van beide gevallen wordt er iets op betaald gezet.
+    expect([200, 500]).toContain(antwoord.status());
+
     const body = await antwoord.json();
-    // Een generieke melding: details zouden helpen bij het vervalsen ervan.
-    expect(JSON.stringify(body)).not.toContain("whsec");
-    expect(JSON.stringify(body)).not.toContain("timestamp");
+    expect(body.data?.verwerkt).not.toBe(true);
+  });
+
+  test("verraadt niet of een betaling bij ons bekend is", async ({
+    request,
+  }) => {
+    const antwoord = await request.post("/api/v1/webhooks/mollie", {
+      form: { id: "tr_nietbestaand" },
+    });
+
+    const tekst = await antwoord.text();
+    expect(tekst).not.toContain("order");
+    expect(tekst).not.toContain("bestelling");
   });
 });

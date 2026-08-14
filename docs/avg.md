@@ -17,12 +17,12 @@ naar verwijst.
 | Supabase (Postgres) | Frankfurt, `eu-central-1` | Alle klantgegevens                                                   |
 | Supabase Storage    | Frankfurt, `eu-central-1` | Beeldmateriaal en cursusmateriaal                                    |
 | Vercel              | `fra1` (Frankfurt)        | De applicatie; geen opslag van gegevens                              |
-| Stripe              | EU/VS                     | Betaalgegevens (wij bewaren alleen een referentie)                   |
+| Mollie              | Amsterdam, EU             | Betaalgegevens (wij bewaren alleen een referentie)                   |
 | Resend              | EU/VS                     | Verzending van e-mail                                                |
 | Anthropic           | VS                        | Alleen het onderwerp van een socialmediabericht; nooit klantgegevens |
 | Meta                | VS                        | Alleen wat de beheerder zelf publiceert                              |
 
-Kaart- en rekeninggegevens komen nooit in onze database. Stripe is daarvan de
+Kaart- en rekeninggegevens komen nooit in onze database. Mollie is daarvan de
 enige bron; wij bewaren de referentie, het bedrag en de status.
 
 ---
@@ -147,6 +147,6 @@ een omschrijving van het bericht, niet om klantinformatie.
 
 - [ ] Privacyverklaring, algemene voorwaarden en cookieverklaring juridisch
       laten toetsen (staan nu als concept in `src/content/juridisch.ts`).
-- [ ] Verwerkersovereenkomsten afsluiten met Supabase, Vercel, Stripe, Resend,
+- [ ] Verwerkersovereenkomsten afsluiten met Supabase, Vercel, Mollie, Resend,
       Anthropic en (bij gebruik) Meta.
 - [ ] Verwerkingsregister opstellen — dit document is er de basis voor.

@@ -106,7 +106,7 @@ export default async function ProfielPage() {
             <h3 className="font-semibold">Download je gegevens</h3>
             <p className="mt-1 text-sm text-muted">
               Alles wat we van je bewaren, in één bestand. Je betaalgegevens
-              staan bij Stripe en niet bij ons.
+              staan bij Mollie en niet bij ons.
             </p>
             <a
               href="/api/v1/mijn-gegevens"

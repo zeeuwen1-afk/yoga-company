@@ -27,7 +27,7 @@ const PRIVACY = `
 <p>We verwerken zo min mogelijk gegevens. Concreet gaat het om:</p>
 <ul>
 <li><strong>Bij een account:</strong> je voor- en achternaam, e-mailadres en — als je dat zelf invult — je telefoonnummer.</li>
-<li><strong>Bij een inschrijving:</strong> welke opleiding je volgt, de betaalstatus en het bedrag. Betaalgegevens zelf komen nooit bij ons binnen; die verwerkt Stripe.</li>
+<li><strong>Bij een inschrijving:</strong> welke opleiding je volgt, de betaalstatus en het bedrag. Betaalgegevens zelf komen nooit bij ons binnen; die verwerkt Mollie.</li>
 <li><strong>Bij digitale content:</strong> waar je in een video of les gebleven bent, zodat je verder kunt waar je stopte.</li>
 <li><strong>Bij berichten:</strong> de inhoud van wat je ons via je eigen omgeving of het contactformulier stuurt.</li>
 <li><strong>Bij toestemming voor mailings:</strong> het moment waarop je die toestemming gaf.</li>
@@ -48,7 +48,7 @@ const PRIVACY = `
 <ul>
 <li><strong>Supabase</strong> — database, inloggen en bestandsopslag (servers in Frankfurt, EU)</li>
 <li><strong>Vercel</strong> — hosting van de website (regio Frankfurt, EU)</li>
-<li><strong>Stripe</strong> — betalingen</li>
+<li><strong>Mollie</strong> — betalingen (Amsterdam, EU)</li>
 <li><strong>Resend</strong> — verzenden van e-mail</li>
 <li><strong>Anthropic</strong> — hulp bij het opstellen van berichten voor sociale media; hier gaan geen klantgegevens naartoe</li>
 <li><strong>Meta</strong> — alleen wanneer wij zelf iets plaatsen op Facebook of Instagram</li>
@@ -127,7 +127,7 @@ const COOKIES = `
 <p>Voor functionele cookies is geen toestemming vereist. Je kunt ze in je browser blokkeren, maar dan kun je niet inloggen.</p>
 
 <h2>Cookies van anderen</h2>
-<p>Betaal je via Stripe, dan gebeurt dat op de omgeving van Stripe zelf, dat daar eigen cookies plaatst. Sluiten we ooit een video van YouTube of Vimeo in, dan doen we dat in de privacyvriendelijke modus.</p>
+<p>Betaal je via Mollie, dan gebeurt dat op de omgeving van Mollie zelf, dat daar eigen cookies plaatst. Sluiten we ooit een video van YouTube of Vimeo in, dan doen we dat in de privacyvriendelijke modus.</p>
 
 <h2>Vragen</h2>
 <p>Stuur gerust een bericht naar info@yogacompanie.nl.</p>

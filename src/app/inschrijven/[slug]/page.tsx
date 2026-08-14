@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { FormMessage } from "@/components/ui/form-message";
 import { formateerPrijs, haalCursus } from "@/features/courses";
 import { InschrijfKnop } from "@/features/enrollments/components/inschrijf-knop";
+import { betalenIngericht } from "@/lib/mollie";
 import { createClient } from "@/lib/supabase/server";
 import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
 
@@ -38,6 +39,10 @@ export default async function InschrijvenPage({
 
   const overzichtPad =
     cursus.type === "opleiding" ? "/opleidingen" : "/trainingen";
+
+  // De sleutel blijft server-side; de pagina geeft alleen door dát er een
+  // betaalkoppeling is, zodat de knop de juiste tekst kan tonen (§7.1).
+  const betalenAan = betalenIngericht();
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -79,16 +84,30 @@ export default async function InschrijvenPage({
           </div>
 
           <div className="mt-8">
-            <InschrijfKnop slug={cursus.slug} />
+            <InschrijfKnop slug={cursus.slug} betalenAan={betalenAan} />
           </div>
 
           <p className="mt-6 text-sm text-muted">
-            Je betaalt met iDEAL of creditcard via Stripe. Wij zien of ontvangen
-            je betaalgegevens nooit. Liever in termijnen betalen?{" "}
-            <Link href="/contact" className="underline">
-              Neem contact op
-            </Link>{" "}
-            — dat regelen we in overleg.
+            {betalenAan ? (
+              <>
+                Je betaalt met iDEAL of creditcard via Mollie. Wij zien of
+                ontvangen je betaalgegevens nooit. Liever in termijnen betalen?{" "}
+                <Link href="/contact" className="underline">
+                  Neem contact op
+                </Link>{" "}
+                — dat regelen we in overleg.
+              </>
+            ) : (
+              <>
+                Online betalen staat nog niet aan. Je aanmelding komt bij ons
+                binnen en we nemen persoonlijk contact op om de inschrijving en
+                de betaling te regelen. Vragen vooraf?{" "}
+                <Link href="/contact" className="underline">
+                  Neem contact op
+                </Link>
+                .
+              </>
+            )}
           </p>
 
           <p className="mt-3 text-xs text-muted">

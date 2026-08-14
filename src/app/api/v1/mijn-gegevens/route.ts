@@ -12,7 +12,7 @@ import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
  * belanden — ook niet bij een fout in deze code.
  *
  * Wat er níét in staat: gegevens die wij niet hebben. Betaalgegevens liggen bij
- * Stripe, en CRM-notities zijn interne aantekeningen van YogaCompany, geen
+ * Mollie, en CRM-notities zijn interne aantekeningen van YogaCompany, geen
  * persoonsgegevens die de klant zelf heeft verstrekt. Wie die toch wil inzien,
  * dient een verzoek in; dat handelt de admin af.
  */
@@ -63,7 +63,7 @@ export async function GET() {
 
   const bestand = {
     toelichting:
-      "Dit bestand bevat alle persoonsgegevens die YogaCompany van je bewaart. Je betaalgegevens staan bij Stripe en niet bij ons.",
+      "Dit bestand bevat alle persoonsgegevens die YogaCompany van je bewaart. Je betaalgegevens staan bij Mollie en niet bij ons.",
     geexporteerdOp: new Date().toISOString(),
     profiel: profiel.data
       ? {

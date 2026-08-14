@@ -18,6 +18,7 @@ export type RequestStatus = "open" | "in_behandeling" | "afgerond";
 export type BlockKind = "text" | "richtext" | "image" | "video";
 export type ContentKind = "video" | "pdf" | "tekst";
 export type PostStatus = "concept" | "gepland" | "gepubliceerd" | "mislukt";
+export type OrderStatus = "concept" | "open" | "paid" | "canceled" | "refunded";
 export type BookingStatus =
   "geboekt" | "wachtlijst" | "geannuleerd" | "niet_verschenen";
 
@@ -95,7 +96,6 @@ export type Course = {
   certificate_text: string | null;
   price_cents: number;
   currency: string;
-  stripe_price_id: string | null;
   has_digital_content: boolean;
   is_active: boolean;
   sort: number;
@@ -132,7 +132,8 @@ export type Enrollment = {
   profile_id: string;
   course_id: string;
   status: EnrollmentStatus;
-  stripe_checkout_session_id: string | null;
+  /** De bestelling die deze inschrijving betaalde; null bij handmatig toekennen. */
+  order_id: string | null;
   amount_cents: number | null;
   paid_at: string | null;
   created_at: string;
@@ -231,6 +232,35 @@ export type Booking = {
   cancelled_at: string | null;
 };
 
+/**
+ * De financiële kant van een aankoop. De inschrijving is het toegangsrecht,
+ * de bestelling de administratie; ze leven apart omdat een bestelling na een
+ * AVG-verwijdering moet blijven staan (§8.4).
+ */
+export type Order = {
+  id: string;
+  profile_id: string;
+  status: OrderStatus;
+  amount_cents: number;
+  currency: string;
+  description: string;
+  /** Mollie is de bron; wij bewaren alleen deze verwijzing. */
+  mollie_payment_id: string | null;
+  paid_at: string | null;
+  refunded_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type OrderItem = {
+  id: string;
+  order_id: string;
+  course_id: string | null;
+  description: string;
+  amount_cents: number;
+  quantity: number;
+};
+
 export type CrmNote = {
   id: string;
   profile_id: string;
@@ -316,6 +346,7 @@ export type Database = {
         [
           FK<"enrollments_profile_id_fkey", "profile_id", "profiles">,
           FK<"enrollments_course_id_fkey", "course_id", "courses">,
+          FK<"enrollments_order_id_fkey", "order_id", "orders">,
         ]
       >;
       progress: Table<
@@ -367,6 +398,17 @@ export type Database = {
       audit_log: Table<
         AuditLogEntry,
         [FK<"audit_log_actor_id_fkey", "actor_id", "profiles">]
+      >;
+      orders: Table<
+        Order,
+        [FK<"orders_profile_id_fkey", "profile_id", "profiles">]
+      >;
+      order_items: Table<
+        OrderItem,
+        [
+          FK<"order_items_order_id_fkey", "order_id", "orders">,
+          FK<"order_items_course_id_fkey", "course_id", "courses">,
+        ]
       >;
       class_sessions: Table<ClassSession>;
       bookings: Table<
@@ -434,6 +476,7 @@ export type Database = {
       content_kind: ContentKind;
       post_status: PostStatus;
       booking_status: BookingStatus;
+      order_status: OrderStatus;
     };
     CompositeTypes: Record<string, never>;
   };

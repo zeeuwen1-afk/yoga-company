@@ -1,18 +1,41 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type Stripe from "stripe";
+
+import type { MollieBetaling } from "@/lib/mollie";
 
 /**
- * De webhook mag een gebeurtenis nooit twee keer verwerken. Stripe levert er
- * soms meer dan één af, en probeert het opnieuw bij een storing.
+ * De webhook van Mollie.
  *
- * Deze tests vervangen de databaseclient door een dubbelganger die de
- * voorwaardelijke update nabootst: `neq('status', 'betaald')` levert bij een
- * tweede poging geen rij op, precies zoals Postgres dat zou doen.
+ * Twee dingen moeten hier hard staan:
+ *
+ *   1. **De inhoud van het verzoek telt niet.** Mollie stuurt alleen een id en
+ *      ondertekent niets. De status komt uit een eigen aanroep naar Mollie.
+ *   2. **Twee keer verwerken is één keer.** Mollie levert dezelfde webhook
+ *      meerdere keren af en probeert het opnieuw bij een storing.
+ *
+ * De databaseclient is vervangen door een dubbelganger die de voorwaardelijke
+ * update nabootst: `neq('status', 'paid')` levert bij een tweede poging geen
+ * rij op, precies zoals Postgres dat zou doen.
  */
 
-type Inschrijving = { id: string; status: string; paid_at: string | null };
+type Bestelling = {
+  id: string;
+  profile_id: string;
+  status: string;
+  currency: string;
+  paid_at: string | null;
+  mollie_payment_id: string | null;
+};
 
-const inschrijvingen = new Map<string, Inschrijving>();
+const bestellingen = new Map<string, Bestelling>();
+const regels = new Map<
+  string,
+  { course_id: string | null; amount_cents: number }[]
+>();
+const inschrijvingen: {
+  profile_id: string;
+  course_id: string;
+  status: string;
+}[] = [];
 const auditRegels: { action: string; entity_id: string | null }[] = [];
 
 function maakDubbelganger() {
@@ -27,33 +50,112 @@ function maakDubbelganger() {
         };
       }
 
-      // enrollments
+      if (tabel === "order_items") {
+        let orderId = "";
+        const bouwer = {
+          select() {
+            return bouwer;
+          },
+          eq(_kolom: string, waarde: string) {
+            orderId = waarde;
+            return bouwer;
+          },
+          not() {
+            return Promise.resolve({
+              data: regels.get(orderId) ?? [],
+              error: null,
+            });
+          },
+        };
+        return bouwer;
+      }
+
+      if (tabel === "enrollments") {
+        const bouwer = {
+          upsert(rij: {
+            profile_id: string;
+            course_id: string;
+            status: string;
+          }) {
+            const bestaand = inschrijvingen.find(
+              (i) =>
+                i.profile_id === rij.profile_id &&
+                i.course_id === rij.course_id,
+            );
+            if (bestaand) Object.assign(bestaand, rij);
+            else inschrijvingen.push({ ...rij });
+            return bouwer;
+          },
+          update(waarden: { status: string }) {
+            for (const rij of inschrijvingen) Object.assign(rij, waarden);
+            return bouwer;
+          },
+          eq() {
+            return bouwer;
+          },
+          neq() {
+            return Promise.resolve({ data: null, error: null });
+          },
+          select() {
+            return bouwer;
+          },
+          single() {
+            return Promise.resolve({
+              data: { id: `enr-${inschrijvingen.length}` },
+              error: null,
+            });
+          },
+        };
+        return bouwer;
+      }
+
+      // orders
       let doelId = "";
-      let uitgeslotenStatus = "";
-      let nieuweWaarden: Partial<Inschrijving> = {};
+      let doelBetaling = "";
+      let uitgesloten = "";
+      let toegestaan: string[] | null = null;
+      let nieuweWaarden: Partial<Bestelling> = {};
+      let isUpdate = false;
 
       const bouwer = {
-        update(waarden: Partial<Inschrijving>) {
-          nieuweWaarden = waarden;
-          return bouwer;
-        },
-        eq(_kolom: string, waarde: string) {
-          doelId = waarde;
-          return bouwer;
-        },
-        neq(_kolom: string, waarde: string) {
-          uitgeslotenStatus = waarde;
-          return bouwer;
-        },
         select() {
           return bouwer;
         },
+        update(waarden: Partial<Bestelling>) {
+          isUpdate = true;
+          nieuweWaarden = waarden;
+          return bouwer;
+        },
+        eq(kolom: string, waarde: string) {
+          if (kolom === "mollie_payment_id") doelBetaling = waarde;
+          else doelId = waarde;
+          return bouwer;
+        },
+        neq(_kolom: string, waarde: string) {
+          uitgesloten = waarde;
+          return bouwer;
+        },
+        in(_kolom: string, waarden: string[]) {
+          toegestaan = waarden;
+          return bouwer;
+        },
         maybeSingle() {
-          const rij = inschrijvingen.get(doelId);
+          const rij = doelBetaling
+            ? [...bestellingen.values()].find(
+                (b) => b.mollie_payment_id === doelBetaling,
+              )
+            : bestellingen.get(doelId);
 
-          // Zoals de databank: staat de rij al in de doeltoestand, dan raakt
-          // de update niets en komt er geen rij terug.
-          if (!rij || rij.status === uitgeslotenStatus) {
+          if (!rij) return Promise.resolve({ data: null, error: null });
+
+          if (!isUpdate) return Promise.resolve({ data: rij, error: null });
+
+          // Zoals de database: staat de rij al in de doeltoestand, dan raakt de
+          // update niets en komt er geen rij terug.
+          if (uitgesloten && rij.status === uitgesloten) {
+            return Promise.resolve({ data: null, error: null });
+          }
+          if (toegestaan && !toegestaan.includes(rij.status)) {
             return Promise.resolve({ data: null, error: null });
           }
 
@@ -71,168 +173,170 @@ vi.mock("@/lib/supabase/admin", () => ({
   createAdminClient: () => maakDubbelganger(),
 }));
 
-vi.mock("./checkout", () => ({
-  enrollmentIdBijPaymentIntent: vi.fn(async () => "inschrijving-1"),
-}));
+const haalBetalingMock = vi.fn();
 
-const { verwerkGebeurtenis } = await import("./webhook");
+vi.mock("@/lib/mollie", async (origineel) => {
+  const echt = await origineel<typeof import("@/lib/mollie")>();
+  return { ...echt, haalBetaling: (id: string) => haalBetalingMock(id) };
+});
 
-function checkoutVoltooid(
-  overschrijf: Partial<{
-    payment_status: string;
-    enrollment_id: string | null;
-    amount_total: number;
-  }> = {},
-) {
+const { verwerkWebhook } = await import("./webhook");
+
+function betaling(overschrijf: Partial<MollieBetaling> = {}): MollieBetaling {
   return {
-    type: "checkout.session.completed",
-    data: {
-      object: {
-        id: "cs_test_1",
-        payment_status: overschrijf.payment_status ?? "paid",
-        amount_total: overschrijf.amount_total ?? 299500,
-        client_reference_id: null,
-        metadata:
-          overschrijf.enrollment_id === null
-            ? {}
-            : { enrollment_id: overschrijf.enrollment_id ?? "inschrijving-1" },
-      },
-    },
-  } as unknown as Stripe.Event;
+    id: "tr_test123",
+    status: "paid",
+    amount: { value: "795.00", currency: "EUR" },
+    metadata: { order_id: "bestelling-1" },
+    ...overschrijf,
+  };
 }
 
-describe("Stripe-webhook", () => {
-  beforeEach(() => {
-    inschrijvingen.clear();
-    auditRegels.length = 0;
-    inschrijvingen.set("inschrijving-1", {
-      id: "inschrijving-1",
-      status: "in_afwachting",
-      paid_at: null,
-    });
+beforeEach(() => {
+  bestellingen.clear();
+  regels.clear();
+  inschrijvingen.length = 0;
+  auditRegels.length = 0;
+  haalBetalingMock.mockReset();
+
+  bestellingen.set("bestelling-1", {
+    id: "bestelling-1",
+    profile_id: "klant-1",
+    status: "open",
+    currency: "eur",
+    paid_at: null,
+    mollie_payment_id: "tr_test123",
+  });
+  regels.set("bestelling-1", [{ course_id: "cursus-1", amount_cents: 79500 }]);
+});
+
+describe("de status komt van Mollie, niet uit het verzoek", () => {
+  it("haalt de betaling op bij het meegegeven id", async () => {
+    haalBetalingMock.mockResolvedValue(betaling());
+
+    await verwerkWebhook("tr_test123");
+
+    expect(haalBetalingMock).toHaveBeenCalledWith("tr_test123");
   });
 
-  it("zet een betaalde inschrijving op betaald", async () => {
-    const uitkomst = await verwerkGebeurtenis(checkoutVoltooid());
+  it("verwerkt niets als Mollie zegt dat de betaling nog loopt", async () => {
+    haalBetalingMock.mockResolvedValue(betaling({ status: "open" }));
+
+    const uitkomst = await verwerkWebhook("tr_test123");
+
+    expect(uitkomst.verwerkt).toBe(false);
+    expect(bestellingen.get("bestelling-1")?.status).toBe("open");
+    expect(inschrijvingen).toHaveLength(0);
+  });
+
+  it("laat een onbekende betaling met rust in plaats van te struikelen", async () => {
+    haalBetalingMock.mockResolvedValue(
+      betaling({ id: "tr_onbekend", metadata: null }),
+    );
+
+    const uitkomst = await verwerkWebhook("tr_onbekend");
+
+    expect(uitkomst.verwerkt).toBe(false);
+    expect(uitkomst.toelichting).toContain("geen bestelling");
+  });
+});
+
+describe("een geslaagde betaling", () => {
+  it("zet de bestelling op betaald en activeert de inschrijving", async () => {
+    haalBetalingMock.mockResolvedValue(betaling());
+
+    const uitkomst = await verwerkWebhook("tr_test123");
 
     expect(uitkomst.verwerkt).toBe(true);
-    expect(uitkomst.enrollmentId).toBe("inschrijving-1");
-    expect(inschrijvingen.get("inschrijving-1")?.status).toBe("betaald");
+    expect(bestellingen.get("bestelling-1")?.status).toBe("paid");
+    expect(inschrijvingen).toHaveLength(1);
+    expect(inschrijvingen[0]).toMatchObject({
+      profile_id: "klant-1",
+      course_id: "cursus-1",
+      status: "betaald",
+      order_id: "bestelling-1",
+    });
+    expect(uitkomst.enrollmentIds).toHaveLength(1);
   });
 
-  it("verwerkt dezelfde gebeurtenis geen tweede keer", async () => {
-    await verwerkGebeurtenis(checkoutVoltooid());
-    const betaaldatum = inschrijvingen.get("inschrijving-1")?.paid_at;
+  it("doet bij een tweede aflevering niets meer", async () => {
+    haalBetalingMock.mockResolvedValue(betaling());
 
-    const tweede = await verwerkGebeurtenis(checkoutVoltooid());
+    await verwerkWebhook("tr_test123");
+    const eerstePaidAt = bestellingen.get("bestelling-1")?.paid_at;
+
+    const tweede = await verwerkWebhook("tr_test123");
 
     expect(tweede.verwerkt).toBe(false);
-    expect(tweede.enrollmentId).toBeUndefined();
-    // De oorspronkelijke betaaldatum blijft staan.
-    expect(inschrijvingen.get("inschrijving-1")?.paid_at).toBe(betaaldatum);
+    expect(tweede.toelichting).toContain("stond al op betaald");
+    expect(bestellingen.get("bestelling-1")?.paid_at).toBe(eerstePaidAt);
+    expect(inschrijvingen).toHaveLength(1);
   });
 
-  it("wacht af zolang de betaling nog niet rond is", async () => {
-    const uitkomst = await verwerkGebeurtenis(
-      checkoutVoltooid({ payment_status: "unpaid" }),
-    );
+  it("vindt de bestelling ook als alleen de metadata hem noemt", async () => {
+    bestellingen.get("bestelling-1")!.mollie_payment_id = null;
+    haalBetalingMock.mockResolvedValue(betaling());
 
-    expect(uitkomst.verwerkt).toBe(false);
-    expect(inschrijvingen.get("inschrijving-1")?.status).toBe("in_afwachting");
-  });
-
-  it("slaat een sessie zonder inschrijving over in plaats van te falen", async () => {
-    const uitkomst = await verwerkGebeurtenis(
-      checkoutVoltooid({ enrollment_id: null }),
-    );
-
-    expect(uitkomst.verwerkt).toBe(false);
-    expect(uitkomst.toelichting).toContain("zonder enrollment_id");
-  });
-
-  it("verwerkt een iDEAL-betaling die pas later slaagt", async () => {
-    const gebeurtenis = {
-      type: "checkout.session.async_payment_succeeded",
-      data: {
-        object: {
-          id: "cs_test_2",
-          amount_total: 84500,
-          client_reference_id: "inschrijving-1",
-          metadata: {},
-        },
-      },
-    } as unknown as Stripe.Event;
-
-    const uitkomst = await verwerkGebeurtenis(gebeurtenis);
+    const uitkomst = await verwerkWebhook("tr_test123");
 
     expect(uitkomst.verwerkt).toBe(true);
-    expect(inschrijvingen.get("inschrijving-1")?.status).toBe("betaald");
+    expect(bestellingen.get("bestelling-1")?.status).toBe("paid");
   });
+});
 
-  it("annuleert de inschrijving bij een mislukte iDEAL-betaling", async () => {
-    const gebeurtenis = {
-      type: "checkout.session.async_payment_failed",
-      data: {
-        object: {
-          id: "cs_test_3",
-          client_reference_id: "inschrijving-1",
-          metadata: {},
-        },
-      },
-    } as unknown as Stripe.Event;
+describe("een mislukte betaling", () => {
+  it.each(["failed", "expired", "canceled"] as const)(
+    "annuleert de bestelling bij status %s",
+    async (status) => {
+      haalBetalingMock.mockResolvedValue(betaling({ status }));
 
-    await verwerkGebeurtenis(gebeurtenis);
+      const uitkomst = await verwerkWebhook("tr_test123");
 
-    expect(inschrijvingen.get("inschrijving-1")?.status).toBe("geannuleerd");
+      expect(uitkomst.verwerkt).toBe(true);
+      expect(bestellingen.get("bestelling-1")?.status).toBe("canceled");
+      expect(inschrijvingen).toHaveLength(0);
+    },
+  );
+
+  it("laat een al betaalde bestelling niet alsnog omvallen", async () => {
+    haalBetalingMock.mockResolvedValue(betaling());
+    await verwerkWebhook("tr_test123");
+
+    // Een late 'expired' na een geslaagde betaling mag niets afpakken.
+    haalBetalingMock.mockResolvedValue(betaling({ status: "expired" }));
+    const uitkomst = await verwerkWebhook("tr_test123");
+
+    expect(uitkomst.verwerkt).toBe(false);
+    expect(bestellingen.get("bestelling-1")?.status).toBe("paid");
   });
+});
 
-  it("annuleert bij terugbetaling en legt dat vast in het audit log", async () => {
-    inschrijvingen.set("inschrijving-1", {
-      id: "inschrijving-1",
-      status: "betaald",
-      paid_at: "2026-01-01T00:00:00.000Z",
-    });
+describe("een terugbetaling", () => {
+  it("trekt de bestelling en de toegang in", async () => {
+    haalBetalingMock.mockResolvedValue(betaling());
+    await verwerkWebhook("tr_test123");
 
-    const gebeurtenis = {
-      type: "charge.refunded",
-      data: { object: { payment_intent: "pi_test_1" } },
-    } as unknown as Stripe.Event;
-
-    const uitkomst = await verwerkGebeurtenis(gebeurtenis);
+    haalBetalingMock.mockResolvedValue(
+      betaling({ amountRefunded: { value: "795.00", currency: "EUR" } }),
+    );
+    const uitkomst = await verwerkWebhook("tr_test123");
 
     expect(uitkomst.verwerkt).toBe(true);
-    expect(inschrijvingen.get("inschrijving-1")?.status).toBe("geannuleerd");
+    expect(bestellingen.get("bestelling-1")?.status).toBe("refunded");
+    expect(auditRegels).toContainEqual(
+      expect.objectContaining({ action: "terugbetaling_verwerkt" }),
+    );
+  });
+
+  it("verwerkt een herhaalde melding niet nog eens", async () => {
+    haalBetalingMock.mockResolvedValue(
+      betaling({ amountRefunded: { value: "795.00", currency: "EUR" } }),
+    );
+
+    await verwerkWebhook("tr_test123");
+    const tweede = await verwerkWebhook("tr_test123");
+
+    expect(tweede.verwerkt).toBe(false);
     expect(auditRegels).toHaveLength(1);
-    expect(auditRegels[0]?.action).toBe("terugbetaling_verwerkt");
-  });
-
-  it("verwerkt een terugbetaling geen tweede keer", async () => {
-    inschrijvingen.set("inschrijving-1", {
-      id: "inschrijving-1",
-      status: "geannuleerd",
-      paid_at: null,
-    });
-
-    const gebeurtenis = {
-      type: "charge.refunded",
-      data: { object: { payment_intent: "pi_test_1" } },
-    } as unknown as Stripe.Event;
-
-    const uitkomst = await verwerkGebeurtenis(gebeurtenis);
-
-    expect(uitkomst.verwerkt).toBe(false);
-    expect(auditRegels).toHaveLength(0);
-  });
-
-  it("laat gebeurtenissen die ons niet aangaan met rust", async () => {
-    const gebeurtenis = {
-      type: "customer.created",
-      data: { object: {} },
-    } as unknown as Stripe.Event;
-
-    const uitkomst = await verwerkGebeurtenis(gebeurtenis);
-
-    expect(uitkomst.verwerkt).toBe(false);
-    expect(uitkomst.toelichting).toContain("vraagt geen actie");
   });
 });

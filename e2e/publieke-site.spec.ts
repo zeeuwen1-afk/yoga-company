@@ -183,7 +183,7 @@ test.describe("Juridische pagina's", () => {
     for (const verwerker of [
       "Supabase",
       "Vercel",
-      "Stripe",
+      "Mollie",
       "Resend",
       "Anthropic",
       "Meta",

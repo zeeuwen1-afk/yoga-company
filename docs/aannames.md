@@ -21,9 +21,22 @@ Zie `docs/verschilanalyse-bouwprompt.md`.
 
 ## A2 — Mollie vervangt Stripe
 
-**Besloten op 13 augustus 2026, door de opdrachtgever:** overstappen naar Mollie
-conform §3 en §7.6. De bestaande Stripe-integratie wordt vervangen; betalingen
-blijven achter de vlag `PAYMENTS_ENABLED`. Nog uit te voeren.
+**Besloten op 13 augustus 2026, door de opdrachtgever:** overstappen naar
+Mollie conform §3 en §7.6. **Uitgevoerd.** Stripe is volledig verwijderd. Zie
+`docs/payments.md`.
+
+Twee keuzes daarbinnen:
+
+- **Geen SDK.** De client is handgeschreven op de REST-API van Mollie. We
+  gebruiken drie eindpunten; dat weegt niet op tegen een extra afhankelijkheid
+  (§11.4). De API-versie zit in de URL, dus hij kan niet onder ons vandaan
+  veranderen.
+- **De betaalvlag volgt uit de sleutel.** §4.6 wil feature-flags in een
+  `settings`-tabel. Voor betalen levert dat een tweede knop op die je óók goed
+  moet zetten, naast de sleutel die je toch al moet plakken. `MOLLIE_API_KEY`
+  aanwezig = betalen aan, met `PAYMENTS_ENABLED=false` als noodrem. Eén
+  handeling om te koppelen, en de test-/live-modus is af te lezen aan het
+  voorvoegsel van de sleutel — dus niet verkeerd in te stellen.
 
 ## A3 — CSS-tokens houden Engelse namen
 
@@ -131,3 +144,23 @@ aangemaakt: de organisatie zit op twee projecten en een derde kost $10 per
 maand. Dat project staat in `eu-west-1` (Ierland). Beide regio's liggen in de
 EU, dus §3 en `docs/avg.md` kloppen; de regio van een bestaand project is niet
 te wijzigen. Zie `docs/supabase-project.md`.
+
+## A14 — Bestellingen naast inschrijvingen
+
+§6 vraagt om `orders` en `order_items`; die bestonden nog niet, de
+betaalreferentie hing aan `enrollments`. Dat werkt zolang één betaling precies
+één inschrijving is, maar §7.6 vraagt straks ook om een lesabonnement
+(maandelijkse incasso, géén inschrijving) en om betalen in termijnen (drie
+betalingen, één inschrijving). Beide passen niet op een inschrijving.
+
+De inschrijving blijft het toegangsrecht op het lesmateriaal, de bestelling is
+de financiële kant. Ze leven apart omdat een bestelling na een
+AVG-verwijdering moet blijven staan terwijl het profiel wordt geanonimiseerd.
+
+## A15 — De webhook van Mollie controleert geen handtekening
+
+Niet uit nalatigheid: Mollie ondertekent zijn webhooks niet en stuurt alleen
+een betaal-id. De status wordt daarom opgehaald bij Mollie zelf, met onze
+geheime sleutel. Wie het webhookadres kent kan hooguit een verwerking uitlokken
+van een betaling die toch al bestaat; een status verzinnen kan niet. Uitgelegd
+in `docs/payments.md` §3.
