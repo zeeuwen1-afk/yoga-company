@@ -1,6 +1,7 @@
 import "server-only";
 
 import { createClient } from "@/lib/supabase/server";
+import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
 import type { ContentKind } from "@/lib/supabase/types";
 
 /**
@@ -124,6 +125,8 @@ export async function haalItemMetBuren(cursusSlug: string, itemId: string) {
 /** De opleidingen waar de klant lesmateriaal van heeft. */
 export async function haalMijnOpleidingen() {
   const supabase = await createClient();
+  const gebruiker = await huidigeGebruiker(supabase);
+  if (!gebruiker) return [];
 
   const { data } = await supabase
     .from("enrollments")
@@ -131,6 +134,7 @@ export async function haalMijnOpleidingen() {
       `id, status, created_at, paid_at,
        courses!inner (id, title, slug, summary, type, has_digital_content)`,
     )
+    .eq("profile_id", gebruiker.id)
     .in("status", ["betaald", "afgerond"])
     .order("created_at", { ascending: false });
 

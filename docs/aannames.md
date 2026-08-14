@@ -164,3 +164,24 @@ een betaal-id. De status wordt daarom opgehaald bij Mollie zelf, met onze
 geheime sleutel. Wie het webhookadres kent kan hooguit een verwerking uitlokken
 van een betaling die toch al bestaat; een status verzinnen kan niet. Uitgelegd
 in `docs/payments.md` §3.
+
+## A16 — Portaalqueries filteren expliciet op de eigen gebruiker
+
+Gevonden op 14 augustus 2026 bij het testen met een echt beheerdersaccount.
+
+De portaalqueries leunden voor de klantscheiding volledig op RLS, met in de
+code de redenering: "een filter is dubbelop, RLS levert toch alleen eigen
+rijen". Dat klopt voor een klant, maar niet voor een beheerder — en de
+eigenaar is beide tegelijk. Een beheerder mág alle boekingen, aanvragen,
+voortgang en gesprekken zien; zonder filter toonde zijn **eigen portaal**
+daardoor de gegevens van klanten alsof het de zijne waren. Op het dashboard
+stond letterlijk "Je eerstvolgende les" bij een les die een klant had geboekt.
+
+Geen lek naar klanten toe: RLS deed precies wat het moest. Wel een
+correctheidsfout, en een instructief onderscheid:
+
+> **RLS bewaakt wat mág. De query hoort te zeggen wat we wíllen.**
+> Het eerste is geen vervanging voor het tweede.
+
+Aangepast in `bookings`, `requests`, `progress`, `content` en `messages`.
+Berichten hebben geen `profile_id`; die filteren via de conversatie.

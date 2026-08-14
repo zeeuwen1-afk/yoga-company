@@ -2,6 +2,7 @@ import "server-only";
 
 import { createClient } from "@/lib/supabase/server";
 import { createPublicClient } from "@/lib/supabase/public";
+import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
 import type { BookingStatus } from "@/lib/supabase/types";
 
 /**
@@ -110,15 +111,22 @@ export async function haalRoosterVoorPortaal(
 }
 
 /**
- * De lopende boekingen van de ingelogde klant, als kaart per les-id. RLS zorgt
- * dat hier nooit een boeking van iemand anders in kan zitten.
+ * De lopende boekingen van de ingelogde gebruiker, als kaart per les-id.
+ *
+ * Het filter op `profile_id` is geen dubbelop naast RLS. Een beheerder mág
+ * alle boekingen zien — dat heeft hij nodig voor de deelnemerslijst — en
+ * zónder dit filter zou zijn eigen portaal dus de boekingen van klanten tonen
+ * alsof het de zijne waren. RLS bewaakt wat mag; de query zegt wat we willen.
  */
 export async function haalEigenBoekingen(): Promise<Map<string, EigenBoeking>> {
   const supabase = await createClient();
+  const gebruiker = await huidigeGebruiker(supabase);
+  if (!gebruiker) return new Map();
 
   const { data } = await supabase
     .from("bookings")
     .select("class_session_id, status, created_at")
+    .eq("profile_id", gebruiker.id)
     .in("status", ["geboekt", "wachtlijst"]);
 
   return new Map(

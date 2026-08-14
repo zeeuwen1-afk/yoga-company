@@ -4,11 +4,19 @@ import { createClient } from "@/lib/supabase/server";
 import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
 
 /**
- * Voortgang van de ingelogde klant (BOUWPROMPT §11 en §12).
+ * Voortgang van de ingelogde gebruiker (BOUWPROMPT §11 en §12).
  *
- * Alle queries hieronder lezen zonder filter op `profile_id`: dat hoeft niet,
- * want RLS levert per definitie alleen de eigen rijen. Zou hier ooit een fout
- * in sluipen, dan blijft de klantscheiding overeind.
+ * Waarom hier wél op `profile_id` wordt gefilterd
+ * ------------------------------------------------
+ * Eerder stond hier dat dat niet hoefde, omdat RLS per definitie alleen de
+ * eigen rijen levert. Dat klopt voor een klant, maar niet voor een beheerder:
+ * die mág de voortgang van klanten inzien voor de monitoring, en zag daardoor
+ * in zijn éigen portaal de gegevens van anderen staan alsof het de zijne
+ * waren. De beheerder is immers ook gewoon portaalgebruiker.
+ *
+ * RLS bewaakt wat mág; de query hoort te zeggen wat we wíllen. Dat zijn twee
+ * verschillende dingen, en alleen het eerste is geen vervanging voor het
+ * tweede.
  */
 
 export type ItemVoortgang = {
@@ -26,11 +34,16 @@ export type CursusVoortgang = {
 /** Voortgang per content-item, als kaart voor snelle opzoeking. */
 export async function haalVoortgang(): Promise<Map<string, ItemVoortgang>> {
   const supabase = await createClient();
+  const gebruiker = await huidigeGebruiker(supabase);
   const kaart = new Map<string, ItemVoortgang>();
+  if (!gebruiker) return kaart;
 
+  // Naast RLS, want een beheerder mag de voortgang van klanten inzien voor de
+  // monitoring — die hoort niet in zijn eigen portaal op te duiken.
   const { data } = await supabase
     .from("progress")
-    .select("content_item_id, last_position_seconds, completed_at");
+    .select("content_item_id, last_position_seconds, completed_at")
+    .eq("profile_id", gebruiker.id);
 
   for (const rij of data ?? []) {
     kaart.set(rij.content_item_id, {
@@ -49,6 +62,8 @@ export async function haalVoortgang(): Promise<Map<string, ItemVoortgang>> {
  */
 export async function haalLaatstBekeken() {
   const supabase = await createClient();
+  const gebruiker = await huidigeGebruiker(supabase);
+  if (!gebruiker) return null;
 
   const { data } = await supabase
     .from("progress")
@@ -65,6 +80,7 @@ export async function haalLaatstBekeken() {
          )
        )`,
     )
+    .eq("profile_id", gebruiker.id)
     .is("completed_at", null)
     .order("updated_at", { ascending: false })
     .limit(1)
@@ -101,9 +117,14 @@ export async function haalLaatstBekeken() {
 /**
  * Voortgang per opleiding: hoeveel van de items zijn afgerond.
  *
- * Let op: `content_items` levert door RLS alleen items waar de klant bij mag.
- * De teller klopt daarmee vanzelf — een opleiding die niet betaald is, levert
- * geen items en dus geen voortgang.
+ * `content_items` levert door RLS alleen items waar de klant bij mag, dus de
+ * teller klopt vanzelf: een opleiding die niet betaald is, levert geen items
+ * en dus geen voortgang.
+ *
+ * Voor een beheerder levert diezelfde query álle items op. Dat valt hier niet
+ * op omdat het portaal de voortgang alleen toont bij de opleidingen uit
+ * `haalMijnOpleidingen`, en die is wél op de eigen inschrijvingen gefilterd.
+ * Wie deze functie ooit ergens anders gebruikt, moet daar rekening mee houden.
  */
 export async function haalCursusVoortgang(): Promise<
   Map<string, CursusVoortgang>
@@ -158,6 +179,7 @@ export async function heeftToegangTotContent(): Promise<boolean> {
   const { count } = await supabase
     .from("enrollments")
     .select("id", { count: "exact", head: true })
+    .eq("profile_id", gebruiker.id)
     .in("status", ["betaald", "afgerond"]);
 
   return (count ?? 0) > 0;
