@@ -4,56 +4,124 @@ Dit bestand is de waarheid over de voortgang. Een fase is pas klaar als **elk**
 punt onder de Definition of Done is afgevinkt. Begin nooit aan een volgende fase
 voordat de huidige is afgerond.
 
-Bron: `BOUWPROMPT.md` (paragraafverwijzingen hieronder verwijzen daarnaar).
+Bron: sinds 13 augustus 2026 **`docs/YogaCompany-claude-code-prompt.md`**. De
+§-verwijzingen in fase 0 t/m 8 hieronder gaan nog over het oude `BOUWPROMPT.md`;
+die in fase 9 over het nieuwe document. Zie de toelichting hieronder.
 
 ---
 
-## 📍 Waar we gebleven zijn — 11 augustus 2026
+## 📍 Waar we gebleven zijn — 14 augustus 2026
 
-**Fase 0 tot en met 7 zijn af.** Alles is gebouwd en getest: 42 unittests, 158
-Playwright-tests, 10 RLS-testbestanden, `pnpm verify` en `pnpm build` groen.
-Fase 8 is bewust uitgesteld en blokkeert niets.
+### Let op: er is een nieuw brondocument
 
-**Waar we mee bezig waren:** een demo van de beheerschermen. Die kan nog niet.
-De publieke site draait lokaal, maar `/admin/*` en `/portaal/*` zitten achter
-inloggen, en `.env.local` bevat placeholder-waarden — er is nog geen echt
-Supabase-project. Dat is punt A1 hieronder.
+Vanaf 13 augustus 2026 is **`docs/YogaCompany-claude-code-prompt.md`** leidend,
+niet meer `BOUWPROMPT.md`. De oude prompt blijft staan omdat hij verklaart
+waarom de code is zoals hij is; alle §-verwijzingen in de fasen hieronder gaan
+nog over dát document.
 
-### Actie voor Pieter (ongeveer 15 minuten)
+De twee documenten nummeren hun fasen verschillend. Laat je daar niet door in
+de war brengen: de fasen hieronder zijn de historische opbouw van deze repo.
+Wat het nieuwe document extra vraagt, staat in
+**`docs/verschilanalyse-bouwprompt.md`**.
 
-1. Maak op [supabase.com](https://supabase.com) een gratis project aan.
-   **Region: Central EU (Frankfurt).** ⚠️ Dit is een AVG-eis en kan achteraf
-   niet meer worden gewijzigd — het is de enige stap die echt onomkeerbaar is.
-   Bewaar het databasewachtwoord in een wachtwoordmanager.
-2. Geef deze vier waarden door uit **Project Settings**:
+### Status
 
-   | Variabele                       | Waar                               |
-   | ------------------------------- | ---------------------------------- |
-   | `NEXT_PUBLIC_SUPABASE_URL`      | API → Project URL                  |
-   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | API → `anon` `public`              |
-   | `SUPABASE_SERVICE_ROLE_KEY`     | API → `service_role` (geheim)      |
-   | `SUPABASE_DB_URL`               | Database → Connection string (URI) |
+Alles staat op de branch **`huisstijl-yogacompany`**, gepusht naar GitHub.
+**Nog niet samengevoegd met `main`, en CI heeft nog niet gedraaid** — de
+workflow luistert alleen op `main` en op een pull request. Open een PR via
+https://github.com/zeeuwen1-afk/yoga-company/pull/new/huisstijl-yogacompany
+en hij draait.
 
-3. Optioneel voor de AI-tool: een sleutel op
-   [console.anthropic.com](https://console.anthropic.com) → `ANTHROPIC_API_KEY`
-   (punt A6). Zonder die sleutel werkt het socialscherm gewoon; je schrijft de
-   tekst dan zelf.
+Lokaal is alles groen:
 
-Deze waarden gaan in `.env.local`, dat niet in git staat.
+|                   |       |
+| ----------------- | ----- |
+| Unittests         | 53    |
+| Playwright        | 170   |
+| RLS-testbestanden | 13    |
+| `pnpm verify`     | groen |
+| `pnpm build`      | groen |
+
+### Wat er sinds 11 augustus is gebeurd
+
+Vijf commits, in deze volgorde:
+
+1. **Huisstijl volgens het nieuwe document** — kleuren, Cormorant Garamond en
+   Jost, merknaam overal `YogaCompany`, modules op € 795 en de opleiding op
+   € 2.795 met een berekende bundelkorting van € 385.
+2. **Merkbestanden, Supabase en een beveiligingsherstel** — zie hieronder.
+3. **Lesrooster en boekingen** — kernactiviteit 2, die volledig ontbrak.
+4. **Mollie in plaats van Stripe** — inclusief `orders` en `order_items`.
+5. **CI bijgewerkt** voor Mollie, plus de seedcontrole als losse stap.
+
+### ⚠️ Wat er onderweg is gevonden en gedicht
+
+Bij het inrichten van het echte Supabase-project bleek dat de rol `anon` —
+die achter de publieke sleutel zit, en die staat in de browser van elke
+bezoeker — uitvoerrecht had op de beheerfuncties. Die functies bewaken
+zichzelf met "is_admin() **of geen sessie**", in de veronderstelling dat "geen
+sessie" server-side betekent. Een anonieme API-aanroep heeft echter óók geen
+sessie.
+
+Iedereen met die sleutel kon dus `zet_profiel_rol` aanroepen en zichzelf
+beheerder maken, of met `anonimiseer_profiel` de gegevens van een willekeurige
+klant wissen.
+
+Gedicht in `20260813120000_functierechten.sql`. RLS-test 11 voert de aanval uit
+en controleert dat hij faalt. Volledige uitleg in `docs/supabase-project.md`.
+
+**De les:** de RLS-suite draaide alleen tegen de lokale nabootsing, en geen
+enkele test riep de beheerfuncties aan als anonieme bezoeker. Draai de suite
+één keer tegen het échte project voordat je live gaat.
+
+### Het Supabase-project draait
+
+Het bestaande, lege project **`zeeuwen1-afk's Project`**
+(`hfsxncotxlenxrkycxsv`, regio `eu-west-1` Ierland) is hiervoor in gebruik
+genomen — een derde project zou $10 per maand kosten. Alle negen migrations
+staan erop, bijgehouden in `schema_migrations`. Details en de afweging over de
+regio: `docs/supabase-project.md`.
+
+### 🔑 Actie voor Pieter — twee waarden, vijf minuten
+
+Deze twee zijn geheim en alleen via het Supabase-dashboard op te halen. Ze
+staan met vindplaats en al klaar in `.env.local`:
+
+| Variabele                   | Waar                                                  |
+| --------------------------- | ----------------------------------------------------- |
+| `SUPABASE_SERVICE_ROLE_KEY` | Project Settings → API → `service_role`               |
+| `SUPABASE_DB_URL`           | Project Settings → Database → Connection string (URI) |
+
+Zonder de eerste werkt het beheer niet: geen klantenkaart, geen site-editor die
+publiceert, geen `pnpm db:seed-admin`.
+
+**En:** open die pull request, zodat CI gaat draaien.
 
 ### Wat ik daarna doe
 
-- `pnpm db:migrate` — het schema erop zetten
-- `supabase/seed.sql` inladen — 7 cursussen en 37 tekstblokken
-- `SUPABASE_DB_URL=… pnpm test:rls` één keer tegen het échte project draaien;
-  de lokale testdatabase bootst Supabase na, maar ís het niet
-- `pnpm db:seed-admin` — jouw beheerdersaccount (uitnodiging, nooit een
-  wachtwoord)
-- Daarna log je in, stel je tweestapsverificatie in, en werkt alles: klanten,
-  site-editor, social en mailings
+```bash
+pnpm db:seed          # 7 cursussen en 39 tekstblokken
+pnpm db:seed-admin    # jouw beheerdersaccount, via een uitnodiging
+SUPABASE_DB_URL=… pnpm test:rls   # de suite één keer tegen het échte project
+```
 
-Ook nog nodig vóór livegang, maar niet voor de demo: `MAILING_UNSUBSCRIBE_SECRET`
-en `CRON_SECRET`, allebei te maken met `openssl rand -base64 32`.
+Daarna log je in, stel je tweestapsverificatie in, en is het portaal en het
+beheer voor het eerst echt te bekijken.
+
+### Openstaand werk, in de volgorde die ik zou aanhouden
+
+| #   | Wat                                                                                                  | Waarom deze volgorde                                                           |
+| --- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| 1   | **Boekingsmails** (flow 6) — bevestiging, herinnering, doorgeschoven van de wachtlijst               | Het rooster is af maar zwijgt; een klant die boekt hoort iets terug te krijgen |
+| 2   | **Consumentenrecht bij betalen** — 14 dagen bedenktijd en de afstandsverklaring bij digitale content | Moet er zijn vóórdat er één euro binnenkomt                                    |
+| 3   | **Abonnement en termijnbetaling** — Mollie Recurring met mandaat                                     | Het datamodel is er klaar voor; dit is de laatste grote betaalfunctie          |
+| 4   | **FAQ en media-tabel**                                                                               | Kleine ontbrekende onderdelen uit §6 van het nieuwe document                   |
+| 5   | **Losse leskaart**                                                                                   | Wacht op punt 3                                                                |
+
+### Twee dingen die nog steeds ontbreken en niemand kan bouwen
+
+- **Foto's** voor de website: over-ons, de studio, sfeerbeeld. Nu placeholders.
+- **Contactgegevens en KvK-nummer** staan als placeholder in het CMS.
 
 ---
 
@@ -176,7 +244,11 @@ staat nu alleen in productie aan.
 
 ---
 
-## Fase 3 — Betalingen & e-mail 🟡 code klaar, wacht op Stripe- en Resend-account
+## Fase 3 — Betalingen & e-mail ⚠️ betaaldeel vervangen door Mollie
+
+> **Verouderd.** Alles over Stripe hieronder is op 13 augustus 2026 vervangen
+> door Mollie; zie fase 9 en `docs/payments.md`. Het e-maildeel klopt nog wel.
+> Deze lijst blijft staan als geschiedenis.
 
 - [x] Stripe Checkout met iDEAL en creditcard, gekoppeld aan `enrollments`
 - [x] Webhook `/api/v1/webhooks/stripe` met verplichte handtekeningcontrole
@@ -444,6 +516,80 @@ deze punten volledig bruikbaar.
 
 ---
 
+## Fase 9 — Nieuwe bouwprompt: huisstijl, lesrooster en Mollie ✅ afgerond
+
+Uitgevoerd op 13 en 14 augustus 2026, op de branch `huisstijl-yogacompany`.
+Volgt `docs/YogaCompany-claude-code-prompt.md`.
+
+### Huisstijl (§2)
+
+- [x] Designtokens op de kleuren uit §2, met salie als nieuw accent en paper
+      als paginaachtergrond
+- [x] Koppen in Cormorant Garamond, tekst en UI in Jost — via `next/font`, dus
+      vanaf ons eigen domein en niet via een CDN
+- [x] Merknaam overal `YogaCompany` (99 plekken)
+- [x] Prijzen: € 795 per module, € 2.795 voor de opleiding, met een korting
+      die uit de database wordt berekend in plaats van ingetypt
+- [x] `--grijs` verdiept naar #667268 omdat de voorgeschreven tint de
+      WCAG AA-eis uit dezelfde paragraaf niet haalde (4,22:1 → 4,73:1)
+- [x] Aparte randkleur voor formuliervelden, zodat die de 3:1 van WCAG 1.4.11 halen
+
+### Merkbestanden (§2)
+
+- [x] `scripts/brand-assets.mjs` haalt het logo op volle resolutie (1600×1138)
+      uit de aangeleverde PDF. Die PDF rendert misleidend — `/Rotate 90` en het
+      beeld staat groter dan de pagina — maar de bitmap zit er ongeschonden in
+- [x] `public/brand/`: gestapeld, horizontaal, beide ook licht voor donkere
+      ondergronden, en het merkteken los
+- [x] Favicons als `icon.png` en `apple-icon.png`
+- [x] Horizontaal logo in de header, lichte variant in de paginavoet, die nu
+      op het nachtgroen staat zoals §2 voorschrijft
+
+### Supabase in gebruik genomen
+
+- [x] Bestaand leeg project hergebruikt (scheelt $10 per maand)
+- [x] Alle negen migrations toegepast, `schema_migrations` bijgewerkt
+- [x] **Beveiligingsgat gedicht**: `anon` mocht de beheerfuncties uitvoeren
+- [x] `docs/supabase-project.md` met de volledige uitleg
+
+### Lesrooster en boekingen (§6, §7.1, §7.3, §7.4)
+
+- [x] `class_sessions` en `bookings`, plus een view die het rooster toont
+      zonder te verraden wie er geboekt heeft
+- [x] Boeken en annuleren als databasefuncties met een rijvergrendeling, zodat
+      twee gelijktijdige boekers er nooit dertien in een les van twaalf zetten
+- [x] Wachtlijst met automatisch doorschuiven, annuleren tot vier uur vooraf
+- [x] Publiek weekrooster op `/lessen`, gevoed door het CMS
+- [x] Portaal: boeken, annuleren, "Jouw lessen", eerstvolgende les op het dashboard
+- [x] Vijfde ingang in de mobiele onderbalk — het maximum dat §9 toestaat
+- [x] Beheer: rooster, deelnemerslijst, wachtlijst, niet-verschenen, afgelasten
+- [x] `docs/lessen-en-boekingen.md`
+
+### Mollie (§3, §7.6)
+
+- [x] `orders` en `order_items` uit §6; de betaalreferentie zat op de
+      inschrijving en dat past niet op abonnementen of termijnbetalingen
+- [x] Handgeschreven client op de REST-API — geen extra dependency
+- [x] Webhook die de status ophaalt bij Mollie in plaats van hem uit het
+      verzoek te geloven; Mollie ondertekent zijn webhooks namelijk niet
+- [x] Idempotent, ook bij een late `expired` na een geslaagde betaling
+- [x] Zolang er geen sleutel is, wordt inschrijven een aanvraag plus een
+      bevestigingsmail — precies zoals §7.1 voorschrijft
+- [x] Koppelingsstatus met test-/live-modus in **Instellingen → Koppelingen**
+- [x] Stripe volledig verwijderd, inclusief de dependency
+- [x] `docs/payments.md`
+
+### Definition of Done
+
+- [x] `pnpm verify` groen — 53 unittests, 13 RLS-testbestanden
+- [x] `pnpm build` groen
+- [x] 170 Playwright-tests groen
+- [x] Alle afwijkingen van het document verantwoord in `docs/aannames.md` (A1 t/m A15)
+- [ ] **CI groen op GitHub** — openstaand: vereist een pull request
+- [ ] **Demo van portaal en beheer** — openstaand: wacht op de service-role sleutel
+
+---
+
 ## Openstaande punten
 
 ### A. Accounts aanmaken — actie voor Pieter
@@ -453,15 +599,15 @@ controles en instellingen die een echt account vereisen. Zolang ze openstaan
 werkt het platform lokaal, maar kan er niet betaald worden en gaat er geen
 e-mail uit.
 
-| #   | Account                                                         | Waarvoor                                        | Wat er daarna moet gebeuren                                                                                                                 | Handleiding             |
-| --- | --------------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| A1  | **Supabase** — regio **Frankfurt** ⚠️ achteraf niet te wijzigen | Database, inloggen, bestandsopslag              | `pnpm db:migrate`, `supabase/seed.sql` inladen, `pnpm db:seed-admin`, en `SUPABASE_DB_URL=… pnpm test:rls` één keer tegen het echte project | `docs/beheer.md` §2, §3 |
-| A2  | **Stripe** — testmodus, iDEAL aanzetten                         | Betalingen                                      | Webhook koppelen, één test-iDEAL-betaling doen en die terugbetalen                                                                          | `docs/beheer.md` §7     |
-| A3  | **Resend** — domein `yogacompanie.nl`                           | E-mail                                          | DNS-records zetten (SPF, DKIM, DMARC), en Supabase Auth via Resend laten versturen                                                          | `docs/beheer.md` §8     |
-| A4  | **GitHub**                                                      | Versiebeheer en CI                              | Repository aanmaken en pushen; `.github/workflows/ci.yml` draait dan vanzelf                                                                | —                       |
-| A5  | **Vercel** — regio `fra1`                                       | Hosting                                         | Koppelen aan de GitHub-repository en de environment variables zetten                                                                        | volgt                   |
-| A6  | **Anthropic**                                                   | AI-socialmediatool                              | API-sleutel in `ANTHROPIC_API_KEY`                                                                                                          | `docs/beheer.md` §10    |
-| A7  | **Meta** — developer-app                                        | Publiceren op Facebook en Instagram (optioneel) | App-review op de publicatierechten; de tool werkt volledig zonder                                                                           | `docs/beheer.md` §10    |
+| #   | Account                                                           | Waarvoor                                        | Wat er daarna moet gebeuren                                                                                                        | Handleiding                |
+| --- | ----------------------------------------------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| A1  | ✅ **Supabase** — project draait, regio `eu-west-1` (Ierland, EU) | Database, inloggen, bestandsopslag              | Alleen nog `SUPABASE_SERVICE_ROLE_KEY` en `SUPABASE_DB_URL` uit het dashboard halen; daarna `pnpm db:seed` en `pnpm db:seed-admin` | `docs/supabase-project.md` |
+| A2  | **Mollie** — testmodus                                            | Betalingen                                      | Eén sleutel plakken in `MOLLIE_API_KEY`; meer niet. Daarna een testbetaling doen en die terugbetalen                               | `docs/payments.md`         |
+| A3  | **Resend** — domein `yogacompanie.nl`                             | E-mail                                          | DNS-records zetten (SPF, DKIM, DMARC), en Supabase Auth via Resend laten versturen                                                 | `docs/beheer.md` §8        |
+| A4  | ✅ **GitHub** — repository bestaat, branch gepusht                | Versiebeheer en CI                              | Nog wel een **pull request** openen: CI luistert alleen op `main` en op een PR                                                     | —                          |
+| A5  | **Vercel** — regio `fra1`                                         | Hosting                                         | Koppelen aan de GitHub-repository en de environment variables zetten                                                               | volgt                      |
+| A6  | **Anthropic**                                                     | AI-socialmediatool                              | API-sleutel in `ANTHROPIC_API_KEY`                                                                                                 | `docs/beheer.md` §10       |
+| A7  | **Meta** — developer-app                                          | Publiceren op Facebook en Instagram (optioneel) | App-review op de publicatierechten; de tool werkt volledig zonder                                                                  | `docs/beheer.md` §10       |
 
 **Twee geheimen die je zelf genereert** (geen account nodig, wel nodig vóór
 livegang):
@@ -472,7 +618,7 @@ livegang):
 | `CRON_SECRET`                | Beschermt de maandelijkse opschoontaak    | `openssl rand -base64 32` |
 
 **Verwerkersovereenkomsten** (§17.8) tekent Pieter in de dashboards van
-Supabase, Vercel, Stripe, Resend, Anthropic en Meta.
+Supabase, Vercel, Mollie, Resend, Anthropic en Meta.
 
 ### B. Nog af te ronden werk
 
