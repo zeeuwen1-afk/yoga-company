@@ -213,24 +213,31 @@ test.describe("SEO", () => {
     expect(tekst).toContain("Sitemap:");
   });
 
-  test("elke pagina heeft een eigen titel en omschrijving", async ({
-    page,
-  }) => {
-    for (const [pad, fragment] of [
-      ["/", "opleidingsinstituut voor yoga"],
-      ["/opleidingen", "Yogaopleidingen"],
-      ["/over-ons", "Over ons"],
-      ["/contact", "Contact"],
-    ]) {
-      await page.goto(pad!);
-      await expect(page).toHaveTitle(new RegExp(fragment!, "i"));
+  /**
+   * Eén test per pagina, en niet vier pagina's in één test.
+   *
+   * De suite draait tegen `next dev`, die een route pas compileert bij het
+   * eerste bezoek. Vier van die eerste bezoeken achter elkaar passen op een
+   * koude CI-machine niet in de tijdslimiet van één test — dat is precies wat
+   * er gebeurde toen de pijplijn voor het eerst draaide. Zo krijgt elke pagina
+   * zijn eigen tijd, en wijst een rode test meteen de pagina aan.
+   */
+  for (const [pad, fragment] of [
+    ["/", "opleidingsinstituut voor yoga"],
+    ["/opleidingen", "Yogaopleidingen"],
+    ["/over-ons", "Over ons"],
+    ["/contact", "Contact"],
+  ] as const) {
+    test(`${pad} heeft een eigen titel en omschrijving`, async ({ page }) => {
+      await page.goto(pad);
+      await expect(page).toHaveTitle(new RegExp(fragment, "i"));
 
       const omschrijving = await page
         .locator('meta[name="description"]')
         .getAttribute("content");
       expect(omschrijving?.length).toBeGreaterThan(50);
-    }
-  });
+    });
+  }
 });
 
 test.describe("Beveiligingsheaders", () => {

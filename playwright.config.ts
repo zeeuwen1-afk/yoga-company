@@ -22,6 +22,14 @@ export default defineConfig({
    */
   expect: { timeout: 15_000 },
 
+  /**
+   * En om dezelfde reden een ruimere tijdslimiet per test op CI. De machine
+   * daar is trager dan deze en compileert elke route koud. Dertig seconden —
+   * de standaard — is dan krap, en een test die omvalt omdat de machine traag
+   * was zegt niets over de code.
+   */
+  timeout: process.env.CI ? 60_000 : 30_000,
+
   use: {
     baseURL,
     trace: "on-first-retry",
