@@ -8,6 +8,8 @@ import { FormMessage } from "@/components/ui/form-message";
 import { Input, Label, Textarea } from "@/components/ui/input";
 import { SubmitButton } from "@/components/ui/submit-button";
 import {
+  herstelTweestapsverificatie,
+  stuurWachtwoordHerstel,
   verwijderKlantAvg,
   voegNotitieToe,
   werkKlantBij,
@@ -107,10 +109,17 @@ export function AccountSchakelaars({
   profileId,
   isActief,
   isAdmin,
+  heeftTweestaps,
 }: {
   profileId: string;
   isActief: boolean;
   isAdmin: boolean;
+  /**
+   * Of er een authenticator-app gekoppeld is. `null` betekent onbekend —
+   * dat gebeurt zolang de service-role sleutel ontbreekt. De knop blijft dan
+   * bruikbaar; de actie zelf meldt wat er werkelijk aan de hand is.
+   */
+  heeftTweestaps: boolean | null;
 }) {
   const [melding, setMelding] = useState<AdminResultaat>(BEGIN);
   const [bezig, startOvergang] = useTransition();
@@ -154,6 +163,44 @@ export function AccountSchakelaars({
         >
           {isAdmin ? "Beheerdersrol intrekken" : "Beheerder maken"}
         </Button>
+      </div>
+
+      <div className="space-y-3 border-t border-line pt-4">
+        <p className="text-sm font-semibold text-ink">Toegang herstellen</p>
+
+        <div className="flex flex-wrap gap-3">
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            disabled={bezig}
+            onClick={() => voerUit(() => stuurWachtwoordHerstel(profileId))}
+          >
+            Wachtwoord laten herstellen
+          </Button>
+
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            disabled={bezig || heeftTweestaps === false}
+            onClick={() =>
+              voerUit(() => herstelTweestapsverificatie(profileId))
+            }
+          >
+            {heeftTweestaps === false
+              ? "Geen tweestapsverificatie"
+              : "Tweestapsverificatie loskoppelen"}
+          </Button>
+        </div>
+
+        <p className="text-sm text-muted">
+          De klant krijgt een e-mail en kiest zelf een nieuw wachtwoord — jij
+          krijgt het nooit te zien, want het account is van de klant.
+          Loskoppelen van de tweestapsverificatie is voor wie zijn telefoon
+          kwijt is; bij de volgende keer inloggen stelt hij hem opnieuw in.
+          Beide handelingen komen in het logboek.
+        </p>
       </div>
 
       <p className="text-sm text-muted">

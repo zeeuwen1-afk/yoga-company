@@ -1,5 +1,6 @@
 import "server-only";
 
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import type { EnrollmentStatus, UserRole } from "@/lib/supabase/types";
 
@@ -85,46 +86,61 @@ export async function haalKlanten(filter: KlantFilter = {}) {
 export async function haalKlantDossier(profileId: string) {
   const supabase = await createClient();
 
-  const [profiel, inschrijvingen, notities, aanvragen, gesprek, voortgang] =
-    await Promise.all([
-      supabase
-        .from("profiles")
-        .select(
-          "id, first_name, last_name, email, phone, role, deleted_at, marketing_consent_at, created_at",
-        )
-        .eq("id", profileId)
-        .maybeSingle(),
-      supabase
-        .from("enrollments")
-        .select(
-          "id, status, amount_cents, paid_at, created_at, courses!inner (id, title, slug)",
-        )
-        .eq("profile_id", profileId)
-        .order("created_at", { ascending: false }),
-      supabase
-        .from("crm_notes")
-        .select(
-          "id, body, created_at, profiles!crm_notes_author_id_fkey (first_name, last_name)",
-        )
-        .eq("profile_id", profileId)
-        .order("created_at", { ascending: false }),
-      supabase
-        .from("requests")
-        .select("id, kind, body, status, created_at, closed_at")
-        .eq("profile_id", profileId)
-        .order("created_at", { ascending: false }),
-      supabase
-        .from("conversations")
-        .select("id, messages (id, body, sender_id, created_at, read_at)")
-        .eq("profile_id", profileId)
-        .maybeSingle(),
-      supabase
-        .from("progress")
-        .select(
-          "content_item_id, last_position_seconds, completed_at, updated_at",
-        )
-        .eq("profile_id", profileId),
-    ]);
+  const [
+    profiel,
+    inschrijvingen,
+    notities,
+    aanvragen,
+    gesprek,
+    voortgang,
+    boekingen,
+  ] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select(
+        "id, first_name, last_name, email, phone, role, deleted_at, marketing_consent_at, created_at",
+      )
+      .eq("id", profileId)
+      .maybeSingle(),
+    supabase
+      .from("enrollments")
+      .select(
+        "id, status, amount_cents, paid_at, created_at, courses!inner (id, title, slug)",
+      )
+      .eq("profile_id", profileId)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("crm_notes")
+      .select(
+        "id, body, created_at, profiles!crm_notes_author_id_fkey (first_name, last_name)",
+      )
+      .eq("profile_id", profileId)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("requests")
+      .select("id, kind, body, status, created_at, closed_at")
+      .eq("profile_id", profileId)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("conversations")
+      .select("id, messages (id, body, sender_id, created_at, read_at)")
+      .eq("profile_id", profileId)
+      .maybeSingle(),
+    supabase
+      .from("progress")
+      .select(
+        "content_item_id, last_position_seconds, completed_at, updated_at",
+      )
+      .eq("profile_id", profileId),
+    supabase
+      .from("bookings")
+      .select(
+        "id, status, created_at, class_sessions!inner (id, title, starts_at, location)",
+      )
+      .eq("profile_id", profileId)
+      .order("created_at", { ascending: false })
+      .limit(50),
+  ]);
 
   if (!profiel.data) return null;
 
@@ -196,6 +212,23 @@ export async function haalKlantDossier(profileId: string) {
             })),
         }
       : null,
+    boekingen: (boekingen.data ?? []).flatMap((rij) => {
+      const les = Array.isArray(rij.class_sessions)
+        ? rij.class_sessions[0]
+        : rij.class_sessions;
+      if (!les) return [];
+      return [
+        {
+          id: rij.id,
+          status: rij.status,
+          geboektOp: rij.created_at,
+          lesId: les.id,
+          lesTitel: les.title,
+          begintOp: les.starts_at,
+          locatie: les.location,
+        },
+      ];
+    }),
     voortgang: {
       aantalItems: (voortgang.data ?? []).length,
       aantalAfgerond: (voortgang.data ?? []).filter((rij) => rij.completed_at)
@@ -212,3 +245,26 @@ export async function haalKlantDossier(profileId: string) {
 export type KlantDossier = NonNullable<
   Awaited<ReturnType<typeof haalKlantDossier>>
 >;
+
+/**
+ * Heeft deze klant een authenticator-app gekoppeld?
+ *
+ * De factoren staan in het `auth`-schema en zijn niet via RLS te lezen; dit
+ * loopt daarom via de Admin-API. Ontbreekt de service-role sleutel, dan geven
+ * we `null` terug — "onbekend" — zodat de klantenkaart gewoon rendert en de
+ * knop niet ten onrechte meldt dat er niets ingesteld staat.
+ */
+export async function heeftTweestapsverificatie(
+  profileId: string,
+): Promise<boolean | null> {
+  try {
+    const admin = createAdminClient();
+    const { data, error } = await admin.auth.admin.mfa.listFactors({
+      userId: profileId,
+    });
+    if (error) return null;
+    return (data?.factors ?? []).length > 0;
+  } catch {
+    return null;
+  }
+}

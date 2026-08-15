@@ -21,7 +21,12 @@ import {
   NotitieFormulier,
 } from "@/features/crm/components/klant-acties";
 import { AdminAntwoordFormulier } from "@/features/messages/components/admin-antwoord";
-import { haalKlantDossier } from "@/features/crm";
+import {
+  BOEKING_LABEL,
+  formateerDag,
+  formateerTijd,
+} from "@/features/bookings";
+import { haalKlantDossier, heeftTweestapsverificatie } from "@/features/crm";
 import { SOORT_LABEL } from "@/features/requests";
 
 export const metadata: Metadata = {
@@ -41,12 +46,19 @@ export default async function KlantDetailPage({
   const dossier = await haalKlantDossier(id);
   if (!dossier) notFound();
 
-  const { profiel, inschrijvingen, notities, aanvragen, gesprek, voortgang } =
-    dossier;
-  const logboek = await haalAuditLog({
-    entiteitId: id,
-    limiet: 20,
-  });
+  const {
+    profiel,
+    inschrijvingen,
+    notities,
+    aanvragen,
+    gesprek,
+    voortgang,
+    boekingen,
+  } = dossier;
+  const [logboek, tweestaps] = await Promise.all([
+    haalAuditLog({ entiteitId: id, limiet: 20 }),
+    heeftTweestapsverificatie(id),
+  ]);
 
   const naam = `${profiel.voornaam} ${profiel.achternaam}`;
 
@@ -160,6 +172,38 @@ export default async function KlantDetailPage({
             </div>
           </Paneel>
 
+          {/* Boekingen -------------------------------------------------------- */}
+          <Paneel titel="Lessen">
+            {boekingen.length === 0 ? (
+              <LegeLijst>Deze klant heeft nog geen les geboekt.</LegeLijst>
+            ) : (
+              <ul className="divide-y divide-line">
+                {boekingen.map((boeking) => (
+                  <li
+                    key={boeking.id}
+                    className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-5 py-3"
+                  >
+                    <div className="min-w-0">
+                      <Link
+                        href={`/admin/lessen/${boeking.lesId}`}
+                        className="font-semibold text-green-dark hover:underline"
+                      >
+                        {boeking.lesTitel}
+                      </Link>
+                      <p className="text-sm text-muted first-letter:uppercase">
+                        {formateerDag(boeking.begintOp)} ·{" "}
+                        {formateerTijd(boeking.begintOp)} · {boeking.locatie}
+                      </p>
+                    </div>
+                    <span className="text-sm text-muted">
+                      {BOEKING_LABEL[boeking.status]}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Paneel>
+
           {/* Aanvragen -------------------------------------------------------- */}
           <Paneel titel="Aanvragen">
             {aanvragen.length === 0 ? (
@@ -264,6 +308,7 @@ export default async function KlantDetailPage({
                 profileId={profiel.id}
                 isActief={profiel.actief}
                 isAdmin={profiel.rol === "admin"}
+                heeftTweestaps={tweestaps}
               />
             </div>
           </Paneel>

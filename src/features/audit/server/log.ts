@@ -53,6 +53,8 @@ export type AuditActie =
   | "les_bijgewerkt"
   | "les_afgelast"
   | "aanwezigheid_gemarkeerd"
+  | "wachtwoordherstel_verstuurd"
+  | "tweestaps_hersteld"
   | "bewaartermijnen_opgeschoond";
 
 export async function schrijfAudit(

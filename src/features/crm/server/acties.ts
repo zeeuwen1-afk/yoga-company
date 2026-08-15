@@ -418,3 +418,128 @@ export async function wijzigRol(profileId: string, rol: "klant" | "admin") {
         : "De beheerdersrol is ingetrokken.",
   };
 }
+
+// --- Toegang herstellen ------------------------------------------------------
+
+/**
+ * Een wachtwoordherstelmail sturen namens de klant (bouwprompt §7.4).
+ *
+ * Bewust géén nieuw wachtwoord instellen en doorgeven. Dan zou de beheerder het
+ * wachtwoord van een klant kennen, en dat hoort niet: het account is van de
+ * klant. Deze route stuurt dezelfde link die de klant ook via "wachtwoord
+ * vergeten" krijgt, alleen dan op verzoek.
+ */
+export async function stuurWachtwoordHerstel(profileId: string) {
+  const context = await vereisAdmin();
+  if (!context) return GEEN_RECHTEN;
+
+  const { supabase, adminId } = context;
+
+  const { data: klant } = await supabase
+    .from("profiles")
+    .select("email, deleted_at")
+    .eq("id", profileId)
+    .maybeSingle();
+
+  if (!klant) {
+    return { status: "fout" as const, bericht: "Deze klant bestaat niet." };
+  }
+
+  if (klant.deleted_at) {
+    return {
+      status: "fout" as const,
+      bericht: "Dit account is gedeactiveerd. Activeer het eerst.",
+    };
+  }
+
+  const admin = createAdminClient();
+  const { error } = await admin.auth.resetPasswordForEmail(klant.email, {
+    redirectTo: `${publicEnv().NEXT_PUBLIC_SITE_URL}/wachtwoord-herstellen`,
+  });
+
+  if (error) {
+    return {
+      status: "fout" as const,
+      bericht: "De herstelmail kon niet worden verstuurd.",
+    };
+  }
+
+  await schrijfAudit(supabase, {
+    actorId: adminId,
+    actie: "wachtwoordherstel_verstuurd",
+    entiteit: "profiles",
+    entiteitId: profileId,
+  });
+
+  revalidatePath(`/admin/klanten/${profileId}`);
+  return {
+    status: "gelukt" as const,
+    bericht:
+      "De klant heeft een e-mail gekregen om een nieuw wachtwoord te kiezen.",
+  };
+}
+
+/**
+ * De tweestapsverificatie van een klant opnieuw laten instellen.
+ *
+ * Voor het geval iemand zijn telefoon kwijt is. De bestaande factoren gaan
+ * eraf; bij de volgende keer inloggen richt de klant hem opnieuw in. Voor
+ * beheerders is dat verplicht, voor klanten optioneel.
+ *
+ * Dit is een gevoelige handeling — hij haalt een beveiligingslaag weg — en gaat
+ * daarom altijd het logboek in.
+ */
+export async function herstelTweestapsverificatie(profileId: string) {
+  const context = await vereisAdmin();
+  if (!context) return GEEN_RECHTEN;
+
+  const { supabase, adminId } = context;
+  const admin = createAdminClient();
+
+  const { data: factoren, error: leesFout } =
+    await admin.auth.admin.mfa.listFactors({ userId: profileId });
+
+  if (leesFout) {
+    return {
+      status: "fout" as const,
+      bericht: "De tweestapsverificatie kon niet worden opgehaald.",
+    };
+  }
+
+  const lijst = factoren?.factors ?? [];
+
+  if (lijst.length === 0) {
+    return {
+      status: "fout" as const,
+      bericht: "Deze klant heeft geen tweestapsverificatie ingesteld.",
+    };
+  }
+
+  for (const factor of lijst) {
+    const { error } = await admin.auth.admin.mfa.deleteFactor({
+      userId: profileId,
+      id: factor.id,
+    });
+    if (error) {
+      return {
+        status: "fout" as const,
+        bericht: "Niet alle factoren konden worden verwijderd.",
+      };
+    }
+  }
+
+  await schrijfAudit(supabase, {
+    actorId: adminId,
+    actie: "tweestaps_hersteld",
+    entiteit: "profiles",
+    entiteitId: profileId,
+    meta: { aantal_factoren: lijst.length },
+  });
+
+  revalidatePath(`/admin/klanten/${profileId}`);
+  return {
+    status: "gelukt" as const,
+    bericht:
+      "De tweestapsverificatie is losgekoppeld. Bij de volgende keer inloggen stelt de klant hem opnieuw in.",
+  };
+}

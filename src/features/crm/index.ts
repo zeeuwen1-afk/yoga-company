@@ -4,6 +4,7 @@
 export {
   haalKlanten,
   haalKlantDossier,
+  heeftTweestapsverificatie,
   type KlantRij,
   type KlantFilter,
   type KlantDossier,
