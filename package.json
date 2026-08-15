@@ -20,6 +20,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:rls": "node scripts/rls-test.mjs",
+    "test:rls:project": "node scripts/rls-test.mjs --project",
     "brand:assets": "node scripts/brand-assets.mjs",
     "beeld:ophalen": "node scripts/beeld-ophalen.mjs",
     "db:migrate": "node scripts/db-migrate.mjs",

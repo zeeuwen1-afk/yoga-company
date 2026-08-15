@@ -8,7 +8,7 @@
  *
  *   pnpm db:seed-admin
  */
-import "dotenv/config";
+import "./omgeving.mjs";
 import { createClient } from "@supabase/supabase-js";
 
 function vereist(naam) {

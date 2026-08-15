@@ -9,7 +9,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
-import "dotenv/config";
+import "./omgeving.mjs";
 import pg from "pg";
 
 const MIGRATIONS_DIR = path.join(process.cwd(), "supabase", "migrations");
