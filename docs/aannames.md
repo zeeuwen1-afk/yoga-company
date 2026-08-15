@@ -201,3 +201,26 @@ plek is.
 De vier foto's komen van Unsplash en zijn **tijdelijk**, tot er eigen beeld is.
 Op Over ons staat bewust geen foto: die pagina moet persoonlijk zijn, en dat
 was ook de wens van de opdrachtgever.
+
+## A18 — Een ruimer klantdossier, inclusief gezondheid
+
+Op 15 augustus 2026 door de opdrachtgever gekozen. §8.1 van de bouwprompt
+verbiedt geboortedata en tracking-profielen; die keuze gaat daar bewust tegenin
+om klanten beter te kunnen volgen en bedienen.
+
+Wat wél is vastgehouden: elk veld heeft een doel, en dat staat bij de kolom in
+de migration. Gezondheidsgegevens zijn bijzondere persoonsgegevens en staan
+daarom in het aparte schema `sensitive` met uitdrukkelijke toestemming, een
+bewaartermijn van twee jaar en een auditregel bij elke inzage — precies zoals
+§8.3 voorschrijft voor de Eerst Jij-intake.
+
+## A19 — NAW-gegevens gaan niet naar de AI
+
+Ook een keuze van de opdrachtgever: het gespreksverslag krijgt de inhoud, niet
+de identiteit. Naam, e-mailadres, telefoonnummer, woonplaats en geboortedatum
+blijven op onze server; leeftijd, doelen, voortgang, notities en (optioneel)
+gezondheidsgegevens gaan wel mee.
+
+Belangrijk om te blijven weten: dat is pseudonimiseren, geen anonimiseren. Het
+blijft een verwerking van persoonsgegevens, dus een verwerkersovereenkomst met
+Anthropic is nodig. Zie `docs/klantdossier.md`.

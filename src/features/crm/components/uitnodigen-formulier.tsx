@@ -51,6 +51,34 @@ export function UitnodigenFormulier() {
         </div>
       </div>
 
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <Label htmlFor="uitn-telefoon">Telefoonnummer (optioneel)</Label>
+          <Input id="uitn-telefoon" name="phone" />
+        </div>
+        <div>
+          <Label htmlFor="uitn-woonplaats">Woonplaats (optioneel)</Label>
+          <Input id="uitn-woonplaats" name="city" />
+        </div>
+      </div>
+
+      <div>
+        <Label htmlFor="uitn-gevonden">
+          Hoe heeft deze persoon ons gevonden? (optioneel)
+        </Label>
+        <Input
+          id="uitn-gevonden"
+          name="how_found"
+          placeholder="Via een vriendin, Google, Instagram…"
+        />
+      </div>
+
+      <p className="text-sm text-muted">
+        De rest — geboortedatum, ervaring, doelen, interesses en eventuele
+        gezondheidsgegevens — vul je aan op de klantenkaart, zodra je die
+        informatie hebt.
+      </p>
+
       <SubmitButton bezigLabel="Versturen…">Uitnodiging versturen</SubmitButton>
 
       <p className="text-sm text-muted">

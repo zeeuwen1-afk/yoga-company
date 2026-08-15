@@ -55,6 +55,10 @@ const uitnodigingSchema = z.object({
     .toLowerCase(),
   first_name: z.string().trim().min(1, "Vul een voornaam in").max(80),
   last_name: z.string().trim().min(1, "Vul een achternaam in").max(80),
+  // Optioneel bij het uitnodigen; de rest vul je later op de klantenkaart aan.
+  phone: z.string().trim().max(30).optional().or(z.literal("")),
+  city: z.string().trim().max(80).optional().or(z.literal("")),
+  how_found: z.string().trim().max(120).optional().or(z.literal("")),
   rol: z.enum(["klant", "admin"]).default("klant"),
 });
 
@@ -118,6 +122,18 @@ export async function nodigKlantUit(
     };
   }
 
+  // De trigger heeft het profiel al aangemaakt met naam en e-mail; wat de
+  // beheerder verder invulde zetten we er nu bij.
+  const extra = {
+    phone: parsed.data.phone || null,
+    city: parsed.data.city || null,
+    how_found: parsed.data.how_found || null,
+  };
+
+  if (Object.values(extra).some(Boolean)) {
+    await supabase.from("profiles").update(extra).eq("id", data.user.id);
+  }
+
   if (parsed.data.rol === "admin") {
     await supabase.rpc("zet_profiel_rol", {
       p_profile_id: data.user.id,
@@ -142,11 +158,31 @@ export async function nodigKlantUit(
 
 // --- Gegevens bijwerken ------------------------------------------------------
 
+const leeg = (max: number) =>
+  z.string().trim().max(max).optional().or(z.literal(""));
+
+/**
+ * De velden die een beheerder mag vastleggen. Elk veld heeft een doel; dat
+ * staat in de migration. Gezondheid staat hier bewust níét tussen — dat zijn
+ * bijzondere persoonsgegevens en die gaan via `bewaarGezondheid`.
+ */
 const klantSchema = z.object({
   profile_id: z.uuid(),
   first_name: z.string().trim().min(1, "Vul een voornaam in").max(80),
   last_name: z.string().trim().min(1, "Vul een achternaam in").max(80),
-  phone: z.string().trim().max(30).optional().or(z.literal("")),
+  phone: leeg(30),
+  birth_date: z
+    .string()
+    .trim()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Gebruik de vorm jjjj-mm-dd")
+    .optional()
+    .or(z.literal("")),
+  city: leeg(80),
+  how_found: leeg(120),
+  experience_level: leeg(120),
+  goals: leeg(1500),
+  // Komma's scheiden de onderwerpen; dat typt prettiger dan losse velden.
+  interests: leeg(500),
 });
 
 export async function werkKlantBij(
@@ -173,6 +209,15 @@ export async function werkKlantBij(
       first_name: parsed.data.first_name,
       last_name: parsed.data.last_name,
       phone: parsed.data.phone || null,
+      birth_date: parsed.data.birth_date || null,
+      city: parsed.data.city || null,
+      how_found: parsed.data.how_found || null,
+      experience_level: parsed.data.experience_level || null,
+      goals: parsed.data.goals || null,
+      interests: (parsed.data.interests ?? "")
+        .split(",")
+        .map((woord) => woord.trim())
+        .filter(Boolean),
     })
     .eq("id", parsed.data.profile_id);
 
@@ -190,7 +235,19 @@ export async function werkKlantBij(
     entiteitId: parsed.data.profile_id,
     // Welke velden zijn aangeraakt, niet wat erin staat: het log hoort geen
     // tweede kopie van de persoonsgegevens te worden.
-    meta: { velden: ["first_name", "last_name", "phone"] },
+    meta: {
+      velden: [
+        "first_name",
+        "last_name",
+        "phone",
+        "birth_date",
+        "city",
+        "how_found",
+        "experience_level",
+        "goals",
+        "interests",
+      ],
+    },
   });
 
   revalidatePath(`/admin/klanten/${parsed.data.profile_id}`);
@@ -332,7 +389,9 @@ export async function verwijderKlantAvg(
 
 const notitieSchema = z.object({
   profile_id: z.uuid(),
-  body: z.string().trim().min(1, "Schrijf eerst een notitie").max(3000),
+  body: z.string().trim().min(1, "Schrijf eerst iets").max(8000),
+  kind: z.enum(["notitie", "verslag"]).default("notitie"),
+  title: z.string().trim().max(160).optional().or(z.literal("")),
 });
 
 export async function voegNotitieToe(
@@ -359,6 +418,8 @@ export async function voegNotitieToe(
     profile_id: parsed.data.profile_id,
     author_id: adminId,
     body: parsed.data.body,
+    kind: parsed.data.kind,
+    title: parsed.data.title || null,
   });
 
   if (error) {
@@ -376,7 +437,13 @@ export async function voegNotitieToe(
   });
 
   revalidatePath(`/admin/klanten/${parsed.data.profile_id}`);
-  return { status: "gelukt", bericht: "Notitie opgeslagen." };
+  return {
+    status: "gelukt",
+    bericht:
+      parsed.data.kind === "verslag"
+        ? "Verslag opgeslagen."
+        : "Notitie opgeslagen.",
+  };
 }
 
 // --- Rol wijzigen ------------------------------------------------------------

@@ -18,7 +18,6 @@ import {
   AccountSchakelaars,
   AvgVerwijderen,
   GegevensBewerken,
-  NotitieFormulier,
 } from "@/features/crm/components/klant-acties";
 import { AdminAntwoordFormulier } from "@/features/messages/components/admin-antwoord";
 import {
@@ -26,7 +25,20 @@ import {
   formateerDag,
   formateerTijd,
 } from "@/features/bookings";
-import { haalKlantDossier, heeftTweestapsverificatie } from "@/features/crm";
+import {
+  haalAnalyses,
+  haalGezondheid,
+  haalKlantDossier,
+  heeftTweestapsverificatie,
+  voegNotitieToe,
+} from "@/features/crm";
+import {
+  Gespreksverslag,
+  Gezondheid,
+  NotitieOfVerslag,
+  VerwijderVerslag,
+} from "@/features/crm/components/dossier-acties";
+import { aiIngericht } from "@/lib/anthropic";
 import { SOORT_LABEL } from "@/features/requests";
 
 export const metadata: Metadata = {
@@ -55,10 +67,13 @@ export default async function KlantDetailPage({
     voortgang,
     boekingen,
   } = dossier;
-  const [logboek, tweestaps] = await Promise.all([
+  const [logboek, tweestaps, gezondheid, analyses] = await Promise.all([
     haalAuditLog({ entiteitId: id, limiet: 20 }),
     heeftTweestapsverificatie(id),
+    haalGezondheid(id),
+    haalAnalyses(id),
   ]);
+  const aiAan = aiIngericht();
 
   const naam = `${profiel.voornaam} ${profiel.achternaam}`;
 
@@ -232,10 +247,49 @@ export default async function KlantDetailPage({
             )}
           </Paneel>
 
-          {/* Notities --------------------------------------------------------- */}
-          <Paneel titel="Interne notities">
+          {/* Gezondheid ------------------------------------------------------- */}
+          <Paneel titel="Gezondheid">
             <div className="p-5">
-              <NotitieFormulier profileId={profiel.id} />
+              <Gezondheid profileId={profiel.id} bestaand={gezondheid} />
+            </div>
+          </Paneel>
+
+          {/* Gespreksverslag -------------------------------------------------- */}
+          <Paneel titel="Gespreksverslag">
+            <div className="space-y-5 p-5">
+              <Gespreksverslag
+                profileId={profiel.id}
+                heeftGezondheid={gezondheid !== null}
+                aiIngericht={aiAan}
+              />
+
+              {analyses.length > 0 ? (
+                <ul className="space-y-4 border-t border-line pt-5">
+                  {analyses.map((analyse) => (
+                    <li key={analyse.id}>
+                      <div className="flex flex-wrap items-baseline justify-between gap-2">
+                        <p className="text-sm text-muted">
+                          {datumKort(analyse.gemaaktOp)}
+                          {analyse.bevatGezondheid
+                            ? " · met gezondheidsgegevens"
+                            : ""}
+                        </p>
+                        <VerwijderVerslag analyseId={analyse.id} />
+                      </div>
+                      <div className="mt-2 rounded-[var(--radius-card)] border border-line bg-cream p-4 text-sm whitespace-pre-wrap">
+                        {analyse.tekst}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          </Paneel>
+
+          {/* Notities en verslagen -------------------------------------------- */}
+          <Paneel titel="Notities en verslagen">
+            <div className="p-5">
+              <NotitieOfVerslag profileId={profiel.id} actie={voegNotitieToe} />
 
               {notities.length > 0 ? (
                 <ul className="mt-5 divide-y divide-line">
@@ -265,6 +319,12 @@ export default async function KlantDetailPage({
                 voornaam={profiel.voornaam}
                 achternaam={profiel.achternaam}
                 telefoon={profiel.telefoon}
+                geboortedatum={profiel.geboortedatum}
+                woonplaats={profiel.woonplaats}
+                hoeGevonden={profiel.hoeGevonden}
+                ervaring={profiel.ervaring}
+                doelen={profiel.doelen}
+                interesses={profiel.interesses}
               />
             </div>
           </Paneel>

@@ -12,15 +12,15 @@ naar verwijst.
 
 ## 1. Waar de gegevens staan
 
-| Waar                | Regio                     | Wat                                                                  |
-| ------------------- | ------------------------- | -------------------------------------------------------------------- |
-| Supabase (Postgres) | Frankfurt, `eu-central-1` | Alle klantgegevens                                                   |
-| Supabase Storage    | Frankfurt, `eu-central-1` | Beeldmateriaal en cursusmateriaal                                    |
-| Vercel              | `fra1` (Frankfurt)        | De applicatie; geen opslag van gegevens                              |
-| Mollie              | Amsterdam, EU             | Betaalgegevens (wij bewaren alleen een referentie)                   |
-| Resend              | EU/VS                     | Verzending van e-mail                                                |
-| Anthropic           | VS                        | Alleen het onderwerp van een socialmediabericht; nooit klantgegevens |
-| Meta                | VS                        | Alleen wat de beheerder zelf publiceert                              |
+| Waar                | Regio                     | Wat                                                                                     |
+| ------------------- | ------------------------- | --------------------------------------------------------------------------------------- |
+| Supabase (Postgres) | Frankfurt, `eu-central-1` | Alle klantgegevens                                                                      |
+| Supabase Storage    | Frankfurt, `eu-central-1` | Beeldmateriaal en cursusmateriaal                                                       |
+| Vercel              | `fra1` (Frankfurt)        | De applicatie; geen opslag van gegevens                                                 |
+| Mollie              | Amsterdam, EU             | Betaalgegevens (wij bewaren alleen een referentie)                                      |
+| Resend              | EU/VS                     | Verzending van e-mail                                                                   |
+| Anthropic           | VS                        | Socialmediateksten, en gepseudonimiseerde klantdossiers voor het gespreksverslag (§7.4) |
+| Meta                | VS                        | Alleen wat de beheerder zelf publiceert                                                 |
 
 Kaart- en rekeninggegevens komen nooit in onze database. Mollie is daarvan de
 enige bron; wij bewaren de referentie, het bedrag en de status.
@@ -108,15 +108,30 @@ klantenbestand zijn.
 
 ---
 
-## 5. De AI-socialmediatool (§15)
+## 5. Wat er naar Anthropic gaat
 
-Naar Anthropic gaat uitsluitend wat de beheerder zelf intypt als onderwerp van
-een bericht, plus de vaste instructie. Er gaan **geen klantgegevens** naartoe:
-geen namen, geen e-mailadressen, geen inschrijvingen. De gegenereerde tekst komt
-terug en wordt in `social_posts` bewaard.
+### De socialmediatool (§15)
 
-Neem in het onderwerpveld dus nooit persoonsgegevens op. Het scherm vraagt om
-een omschrijving van het bericht, niet om klantinformatie.
+Uitsluitend wat de beheerder zelf intypt als onderwerp van een bericht, plus de
+vaste instructie. Geen klantgegevens. Neem in het onderwerpveld dus nooit
+persoonsgegevens op; het scherm vraagt om een omschrijving van het bericht, niet
+om klantinformatie.
+
+### Het gespreksverslag (§7.4) — sinds 15 augustus 2026
+
+Hier gaan **wél** klantgegevens naartoe, gepseudonimiseerd. Niet mee: naam,
+e-mailadres, telefoonnummer, woonplaats en geboortedatum. Wel mee: leeftijd,
+ervaring, doelen, interesses, inschrijvingen, voortgang, boekingen, en de
+notities en verslagen. Gezondheidsgegevens alleen wanneer de beheerder dat per
+keer aanvinkt.
+
+**Pseudonimiseren is geen anonimiseren.** Een uitgebreid profiel kan indirect
+nog steeds naar één persoon leiden, dus dit blijft een verwerking van
+persoonsgegevens door een derde partij. Er is een verwerkersovereenkomst met
+Anthropic voor nodig, en de privacyverklaring benoemt het.
+
+`src/features/crm/server/analyse.test.ts` legt vast wat er níét uit mag; de
+volledige uitleg staat in `docs/klantdossier.md`.
 
 ---
 

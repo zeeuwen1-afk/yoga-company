@@ -98,7 +98,7 @@ export async function haalKlantDossier(profileId: string) {
     supabase
       .from("profiles")
       .select(
-        "id, first_name, last_name, email, phone, role, deleted_at, marketing_consent_at, created_at",
+        "id, first_name, last_name, email, phone, role, deleted_at, marketing_consent_at, created_at, birth_date, city, how_found, experience_level, goals, interests",
       )
       .eq("id", profileId)
       .maybeSingle(),
@@ -112,7 +112,7 @@ export async function haalKlantDossier(profileId: string) {
     supabase
       .from("crm_notes")
       .select(
-        "id, body, created_at, profiles!crm_notes_author_id_fkey (first_name, last_name)",
+        "id, body, kind, title, created_at, profiles!crm_notes_author_id_fkey (first_name, last_name)",
       )
       .eq("profile_id", profileId)
       .order("created_at", { ascending: false }),
@@ -162,6 +162,12 @@ export async function haalKlantDossier(profileId: string) {
       achternaam: profiel.data.last_name,
       email: profiel.data.email,
       telefoon: profiel.data.phone,
+      geboortedatum: profiel.data.birth_date,
+      woonplaats: profiel.data.city,
+      hoeGevonden: profiel.data.how_found,
+      ervaring: profiel.data.experience_level,
+      doelen: profiel.data.goals,
+      interesses: profiel.data.interests ?? [],
       rol: profiel.data.role,
       actief: profiel.data.deleted_at === null,
       gedeactiveerdOp: profiel.data.deleted_at,
@@ -186,6 +192,8 @@ export async function haalKlantDossier(profileId: string) {
     }),
     notities: (notities.data ?? []).map((rij) => ({
       id: rij.id,
+      soort: rij.kind,
+      titel: rij.title,
       tekst: rij.body,
       geschrevenOp: rij.created_at,
       auteur: eenNaam(rij.profiles),
@@ -267,4 +275,49 @@ export async function heeftTweestapsverificatie(
   } catch {
     return null;
   }
+}
+
+/**
+ * De gezondheidsgegevens van een klant.
+ *
+ * Loopt via `haal_gezondheid`, want het schema `sensitive` is niet via de API
+ * bereikbaar. Die functie controleert zelf of de aanroeper beheerder is en
+ * schrijft de inzage in het audit log (§8.3).
+ */
+export async function haalGezondheid(profileId: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.rpc("haal_gezondheid", {
+    p_profile_id: profileId,
+  });
+
+  if (error || !data || data.length === 0) return null;
+
+  const rij = data[0];
+  return {
+    tekst: rij.body,
+    toestemmingOp: rij.consent_at,
+    toestemmingNotitie: rij.consent_note,
+    bijgewerktOp: rij.updated_at,
+  };
+}
+
+/** De eerder gemaakte gespreksverslagen, nieuwste eerst. */
+export async function haalAnalyses(profileId: string) {
+  const supabase = await createClient();
+
+  const { data } = await supabase
+    .from("crm_analyses")
+    .select("id, body, model, bevat_gezondheid, created_at")
+    .eq("profile_id", profileId)
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  return (data ?? []).map((rij) => ({
+    id: rij.id,
+    tekst: rij.body,
+    model: rij.model,
+    bevatGezondheid: rij.bevat_gezondheid,
+    gemaaktOp: rij.created_at,
+  }));
 }

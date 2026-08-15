@@ -75,6 +75,13 @@ export type Profile = {
   last_name: string;
   email: string;
   phone: string | null;
+  /** Zie de migration 20260815090000 voor het doel van elk veld hieronder. */
+  birth_date: string | null;
+  city: string | null;
+  how_found: string | null;
+  experience_level: string | null;
+  goals: string | null;
+  interests: string[];
   marketing_consent_at: string | null;
   created_at: string;
   deleted_at: string | null;
@@ -261,11 +268,29 @@ export type OrderItem = {
   quantity: number;
 };
 
+export type CrmNoteKind = "notitie" | "verslag";
+
 export type CrmNote = {
   id: string;
   profile_id: string;
   author_id: string;
   body: string;
+  kind: CrmNoteKind;
+  title: string | null;
+  created_at: string;
+};
+
+/**
+ * Een door de AI geschreven gespreksverslag. Uitsluitend voor de beheerder;
+ * die bepaalt wat hij ervan met de klant deelt.
+ */
+export type CrmAnalyse = {
+  id: string;
+  profile_id: string;
+  body: string;
+  model: string;
+  bevat_gezondheid: boolean;
+  created_by: string | null;
   created_at: string;
 };
 
@@ -410,6 +435,13 @@ export type Database = {
           FK<"order_items_course_id_fkey", "course_id", "courses">,
         ]
       >;
+      crm_analyses: Table<
+        CrmAnalyse,
+        [
+          FK<"crm_analyses_profile_id_fkey", "profile_id", "profiles">,
+          FK<"crm_analyses_created_by_fkey", "created_by", "profiles">,
+        ]
+      >;
       class_sessions: Table<ClassSession>;
       bookings: Table<
         Booking,
@@ -452,6 +484,27 @@ export type Database = {
       };
       // Lesrooster. Boeken en annuleren lopen bewust via functies: alleen zo
       // is de capaciteit onder gelijktijdige boekers houdbaar.
+      // Gezondheidsgegevens staan in het schema `sensitive`, dat niet via de
+      // API bereikbaar is. Deze twee functies zijn de enige ingang en loggen
+      // elke inzage en wijziging (§8.3).
+      haal_gezondheid: {
+        Args: { p_profile_id: string };
+        Returns: {
+          body: string;
+          consent_at: string;
+          consent_note: string | null;
+          updated_at: string;
+          updated_by: string | null;
+        }[];
+      };
+      bewaar_gezondheid: {
+        Args: {
+          p_profile_id: string;
+          p_body: string;
+          p_consent_note?: string | null;
+        };
+        Returns: undefined;
+      };
       vrije_plekken: { Args: { p_session_id: string }; Returns: number };
       boek_les: { Args: { p_session_id: string }; Returns: BookingStatus };
       annuleer_boeking: { Args: { p_session_id: string }; Returns: undefined };
@@ -476,6 +529,7 @@ export type Database = {
       content_kind: ContentKind;
       post_status: PostStatus;
       booking_status: BookingStatus;
+      crm_note_kind: CrmNoteKind;
       order_status: OrderStatus;
     };
     CompositeTypes: Record<string, never>;

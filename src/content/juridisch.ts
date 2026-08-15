@@ -50,7 +50,7 @@ const PRIVACY = `
 <li><strong>Vercel</strong> — hosting van de website (regio Frankfurt, EU)</li>
 <li><strong>Mollie</strong> — betalingen (Amsterdam, EU)</li>
 <li><strong>Resend</strong> — verzenden van e-mail</li>
-<li><strong>Anthropic</strong> — hulp bij het opstellen van berichten voor sociale media; hier gaan geen klantgegevens naartoe</li>
+<li><strong>Anthropic</strong> — hulp bij het opstellen van berichten voor sociale media, en bij het maken van een gespreksverslag voor je begeleiding. Voor dat verslag gaan je naam, e-mailadres, telefoonnummer en woonplaats <strong>niet</strong> mee; wel je leeftijd, je doelen, je voortgang en de aantekeningen die wij bij je hebben gemaakt. Heb je toestemming gegeven voor het vastleggen van gezondheidsinformatie, dan gaat die alleen mee als dat voor dat verslag nodig is</li>
 <li><strong>Meta</strong> — alleen wanneer wij zelf iets plaatsen op Facebook of Instagram</li>
 </ul>
 
