@@ -1,5 +1,8 @@
 import { expect, test } from "@playwright/test";
 
+/** Gezet door playwright.config.ts: draaien we tegen een echte build? */
+const PRODUCTIEBUILD = process.env.E2E_PRODUCTIEBUILD === "1";
+
 test.describe("Fundament", () => {
   test("de landingspagina rendert met kop, navigatie en footer", async ({
     page,
@@ -30,7 +33,17 @@ test.describe("Fundament", () => {
     expect(achtergrond).toBe("rgb(246, 250, 249)");
   });
 
+  /**
+   * De styleguide is een hulpmiddel voor het bouwen en hoort niet op een
+   * openbare server. `/dev/styleguide` geeft in een productiebuild dan ook een
+   * 404. Allebei die eigenschappen worden hier vastgelegd, elk in de omgeving
+   * waar hij geldt.
+   */
   test("de styleguide toont de kleurtokens", async ({ page }) => {
+    test.skip(
+      PRODUCTIEBUILD,
+      "In een productiebuild bestaat de styleguide bewust niet.",
+    );
     await page.goto("/dev/styleguide");
 
     await expect(
@@ -39,6 +52,18 @@ test.describe("Fundament", () => {
     await expect(
       page.getByText("--color-green", { exact: true }),
     ).toBeVisible();
+  });
+
+  test("de styleguide bestaat niet op een productieserver", async ({
+    page,
+  }) => {
+    test.skip(
+      !PRODUCTIEBUILD,
+      "Alleen zinvol tegen een productiebuild; lokaal draait de ontwikkelserver.",
+    );
+    const antwoord = await page.goto("/dev/styleguide");
+
+    expect(antwoord?.status()).toBe(404);
   });
 
   test("een onbekend adres toont een Nederlandse 404 met navigatie", async ({

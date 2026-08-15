@@ -2,6 +2,26 @@ import { defineConfig, devices } from "@playwright/test";
 
 const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
 
+/**
+ * Tegen een productiebuild of tegen de ontwikkelserver?
+ *
+ * Lokaal `next dev`: je wilt een wijziging meteen kunnen natrekken zonder eerst
+ * te bouwen. Op CI een echte build, om twee redenen.
+ *
+ * De eerste is betrouwbaarheid. `next dev` compileert een route pas bij het
+ * eerste bezoek. Op de trage machine van GitHub duurt dat lang genoeg om tests
+ * te laten omvallen die niets mankeren — de eerste twee keer dat de pijplijn
+ * draaide gebeurde precies dat, beide keren bij een andere test, en beide keren
+ * was elke fout een verlopen `page.goto`. Zulke roodkleuringen zijn erger dan
+ * geen tests: je leert ze wegwuiven.
+ *
+ * De tweede weegt zwaarder: zo testen we wat er ook echt op de server draait.
+ * Een productiebuild gedraagt zich anders dan de ontwikkelserver, en juist die
+ * verschillen wil je vóór de livegang tegenkomen.
+ */
+const productiebuild = !!process.env.CI;
+process.env.E2E_PRODUCTIEBUILD = productiebuild ? "1" : "";
+
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
@@ -41,9 +61,10 @@ export default defineConfig({
     { name: "mobiel", use: { ...devices["iPhone 13"] } },
   ],
   webServer: {
-    command: "pnpm dev",
+    command: productiebuild ? "pnpm build && pnpm start" : "pnpm dev",
     url: baseURL,
     reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
+    // De build zelf zit in deze tijd inbegrepen.
+    timeout: productiebuild ? 300_000 : 120_000,
   },
 });
