@@ -103,8 +103,8 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "image",
     omschrijving: "Foto naast de hero",
     value: {
-      url: "/beeld/hero-gordijn.jpg",
-      alt: "De schaduw van een plant op een linnen gordijn",
+      url: "/beeld/hero-vloer.jpg",
+      alt: "Zonlicht valt door een raam op een houten vloer",
     },
   },
 
@@ -246,8 +246,8 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "image",
     omschrijving: "Sfeerbeeld boven het overzicht",
     value: {
-      url: "/beeld/opleidingen-lattenwand.jpg",
-      alt: "Zacht licht op een wand van verticale houten latten",
+      url: "/beeld/opleidingen-zaal.jpg",
+      alt: "Een zaal met yogamatten en blokken klaargelegd, zonder deelnemers",
     },
   },
   {

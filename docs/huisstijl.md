@@ -83,12 +83,12 @@ domein serveert — er gaat dus geen bezoekersverzoek naar Google.
 Vier foto's op de hele site. Bewust weinig: ze horen een pagina te openen, niet
 te overstemmen.
 
-| Waar                             | Bestand                      | Blok in de site-editor           |
-| -------------------------------- | ---------------------------- | -------------------------------- |
-| Startpagina, naast de hero       | `hero-gordijn.jpg`           | Startpagina → Foto naast de hero |
-| Opleidingen, boven het overzicht | `opleidingen-lattenwand.jpg` | Opleidingen → Sfeerbeeld         |
-| Lessen, boven het rooster        | `lessen-studio.jpg`          | Lessen → Sfeerbeeld              |
-| Trainingen, boven het overzicht  | `trainingen-blad.jpg`        | Trainingen → Sfeerbeeld          |
+| Waar                             | Bestand                | Blok in de site-editor           |
+| -------------------------------- | ---------------------- | -------------------------------- |
+| Startpagina, naast de hero       | `hero-vloer.jpg`       | Startpagina → Foto naast de hero |
+| Opleidingen, boven het overzicht | `opleidingen-zaal.jpg` | Opleidingen → Sfeerbeeld         |
+| Lessen, boven het rooster        | `lessen-studio.jpg`    | Lessen → Sfeerbeeld              |
+| Trainingen, boven het overzicht  | `trainingen-blad.jpg`  | Trainingen → Sfeerbeeld          |
 
 Ze staan als CMS-blok in de site-editor, dus ze zijn te vervangen zonder mij en
 zonder uitrol.
@@ -96,9 +96,13 @@ zonder uitrol.
 ## Geen mensen, en geen portret op Over ons
 
 Geposeerde yogamodellen zijn direct herkenbaar als stock en beloven een studio
-die er niet zo uitziet. Deze vier zijn detailbeelden: licht op linnen, een
-houten lattenwand, een stille ruimte, bladschaduw. Die dragen dezelfde rust,
-verouderen niet en botsen straks niet met echte foto's van de eigen studio.
+die er niet zo uitziet. Deze vier tonen ruimte en materiaal: zonlicht op een
+houten vloer, een zaal met matten en blokken klaargelegd, een stille hoek, en
+bladschaduw. Warm en tastbaar, zonder gezichten die niet van jullie zijn.
+
+De zaal op **Opleidingen** is bewust wél een yogazaal: die pagina verkoopt de
+opleiding, en dan helpt het als je ziet waar je terechtkomt. De andere drie
+blijven abstracter, zodat ze niet met elkaar concurreren.
 
 Op **Over ons** staat bewust geen foto. Die pagina moet persoonlijk zijn en een
 gekochte portretfoto werkt daar averechts.
@@ -109,12 +113,12 @@ Alle vier van [Unsplash](https://unsplash.com), onder de Unsplash-licentie:
 vrij te gebruiken, ook commercieel, zonder naamsvermelding. Beelden onder
 Unsplash+ zijn bewust niet gebruikt — die vragen een betaald abonnement.
 
-| Bestand                      | Fotograaf      | Bron                                    |
-| ---------------------------- | -------------- | --------------------------------------- |
-| `hero-gordijn.jpg`           | Saad Ahmad     | https://unsplash.com/photos/3VSa5sbvdpc |
-| `opleidingen-lattenwand.jpg` | Declan Sun     | https://unsplash.com/photos/HjSkMsTvaPo |
-| `lessen-studio.jpg`          | Daniel Chen    | https://unsplash.com/photos/SoNaNOFT974 |
-| `trainingen-blad.jpg`        | Milad Fakurian | https://unsplash.com/photos/UqP7U400AZs |
+| Bestand                | Fotograaf        | Bron                                    |
+| ---------------------- | ---------------- | --------------------------------------- |
+| `hero-vloer.jpg`       | Leyla M          | https://unsplash.com/photos/PIeJKS6-h0E |
+| `opleidingen-zaal.jpg` | Olga Pukhalskaya | https://unsplash.com/photos/dwka5DDrnY0 |
+| `lessen-studio.jpg`    | Daniel Chen      | https://unsplash.com/photos/SoNaNOFT974 |
+| `trainingen-blad.jpg`  | Milad Fakurian   | https://unsplash.com/photos/UqP7U400AZs |
 
 De fotograaf staat erbij omdat dat hoort, ook al hoeft het niet.
 

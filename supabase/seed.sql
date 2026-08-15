@@ -714,7 +714,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'hero_beeld', 'image', '{"url":"/beeld/hero-gordijn.jpg","alt":"De schaduw van een plant op een linnen gordijn"}'::jsonb)
+values ('home', 'hero_beeld', 'image', '{"url":"/beeld/hero-vloer.jpg","alt":"Zonlicht valt door een raam op een houten vloer"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -786,7 +786,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('opleidingen', 'beeld', 'image', '{"url":"/beeld/opleidingen-lattenwand.jpg","alt":"Zacht licht op een wand van verticale houten latten"}'::jsonb)
+values ('opleidingen', 'beeld', 'image', '{"url":"/beeld/opleidingen-zaal.jpg","alt":"Een zaal met yogamatten en blokken klaargelegd, zonder deelnemers"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
