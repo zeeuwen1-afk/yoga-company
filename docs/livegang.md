@@ -14,16 +14,17 @@ partij, **[ik]** is code en controles.
 
 ## Waar we nu staan
 
+Bijgewerkt op 15 augustus 2026, aan het eind van de dag.
+
 |                            |                                                                        |
 | -------------------------- | ---------------------------------------------------------------------- |
 | Alle 10 migrations         | staan op het echte Supabase-project                                    |
 | `pnpm verify`              | groen (typecheck, lint, opmaak, 63 unittests, 206 RLS-controles, seed) |
-| Inhoud in de live database | **leeg** — 0 opleidingen, 0 tekstblokken                               |
-| Testpijplijn (CI)          | heeft nog nooit gedraaid                                               |
+| Testpijplijn (CI)          | **groen**, beide taken — voor het eerst                                |
+| Inhoud in de live database | **gevuld** — 7 opleidingen, 42 tekstblokken                            |
+| Beveiliging in productie   | nagelopen, alles zoals ontworpen (fase E4)                             |
+| Beheerdersaccount          | nog alleen testaccounts                                                |
 | Online                     | nergens                                                                |
-
-Twee sleutels ontbreken, en die blokkeren bijna alles: zonder de service-role
-sleutel kan er niets in de database worden gezet en werkt het beheer niet.
 
 ---
 
