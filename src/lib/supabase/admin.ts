@@ -27,3 +27,15 @@ export function createAdminClient() {
     },
   );
 }
+
+/**
+ * Is de service-role sleutel er?
+ *
+ * Handelingen die deze client nodig hebben — uitnodigen, wachtwoordherstel,
+ * tweestapsverificatie loskoppelen, AVG-verwijdering — kunnen zonder die
+ * sleutel niet. Zonder deze controle gooit `serverEnv()` een fout en krijgt de
+ * beheerder een klapper in plaats van uitleg.
+ */
+export function serviceRoleBeschikbaar(): boolean {
+  return Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY?.trim());
+}

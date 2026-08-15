@@ -1,6 +1,9 @@
 import "server-only";
 
-import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  createAdminClient,
+  serviceRoleBeschikbaar,
+} from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import type { EnrollmentStatus, UserRole } from "@/lib/supabase/types";
 
@@ -265,6 +268,8 @@ export type KlantDossier = NonNullable<
 export async function heeftTweestapsverificatie(
   profileId: string,
 ): Promise<boolean | null> {
+  if (!serviceRoleBeschikbaar()) return null;
+
   try {
     const admin = createAdminClient();
     const { data, error } = await admin.auth.admin.mfa.listFactors({

@@ -5,7 +5,10 @@ import { z } from "zod";
 
 import { schrijfAudit } from "@/features/audit";
 import { publicEnv } from "@/lib/env";
-import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  createAdminClient,
+  serviceRoleBeschikbaar,
+} from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
 
@@ -500,6 +503,14 @@ export async function stuurWachtwoordHerstel(profileId: string) {
   const context = await vereisAdmin();
   if (!context) return GEEN_RECHTEN;
 
+  if (!serviceRoleBeschikbaar()) {
+    return {
+      status: "fout" as const,
+      bericht:
+        "Hiervoor is de service-role sleutel van Supabase nodig; die staat nog niet in .env.local. Zie docs/supabase-project.md.",
+    };
+  }
+
   const { supabase, adminId } = context;
 
   const { data: klant } = await supabase
@@ -559,6 +570,14 @@ export async function stuurWachtwoordHerstel(profileId: string) {
 export async function herstelTweestapsverificatie(profileId: string) {
   const context = await vereisAdmin();
   if (!context) return GEEN_RECHTEN;
+
+  if (!serviceRoleBeschikbaar()) {
+    return {
+      status: "fout" as const,
+      bericht:
+        "Hiervoor is de service-role sleutel van Supabase nodig; die staat nog niet in .env.local. Zie docs/supabase-project.md.",
+    };
+  }
 
   const { supabase, adminId } = context;
   const admin = createAdminClient();
