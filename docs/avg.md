@@ -60,7 +60,7 @@ het bewijs dat de termijnen daadwerkelijk worden uitgevoerd.
 
 ```bash
 curl -H "Authorization: Bearer $CRON_SECRET" \
-  https://yogacompanie.nl/api/v1/cron/opschonen
+  https://yogacompany.eu/api/v1/cron/opschonen
 ```
 
 Zonder of met een verkeerd geheim antwoordt de route `404` — dan bestaat hij

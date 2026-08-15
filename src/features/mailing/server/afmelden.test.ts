@@ -14,7 +14,7 @@ const ANDER = "22222222-2222-2222-2222-222222222222";
 describe("afmeldtoken", () => {
   beforeEach(() => {
     process.env.MAILING_UNSUBSCRIBE_SECRET = "test-geheim-voor-de-unit-tests";
-    process.env.NEXT_PUBLIC_SITE_URL = "https://yogacompanie.nl";
+    process.env.NEXT_PUBLIC_SITE_URL = "https://yogacompany.eu";
   });
 
   afterEach(() => {
@@ -56,7 +56,7 @@ describe("afmeldtoken", () => {
 
   it("bouwt een volledige afmeldlink op de eigen site", () => {
     const url = afmeldUrl(PROFIEL);
-    expect(url.startsWith("https://yogacompanie.nl/afmelden/")).toBe(true);
+    expect(url.startsWith("https://yogacompany.eu/afmelden/")).toBe(true);
     expect(leesAfmeldToken(url.split("/afmelden/")[1])).toBe(PROFIEL);
   });
 

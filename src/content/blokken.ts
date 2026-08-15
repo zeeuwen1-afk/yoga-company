@@ -371,7 +371,7 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving: "Contactgegevens naast het formulier",
     value: {
       items: [
-        { label: "E-mail", waarde: "info@yogacompanie.nl" },
+        { label: "E-mail", waarde: "info@yogacompany.eu" },
         { label: "Telefoon", waarde: "Telefoonnummer volgt" },
         { label: "Studio", waarde: "Adres volgt" },
       ],
@@ -397,7 +397,7 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving: "E-mail, KvK en btw-nummer in de paginavoet",
     value: {
       items: [
-        { label: "E-mail", waarde: "info@yogacompanie.nl" },
+        { label: "E-mail", waarde: "info@yogacompany.eu" },
         { label: "KvK", waarde: "KvK-nummer volgt" },
       ],
     },

@@ -73,7 +73,7 @@ export async function verstuurContactbericht(
     return {
       status: "fout",
       bericht:
-        "Het bericht kon niet worden verstuurd. Probeer het later opnieuw of mail ons op info@yogacompanie.nl.",
+        "Het bericht kon niet worden verstuurd. Probeer het later opnieuw of mail ons op info@yogacompany.eu.",
     };
   }
 

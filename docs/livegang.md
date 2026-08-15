@@ -103,7 +103,7 @@ Pas als B2 groen is.
 ## Fase C — Online op een proefadres
 
 Nog niet op je eigen domein. Eerst een adres van Vercel, zodat we alles kunnen
-uitproberen zonder dat er iemand op `yogacompanie.nl` iets halfs ziet staan.
+uitproberen zonder dat er iemand op `yogacompany.eu` iets halfs ziet staan.
 
 ### C1 · Vercel koppelen **[jij, ± 10 minuten]**
 
@@ -139,12 +139,12 @@ standaardmailer van Supabase stuurt **maximaal drie mails per uur** en is
 uitdrukkelijk niet voor productie bedoeld. Zonder eigen mailserver kan de vierde
 klant die dag zijn wachtwoord niet herstellen.
 
-- **D1 [jij]** — Resend-account, `yogacompanie.nl` verifiëren (drie DNS-regels).
+- **D1 [jij]** — Resend-account, `yogacompany.eu` verifiëren (drie DNS-regels).
 - **D2 [jij]** — die gegevens als SMTP in Supabase zetten.
 - **D3 [ik]** — `RESEND_API_KEY` en `EMAIL_FROM` in Vercel.
 
 **Controle:** "wachtwoord vergeten" levert binnen een minuut een mail op, van
-`@yogacompanie.nl`, en die belandt niet in spam.
+`@yogacompany.eu`, en die belandt niet in spam.
 
 ---
 
@@ -189,12 +189,12 @@ een apart, leeg project of een preview-branch bij — niet productie.
 
 ## Fase F — Het eigen domein
 
-- **F1 [jij]** — `yogacompanie.nl` bij Vercel toevoegen, DNS aanpassen bij je
+- **F1 [jij]** — `yogacompany.eu` bij Vercel toevoegen, DNS aanpassen bij je
   registrar.
 - **F2 [ik]** — `NEXT_PUBLIC_SITE_URL` bijwerken, en de URL's in Supabase mee.
 - **F3 [ik]** — controleren: https, de headers, `robots.txt`, `sitemap.xml`.
 
-**Controle:** `https://yogacompanie.nl` laadt, `http://` stuurt door naar https,
+**Controle:** `https://yogacompany.eu` laadt, `http://` stuurt door naar https,
 en een deel van de e-mails komt aan met de juiste links erin.
 
 ---

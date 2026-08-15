@@ -198,12 +198,12 @@ beide kanten werken.
 ## 8. E-mail (Resend)
 
 1. Maak een account op [resend.com](https://resend.com) en voeg het domein
-   `yogacompanie.nl` toe.
+   `yogacompany.eu` toe.
 2. Zet de DNS-records die Resend toont (SPF, DKIM en DMARC). Zonder die records
    komen mails in de spammap terecht.
 3. Zet in `.env.local`:
    - `RESEND_API_KEY`
-   - `EMAIL_FROM="YogaCompany <info@yogacompanie.nl>"`
+   - `EMAIL_FROM="YogaCompany <info@yogacompany.eu>"`
 
 Ontbreekt de sleutel, dan wordt er niets verstuurd en gaat de rest gewoon door:
 een mail die niet weggaat mag nooit een betaling of inschrijving laten
@@ -420,7 +420,7 @@ Zelf een ronde draaien:
 
 ```bash
 curl -H "Authorization: Bearer $CRON_SECRET" \
-  https://yogacompanie.nl/api/v1/cron/opschonen
+  https://yogacompany.eu/api/v1/cron/opschonen
 ```
 
 Elke ronde schrijft een regel in het logboek met de aantallen. Zie `docs/avg.md`

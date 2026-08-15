@@ -21,7 +21,7 @@ export type JuridischeTekst = {
 
 const PRIVACY = `
 <h2>1. Wie zijn wij</h2>
-<p>YogaCompany is verantwoordelijk voor de verwerking van je persoonsgegevens zoals beschreven in deze verklaring. Je bereikt ons via info@yogacompanie.nl.</p>
+<p>YogaCompany is verantwoordelijk voor de verwerking van je persoonsgegevens zoals beschreven in deze verklaring. Je bereikt ons via info@yogacompany.eu.</p>
 
 <h2>2. Welke gegevens we verwerken</h2>
 <p>We verwerken zo min mogelijk gegevens. Concreet gaat het om:</p>
@@ -64,7 +64,7 @@ const PRIVACY = `
 <p>We gebruiken uitsluitend functionele cookies: die zijn nodig om ingelogd te blijven. We volgen je niet en gebruiken geen advertentie- of statistiekcookies. Daarom zie je bij ons geen cookiemelding.</p>
 
 <h2>9. Je rechten</h2>
-<p>Je mag je gegevens inzien, corrigeren, meenemen of laten verwijderen, en je toestemming voor mailings altijd intrekken. Heb je een account, dan doe je dat zelf onder <em>Profiel</em>: je downloadt daar je gegevens als bestand en kunt verwijdering aanvragen. Liever per e-mail? Stuur een bericht naar info@yogacompanie.nl.</p>
+<p>Je mag je gegevens inzien, corrigeren, meenemen of laten verwijderen, en je toestemming voor mailings altijd intrekken. Heb je een account, dan doe je dat zelf onder <em>Profiel</em>: je downloadt daar je gegevens als bestand en kunt verwijdering aanvragen. Liever per e-mail? Stuur een bericht naar info@yogacompany.eu.</p>
 <p>Ben je het oneens met hoe wij met je gegevens omgaan, dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens.</p>
 
 <h2>10. Wijzigingen</h2>
@@ -108,7 +108,7 @@ const VOORWAARDEN = `
 <p>We doen ons werk zorgvuldig. Onze aansprakelijkheid is beperkt tot het bedrag dat je voor de betreffende opleiding hebt betaald, behalve bij opzet of grove nalatigheid van onze kant.</p>
 
 <h2>11. Klachten</h2>
-<p>Ben je ergens niet tevreden over, laat het ons weten via info@yogacompanie.nl. We reageren binnen veertien dagen en zoeken samen naar een oplossing.</p>
+<p>Ben je ergens niet tevreden over, laat het ons weten via info@yogacompany.eu. We reageren binnen veertien dagen en zoeken samen naar een oplossing.</p>
 
 <h2>12. Toepasselijk recht</h2>
 <p>Op deze voorwaarden is Nederlands recht van toepassing.</p>
@@ -130,7 +130,7 @@ const COOKIES = `
 <p>Betaal je via Mollie, dan gebeurt dat op de omgeving van Mollie zelf, dat daar eigen cookies plaatst. Sluiten we ooit een video van YouTube of Vimeo in, dan doen we dat in de privacyvriendelijke modus.</p>
 
 <h2>Vragen</h2>
-<p>Stuur gerust een bericht naar info@yogacompanie.nl.</p>
+<p>Stuur gerust een bericht naar info@yogacompany.eu.</p>
 `;
 
 export const JURIDISCHE_TEKSTEN: JuridischeTekst[] = [
