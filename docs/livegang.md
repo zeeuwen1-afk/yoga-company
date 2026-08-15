@@ -155,11 +155,34 @@ klant die dag zijn wachtwoord niet herstellen.
 - **E2 [jij]** — tweestapsverificatie op je eigen beheerdersaccount. De code
   eist het al; dit is het bevestigen dat het aanstaat.
 - **E3 [jij]** — controleren dat de dagelijkse back-up aanstaat.
-- **E4 [ik]** — de RLS-suite één keer tegen het echte project draaien in plaats
-  van tegen een wegwerpdatabase.
+- **E4 [ik]** — controleren dat het echte project dezelfde regels afdwingt als
+  de nagebootste database waar de tests op draaien. **Gedaan op 15 augustus
+  2026**; zie hieronder.
 
 **Controle:** de beveiligingsscan van Supabase komt schoon terug, op de twee
 bewust gemaakte uitzonderingen na (die staan uitgelegd in `docs/beheer.md`).
+
+### Wat E4 wél en niet is
+
+De gedragstests (`pnpm test:rls:project`) gaan uit van een **lege** database:
+89 van de controles tellen absolute aantallen — "de admin ziet twee cursussen".
+Tegen het gevulde project kloppen die aantallen niet meer, en botsen de
+testgegevens bovendien op de seed. Ze allemaal herschrijven zou de tests eerder
+verzwakken dan versterken, dus dat is niet gedaan. De gedragstests draaien waar
+ze voor gemaakt zijn: tegen een wegwerpdatabase, bij elke wijziging, in CI.
+
+Wat tegen productie wél is nagelopen, alleen lezend:
+
+| Controle                                           | Uitkomst                                                                         |
+| -------------------------------------------------- | -------------------------------------------------------------------------------- |
+| RLS op elke publieke tabel                         | 22 van 22, met 45 policies                                                       |
+| `anon` mag admin-functies uitvoeren                | nee — het gat van 13 augustus is dicht                                           |
+| Admin-functies controleren zelf de rol             | alle zeven doen dat                                                              |
+| `search_path` vastgezet op elke `security definer` | ja                                                                               |
+| `sensitive.client_health`                          | RLS aan, nul policies, schema onbereikbaar voor `anon` en voor ingelogde klanten |
+
+Wil je de gedragstests ooit tegen een échte Supabase draaien, dan hoort daar
+een apart, leeg project of een preview-branch bij — niet productie.
 
 ---
 
