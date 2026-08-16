@@ -22,6 +22,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
 import "./omgeving.mjs";
+import { leesMigraties } from "./migraties.mjs";
 
 const TESTS_DIR = path.join(process.cwd(), "supabase", "tests", "rls");
 const MIGRATIONS_DIR = path.join(process.cwd(), "supabase", "migrations");
@@ -91,9 +92,7 @@ async function main() {
       // Lege database: eerst Supabase nabootsen, dan de echte migrations.
       await db.run(await readFile(BOOTSTRAP, "utf8"));
 
-      const migraties = (await readdir(MIGRATIONS_DIR))
-        .filter((naam) => naam.endsWith(".sql"))
-        .sort();
+      const migraties = await leesMigraties(MIGRATIONS_DIR);
 
       for (const migratie of migraties) {
         await db.run(

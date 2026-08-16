@@ -6,10 +6,11 @@
  *
  *   pnpm db:migrate
  */
-import { readdir, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import "./omgeving.mjs";
+import { leesMigraties } from "./migraties.mjs";
 import pg from "pg";
 
 const MIGRATIONS_DIR = path.join(process.cwd(), "supabase", "migrations");
@@ -42,9 +43,7 @@ async function main() {
   const { rows } = await client.query("select version from schema_migrations");
   const applied = new Set(rows.map((row) => row.version));
 
-  const files = (await readdir(MIGRATIONS_DIR))
-    .filter((name) => name.endsWith(".sql"))
-    .sort();
+  const files = await leesMigraties(MIGRATIONS_DIR);
 
   let count = 0;
   for (const file of files) {

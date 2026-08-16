@@ -50,3 +50,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Kopieën die iCloud maakt bij een synchronisatieconflict. Dit project staat in
+# ~/Documents, en die map wordt door iCloud gesynchroniseerd. Bij een conflict
+# blijft er een "bestand 2.ts" achter. Die draaien gewoon mee: een dubbele
+# testspec telt dubbel, een dubbele migration draait twee keer. Ze horen hier
+# niet, dus git ziet ze niet meer.
+* [0-9].*
+* ([0-9]).*
