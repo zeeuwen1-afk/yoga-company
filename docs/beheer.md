@@ -13,6 +13,26 @@ Op deze Mac staat Node in `~/.local/node` (installatie zonder beheerrechten).
 De regel die dat in je pad zet, staat in `~/.zshrc`. Open na een verse
 installatie een nieuwe terminal.
 
+### Waar het project staat
+
+`~/Projecten/yoga-companie`. Op 16 augustus 2026 verhuisd vanuit
+`~/Documents/yoga-companie`, en dat is geen smaakkwestie: **een projectmap hoort
+niet in iCloud, OneDrive of Dropbox.**
+
+Zo'n dienst ziet geen verschil tussen een tekstdocument en broncode. Van de
+ruim 44.000 bestanden die hier stonden waren er 335 van ons; de rest was
+`node_modules`, `.next` en `.git`, die voortdurend veranderen terwijl de server
+draait. Bij een conflict laat iCloud een kopie achter met " 2" in de naam.
+Vijftien van die kopieën zijn er op 16 augustus uit gehaald — twee ervan waren
+migrations, en die draaiden dus twee keer. OneDrive doet hetzelfde, met
+`-MACBOOKNAAM` in plaats van " 2".
+
+En `.env.local` staat bewust niet in git, maar wél in zo'n map. De
+service-role sleutel en het databasewachtwoord gingen dus mee de cloud in.
+
+De back-up is GitHub, niet een synchronisatiemap: daar staat elke versie met
+een verklaring erbij, en één `git clone` zet alles terug op een nieuwe machine.
+
 ```bash
 pnpm install
 cp .env.example .env.local     # vul de waarden in
