@@ -193,6 +193,85 @@ test.describe("Juridische pagina's", () => {
   });
 });
 
+test.describe("Tarieven", () => {
+  /**
+   * De prijslijst staat twee keer in de pagina: als tabel voor een breed
+   * scherm en als lijst voor een telefoon, waarvan er steeds één zichtbaar is.
+   * De tests filteren daarom op zichtbaarheid — anders zou dezelfde test op
+   * desktop slagen en op mobiel omvallen, of andersom.
+   */
+  const zichtbaar = (page: import("@playwright/test").Page, tekst: string) =>
+    page.getByText(tekst, { exact: false }).filter({ visible: true });
+
+  test("toont de prijslijst met de prijs per les", async ({ page }) => {
+    await page.goto("/lessen/tarieven");
+
+    await expect(
+      page.getByRole("heading", { name: "Tarieven", level: 1 }),
+    ).toBeVisible();
+    await expect(page.getByText("Lessen Rinske Yoga, Almere")).toBeVisible();
+
+    await expect(zichtbaar(page, "10-strippenkaart").first()).toBeVisible();
+    await expect(zichtbaar(page, "€ 145,00").first()).toBeVisible();
+    // Het getal waarop mensen werkelijk vergelijken, en dat de voorbeeldsite
+    // niet toont.
+    await expect(zichtbaar(page, "€ 14,50").first()).toBeVisible();
+  });
+
+  test("licht één kaart uit als meest gekozen", async ({ page }) => {
+    await page.goto("/lessen/tarieven");
+
+    await expect(zichtbaar(page, "Meest gekozen").first()).toBeVisible();
+  });
+
+  test("noemt de annuleringsregel op de pagina zelf", async ({ page }) => {
+    await page.goto("/lessen/tarieven");
+
+    await expect(page.getByText("24 uur")).toBeVisible();
+  });
+
+  test("is bereikbaar via het menu onder Lessen", async ({ page }) => {
+    await page.goto("/");
+
+    const lessen = page
+      .getByRole("navigation", { name: "Hoofdmenu" })
+      .getByRole("link", { name: "Lessen" });
+
+    if (await lessen.isVisible()) {
+      // Op een breed scherm klapt het submenu open bij hover.
+      await lessen.hover();
+    } else {
+      await page.getByRole("button", { name: "Menu openen" }).click();
+    }
+
+    await page.getByRole("link", { name: "Tarieven" }).first().click();
+    await expect(page).toHaveURL(/\/lessen\/tarieven$/);
+  });
+
+  test("het zijbalkje staat naast het weekrooster", async ({ page }) => {
+    await page.goto("/lessen");
+
+    await expect(
+      page.getByRole("heading", { name: "Strippenkaarten" }),
+    ).toBeVisible();
+    await expect(page.getByRole("link", { name: "Kaart kopen" })).toBeVisible();
+    // Dezelfde prijs als op de tarievenpagina: één lijst voedt allebei.
+    await expect(zichtbaar(page, "€ 145,00").first()).toBeVisible();
+  });
+
+  test("aanvragen vraagt eerst om inloggen", async ({ page }) => {
+    await page.goto("/lessen/tarieven/aanvragen?kaart=3");
+
+    await expect(page).toHaveURL(/\/inloggen\?vervolg=/);
+  });
+
+  test("een kaart die niet bestaat geeft een nette 404", async ({ page }) => {
+    const antwoord = await page.goto("/lessen/tarieven/aanvragen?kaart=99");
+
+    expect(antwoord?.status()).toBe(404);
+  });
+});
+
 test.describe("Veiligheid en privacy", () => {
   test("is bereikbaar via het hoofdmenu", async ({ page }) => {
     await page.goto("/");
@@ -255,6 +334,7 @@ test.describe("SEO", () => {
     expect(xml).toContain("/trainingen/eerst-jij");
     expect(xml).toContain("/privacyverklaring");
     expect(xml).toContain("/veiligheid");
+    expect(xml).toContain("/lessen/tarieven");
   });
 
   test("robots.txt sluit de afgeschermde delen uit", async ({ request }) => {

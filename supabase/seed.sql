@@ -1020,7 +1020,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('veiligheid', 'sectie_5_antwoord', 'richtext', '{"html":"\n<p>Omdat er niets online gaat voordat een reeks controles automatisch is doorlopen. Die controles kijken niet of de site er mooi uitziet, maar of hij zich gedraagt:</p>\n<ul>\n<li><strong>67 controles op losse onderdelen</strong> — rekent de prijs goed, wordt een te late annulering geweigerd.</li>\n<li><strong>206 controles die juist proberen wat niet mag:</strong> klant A die het dossier van klant B opvraagt, iemand die zichzelf beheerder maakt, betaalde content bekijken zonder betaling, een concepttekst die uitlekt voordat hij gepubliceerd is. Elk van die pogingen hóórt te mislukken, en de controle valt om zodra er ééntje slaagt.</li>\n<li><strong>184 controles die de site in twee echte browsers doorlopen</strong> — op een laptop en op een telefoon — van begin tot eind: inschrijven, inloggen, boeken, annuleren.</li>\n</ul>\n<p>Samen zijn dat ruim vierhonderd controles, en ze draaien bij elke wijziging opnieuw. Springt er één op rood, dan gaat de wijziging niet door. Niet \"we kijken er nog naar\" — hij komt er eenvoudigweg niet in.</p>\n"}'::jsonb)
+values ('veiligheid', 'sectie_5_antwoord', 'richtext', '{"html":"\n<p>Omdat er niets online gaat voordat een reeks controles automatisch is doorlopen. Die controles kijken niet of de site er mooi uitziet, maar of hij zich gedraagt:</p>\n<ul>\n<li><strong>72 controles op losse onderdelen</strong> — rekent de prijs goed, wordt een te late annulering geweigerd.</li>\n<li><strong>206 controles die juist proberen wat niet mag:</strong> klant A die het dossier van klant B opvraagt, iemand die zichzelf beheerder maakt, betaalde content bekijken zonder betaling, een concepttekst die uitlekt voordat hij gepubliceerd is. Elk van die pogingen hóórt te mislukken, en de controle valt om zodra er ééntje slaagt.</li>\n<li><strong>198 controles die de site in twee echte browsers doorlopen</strong> — op een laptop en op een telefoon — van begin tot eind: inschrijven, inloggen, boeken, annuleren.</li>\n</ul>\n<p>Samen zijn dat ruim vierhonderd controles, en ze draaien bij elke wijziging opnieuw. Springt er één op rood, dan gaat de wijziging niet door. Niet \"we kijken er nog naar\" — hij komt er eenvoudigweg niet in.</p>\n"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1033,6 +1033,48 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('veiligheid', 'sectie_6_antwoord', 'richtext', '{"html":"\n<p>Liever eerlijk dan glad:</p>\n<ul>\n<li><strong>Online betalen kan nog niet.</strong> Schrijf je je in, dan wordt dat een aanvraag en nemen we zelf contact met je op over de betaling.</li>\n<li><strong>De juridische teksten zijn concept.</strong> Ze zijn zorgvuldig opgesteld, maar nog niet door een jurist nagekeken. Dat staat er ook bij, op de pagina''s zelf.</li>\n<li><strong>Nieuwsbrieven versturen we nog niet.</strong> Eerst willen we de toestemmingsadministratie sluitend hebben; daarna pas de eerste mailing.</li>\n</ul>\n<p>Zodra hier iets in verandert, verandert deze pagina mee.</p>\n"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'titel', 'text', '{"text":"Tarieven"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'locatie', 'text', '{"text":"Lessen Rinske Yoga, Almere"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'inleiding', 'text', '{"text":"Alle kaarten naast elkaar. Hoe meer lessen op je kaart, hoe voordeliger je per keer uit bent — dat staat in de derde kolom, zodat je het niet zelf hoeft uit te rekenen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'tarieven', 'richtext', '{"items":[{"naam":"Snuffelkaart","toelichting":"3 lessen, om kennis te maken","prijs":"€ 9,00","per_les":"€ 3,00","geldig":"—","uitgelicht":"","rail":""},{"naam":"Losse les","toelichting":"Eén les, zonder verplichting","prijs":"€ 17,00","per_les":"€ 17,00","geldig":"—","uitgelicht":"","rail":"ja"},{"naam":"3-strippenkaart","toelichting":"3 lessen","prijs":"€ 47,50","per_les":"€ 15,83","geldig":"1 maand, uitloop tot 1½","uitgelicht":"","rail":"ja"},{"naam":"10-strippenkaart","toelichting":"10 lessen","prijs":"€ 145,00","per_les":"€ 14,50","geldig":"3 maanden, uitloop tot 4","uitgelicht":"ja","rail":"ja"},{"naam":"20-strippenkaart","toelichting":"20 lessen","prijs":"€ 280,00","per_les":"€ 14,00","geldig":"6 maanden, uitloop tot 7","uitgelicht":"","rail":"ja"},{"naam":"Maandabonnement","toelichting":"1× per week","prijs":"€ 58,50","per_les":"± € 13,50","geldig":"opzegtermijn 1 maand","uitgelicht":"","rail":""},{"naam":"Kwartaalabonnement","toelichting":"1× per week","prijs":"€ 169,00","per_les":"± € 13,00","geldig":"3 maanden","uitgelicht":"","rail":""},{"naam":"Halfjaarabonnement","toelichting":"1× per week","prijs":"€ 316,00","per_les":"± € 12,15","geldig":"6 maanden","uitgelicht":"","rail":""}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'voorwaarden', 'richtext', '{"html":"\n<p>Reserveer je plek vooraf; een kaart geeft toegang tot alle lessen in het weekrooster. Tot <strong>24 uur</strong> voor de les annuleren is kosteloos — daarna kost het een strip.</p>\n<p>Lukt het een keer echt niet, laat het dan weten. We kijken er niet moeilijk over.</p>\n"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'rail_titel', 'text', '{"text":"Strippenkaarten"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'rail_voet', 'text', '{"text":"Een kaart geldt voor alle lessen hiernaast."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

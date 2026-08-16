@@ -90,6 +90,42 @@ export function InschrijfaanvraagMail({
   );
 }
 
+/**
+ * 4b. Bevestiging na het aanvragen van een strippenkaart of abonnement.
+ *
+ * Apart van de inschrijfaanvraag, want een kaart is geen opleiding: er valt
+ * geen praktische informatie door te nemen, en de kaart gaat pas gelden zodra
+ * hij betaald is. Dat laatste hoort erin, anders staat iemand voor niets op de
+ * mat bij de eerstvolgende les.
+ */
+export function KaartaanvraagMail({
+  voornaam,
+  kaart,
+  prijs,
+}: {
+  voornaam: string;
+  kaart: string;
+  prijs: string;
+}) {
+  return (
+    <Mail voorvertoning="We hebben je aanvraag ontvangen">
+      <Kop>Je aanvraag is binnen</Kop>
+      <Alinea>Hallo {voornaam},</Alinea>
+      <Alinea>
+        Je hebt een <strong>{kaart}</strong> aangevraagd van {prijs}. We nemen
+        binnen twee werkdagen contact met je op om de betaling af te spreken.
+      </Alinea>
+      <Alinea>
+        Zodra dat rond is staat je kaart klaar en kun je lessen reserveren. Er
+        is nu nog niets betaald en je zit nergens aan vast.
+      </Alinea>
+      <Alinea gedempt>
+        Deze mail is automatisch verstuurd; je hoeft er niet op te antwoorden.
+      </Alinea>
+    </Mail>
+  );
+}
+
 /** 5a. Bevestiging naar de afzender van het contactformulier. */
 export function ContactBevestigingMail({ naam }: { naam: string }) {
   return (

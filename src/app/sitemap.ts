@@ -17,6 +17,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${basis}/over-ons`, changeFrequency: "yearly", priority: 0.6 },
     { url: `${basis}/contact`, changeFrequency: "yearly", priority: 0.6 },
     { url: `${basis}/veiligheid`, changeFrequency: "yearly", priority: 0.5 },
+    { url: `${basis}/lessen`, changeFrequency: "weekly", priority: 0.8 },
+    {
+      url: `${basis}/lessen/tarieven`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 
   const aanbod: MetadataRoute.Sitemap = cursussen.map((cursus) => ({

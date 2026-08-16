@@ -9,6 +9,15 @@ import {
   VEILIGHEID_SECTIES,
   VEILIGHEID_TITEL,
 } from "./veiligheid.ts";
+import {
+  TARIEVEN,
+  TARIEVEN_INLEIDING,
+  TARIEVEN_LOCATIE,
+  TARIEVEN_RAIL_TITEL,
+  TARIEVEN_RAIL_VOET,
+  TARIEVEN_TITEL,
+  TARIEVEN_VOORWAARDEN,
+} from "./tarieven.ts";
 
 /**
  * De teksten en beelden van de publieke site (BOUWPROMPT §19).
@@ -123,6 +132,66 @@ const veiligheidBlokken: BlokSeed[] = [
       value: { html: sectie.antwoord },
     },
   ]),
+];
+
+/**
+ * De tarievenpagina (§8.2).
+ *
+ * De hele prijslijst is één lijstblok. Een tarief wijzigen is daarmee één veld
+ * aanpassen, en er is geen opmaak die kan sneuvelen. Het zijbalkje naast het
+ * weekrooster leest dezelfde lijst — zie `src/content/tarieven.ts`.
+ */
+const tarievenBlokken: BlokSeed[] = [
+  {
+    page_key: "tarieven",
+    block_key: "titel",
+    kind: "text" as const,
+    omschrijving: "Kop van de tarievenpagina",
+    value: { text: TARIEVEN_TITEL },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "locatie",
+    kind: "text" as const,
+    omschrijving: "Regel boven de kop, met de plaats waar de lessen zijn",
+    value: { text: TARIEVEN_LOCATIE },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "inleiding",
+    kind: "text" as const,
+    omschrijving: "Inleidende zin onder de kop",
+    value: { text: TARIEVEN_INLEIDING },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "tarieven",
+    kind: "richtext" as const,
+    omschrijving:
+      'De prijslijst. "In zijbalkje" op ja zet de regel ook naast het weekrooster (houd het op vier); "Uitgelicht" op ja geeft één regel de nadruk.',
+    value: { items: TARIEVEN as unknown as Record<string, string>[] },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "voorwaarden",
+    kind: "richtext" as const,
+    omschrijving: "De spelregels onder de tabel: reserveren en annuleren",
+    value: { html: TARIEVEN_VOORWAARDEN },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "rail_titel",
+    kind: "text" as const,
+    omschrijving: "Kop van het zijbalkje naast het weekrooster",
+    value: { text: TARIEVEN_RAIL_TITEL },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "rail_voet",
+    kind: "text" as const,
+    omschrijving: "Zinnetje onderaan het zijbalkje",
+    value: { text: TARIEVEN_RAIL_VOET },
+  },
 ];
 
 export const BLOKKEN: BlokSeed[] = [
@@ -460,6 +529,7 @@ export const BLOKKEN: BlokSeed[] = [
 
   ...juridischeBlokken,
   ...veiligheidBlokken,
+  ...tarievenBlokken,
 ];
 
 /** Alle blokken van één pagina, als kaart van block_key naar waarde. */

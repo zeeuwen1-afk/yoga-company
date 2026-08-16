@@ -44,6 +44,12 @@ const VELD_LABEL: Record<string, string> = {
   foto: "Foto (webadres)",
   label: "Label",
   waarde: "Waarde",
+  toelichting: "Toelichting",
+  prijs: "Prijs",
+  per_les: "Per les",
+  geldig: "Geldigheid",
+  uitgelicht: 'Uitgelicht als "meest gekozen"? (ja of leeg)',
+  rail: "In het zijbalkje bij het rooster? (ja of leeg)",
 };
 
 export function BlokBewerker({
