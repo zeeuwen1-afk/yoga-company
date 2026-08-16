@@ -110,34 +110,11 @@ uitproberen zonder dat er iemand op `yogacompany.eu` iets halfs ziet staan.
 Nieuw project, gekoppeld aan de GitHub-repo. Regio staat al vast op Frankfurt
 (`vercel.json`), zodat de gegevens de EU niet verlaten.
 
-### C2 · Omgevingsvariabelen invullen **[jij]**
+### C2 · Omgevingsvariabelen invullen **[jij, met een lijst van mij]**
 
-In Vercel: Settings → Environment Variables. Zet ze op **alle drie** de
-omgevingen (Production, Preview, Development), tenzij anders vermeld.
-
-Nu invullen — zonder deze zes draait de site niet:
-
-| Naam                            | Waarde                                                        |
-| ------------------------------- | ------------------------------------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`      | `https://hfsxncotxlenxrkycxsv.supabase.co`                    |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | uit `.env.local` regel 8 (openbaar, mag iedereen zien)        |
-| `SUPABASE_SERVICE_ROLE_KEY`     | uit `.env.local` regel 17 — **geheim**                        |
-| `NEXT_PUBLIC_SITE_URL`          | het adres dat Vercel je geeft, mét `https://` en zonder slash |
-| `CRON_SECRET`                   | uit `.env.local`                                              |
-| `MAILING_UNSUBSCRIBE_SECRET`    | uit `.env.local`                                              |
-
-Later, als die diensten er zijn: `RESEND_API_KEY`, `EMAIL_FROM`,
-`MOLLIE_API_KEY`, `ANTHROPIC_API_KEY`, `SEED_ADMIN_EMAIL`. Zolang ze ontbreken
-werkt de site gewoon; alleen dat ene onderdeel doet dan niets.
-
-> **`SUPABASE_DB_URL` hoort hier niet.** Die wordt alleen gelezen door de
-> scripts op de ontwikkelmachine — migrations, de seed, de RLS-tests — en nooit
-> door de draaiende site. Je databasewachtwoord verlaat je eigen computer dus
-> niet. Zet hem er niet "voor de zekerheid" bij.
-
-> **`NEXT_PUBLIC_SITE_URL` moet met `https://` beginnen.** Daar hangt de
-> beveiligingsheader `upgrade-insecure-requests` aan: staat er `http://`, dan
-> wordt die weggelaten en dwingt de site https niet af. Zie `next.config.ts`.
+Ik lever de exacte lijst met namen en welke waarde waar vandaan komt. Dezelfde
+sleutels als lokaal, plus `CRON_SECRET` en `MAILING_UNSUBSCRIBE_SECRET` die ik
+genereer.
 
 ### C3 · Eerste deploy **[ik]**
 
