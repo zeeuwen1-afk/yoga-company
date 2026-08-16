@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
+import { VEILIGHEID_SECTIES } from "@/content/veiligheid";
 import { ContactFormulier } from "../components/contact-formulier";
 import type { Pagina } from "../server/queries";
 
@@ -134,6 +136,50 @@ export function JuridischeInhoud({ pagina }: { pagina: Pagina }) {
           html={pagina.html("inhoud")}
           className="mt-10 [&_h2]:mt-10 [&_h2]:text-2xl [&_ul]:space-y-1"
         />
+      </div>
+    </Sectie>
+  );
+}
+
+export function VeiligheidInhoud({ pagina }: { pagina: Pagina }) {
+  return (
+    <Sectie>
+      <div className="max-w-2xl">
+        <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
+        <p className="mt-5 text-lg text-muted">{pagina.tekst("inleiding")}</p>
+
+        <Richtext
+          html={pagina.html("kern")}
+          className="mt-10 text-lg [&_li]:mt-2"
+        />
+
+        {/* Uitklappers met <details>, niet met een schakelaar in JavaScript:
+            zo staan ze open in een afdruk, vindt de zoekfunctie van de browser
+            ook de dichtgeklapte tekst, en werkt de pagina wanneer er onderweg
+            iets met de scripts misgaat. Dat past bij een pagina die juist over
+            betrouwbaarheid gaat. */}
+        <div className="mt-12 divide-y divide-line border-y border-line">
+          {VEILIGHEID_SECTIES.map((_, index) => {
+            const nummer = index + 1;
+            const vraag = pagina.tekst(`sectie_${nummer}_vraag`);
+            const antwoord = pagina.html(`sectie_${nummer}_antwoord`);
+
+            if (!vraag) return null;
+
+            return (
+              <details key={nummer} className="group py-1">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-left font-semibold text-ink marker:content-none hover:text-green [&::-webkit-details-marker]:hidden">
+                  {vraag}
+                  <ChevronDown
+                    aria-hidden
+                    className="size-5 shrink-0 text-green transition-transform group-open:rotate-180"
+                  />
+                </summary>
+                <Richtext html={antwoord} className="pb-6 text-muted" />
+              </details>
+            );
+          })}
+        </div>
       </div>
     </Sectie>
   );

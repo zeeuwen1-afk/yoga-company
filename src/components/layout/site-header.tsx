@@ -13,6 +13,7 @@ const navigation = [
   { href: "/lessen", label: "Lessen" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },
+  { href: "/veiligheid", label: "Veiligheid" },
 ];
 
 export function SiteHeader() {

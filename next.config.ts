@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+import { isProductiedomein } from "./src/lib/domein";
+
 /**
  * Securityheaders (BOUWPROMPT §17.2).
  *
@@ -72,6 +74,14 @@ const securityHeaders = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
   },
+  // Zolang dit niet het eigen domein is, blijft de hele site uit de
+  // zoekmachines. Bewust een header en geen `Disallow: /` in robots.txt: dat
+  // laatste verbiedt het ophálen van de pagina, en dan kan een zoekmachine dit
+  // verbod juist niet lezen — het adres belandt dan alsnog in de index, met
+  // "geen omschrijving beschikbaar" eronder. Ophalen mag dus; opnemen niet.
+  ...(isProductiedomein(siteUrl)
+    ? []
+    : [{ key: "X-Robots-Tag", value: "noindex, nofollow" }]),
 ];
 
 const nextConfig: NextConfig = {

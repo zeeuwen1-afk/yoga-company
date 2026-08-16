@@ -193,6 +193,58 @@ test.describe("Juridische pagina's", () => {
   });
 });
 
+test.describe("Veiligheid en privacy", () => {
+  test("is bereikbaar via het hoofdmenu", async ({ page }) => {
+    await page.goto("/");
+
+    const link = page
+      .getByRole("navigation", { name: "Hoofdmenu" })
+      .getByRole("link", { name: "Veiligheid" });
+
+    // Op de telefoon zit het hoofdmenu achter de menuknop.
+    if (!(await link.isVisible())) {
+      await page.getByRole("button", { name: "Menu openen" }).click();
+    }
+
+    await page.getByRole("link", { name: "Veiligheid" }).first().click();
+
+    await expect(
+      page.getByRole("heading", { name: "Veiligheid en privacy", level: 1 }),
+    ).toBeVisible();
+  });
+
+  /**
+   * De kern staat er bewust boven de uitklappers: wie niets openklapt moet de
+   * belangrijkste vier punten toch gelezen hebben. Zodra iemand ze achter een
+   * uitklapper zou verstoppen, valt deze test om.
+   */
+  test("toont de kern zonder dat er iets opengeklapt hoeft", async ({
+    page,
+  }) => {
+    await page.goto("/veiligheid");
+
+    await expect(
+      page.getByText("Je gegevens staan in Frankfurt"),
+    ).toBeVisible();
+    await expect(page.getByText("Alleen jij ziet jouw dossier")).toBeVisible();
+    await expect(page.getByText("Je wachtwoord kennen we niet")).toBeVisible();
+    await expect(page.getByText("We volgen je niet")).toBeVisible();
+  });
+
+  test("een uitklapper opent en toont het antwoord", async ({ page }) => {
+    await page.goto("/veiligheid");
+
+    const antwoord = page.getByText("Bij veel websites is de website zelf");
+    await expect(antwoord).not.toBeVisible();
+
+    await page
+      .getByText("Hoe weten jullie zo zeker dat niemand anders bij mijn")
+      .click();
+
+    await expect(antwoord).toBeVisible();
+  });
+});
+
 test.describe("SEO", () => {
   test("de sitemap bevat alle publieke pagina's", async ({ request }) => {
     const antwoord = await request.get("/sitemap.xml");
@@ -202,6 +254,7 @@ test.describe("SEO", () => {
     expect(xml).toContain("/opleidingen/200-uurs-yin-yoga-specialist");
     expect(xml).toContain("/trainingen/eerst-jij");
     expect(xml).toContain("/privacyverklaring");
+    expect(xml).toContain("/veiligheid");
   });
 
   test("robots.txt sluit de afgeschermde delen uit", async ({ request }) => {
@@ -227,6 +280,7 @@ test.describe("SEO", () => {
     ["/opleidingen", "Yogaopleidingen"],
     ["/over-ons", "Over ons"],
     ["/contact", "Contact"],
+    ["/veiligheid", "Veiligheid en privacy"],
   ] as const) {
     test(`${pad} heeft een eigen titel en omschrijving`, async ({ page }) => {
       await page.goto(pad);
@@ -248,6 +302,11 @@ test.describe("Beveiligingsheaders", () => {
     expect(headers["content-security-policy"]).toContain("default-src 'self'");
     expect(headers["x-content-type-options"]).toBe("nosniff");
     expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
+
+    // De tests draaien op localhost, en dat is niet het eigen domein: de site
+    // hoort zichzelf dan uit de zoekmachines te houden. Op yogacompany.eu
+    // hoort deze header juist te verdwijnen — zie src/lib/domein.ts.
+    expect(headers["x-robots-tag"]).toBe("noindex, nofollow");
     expect(headers["x-frame-options"]).toBe("SAMEORIGIN");
   });
 });

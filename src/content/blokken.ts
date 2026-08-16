@@ -3,6 +3,12 @@ import type { BlockKind } from "@/lib/supabase/types";
 // Met extensie, zodat dit bestand ook rechtstreeks door Node te draaien is
 // voor `pnpm db:generate-seed`.
 import { JURIDISCHE_TEKSTEN } from "./juridisch.ts";
+import {
+  VEILIGHEID_INLEIDING,
+  VEILIGHEID_KERN,
+  VEILIGHEID_SECTIES,
+  VEILIGHEID_TITEL,
+} from "./veiligheid.ts";
 
 /**
  * De teksten en beelden van de publieke site (BOUWPROMPT §19).
@@ -69,6 +75,55 @@ const juridischeBlokken: BlokSeed[] = JURIDISCHE_TEKSTEN.flatMap((tekst) => [
     },
   },
 ]);
+
+/**
+ * De pagina "Veiligheid en privacy" (§8.6).
+ *
+ * Elke uitklapper is een paar blokken: de vraag als losse regel, het antwoord
+ * als richtext. Dat is bewust geen lijstblok met vaste velden — in de
+ * antwoorden staan opsommingen en accenten, en die overleven een gewoon
+ * tekstveld niet. De volgorde en het aantal liggen vast in code; alleen de
+ * inhoud is bewerkbaar.
+ */
+const veiligheidBlokken: BlokSeed[] = [
+  {
+    page_key: "veiligheid",
+    block_key: "titel",
+    kind: "text" as const,
+    omschrijving: "Kop van de pagina Veiligheid en privacy",
+    value: { text: VEILIGHEID_TITEL },
+  },
+  {
+    page_key: "veiligheid",
+    block_key: "inleiding",
+    kind: "text" as const,
+    omschrijving: "Inleidende zin onder de kop",
+    value: { text: VEILIGHEID_INLEIDING },
+  },
+  {
+    page_key: "veiligheid",
+    block_key: "kern",
+    kind: "richtext" as const,
+    omschrijving: "De korte versie bovenaan, boven de uitklappers",
+    value: { html: VEILIGHEID_KERN },
+  },
+  ...VEILIGHEID_SECTIES.flatMap((sectie, index) => [
+    {
+      page_key: "veiligheid",
+      block_key: `sectie_${index + 1}_vraag`,
+      kind: "text" as const,
+      omschrijving: `Vraag ${index + 1} — de tekst op de uitklapper`,
+      value: { text: sectie.vraag },
+    },
+    {
+      page_key: "veiligheid",
+      block_key: `sectie_${index + 1}_antwoord`,
+      kind: "richtext" as const,
+      omschrijving: `Antwoord ${index + 1} — wat er onder de uitklapper staat`,
+      value: { html: sectie.antwoord },
+    },
+  ]),
+];
 
 export const BLOKKEN: BlokSeed[] = [
   // ---------------------------------------------------------------------------
@@ -404,6 +459,7 @@ export const BLOKKEN: BlokSeed[] = [
   },
 
   ...juridischeBlokken,
+  ...veiligheidBlokken,
 ];
 
 /** Alle blokken van één pagina, als kaart van block_key naar waarde. */
