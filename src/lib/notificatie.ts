@@ -31,12 +31,12 @@ export function mailIngericht(): boolean {
 }
 
 function afzender(): string {
-  return process.env.EMAIL_FROM ?? "Yoga Companie <info@yogacompanie.nl>";
+  return process.env.EMAIL_FROM ?? "YogaCompany <info@yogacompany.eu>";
 }
 
-/** Het adres waarop Yoga Companie notificaties ontvangt. */
+/** Het adres waarop YogaCompany notificaties ontvangt. */
 export function adminAdres(): string {
-  return process.env.SEED_ADMIN_EMAIL ?? "info@yogacompanie.nl";
+  return process.env.SEED_ADMIN_EMAIL ?? "info@yogacompany.eu";
 }
 
 export type MailResultaat = {

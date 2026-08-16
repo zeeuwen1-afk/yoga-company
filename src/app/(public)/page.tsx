@@ -9,7 +9,7 @@ import { haalAanbod } from "@/features/courses";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Yoga Companie — opleidingsinstituut voor yoga",
+  title: "YogaCompany — opleidingsinstituut voor yoga",
   description:
     "Yogaopleidingen en trainingen in kleine groepen. De 200-uurs Yin Yoga Specialist Opleiding, losse modules en het herstelprogramma Eerst Jij.",
   alternates: { canonical: "/" },

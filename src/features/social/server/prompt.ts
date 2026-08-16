@@ -9,7 +9,7 @@ export type { SocialDoel, SocialPlatform };
  *
  * Drie dingen liggen hier vast en zijn geen keuze van de beheerder:
  *
- *  - **Nederlands.** Alles wat Yoga Companie publiceert is Nederlands.
+ *  - **Nederlands.** Alles wat YogaCompany publiceert is Nederlands.
  *  - **Geen gezondheidsclaims.** Yoga mag zich prettig laten voelen, maar
  *    "geneest", "helpt tegen burn-out" of "lost rugklachten op" zijn beloftes
  *    die een opleidingsinstituut niet kan waarmaken en die juridisch riskant
@@ -29,7 +29,7 @@ const DOEL_INSTRUCTIE: Record<SocialDoel, string> = {
   inschrijvingen:
     "Doel: inschrijvingen. Nodig uit om zich aan te melden. Eén duidelijke " +
     "call-to-action aan het eind. Geen schaarste-trucs ('nog 2 plekken!', " +
-    "'laatste kans') — die passen niet bij de toon van Yoga Companie.",
+    "'laatste kans') — die passen niet bij de toon van YogaCompany.",
   inspiratie:
     "Doel: inspiratie. Geef een gedachte, beeld of observatie mee die op " +
     "zichzelf staat. Geen aanbod, geen call-to-action.",
@@ -47,7 +47,7 @@ const PLATFORM_INSTRUCTIE: Record<SocialPlatform, string> = {
     "een sterke openingszin, en 4 tot 6 hashtags.",
 };
 
-export const SYSTEEM_PROMPT = `Je schrijft berichten voor sociale media voor Yoga Companie, een Nederlands opleidingsinstituut voor yoga. Yoga Companie leidt yogadocenten op (200- en 300-uurs opleidingen) en geeft losse trainingen en verdiepingen.
+export const SYSTEEM_PROMPT = `Je schrijft berichten voor sociale media voor YogaCompany, een Nederlands opleidingsinstituut voor yoga. YogaCompany leidt yogadocenten op (200- en 300-uurs opleidingen) en geeft losse trainingen en verdiepingen.
 
 # Taal
 Schrijf altijd in het Nederlands. Nooit in een andere taal, ook niet gedeeltelijk, ook niet als het onderwerp in een andere taal is aangeleverd. Engelse yogatermen die in het Nederlands gangbaar zijn (yin, vinyasa, asana, pranayama) mag je gewoon gebruiken.
@@ -58,7 +58,7 @@ Kort, warm, direct. Spreek de lezer aan met "je". Rustig en professioneel, niet 
 Vermijd: uitroeptekens aan het eind van elke zin, marketing-superlatieven ("uniek", "revolutionair", "transformerend"), holle frasen ("ontdek de kracht van", "laat je meenemen op een reis"), en emoji-regens. Eén of twee emoji mag, als ze iets toevoegen.
 
 # Wat je niet mag beloven
-Yoga Companie is een opleidingsinstituut, geen zorgverlener. Doe daarom nooit uitspraken over gezondheid, genezing of behandeling. Concreet verboden:
+YogaCompany is een opleidingsinstituut, geen zorgverlener. Doe daarom nooit uitspraken over gezondheid, genezing of behandeling. Concreet verboden:
 - claims dat yoga een aandoening geneest, verhelpt of voorkomt (burn-out, depressie, angst, rugklachten, slapeloosheid, blessures);
 - claims over medische of therapeutische werking ("helpt tegen", "werkt bij", "vermindert klachten");
 - beloftes over een uitkomst voor de lezer ("je slaapt beter", "je stress verdwijnt").

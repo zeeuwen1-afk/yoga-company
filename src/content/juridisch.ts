@@ -21,13 +21,13 @@ export type JuridischeTekst = {
 
 const PRIVACY = `
 <h2>1. Wie zijn wij</h2>
-<p>Yoga Companie is verantwoordelijk voor de verwerking van je persoonsgegevens zoals beschreven in deze verklaring. Je bereikt ons via info@yogacompanie.nl.</p>
+<p>YogaCompany is verantwoordelijk voor de verwerking van je persoonsgegevens zoals beschreven in deze verklaring. Je bereikt ons via info@yogacompany.eu.</p>
 
 <h2>2. Welke gegevens we verwerken</h2>
 <p>We verwerken zo min mogelijk gegevens. Concreet gaat het om:</p>
 <ul>
 <li><strong>Bij een account:</strong> je voor- en achternaam, e-mailadres en — als je dat zelf invult — je telefoonnummer.</li>
-<li><strong>Bij een inschrijving:</strong> welke opleiding je volgt, de betaalstatus en het bedrag. Betaalgegevens zelf komen nooit bij ons binnen; die verwerkt Stripe.</li>
+<li><strong>Bij een inschrijving:</strong> welke opleiding je volgt, de betaalstatus en het bedrag. Betaalgegevens zelf komen nooit bij ons binnen; die verwerkt Mollie.</li>
 <li><strong>Bij digitale content:</strong> waar je in een video of les gebleven bent, zodat je verder kunt waar je stopte.</li>
 <li><strong>Bij berichten:</strong> de inhoud van wat je ons via je eigen omgeving of het contactformulier stuurt.</li>
 <li><strong>Bij toestemming voor mailings:</strong> het moment waarop je die toestemming gaf.</li>
@@ -48,9 +48,9 @@ const PRIVACY = `
 <ul>
 <li><strong>Supabase</strong> — database, inloggen en bestandsopslag (servers in Frankfurt, EU)</li>
 <li><strong>Vercel</strong> — hosting van de website (regio Frankfurt, EU)</li>
-<li><strong>Stripe</strong> — betalingen</li>
+<li><strong>Mollie</strong> — betalingen (Amsterdam, EU)</li>
 <li><strong>Resend</strong> — verzenden van e-mail</li>
-<li><strong>Anthropic</strong> — hulp bij het opstellen van berichten voor sociale media; hier gaan geen klantgegevens naartoe</li>
+<li><strong>Anthropic</strong> — hulp bij het opstellen van berichten voor sociale media, en bij het maken van een gespreksverslag voor je begeleiding. Voor dat verslag gaan je naam, e-mailadres, telefoonnummer en woonplaats <strong>niet</strong> mee; wel je leeftijd, je doelen, je voortgang en de aantekeningen die wij bij je hebben gemaakt. Heb je toestemming gegeven voor het vastleggen van gezondheidsinformatie, dan gaat die alleen mee als dat voor dat verslag nodig is</li>
 <li><strong>Meta</strong> — alleen wanneer wij zelf iets plaatsen op Facebook of Instagram</li>
 </ul>
 
@@ -64,7 +64,7 @@ const PRIVACY = `
 <p>We gebruiken uitsluitend functionele cookies: die zijn nodig om ingelogd te blijven. We volgen je niet en gebruiken geen advertentie- of statistiekcookies. Daarom zie je bij ons geen cookiemelding.</p>
 
 <h2>9. Je rechten</h2>
-<p>Je mag je gegevens inzien, corrigeren, meenemen of laten verwijderen, en je toestemming voor mailings altijd intrekken. Heb je een account, dan doe je dat zelf onder <em>Profiel</em>: je downloadt daar je gegevens als bestand en kunt verwijdering aanvragen. Liever per e-mail? Stuur een bericht naar info@yogacompanie.nl.</p>
+<p>Je mag je gegevens inzien, corrigeren, meenemen of laten verwijderen, en je toestemming voor mailings altijd intrekken. Heb je een account, dan doe je dat zelf onder <em>Profiel</em>: je downloadt daar je gegevens als bestand en kunt verwijdering aanvragen. Liever per e-mail? Stuur een bericht naar info@yogacompany.eu.</p>
 <p>Ben je het oneens met hoe wij met je gegevens omgaan, dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens.</p>
 
 <h2>10. Wijzigingen</h2>
@@ -73,7 +73,7 @@ const PRIVACY = `
 
 const VOORWAARDEN = `
 <h2>1. Waar deze voorwaarden over gaan</h2>
-<p>Deze voorwaarden gelden voor alle opleidingen, trainingen, lessen en digitale content van Yoga Companie.</p>
+<p>Deze voorwaarden gelden voor alle opleidingen, trainingen, lessen en digitale content van YogaCompany.</p>
 
 <h2>2. Inschrijven</h2>
 <p>Je schrijft je in via de website. De inschrijving is definitief zodra we je betaling hebben ontvangen en je van ons een bevestiging per e-mail hebt gekregen. Plaatsing gebeurt op volgorde van betaling; onze groepen zijn klein, dus vol is vol.</p>
@@ -108,7 +108,7 @@ const VOORWAARDEN = `
 <p>We doen ons werk zorgvuldig. Onze aansprakelijkheid is beperkt tot het bedrag dat je voor de betreffende opleiding hebt betaald, behalve bij opzet of grove nalatigheid van onze kant.</p>
 
 <h2>11. Klachten</h2>
-<p>Ben je ergens niet tevreden over, laat het ons weten via info@yogacompanie.nl. We reageren binnen veertien dagen en zoeken samen naar een oplossing.</p>
+<p>Ben je ergens niet tevreden over, laat het ons weten via info@yogacompany.eu. We reageren binnen veertien dagen en zoeken samen naar een oplossing.</p>
 
 <h2>12. Toepasselijk recht</h2>
 <p>Op deze voorwaarden is Nederlands recht van toepassing.</p>
@@ -116,7 +116,7 @@ const VOORWAARDEN = `
 
 const COOKIES = `
 <h2>Kort gezegd</h2>
-<p>We volgen je niet. Yoga Companie gebruikt geen advertentiecookies, geen statistiekcookies en geen trackers van derden. Daarom krijg je bij ons geen cookiemelding: die is alleen verplicht voor cookies die wij niet gebruiken.</p>
+<p>We volgen je niet. YogaCompany gebruikt geen advertentiecookies, geen statistiekcookies en geen trackers van derden. Daarom krijg je bij ons geen cookiemelding: die is alleen verplicht voor cookies die wij niet gebruiken.</p>
 
 <h2>Welke cookies dan wel</h2>
 <p>Alleen cookies die nodig zijn om de site te laten werken:</p>
@@ -127,10 +127,10 @@ const COOKIES = `
 <p>Voor functionele cookies is geen toestemming vereist. Je kunt ze in je browser blokkeren, maar dan kun je niet inloggen.</p>
 
 <h2>Cookies van anderen</h2>
-<p>Betaal je via Stripe, dan gebeurt dat op de omgeving van Stripe zelf, dat daar eigen cookies plaatst. Sluiten we ooit een video van YouTube of Vimeo in, dan doen we dat in de privacyvriendelijke modus.</p>
+<p>Betaal je via Mollie, dan gebeurt dat op de omgeving van Mollie zelf, dat daar eigen cookies plaatst. Sluiten we ooit een video van YouTube of Vimeo in, dan doen we dat in de privacyvriendelijke modus.</p>
 
 <h2>Vragen</h2>
-<p>Stuur gerust een bericht naar info@yogacompanie.nl.</p>
+<p>Stuur gerust een bericht naar info@yogacompany.eu.</p>
 `;
 
 export const JURIDISCHE_TEKSTEN: JuridischeTekst[] = [
@@ -138,7 +138,7 @@ export const JURIDISCHE_TEKSTEN: JuridischeTekst[] = [
     pageKey: "privacyverklaring",
     titel: "Privacyverklaring",
     omschrijving:
-      "Welke persoonsgegevens Yoga Companie verwerkt, waarom, hoe lang en met wie ze worden gedeeld.",
+      "Welke persoonsgegevens YogaCompany verwerkt, waarom, hoe lang en met wie ze worden gedeeld.",
     inleiding:
       "We verwerken zo min mogelijk gegevens, en alleen wat nodig is om je opleiding te kunnen geven. Hieronder lees je precies wat, waarom en hoe lang.",
     html: PRIVACY,
@@ -147,7 +147,7 @@ export const JURIDISCHE_TEKSTEN: JuridischeTekst[] = [
     pageKey: "algemene-voorwaarden",
     titel: "Algemene voorwaarden",
     omschrijving:
-      "De voorwaarden voor opleidingen, trainingen, lessen en digitale content van Yoga Companie.",
+      "De voorwaarden voor opleidingen, trainingen, lessen en digitale content van YogaCompany.",
     inleiding:
       "Deze voorwaarden gelden voor alles wat we aanbieden. We hebben ze zo kort en leesbaar mogelijk gehouden.",
     html: VOORWAARDEN,
@@ -156,7 +156,7 @@ export const JURIDISCHE_TEKSTEN: JuridischeTekst[] = [
     pageKey: "cookies",
     titel: "Cookies",
     omschrijving:
-      "Yoga Companie gebruikt uitsluitend functionele cookies en volgt bezoekers niet.",
+      "YogaCompany gebruikt uitsluitend functionele cookies en volgt bezoekers niet.",
     inleiding:
       "Een korte pagina, want er valt weinig te melden: we gebruiken alleen cookies die nodig zijn om de site te laten werken.",
     html: COOKIES,

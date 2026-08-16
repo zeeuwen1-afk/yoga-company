@@ -146,12 +146,28 @@ export function OverzichtInhoud({
   pagina: Pagina;
   children: React.ReactNode;
 }) {
+  const beeld = pagina.beeld("beeld");
+
   return (
     <Sectie>
       <SectieKop
         titel={pagina.tekst("titel")}
         inleiding={pagina.tekst("inleiding")}
       />
+
+      {/* Een brede band, geen paginavullende foto: het beeld hoort de pagina
+          te openen, niet te overstemmen. Blijft weg zolang er geen foto is
+          gekozen, zodat de pagina niet met een gat begint. */}
+      {beeld ? (
+        <Image
+          src={beeld.url}
+          alt={beeld.alt}
+          width={1600}
+          height={520}
+          className="mt-10 aspect-[16/5] w-full rounded-[var(--radius-card)] border border-line object-cover"
+        />
+      ) : null}
+
       <div className="mt-12">{children}</div>
     </Sectie>
   );

@@ -17,10 +17,11 @@ env:
   NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
   NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key
   SUPABASE_SERVICE_ROLE_KEY: placeholder-service-role-key
-  # Geen echte sleutels: hiermee wordt uitsluitend gecontroleerd dat de webhook
-  # een ongeldige handtekening weigert. Er gaat geen verkeer naar Stripe.
-  STRIPE_SECRET_KEY: sk_test_placeholder
-  STRIPE_WEBHOOK_SECRET: whsec_placeholder
+  # MOLLIE_API_KEY staat hier bewust niet. Zonder sleutel draait de suite de
+  # stand waarin het platform nu ook echt staat: inschrijven levert een
+  # aanvraag op in plaats van een betaling. De webhooktests controleren dat er
+  # niets uit het verzoek wordt overgenomen; daar is geen sleutel voor nodig en
+  # er gaat geen verkeer naar Mollie.
 
 jobs:
   kwaliteit:
@@ -54,6 +55,11 @@ jobs:
         # Draait de echte migrations tegen een lokale wegwerpdatabase en
         # controleert de klantscheiding. Geen Supabase-project nodig.
         run: pnpm test:rls
+
+      - name: Seed controleren
+        # Draait supabase/seed.sql tegen een wegwerpdatabase en controleert dat
+        # het aanbod en de prijzen erin kloppen.
+        run: pnpm db:check-seed
 
       - name: Build
         run: pnpm build

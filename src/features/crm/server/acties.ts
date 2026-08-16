@@ -5,7 +5,10 @@ import { z } from "zod";
 
 import { schrijfAudit } from "@/features/audit";
 import { publicEnv } from "@/lib/env";
-import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  createAdminClient,
+  serviceRoleBeschikbaar,
+} from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
 
@@ -55,6 +58,10 @@ const uitnodigingSchema = z.object({
     .toLowerCase(),
   first_name: z.string().trim().min(1, "Vul een voornaam in").max(80),
   last_name: z.string().trim().min(1, "Vul een achternaam in").max(80),
+  // Optioneel bij het uitnodigen; de rest vul je later op de klantenkaart aan.
+  phone: z.string().trim().max(30).optional().or(z.literal("")),
+  city: z.string().trim().max(80).optional().or(z.literal("")),
+  how_found: z.string().trim().max(120).optional().or(z.literal("")),
   rol: z.enum(["klant", "admin"]).default("klant"),
 });
 
@@ -118,6 +125,18 @@ export async function nodigKlantUit(
     };
   }
 
+  // De trigger heeft het profiel al aangemaakt met naam en e-mail; wat de
+  // beheerder verder invulde zetten we er nu bij.
+  const extra = {
+    phone: parsed.data.phone || null,
+    city: parsed.data.city || null,
+    how_found: parsed.data.how_found || null,
+  };
+
+  if (Object.values(extra).some(Boolean)) {
+    await supabase.from("profiles").update(extra).eq("id", data.user.id);
+  }
+
   if (parsed.data.rol === "admin") {
     await supabase.rpc("zet_profiel_rol", {
       p_profile_id: data.user.id,
@@ -142,11 +161,31 @@ export async function nodigKlantUit(
 
 // --- Gegevens bijwerken ------------------------------------------------------
 
+const leeg = (max: number) =>
+  z.string().trim().max(max).optional().or(z.literal(""));
+
+/**
+ * De velden die een beheerder mag vastleggen. Elk veld heeft een doel; dat
+ * staat in de migration. Gezondheid staat hier bewust níét tussen — dat zijn
+ * bijzondere persoonsgegevens en die gaan via `bewaarGezondheid`.
+ */
 const klantSchema = z.object({
   profile_id: z.uuid(),
   first_name: z.string().trim().min(1, "Vul een voornaam in").max(80),
   last_name: z.string().trim().min(1, "Vul een achternaam in").max(80),
-  phone: z.string().trim().max(30).optional().or(z.literal("")),
+  phone: leeg(30),
+  birth_date: z
+    .string()
+    .trim()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Gebruik de vorm jjjj-mm-dd")
+    .optional()
+    .or(z.literal("")),
+  city: leeg(80),
+  how_found: leeg(120),
+  experience_level: leeg(120),
+  goals: leeg(1500),
+  // Komma's scheiden de onderwerpen; dat typt prettiger dan losse velden.
+  interests: leeg(500),
 });
 
 export async function werkKlantBij(
@@ -173,6 +212,15 @@ export async function werkKlantBij(
       first_name: parsed.data.first_name,
       last_name: parsed.data.last_name,
       phone: parsed.data.phone || null,
+      birth_date: parsed.data.birth_date || null,
+      city: parsed.data.city || null,
+      how_found: parsed.data.how_found || null,
+      experience_level: parsed.data.experience_level || null,
+      goals: parsed.data.goals || null,
+      interests: (parsed.data.interests ?? "")
+        .split(",")
+        .map((woord) => woord.trim())
+        .filter(Boolean),
     })
     .eq("id", parsed.data.profile_id);
 
@@ -190,7 +238,19 @@ export async function werkKlantBij(
     entiteitId: parsed.data.profile_id,
     // Welke velden zijn aangeraakt, niet wat erin staat: het log hoort geen
     // tweede kopie van de persoonsgegevens te worden.
-    meta: { velden: ["first_name", "last_name", "phone"] },
+    meta: {
+      velden: [
+        "first_name",
+        "last_name",
+        "phone",
+        "birth_date",
+        "city",
+        "how_found",
+        "experience_level",
+        "goals",
+        "interests",
+      ],
+    },
   });
 
   revalidatePath(`/admin/klanten/${parsed.data.profile_id}`);
@@ -332,7 +392,9 @@ export async function verwijderKlantAvg(
 
 const notitieSchema = z.object({
   profile_id: z.uuid(),
-  body: z.string().trim().min(1, "Schrijf eerst een notitie").max(3000),
+  body: z.string().trim().min(1, "Schrijf eerst iets").max(8000),
+  kind: z.enum(["notitie", "verslag"]).default("notitie"),
+  title: z.string().trim().max(160).optional().or(z.literal("")),
 });
 
 export async function voegNotitieToe(
@@ -359,6 +421,8 @@ export async function voegNotitieToe(
     profile_id: parsed.data.profile_id,
     author_id: adminId,
     body: parsed.data.body,
+    kind: parsed.data.kind,
+    title: parsed.data.title || null,
   });
 
   if (error) {
@@ -376,7 +440,13 @@ export async function voegNotitieToe(
   });
 
   revalidatePath(`/admin/klanten/${parsed.data.profile_id}`);
-  return { status: "gelukt", bericht: "Notitie opgeslagen." };
+  return {
+    status: "gelukt",
+    bericht:
+      parsed.data.kind === "verslag"
+        ? "Verslag opgeslagen."
+        : "Notitie opgeslagen.",
+  };
 }
 
 // --- Rol wijzigen ------------------------------------------------------------
@@ -416,5 +486,146 @@ export async function wijzigRol(profileId: string, rol: "klant" | "admin") {
       rol === "admin"
         ? "Deze persoon is nu beheerder en moet bij de eerstvolgende keer inloggen tweestapsverificatie instellen."
         : "De beheerdersrol is ingetrokken.",
+  };
+}
+
+// --- Toegang herstellen ------------------------------------------------------
+
+/**
+ * Een wachtwoordherstelmail sturen namens de klant (bouwprompt §7.4).
+ *
+ * Bewust géén nieuw wachtwoord instellen en doorgeven. Dan zou de beheerder het
+ * wachtwoord van een klant kennen, en dat hoort niet: het account is van de
+ * klant. Deze route stuurt dezelfde link die de klant ook via "wachtwoord
+ * vergeten" krijgt, alleen dan op verzoek.
+ */
+export async function stuurWachtwoordHerstel(profileId: string) {
+  const context = await vereisAdmin();
+  if (!context) return GEEN_RECHTEN;
+
+  if (!serviceRoleBeschikbaar()) {
+    return {
+      status: "fout" as const,
+      bericht:
+        "Hiervoor is de service-role sleutel van Supabase nodig; die staat nog niet in .env.local. Zie docs/supabase-project.md.",
+    };
+  }
+
+  const { supabase, adminId } = context;
+
+  const { data: klant } = await supabase
+    .from("profiles")
+    .select("email, deleted_at")
+    .eq("id", profileId)
+    .maybeSingle();
+
+  if (!klant) {
+    return { status: "fout" as const, bericht: "Deze klant bestaat niet." };
+  }
+
+  if (klant.deleted_at) {
+    return {
+      status: "fout" as const,
+      bericht: "Dit account is gedeactiveerd. Activeer het eerst.",
+    };
+  }
+
+  const admin = createAdminClient();
+  const { error } = await admin.auth.resetPasswordForEmail(klant.email, {
+    redirectTo: `${publicEnv().NEXT_PUBLIC_SITE_URL}/wachtwoord-herstellen`,
+  });
+
+  if (error) {
+    return {
+      status: "fout" as const,
+      bericht: "De herstelmail kon niet worden verstuurd.",
+    };
+  }
+
+  await schrijfAudit(supabase, {
+    actorId: adminId,
+    actie: "wachtwoordherstel_verstuurd",
+    entiteit: "profiles",
+    entiteitId: profileId,
+  });
+
+  revalidatePath(`/admin/klanten/${profileId}`);
+  return {
+    status: "gelukt" as const,
+    bericht:
+      "De klant heeft een e-mail gekregen om een nieuw wachtwoord te kiezen.",
+  };
+}
+
+/**
+ * De tweestapsverificatie van een klant opnieuw laten instellen.
+ *
+ * Voor het geval iemand zijn telefoon kwijt is. De bestaande factoren gaan
+ * eraf; bij de volgende keer inloggen richt de klant hem opnieuw in. Voor
+ * beheerders is dat verplicht, voor klanten optioneel.
+ *
+ * Dit is een gevoelige handeling — hij haalt een beveiligingslaag weg — en gaat
+ * daarom altijd het logboek in.
+ */
+export async function herstelTweestapsverificatie(profileId: string) {
+  const context = await vereisAdmin();
+  if (!context) return GEEN_RECHTEN;
+
+  if (!serviceRoleBeschikbaar()) {
+    return {
+      status: "fout" as const,
+      bericht:
+        "Hiervoor is de service-role sleutel van Supabase nodig; die staat nog niet in .env.local. Zie docs/supabase-project.md.",
+    };
+  }
+
+  const { supabase, adminId } = context;
+  const admin = createAdminClient();
+
+  const { data: factoren, error: leesFout } =
+    await admin.auth.admin.mfa.listFactors({ userId: profileId });
+
+  if (leesFout) {
+    return {
+      status: "fout" as const,
+      bericht: "De tweestapsverificatie kon niet worden opgehaald.",
+    };
+  }
+
+  const lijst = factoren?.factors ?? [];
+
+  if (lijst.length === 0) {
+    return {
+      status: "fout" as const,
+      bericht: "Deze klant heeft geen tweestapsverificatie ingesteld.",
+    };
+  }
+
+  for (const factor of lijst) {
+    const { error } = await admin.auth.admin.mfa.deleteFactor({
+      userId: profileId,
+      id: factor.id,
+    });
+    if (error) {
+      return {
+        status: "fout" as const,
+        bericht: "Niet alle factoren konden worden verwijderd.",
+      };
+    }
+  }
+
+  await schrijfAudit(supabase, {
+    actorId: adminId,
+    actie: "tweestaps_hersteld",
+    entiteit: "profiles",
+    entiteitId: profileId,
+    meta: { aantal_factoren: lijst.length },
+  });
+
+  revalidatePath(`/admin/klanten/${profileId}`);
+  return {
+    status: "gelukt" as const,
+    bericht:
+      "De tweestapsverificatie is losgekoppeld. Bij de volgende keer inloggen stelt de klant hem opnieuw in.",
   };
 }

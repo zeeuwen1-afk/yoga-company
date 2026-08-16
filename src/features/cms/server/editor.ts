@@ -39,6 +39,7 @@ const PAGINA_NAMEN: Record<string, { titel: string; pad: string }> = {
   home: { titel: "Startpagina", pad: "/" },
   opleidingen: { titel: "Opleidingen", pad: "/opleidingen" },
   trainingen: { titel: "Trainingen", pad: "/trainingen" },
+  lessen: { titel: "Lessen", pad: "/lessen" },
   "over-ons": { titel: "Over ons", pad: "/over-ons" },
   contact: { titel: "Contact", pad: "/contact" },
   footer: { titel: "Paginavoet", pad: "/" },

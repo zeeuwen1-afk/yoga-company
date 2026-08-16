@@ -1,19 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { EB_Garamond, Source_Sans_3 } from "next/font/google";
+import { Cormorant_Garamond, Jost } from "next/font/google";
 
 import "./globals.css";
 
-const ebGaramond = EB_Garamond({
-  variable: "--font-eb-garamond",
+// next/font haalt de fontbestanden op tijdens de build en serveert ze vanaf ons
+// eigen domein. Er gaat dus geen bezoekersverzoek naar Google — dat voldoet aan
+// de eis "geen Google Fonts-CDN" uit §2 van de bouwprompt.
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
-  weight: ["600"],
+  weight: ["500", "600"],
   display: "swap",
 });
 
-const sourceSans = Source_Sans_3({
-  variable: "--font-source-sans",
+const jost = Jost({
+  variable: "--font-jost",
   subsets: ["latin"],
-  weight: ["400", "600"],
+  weight: ["300", "400", "600"],
   display: "swap",
 });
 
@@ -22,15 +25,15 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   ),
   title: {
-    default: "Yoga Companie — opleidingsinstituut voor yoga",
-    template: "%s · Yoga Companie",
+    default: "YogaCompany — opleidingsinstituut voor yoga",
+    template: "%s · YogaCompany",
   },
   description:
-    "Opleidingen, trainingen en yogalessen. Deskundig en betrouwbaar, warm en persoonlijk.",
+    "Opleidingen · Trainingen · Lessen. Deskundig en betrouwbaar, warm en persoonlijk.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#2E4A3B",
+  themeColor: "#1F5551",
 };
 
 export default function RootLayout({
@@ -39,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl" className={`${ebGaramond.variable} ${sourceSans.variable}`}>
+    <html lang="nl" className={`${cormorant.variable} ${jost.variable}`}>
       <body>{children}</body>
     </html>
   );

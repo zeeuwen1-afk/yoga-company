@@ -1,5 +1,5 @@
 -- =============================================================================
--- Yoga Companie — Row Level Security (BOUWPROMPT §2.1 en §6)
+-- YogaCompany — Row Level Security (BOUWPROMPT §2.1 en §6)
 --
 -- Klantscheiding wordt hier afgedwongen, op databaseniveau. Applicatiecode is
 -- nooit de enige verdediging: ook een fout in een query mag er niet toe leiden

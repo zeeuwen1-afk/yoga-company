@@ -8,6 +8,8 @@ import { FormMessage } from "@/components/ui/form-message";
 import { Input, Label, Textarea } from "@/components/ui/input";
 import { SubmitButton } from "@/components/ui/submit-button";
 import {
+  herstelTweestapsverificatie,
+  stuurWachtwoordHerstel,
   verwijderKlantAvg,
   voegNotitieToe,
   werkKlantBij,
@@ -23,11 +25,23 @@ export function GegevensBewerken({
   voornaam,
   achternaam,
   telefoon,
+  geboortedatum,
+  woonplaats,
+  hoeGevonden,
+  ervaring,
+  doelen,
+  interesses,
 }: {
   profileId: string;
   voornaam: string;
   achternaam: string;
   telefoon: string | null;
+  geboortedatum: string | null;
+  woonplaats: string | null;
+  hoeGevonden: string | null;
+  ervaring: string | null;
+  doelen: string | null;
+  interesses: string[];
 }) {
   const [resultaat, actie] = useActionState(werkKlantBij, BEGIN);
 
@@ -64,10 +78,83 @@ export function GegevensBewerken({
         </div>
       </div>
 
-      <div>
-        <Label htmlFor="k-telefoon">Telefoonnummer</Label>
-        <Input id="k-telefoon" name="phone" defaultValue={telefoon ?? ""} />
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <Label htmlFor="k-telefoon">Telefoonnummer</Label>
+          <Input id="k-telefoon" name="phone" defaultValue={telefoon ?? ""} />
+        </div>
+        <div>
+          <Label htmlFor="k-geboorte">Geboortedatum</Label>
+          <Input
+            id="k-geboorte"
+            name="birth_date"
+            type="date"
+            defaultValue={geboortedatum ?? ""}
+          />
+        </div>
       </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <Label htmlFor="k-woonplaats">Woonplaats</Label>
+          <Input
+            id="k-woonplaats"
+            name="city"
+            defaultValue={woonplaats ?? ""}
+            placeholder="Alleen de plaats, geen adres"
+          />
+        </div>
+        <div>
+          <Label htmlFor="k-gevonden">Hoe heeft deze klant ons gevonden?</Label>
+          <Input
+            id="k-gevonden"
+            name="how_found"
+            defaultValue={hoeGevonden ?? ""}
+            placeholder="Via een vriendin, Google, Instagram…"
+          />
+        </div>
+      </div>
+
+      <div>
+        <Label htmlFor="k-ervaring">Ervaring met yoga</Label>
+        <Input
+          id="k-ervaring"
+          name="experience_level"
+          defaultValue={ervaring ?? ""}
+          placeholder="Beginner, twee jaar Hatha, docent sinds 2019…"
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="k-doelen">Wat wil deze klant bereiken?</Label>
+        <Textarea
+          id="k-doelen"
+          name="goals"
+          rows={3}
+          defaultValue={doelen ?? ""}
+          placeholder="Waar komt iemand voor, en waar wil hij naartoe?"
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="k-interesses">Interesses</Label>
+        <Input
+          id="k-interesses"
+          name="interests"
+          defaultValue={interesses.join(", ")}
+          placeholder="yin, ademwerk, meridianen"
+        />
+        <p className="mt-1.5 text-sm text-muted">
+          Onderwerpen, gescheiden door komma&apos;s. Gebruikt om mailings
+          gericht te versturen — alleen bij klanten die daar toestemming voor
+          gaven.
+        </p>
+      </div>
+
+      <p className="text-sm text-muted">
+        Blessures en klachten horen hier niet thuis; die leg je vast bij
+        Gezondheid, want daar gelden strengere regels voor.
+      </p>
 
       <SubmitButton bezigLabel="Opslaan…">Opslaan</SubmitButton>
     </form>
@@ -107,10 +194,17 @@ export function AccountSchakelaars({
   profileId,
   isActief,
   isAdmin,
+  heeftTweestaps,
 }: {
   profileId: string;
   isActief: boolean;
   isAdmin: boolean;
+  /**
+   * Of er een authenticator-app gekoppeld is. `null` betekent onbekend —
+   * dat gebeurt zolang de service-role sleutel ontbreekt. De knop blijft dan
+   * bruikbaar; de actie zelf meldt wat er werkelijk aan de hand is.
+   */
+  heeftTweestaps: boolean | null;
 }) {
   const [melding, setMelding] = useState<AdminResultaat>(BEGIN);
   const [bezig, startOvergang] = useTransition();
@@ -154,6 +248,44 @@ export function AccountSchakelaars({
         >
           {isAdmin ? "Beheerdersrol intrekken" : "Beheerder maken"}
         </Button>
+      </div>
+
+      <div className="space-y-3 border-t border-line pt-4">
+        <p className="text-sm font-semibold text-ink">Toegang herstellen</p>
+
+        <div className="flex flex-wrap gap-3">
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            disabled={bezig}
+            onClick={() => voerUit(() => stuurWachtwoordHerstel(profileId))}
+          >
+            Wachtwoord laten herstellen
+          </Button>
+
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            disabled={bezig || heeftTweestaps === false}
+            onClick={() =>
+              voerUit(() => herstelTweestapsverificatie(profileId))
+            }
+          >
+            {heeftTweestaps === false
+              ? "Geen tweestapsverificatie"
+              : "Tweestapsverificatie loskoppelen"}
+          </Button>
+        </div>
+
+        <p className="text-sm text-muted">
+          De klant krijgt een e-mail en kiest zelf een nieuw wachtwoord — jij
+          krijgt het nooit te zien, want het account is van de klant.
+          Loskoppelen van de tweestapsverificatie is voor wie zijn telefoon
+          kwijt is; bij de volgende keer inloggen stelt hij hem opnieuw in.
+          Beide handelingen komen in het logboek.
+        </p>
       </div>
 
       <p className="text-sm text-muted">

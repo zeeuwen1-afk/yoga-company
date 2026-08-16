@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
@@ -9,6 +10,7 @@ import { cn } from "@/lib/utils";
 const navigation = [
   { href: "/opleidingen", label: "Opleidingen" },
   { href: "/trainingen", label: "Trainingen" },
+  { href: "/lessen", label: "Lessen" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },
 ];
@@ -19,11 +21,20 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-background">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link
-          href="/"
-          className="font-serif text-xl leading-none font-semibold text-green-dark"
-        >
-          Yoga Companie
+        <Link href="/" className="flex items-center" aria-label="YogaCompany">
+          {/* De compacte variant: merkteken en woordmerk, zonder de
+              ondertitel. In een balk van veertig pixels hoog zou die op vier
+              pixels uitkomen — onleesbaar klein is erger dan weglaten. De
+              volledige variant staat in de paginavoet. Het beeld draagt geen
+              tekst voor schermlezers, vandaar de aria-label op de link. */}
+          <Image
+            src="/brand/logo-compact.png"
+            alt=""
+            width={900}
+            height={248}
+            priority
+            className="h-9 w-auto sm:h-10"
+          />
         </Link>
 
         <nav

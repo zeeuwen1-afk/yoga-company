@@ -5,7 +5,7 @@ import Anthropic from "@anthropic-ai/sdk";
 /**
  * Koppeling met de Anthropic API (BOUWPROMPT §15).
  *
- * Net als bij Stripe en Resend: de sleutel wordt pas gelezen op het moment dat
+ * Net als bij Mollie en Resend: de sleutel wordt pas gelezen op het moment dat
  * hij nodig is. Zo start de applicatie ook zonder AI-koppeling en kun je alles
  * behalve het genereren van teksten gewoon gebruiken — de socialmediatool blijft
  * bruikbaar met zelfgeschreven captions.

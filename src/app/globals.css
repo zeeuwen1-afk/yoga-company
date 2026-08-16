@@ -1,26 +1,37 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
- * Yoga Companie — design tokens (BOUWPROMPT §5)
+ * YogaCompany — design tokens (bouwprompt §2)
  * Rustig, warm en professioneel. Contrasten voldoen aan WCAG AA.
  * De site kent bewust één vaste (lichte) verschijningsvorm.
+ *
+ * De tokennamen zijn Engels omdat de Tailwind-klassen (bg-green, text-muted)
+ * door de hele applicatie zo heten; de wáárden komen uit §2 van de bouwprompt.
+ * Zie docs/aannames.md.
  * ------------------------------------------------------------------------- */
 
 @theme {
-  /* Merkkleuren */
-  --color-green: #2e4a3b; /* primair — koppen, knoppen */
-  --color-green-dark: #22382c; /* hover, koppen donker */
-  --color-sand: #eae1ce; /* secundaire vlakken */
-  --color-sand-light: #f4eedf; /* zachte kaders */
-  --color-cream: #faf6ec; /* paginaachtergrond secties */
-  --color-ink: #2b2a26; /* bodytekst */
-  --color-muted: #6e6a5c; /* bijschriften */
-  --color-line: #d9d0bc; /* lijnen, borders */
+  /* Merkkleuren — palet "Helder water", vastgesteld 14 augustus 2026.
+   * Zeegroen met warm zand: koeler en helderder dan het nachtgroen waarmee
+   * we begonnen, met het zand erin om te voorkomen dat het kil wordt.
+   * Elke combinatie die in de applicatie voorkomt haalt WCAG AA; de
+   * berekening staat in docs/huisstijl.md. */
+  --color-green: #1f5551; /* zeegroen, primair — koppen, knoppen, footer */
+  --color-green-dark: #163f3c; /* hover en diepere koppen */
+  --color-sage: #a0cbc4; /* salie, secundair accent */
+  --color-sand: #e6d9c0; /* zand, warm accent */
+  --color-sand-light: #f1e9d9; /* zand licht, warm accent */
+  --color-paper: #f6faf9; /* paginaachtergrond */
+  --color-cream: #eaf3f1; /* warme off-white: tintvlakken en tekst op groen */
+  --color-ink: #14332f; /* bodytekst */
+  --color-muted: #566e6a; /* bijschriften — zie noot over contrast hieronder */
+  --color-line: #d3e2df; /* decoratieve lijnen en kaders */
+  --color-line-strong: #748c88; /* randen van formuliervelden (WCAG 1.4.11) */
   --color-error: #9c3d2e;
   --color-success: #3e6b4f;
 
   /* Semantische aliassen (gebruikt door de UI-componenten) */
-  --color-background: #ffffff;
+  --color-background: #ffffff; /* vlakken: kaarten en panelen */
   --color-foreground: var(--color-ink);
   --color-primary: var(--color-green);
   --color-primary-foreground: var(--color-cream);
@@ -29,13 +40,18 @@
   --color-border: var(--color-line);
   --color-ring: var(--color-green);
 
-  /* Typografie */
-  --font-serif: var(--font-eb-garamond), ui-serif, Georgia, serif;
-  --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
+  /* Typografie — §2: koppen Cormorant Garamond, tekst en UI Jost */
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
 
   /* Vorm */
   --radius-card: 12px;
 }
+
+/* Noot over --color-muted.
+ * Bijschriften zijn de krapste tekstcombinatie op de pagina: #566E6A op
+ * --color-paper haalt 5,21:1, ruim boven de AA-eis van 4,5:1. Wie deze tint
+ * ooit lichter maakt, moet dat opnieuw narekenen. */
 
 @layer base {
   :root {
@@ -47,10 +63,11 @@
   }
 
   body {
-    background-color: var(--color-background);
+    background-color: var(--color-paper);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-size: 1rem;
+    font-weight: 400;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
@@ -77,6 +94,15 @@
     background-color: var(--color-sand);
     color: var(--color-green-dark);
   }
+}
+
+/* Labels in kleinkapitaal-stijl met ruime letterafstand (§2). */
+@utility label-klein {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
 }
 
 /* Respecteer de systeemvoorkeur voor minder beweging (BOUWPROMPT §18) */

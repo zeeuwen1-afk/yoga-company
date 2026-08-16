@@ -21,7 +21,7 @@ export default async function BerichtenPage() {
       <div>
         <h1 className="text-3xl sm:text-4xl">Berichten</h1>
         <p className="mt-2 text-muted">
-          Je persoonlijke lijn met Yoga Companie. Alleen jij en wij lezen mee.
+          Je persoonlijke lijn met YogaCompany. Alleen jij en wij lezen mee.
         </p>
       </div>
 

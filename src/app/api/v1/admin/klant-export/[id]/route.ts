@@ -56,7 +56,7 @@ export async function GET(
 
   const bestand = {
     toelichting:
-      "Alle persoonsgegevens die Yoga Companie van deze klant bewaart. Betaalgegevens staan bij Stripe.",
+      "Alle persoonsgegevens die YogaCompany van deze klant bewaart. Betaalgegevens staan bij Mollie.",
     geexporteerdOp: new Date().toISOString(),
     profiel: dossier.profiel,
     inschrijvingen: dossier.inschrijvingen,

@@ -4,17 +4,24 @@
  *
  * Twee manieren, dezelfde tests:
  *
- *   pnpm test:rls          lokale wegwerpdatabase (PGlite), geen configuratie
- *   SUPABASE_DB_URL=… …    tegen het echte Supabase-project
+ *   pnpm test:rls            lokale wegwerpdatabase (PGlite), geen configuratie
+ *   pnpm test:rls:project    tegen het echte Supabase-project
  *
  * De lokale variant draait in CI bij elke wijziging. Draai de suite daarnaast
  * minstens één keer tegen het echte project voordat je live gaat: de lokale
  * database bootst Supabase na, maar ís het niet.
+ *
+ * Het echte project vraagt om `--project`, en niet alleen om een ingevulde
+ * SUPABASE_DB_URL. Anders verandert het doel van deze tests zodra iemand die
+ * variabele invult — en dan praat `pnpm verify` bij elke run ongemerkt met de
+ * database waar je klanten in staan. Tegen dat project draait alles in één
+ * transactie die aan het eind wordt teruggedraaid, maar "het ruimt zichzelf op"
+ * is geen reden om er ongevraagd naartoe te gaan.
  */
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
-import "dotenv/config";
+import "./omgeving.mjs";
 
 const TESTS_DIR = path.join(process.cwd(), "supabase", "tests", "rls");
 const MIGRATIONS_DIR = path.join(process.cwd(), "supabase", "migrations");
@@ -31,9 +38,19 @@ const GRIJS = "[90m";
 const VET = "[1m";
 const RESET = "[0m";
 
+/** Alleen mét --project gaan we naar het echte Supabase-project. */
+const TEGEN_PROJECT = process.argv.includes("--project");
+
 /** Eén verbinding, ongeacht of dat PGlite of een echte Postgres is. */
 async function openDatabase() {
-  const url = process.env.SUPABASE_DB_URL;
+  const url = TEGEN_PROJECT ? process.env.SUPABASE_DB_URL : null;
+
+  if (TEGEN_PROJECT && !url) {
+    console.error(
+      "SUPABASE_DB_URL ontbreekt, en --project vraagt om het echte project.",
+    );
+    process.exit(1);
+  }
 
   if (url) {
     const { default: pg } = await import("pg");

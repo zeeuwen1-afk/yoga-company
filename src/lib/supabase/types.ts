@@ -18,6 +18,9 @@ export type RequestStatus = "open" | "in_behandeling" | "afgerond";
 export type BlockKind = "text" | "richtext" | "image" | "video";
 export type ContentKind = "video" | "pdf" | "tekst";
 export type PostStatus = "concept" | "gepland" | "gepubliceerd" | "mislukt";
+export type OrderStatus = "concept" | "open" | "paid" | "canceled" | "refunded";
+export type BookingStatus =
+  "geboekt" | "wachtlijst" | "geannuleerd" | "niet_verschenen";
 
 export type Json =
   | string
@@ -72,6 +75,13 @@ export type Profile = {
   last_name: string;
   email: string;
   phone: string | null;
+  /** Zie de migration 20260815090000 voor het doel van elk veld hieronder. */
+  birth_date: string | null;
+  city: string | null;
+  how_found: string | null;
+  experience_level: string | null;
+  goals: string | null;
+  interests: string[];
   marketing_consent_at: string | null;
   created_at: string;
   deleted_at: string | null;
@@ -93,7 +103,6 @@ export type Course = {
   certificate_text: string | null;
   price_cents: number;
   currency: string;
-  stripe_price_id: string | null;
   has_digital_content: boolean;
   is_active: boolean;
   sort: number;
@@ -130,7 +139,8 @@ export type Enrollment = {
   profile_id: string;
   course_id: string;
   status: EnrollmentStatus;
-  stripe_checkout_session_id: string | null;
+  /** De bestelling die deze inschrijving betaalde; null bij handmatig toekennen. */
+  order_id: string | null;
   amount_cents: number | null;
   paid_at: string | null;
   created_at: string;
@@ -188,11 +198,99 @@ export type ContentBlockPublic = {
   updated_at: string;
 };
 
+/**
+ * Een geroosterde yogales. Let op het verschil met `Lesson`: dat is
+ * lesmateriaal binnen een opleiding, dit is een les op een tijdstip.
+ */
+export type ClassSession = {
+  id: string;
+  title: string;
+  description: string | null;
+  starts_at: string;
+  duration_minutes: number;
+  location: string;
+  capacity: number;
+  cancelled_at: string | null;
+  cancellation_reason: string | null;
+  is_published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+/** Het rooster zoals bezoekers het zien: zonder wie er geboekt heeft. */
+export type ClassSessionPublic = {
+  id: string;
+  title: string;
+  description: string | null;
+  starts_at: string;
+  duration_minutes: number;
+  location: string;
+  capacity: number;
+  cancelled_at: string | null;
+  free_spots: number;
+};
+
+export type Booking = {
+  id: string;
+  class_session_id: string;
+  profile_id: string;
+  status: BookingStatus;
+  created_at: string;
+  cancelled_at: string | null;
+};
+
+/**
+ * De financiële kant van een aankoop. De inschrijving is het toegangsrecht,
+ * de bestelling de administratie; ze leven apart omdat een bestelling na een
+ * AVG-verwijdering moet blijven staan (§8.4).
+ */
+export type Order = {
+  id: string;
+  profile_id: string;
+  status: OrderStatus;
+  amount_cents: number;
+  currency: string;
+  description: string;
+  /** Mollie is de bron; wij bewaren alleen deze verwijzing. */
+  mollie_payment_id: string | null;
+  paid_at: string | null;
+  refunded_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type OrderItem = {
+  id: string;
+  order_id: string;
+  course_id: string | null;
+  description: string;
+  amount_cents: number;
+  quantity: number;
+};
+
+export type CrmNoteKind = "notitie" | "verslag";
+
 export type CrmNote = {
   id: string;
   profile_id: string;
   author_id: string;
   body: string;
+  kind: CrmNoteKind;
+  title: string | null;
+  created_at: string;
+};
+
+/**
+ * Een door de AI geschreven gespreksverslag. Uitsluitend voor de beheerder;
+ * die bepaalt wat hij ervan met de klant deelt.
+ */
+export type CrmAnalyse = {
+  id: string;
+  profile_id: string;
+  body: string;
+  model: string;
+  bevat_gezondheid: boolean;
+  created_by: string | null;
   created_at: string;
 };
 
@@ -273,6 +371,7 @@ export type Database = {
         [
           FK<"enrollments_profile_id_fkey", "profile_id", "profiles">,
           FK<"enrollments_course_id_fkey", "course_id", "courses">,
+          FK<"enrollments_order_id_fkey", "order_id", "orders">,
         ]
       >;
       progress: Table<
@@ -325,10 +424,44 @@ export type Database = {
         AuditLogEntry,
         [FK<"audit_log_actor_id_fkey", "actor_id", "profiles">]
       >;
+      orders: Table<
+        Order,
+        [FK<"orders_profile_id_fkey", "profile_id", "profiles">]
+      >;
+      order_items: Table<
+        OrderItem,
+        [
+          FK<"order_items_order_id_fkey", "order_id", "orders">,
+          FK<"order_items_course_id_fkey", "course_id", "courses">,
+        ]
+      >;
+      crm_analyses: Table<
+        CrmAnalyse,
+        [
+          FK<"crm_analyses_profile_id_fkey", "profile_id", "profiles">,
+          FK<"crm_analyses_created_by_fkey", "created_by", "profiles">,
+        ]
+      >;
+      class_sessions: Table<ClassSession>;
+      bookings: Table<
+        Booking,
+        [
+          FK<
+            "bookings_class_session_id_fkey",
+            "class_session_id",
+            "class_sessions"
+          >,
+          FK<"bookings_profile_id_fkey", "profile_id", "profiles">,
+        ]
+      >;
     };
     Views: {
       content_blocks_public: {
         Row: ContentBlockPublic;
+        Relationships: [];
+      };
+      class_sessions_public: {
+        Row: ClassSessionPublic;
         Relationships: [];
       };
     };
@@ -349,6 +482,32 @@ export type Database = {
         Args: { p_profile_id: string; p_rol: UserRole };
         Returns: undefined;
       };
+      // Lesrooster. Boeken en annuleren lopen bewust via functies: alleen zo
+      // is de capaciteit onder gelijktijdige boekers houdbaar.
+      // Gezondheidsgegevens staan in het schema `sensitive`, dat niet via de
+      // API bereikbaar is. Deze twee functies zijn de enige ingang en loggen
+      // elke inzage en wijziging (§8.3).
+      haal_gezondheid: {
+        Args: { p_profile_id: string };
+        Returns: {
+          body: string;
+          consent_at: string;
+          consent_note: string | null;
+          updated_at: string;
+          updated_by: string | null;
+        }[];
+      };
+      bewaar_gezondheid: {
+        Args: {
+          p_profile_id: string;
+          p_body: string;
+          p_consent_note?: string | null;
+        };
+        Returns: undefined;
+      };
+      vrije_plekken: { Args: { p_session_id: string }; Returns: number };
+      boek_les: { Args: { p_session_id: string }; Returns: BookingStatus };
+      annuleer_boeking: { Args: { p_session_id: string }; Returns: undefined };
       // Maandelijkse opschoontaak (§17.6); geeft terug wat er is opgeruimd.
       opruimen_bewaartermijnen: {
         Args: Record<string, never>;
@@ -369,6 +528,9 @@ export type Database = {
       block_kind: BlockKind;
       content_kind: ContentKind;
       post_status: PostStatus;
+      booking_status: BookingStatus;
+      crm_note_kind: CrmNoteKind;
+      order_status: OrderStatus;
     };
     CompositeTypes: Record<string, never>;
   };

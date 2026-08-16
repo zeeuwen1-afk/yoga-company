@@ -4,13 +4,13 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { verstuurInschrijfbevestiging } from "@/features/payments";
-import { publicEnv } from "@/lib/env";
-import { stripe, stripeIngericht } from "@/lib/stripe";
+import { maakBestellingEnBetaling } from "@/features/payments";
+import { betalenIngericht } from "@/lib/mollie";
 import { createClient } from "@/lib/supabase/server";
 import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
 
 /**
- * Adminfuncties rond betalingen (BOUWPROMPT §9).
+ * Adminfuncties rond betalingen (bouwprompt §7.6).
  *
  * "Betalen in termijnen in overleg" vraagt om twee handmatige mogelijkheden:
  * een betaallink sturen, en een inschrijving met de hand op betaald zetten.
@@ -59,7 +59,7 @@ async function vereisAdmin() {
 
 /**
  * Zet een inschrijving met de hand op betaald, bijvoorbeeld bij een
- * bankoverschrijving of een termijnregeling buiten Stripe om.
+ * bankoverschrijving of een termijnregeling buiten Mollie om.
  */
 export async function markeerHandmatigBetaald(
   _vorige: AdminResultaat,
@@ -165,7 +165,7 @@ export async function maakBetaallink(
     return { status: "fout", bericht: "Je hebt hier geen rechten voor." };
   }
 
-  if (!stripeIngericht()) {
+  if (!betalenIngericht()) {
     return {
       status: "fout",
       bericht: "De betaalkoppeling is nog niet ingericht.",
@@ -184,42 +184,43 @@ export async function maakBetaallink(
   }
 
   const { supabase, adminId } = context;
-  const basis = publicEnv().NEXT_PUBLIC_SITE_URL;
+
+  // De betaallink is een gewone bestelling zonder opleidingsregel: hij hoort
+  // bij een inschrijving die de beheerder handmatig beheert (een termijn, een
+  // correctie). De webhook zet de bestelling straks op betaald; de toegang
+  // regelt de beheerder zelf met "handmatig op betaald zetten".
+  const { data: inschrijving } = await supabase
+    .from("enrollments")
+    .select("profile_id")
+    .eq("id", parsed.data.enrollment_id)
+    .maybeSingle();
+
+  if (!inschrijving) {
+    return { status: "fout", bericht: "Deze inschrijving bestaat niet." };
+  }
 
   try {
-    const sessie = await stripe().checkout.sessions.create({
-      mode: "payment",
-      payment_method_types: ["ideal", "card"],
-      locale: "nl",
-      line_items: [
+    const bestelling = await maakBestellingEnBetaling({
+      profileId: inschrijving.profile_id,
+      omschrijving: parsed.data.omschrijving,
+      valuta: "eur",
+      regels: [
         {
-          quantity: 1,
-          price_data: {
-            currency: "eur",
-            unit_amount: parsed.data.bedrag_centen,
-            product_data: { name: parsed.data.omschrijving },
-          },
+          courseId: null,
+          omschrijving: parsed.data.omschrijving,
+          bedragCenten: parsed.data.bedrag_centen,
         },
       ],
-      client_reference_id: parsed.data.enrollment_id,
-      metadata: { enrollment_id: parsed.data.enrollment_id },
-      payment_intent_data: {
-        metadata: { enrollment_id: parsed.data.enrollment_id },
-      },
-      success_url: `${basis}/inschrijven/gelukt?sessie={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${basis}/portaal`,
+      retourPad: "/portaal",
     });
-
-    if (!sessie.url) {
-      return { status: "fout", bericht: "Stripe leverde geen link op." };
-    }
 
     await supabase.from("audit_log").insert({
       actor_id: adminId,
       action: "betaallink_gemaakt",
-      entity: "enrollments",
-      entity_id: parsed.data.enrollment_id,
+      entity: "orders",
+      entity_id: bestelling.orderId,
       meta: {
+        enrollment_id: parsed.data.enrollment_id,
         bedrag_centen: parsed.data.bedrag_centen,
         omschrijving: parsed.data.omschrijving,
       },
@@ -228,7 +229,7 @@ export async function maakBetaallink(
     return {
       status: "gelukt",
       bericht: "De betaallink staat klaar. Stuur hem naar de klant.",
-      betaalUrl: sessie.url,
+      betaalUrl: bestelling.betaalUrl,
     };
   } catch (fout) {
     console.error(

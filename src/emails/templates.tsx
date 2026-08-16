@@ -62,6 +62,34 @@ export function InschrijfbevestigingMail({
   );
 }
 
+/**
+ * 4b. Aanvraag tot inschrijving, zolang online betalen nog niet aanstaat
+ * (§7.1). De klant koopt niets; we nemen persoonlijk contact op.
+ */
+export function InschrijfaanvraagMail({
+  voornaam,
+  cursusTitel,
+}: {
+  voornaam: string;
+  cursusTitel: string;
+}) {
+  return (
+    <Mail voorvertoning="We hebben je aanvraag ontvangen">
+      <Kop>Je aanvraag is binnen</Kop>
+      <Alinea>Hallo {voornaam},</Alinea>
+      <Alinea>
+        Je hebt je aangemeld voor <strong>{cursusTitel}</strong>. We nemen
+        binnen twee werkdagen persoonlijk contact met je op om de inschrijving
+        af te ronden en de praktische informatie door te nemen.
+      </Alinea>
+      <Alinea>Er is nog niets betaald en je zit nog nergens aan vast.</Alinea>
+      <Alinea gedempt>
+        Deze mail is automatisch verstuurd; je hoeft er niet op te antwoorden.
+      </Alinea>
+    </Mail>
+  );
+}
+
 /** 5a. Bevestiging naar de afzender van het contactformulier. */
 export function ContactBevestigingMail({ naam }: { naam: string }) {
   return (
@@ -107,11 +135,11 @@ export function NieuwBerichtMail({
   portaalUrl: string;
 }) {
   return (
-    <Mail voorvertoning="Je hebt een bericht van Yoga Companie">
+    <Mail voorvertoning="Je hebt een bericht van YogaCompany">
       <Kop>Je hebt een bericht</Kop>
       <Alinea>Hallo {voornaam},</Alinea>
       <Alinea>
-        Er staat een bericht van Yoga Companie voor je klaar. Log in om het te
+        Er staat een bericht van YogaCompany voor je klaar. Log in om het te
         lezen en te beantwoorden.
       </Alinea>
       <Knop href={portaalUrl}>Lees je bericht</Knop>
@@ -133,7 +161,7 @@ export function MailingMail({
   afmeldUrl: string;
 }) {
   return (
-    <Mail voorvertoning="Nieuws van Yoga Companie">
+    <Mail voorvertoning="Nieuws van YogaCompany">
       <div dangerouslySetInnerHTML={{ __html: inhoudHtml }} />
       <Scheiding />
       <Alinea gedempt>

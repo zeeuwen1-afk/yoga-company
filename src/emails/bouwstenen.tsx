@@ -38,7 +38,7 @@ export function Mail({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="x-apple-disable-message-reformatting" />
-        <title>Yoga Companie</title>
+        <title>YogaCompany</title>
       </head>
       <body
         style={{
@@ -99,7 +99,7 @@ export function Mail({
                             color: KLEUR.groenDonker,
                           }}
                         >
-                          Yoga Companie
+                          YogaCompany
                         </p>
                       </td>
                     </tr>
@@ -125,7 +125,7 @@ export function Mail({
                           color: KLEUR.gedempt,
                         }}
                       >
-                        Yoga Companie — opleidingsinstituut voor yoga
+                        YogaCompany — opleidingsinstituut voor yoga
                       </td>
                     </tr>
                   </tbody>

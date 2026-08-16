@@ -5,7 +5,14 @@ import { formateerPrijs } from "../prijs";
 import type { Cursus } from "../server/queries";
 
 /** Kaart in het overzicht: titel, samenvatting, prijs en startinformatie. */
-export function CursusKaart({ cursus }: { cursus: Cursus }) {
+export function CursusKaart({
+  cursus,
+  kortingCenten = null,
+}: {
+  cursus: Cursus;
+  /** Bedrag dat een bundel scheelt ten opzichte van de losse modules (§7.1). */
+  kortingCenten?: number | null;
+}) {
   const pad = cursus.type === "opleiding" ? "/opleidingen" : "/trainingen";
   const uren = cursus.curriculum.reduce(
     (totaal, module) => totaal + module.uren,
@@ -13,7 +20,13 @@ export function CursusKaart({ cursus }: { cursus: Cursus }) {
   );
 
   return (
-    <Card className="flex flex-col transition-colors hover:border-green/40">
+    <Card
+      className={
+        kortingCenten
+          ? "flex flex-col border-green/50 bg-sand-light/40 transition-colors hover:border-green"
+          : "flex flex-col transition-colors hover:border-green/40"
+      }
+    >
       <CardHeader>
         <p className="text-sm font-semibold text-muted">
           {cursus.type === "opleiding" ? "Opleiding" : "Training"}
@@ -43,6 +56,16 @@ export function CursusKaart({ cursus }: { cursus: Cursus }) {
               {formateerPrijs(cursus.prijsCenten)}
             </dd>
           </div>
+          {kortingCenten ? (
+            <div>
+              <dt className="sr-only">
+                Voordeel ten opzichte van losse modules
+              </dt>
+              <dd className="text-sm font-semibold text-green">
+                bespaar {formateerPrijs(kortingCenten)}
+              </dd>
+            </div>
+          ) : null}
           {cursus.maxDeelnemers ? (
             <div>
               <dt className="sr-only">Groepsgrootte</dt>
@@ -55,6 +78,36 @@ export function CursusKaart({ cursus }: { cursus: Cursus }) {
       </CardContent>
     </Card>
   );
+}
+
+/**
+ * Wat een bundel scheelt ten opzichte van dezelfde modules los gekocht.
+ *
+ * De korting wordt afgeleid uit de prijzen die in de database staan, niet
+ * ergens los ingetypt. Wijzigt de beheerder een prijs, dan klopt het bedrag
+ * op de site meteen mee (§7.1).
+ */
+function berekenKortingCenten(cursus: Cursus, alle: Cursus[]): number | null {
+  if (cursus.curriculum.length < 2) return null;
+
+  const nummers = new Set(cursus.curriculum.map((module) => module.nummer));
+  const losseModules = alle.filter(
+    (kandidaat) =>
+      kandidaat.slug !== cursus.slug &&
+      kandidaat.curriculum.length === 1 &&
+      nummers.has(kandidaat.curriculum[0].nummer),
+  );
+
+  // Alleen tonen als élke module ook los te koop is; anders is de vergelijking
+  // niet eerlijk en zeggen we er liever niets over.
+  if (losseModules.length !== nummers.size) return null;
+
+  const samenLos = losseModules.reduce(
+    (totaal, module) => totaal + module.prijsCenten,
+    0,
+  );
+  const verschil = samenLos - cursus.prijsCenten;
+  return verschil > 0 ? verschil : null;
 }
 
 /** Rooster van kaarten; `relative` is nodig voor de uitgerekte links. */
@@ -72,7 +125,10 @@ export function CursusRooster({ cursussen }: { cursussen: Cursus[] }) {
     <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {cursussen.map((cursus) => (
         <li key={cursus.slug} className="relative flex">
-          <CursusKaart cursus={cursus} />
+          <CursusKaart
+            cursus={cursus}
+            kortingCenten={berekenKortingCenten(cursus, cursussen)}
+          />
         </li>
       ))}
     </ul>

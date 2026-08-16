@@ -1,5 +1,5 @@
 -- =============================================================================
--- Yoga Companie — AVG-verwijdering en soft delete (BOUWPROMPT §13, §17.7)
+-- YogaCompany — AVG-verwijdering en soft delete (BOUWPROMPT §13, §17.7)
 --
 -- Verwijderen op verzoek betekent hier: anonimiseren, niet wissen. De wet
 -- vraagt om verwijdering van persoonsgegevens, maar verplicht ons tegelijk de

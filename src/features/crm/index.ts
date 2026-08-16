@@ -4,6 +4,9 @@
 export {
   haalKlanten,
   haalKlantDossier,
+  heeftTweestapsverificatie,
+  haalGezondheid,
+  haalAnalyses,
   type KlantRij,
   type KlantFilter,
   type KlantDossier,
@@ -18,3 +21,10 @@ export {
   wijzigRol,
   type AdminResultaat,
 } from "./server/acties";
+
+export {
+  bewaarGezondheid,
+  maakGespreksverslag,
+  verwijderGespreksverslag,
+  type DossierResultaat,
+} from "./server/dossier-acties";

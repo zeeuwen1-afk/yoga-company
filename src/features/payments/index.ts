@@ -1,11 +1,12 @@
 /**
- * Publieke ingang van de payments-feature (BOUWPROMPT §4).
+ * Publieke ingang van de payments-feature (bouwprompt §4).
  */
 export {
-  maakCheckoutSessie,
-  enrollmentIdBijPaymentIntent,
-  type CheckoutInvoer,
-} from "./server/checkout";
+  maakBestellingEnBetaling,
+  type BestelInvoer,
+  type BestelRegel,
+  type BestelResultaat,
+} from "./server/bestelling";
 
-export { verwerkGebeurtenis, type WebhookUitkomst } from "./server/webhook";
+export { verwerkWebhook, type WebhookUitkomst } from "./server/webhook";
 export { verstuurInschrijfbevestiging } from "./server/bevestiging";

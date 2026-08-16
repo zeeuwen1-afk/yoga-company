@@ -65,7 +65,7 @@ export function Gesprek({ berichten }: { berichten: Bericht[] }) {
                     bericht.vanKlant ? "text-cream/70" : "text-muted",
                   )}
                 >
-                  {bericht.vanKlant ? "Jij" : "Yoga Companie"} ·{" "}
+                  {bericht.vanKlant ? "Jij" : "YogaCompany"} ·{" "}
                   {tijdstip(bericht.verstuurdOp)}
                 </p>
               </div>

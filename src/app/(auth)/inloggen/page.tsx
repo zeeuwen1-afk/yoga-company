@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Inloggen",
-  description: "Log in op je eigen omgeving bij Yoga Companie.",
+  description: "Log in op je eigen omgeving bij YogaCompany.",
   robots: { index: false, follow: false },
 };
 

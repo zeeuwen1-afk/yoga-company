@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
 
 /**
- * De beveiligde dialoog met Yoga Companie (BOUWPROMPT §11).
+ * De beveiligde dialoog met YogaCompany (BOUWPROMPT §11).
  *
  * Elke klant heeft precies één conversatie, aangemaakt bij registratie. RLS
  * zorgt dat alleen de eigen conversatie zichtbaar is; de queries hieronder
@@ -24,9 +24,15 @@ export async function haalGesprek(): Promise<Bericht[]> {
   const gebruiker = await huidigeGebruiker(supabase);
   if (!gebruiker) return [];
 
+  // Berichten hebben geen profile_id; de koppeling loopt via de conversatie.
+  // Het filter staat er naast RLS omdat een beheerder alle gesprekken mag
+  // lezen — die horen niet in zijn eigen portaal te verschijnen.
   const { data } = await supabase
     .from("messages")
-    .select("id, body, sender_id, created_at, read_at")
+    .select(
+      "id, body, sender_id, created_at, read_at, conversations!inner(profile_id)",
+    )
+    .eq("conversations.profile_id", gebruiker.id)
     .order("created_at", { ascending: true });
 
   return (data ?? []).map((rij) => ({
@@ -38,7 +44,7 @@ export async function haalGesprek(): Promise<Bericht[]> {
   }));
 }
 
-/** Aantal ongelezen berichten van Yoga Companie aan deze klant. */
+/** Aantal ongelezen berichten van YogaCompany aan deze klant. */
 export async function haalOngelezenAantal(): Promise<number> {
   const supabase = await createClient();
   const gebruiker = await huidigeGebruiker(supabase);
@@ -46,7 +52,11 @@ export async function haalOngelezenAantal(): Promise<number> {
 
   const { count } = await supabase
     .from("messages")
-    .select("id", { count: "exact", head: true })
+    .select("id, conversations!inner(profile_id)", {
+      count: "exact",
+      head: true,
+    })
+    .eq("conversations.profile_id", gebruiker.id)
     .is("read_at", null)
     .neq("sender_id", gebruiker.id);
 

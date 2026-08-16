@@ -79,7 +79,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "hero_titel",
     kind: "text",
     omschrijving: "Grote kop bovenaan de startpagina",
-    value: { text: "Yoga Companie — opleidingsinstituut voor yoga" },
+    value: { text: "YogaCompany — opleidingsinstituut voor yoga" },
   },
   {
     page_key: "home",
@@ -101,8 +101,11 @@ export const BLOKKEN: BlokSeed[] = [
     page_key: "home",
     block_key: "hero_beeld",
     kind: "image",
-    omschrijving: "Foto naast of achter de hero",
-    value: { url: "", alt: "" },
+    omschrijving: "Foto naast de hero",
+    value: {
+      url: "/beeld/hero-vloer.jpg",
+      alt: "Zonlicht valt door een raam op een houten vloer",
+    },
   },
 
   {
@@ -142,8 +145,8 @@ export const BLOKKEN: BlokSeed[] = [
     page_key: "home",
     block_key: "waarom_titel",
     kind: "text",
-    omschrijving: "Kop van het blok Waarom Yoga Companie",
-    value: { text: "Waarom Yoga Companie" },
+    omschrijving: "Kop van het blok Waarom YogaCompany",
+    value: { text: "Waarom YogaCompany" },
   },
   {
     page_key: "home",
@@ -238,11 +241,57 @@ export const BLOKKEN: BlokSeed[] = [
     },
   },
   {
+    page_key: "opleidingen",
+    block_key: "beeld",
+    kind: "image",
+    omschrijving: "Sfeerbeeld boven het overzicht",
+    value: {
+      url: "/beeld/opleidingen-zaal.jpg",
+      alt: "Een zaal met yogamatten en blokken klaargelegd, zonder deelnemers",
+    },
+  },
+  {
+    page_key: "lessen",
+    block_key: "titel",
+    kind: "text",
+    omschrijving: "Kop van de lessenpagina",
+    value: { text: "Yogalessen" },
+  },
+  {
+    page_key: "lessen",
+    block_key: "inleiding",
+    kind: "text",
+    omschrijving: "Inleidende tekst boven het weekrooster",
+    value: {
+      text: "Wekelijkse lessen in kleine groepen. Kijk wanneer het je uitkomt en boek je plek — met een account gaat dat in één klik.",
+    },
+  },
+  {
+    page_key: "lessen",
+    block_key: "beeld",
+    kind: "image",
+    omschrijving: "Sfeerbeeld boven het weekrooster",
+    value: {
+      url: "/beeld/lessen-studio.jpg",
+      alt: "Een rustige ruimte met een houten bank, twee zitkussens en een rond raam",
+    },
+  },
+  {
     page_key: "trainingen",
     block_key: "titel",
     kind: "text",
     omschrijving: "Kop van de trainingenpagina",
     value: { text: "Trainingen" },
+  },
+  {
+    page_key: "trainingen",
+    block_key: "beeld",
+    kind: "image",
+    omschrijving: "Sfeerbeeld boven het overzicht",
+    value: {
+      url: "/beeld/trainingen-blad.jpg",
+      alt: "De schaduw van een plant op een lichte muur",
+    },
   },
   {
     page_key: "trainingen",
@@ -262,7 +311,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "titel",
     kind: "text",
     omschrijving: "Kop van de over-onspagina",
-    value: { text: "Over Yoga Companie" },
+    value: { text: "Over YogaCompany" },
   },
   {
     page_key: "over-ons",
@@ -270,7 +319,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "richtext",
     omschrijving: "Het verhaal en de filosofie",
     value: {
-      html: "<p>Yoga Companie is een opleidingsinstituut voor yoga. We leiden op, we trainen, en we geven les — in die volgorde van nadruk.</p><p>Wat ons bindt is een manier van kijken: yoga is geen prestatie. Een houding die er goed uitziet zegt niets als het lichaam eronder gespannen blijft. We leren onze deelnemers kijken naar de mens tegenover hen, niet naar de vorm.</p><p>Daarom werken we in kleine groepen. Daarom duren onze opleidingen langer dan strikt nodig. En daarom kun je onze modules los volgen: niet iedereen heeft hetzelfde tempo, en dat hoeft ook niet.</p>",
+      html: "<p>YogaCompany is een opleidingsinstituut voor yoga. We leiden op, we trainen, en we geven les — in die volgorde van nadruk.</p><p>Wat ons bindt is een manier van kijken: yoga is geen prestatie. Een houding die er goed uitziet zegt niets als het lichaam eronder gespannen blijft. We leren onze deelnemers kijken naar de mens tegenover hen, niet naar de vorm.</p><p>Daarom werken we in kleine groepen. Daarom duren onze opleidingen langer dan strikt nodig. En daarom kun je onze modules los volgen: niet iedereen heeft hetzelfde tempo, en dat hoeft ook niet.</p>",
     },
   },
   {
@@ -322,7 +371,7 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving: "Contactgegevens naast het formulier",
     value: {
       items: [
-        { label: "E-mail", waarde: "info@yogacompanie.nl" },
+        { label: "E-mail", waarde: "info@yogacompany.eu" },
         { label: "Telefoon", waarde: "Telefoonnummer volgt" },
         { label: "Studio", waarde: "Adres volgt" },
       ],
@@ -336,7 +385,7 @@ export const BLOKKEN: BlokSeed[] = [
     page_key: "footer",
     block_key: "over",
     kind: "text",
-    omschrijving: "Korte zin over Yoga Companie in de paginavoet",
+    omschrijving: "Korte zin over YogaCompany in de paginavoet",
     value: {
       text: "Opleidingsinstituut voor yoga. Opleidingen, trainingen en yogalessen.",
     },
@@ -348,7 +397,7 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving: "E-mail, KvK en btw-nummer in de paginavoet",
     value: {
       items: [
-        { label: "E-mail", waarde: "info@yogacompanie.nl" },
+        { label: "E-mail", waarde: "info@yogacompany.eu" },
         { label: "KvK", waarde: "KvK-nummer volgt" },
       ],
     },

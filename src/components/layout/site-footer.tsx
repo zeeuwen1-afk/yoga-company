@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { haalPagina, type Pagina } from "@/features/cms";
@@ -11,6 +12,7 @@ const legal = [
 const navigatie = [
   { href: "/opleidingen", label: "Opleidingen" },
   { href: "/trainingen", label: "Trainingen" },
+  { href: "/lessen", label: "Lessen" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },
 ];
@@ -28,25 +30,31 @@ export async function SiteFooter({
   const gegevens = pagina.lijst<Gegeven>("bedrijfsgegevens");
 
   return (
-    <footer className="mt-20 border-t border-line bg-cream">
+    // §2: het nachtgroen draagt de paginavoet; daarop staat de lichte variant
+    // van het logo.
+    <footer className="mt-20 bg-green text-cream">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
-          <p className="font-serif text-lg font-semibold text-green-dark">
-            Yoga Companie
-          </p>
-          <p className="mt-2 max-w-xs text-sm text-muted">
+          <Image
+            src="/brand/logo-horizontaal-donker.png"
+            alt="YogaCompany"
+            width={1200}
+            height={326}
+            className="h-10 w-auto"
+          />
+          <p className="mt-4 max-w-xs text-sm text-sage">
             {pagina.tekst("over")}
           </p>
         </div>
 
         <div>
-          <p className="text-sm font-semibold text-ink">Aanbod</p>
+          <p className="text-sm font-semibold text-cream">Aanbod</p>
           <ul className="mt-2 space-y-1 text-sm">
             {navigatie.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-muted transition-colors hover:text-green"
+                  className="text-sage transition-colors hover:text-sand-light"
                 >
                   {item.label}
                 </Link>
@@ -56,13 +64,13 @@ export async function SiteFooter({
         </div>
 
         <div>
-          <p className="text-sm font-semibold text-ink">Juridisch</p>
+          <p className="text-sm font-semibold text-cream">Juridisch</p>
           <ul className="mt-2 space-y-1 text-sm">
             {legal.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-muted transition-colors hover:text-green"
+                  className="text-sage transition-colors hover:text-sand-light"
                 >
                   {item.label}
                 </Link>
@@ -71,7 +79,7 @@ export async function SiteFooter({
           </ul>
 
           {gegevens.length > 0 ? (
-            <dl className="mt-4 space-y-0.5 text-sm text-muted">
+            <dl className="mt-4 space-y-0.5 text-sm text-sage">
               {gegevens.map((gegeven) => (
                 <div key={gegeven.label} className="flex gap-1">
                   <dt className="sr-only">{gegeven.label}</dt>
@@ -83,9 +91,9 @@ export async function SiteFooter({
         </div>
       </div>
 
-      <div className="border-t border-line">
-        <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-muted sm:px-6">
-          © {new Date().getFullYear()} Yoga Companie. Alle rechten voorbehouden.
+      <div className="border-t border-sage/25">
+        <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-sage sm:px-6">
+          © {new Date().getFullYear()} YogaCompany. Alle rechten voorbehouden.
         </p>
       </div>
     </footer>

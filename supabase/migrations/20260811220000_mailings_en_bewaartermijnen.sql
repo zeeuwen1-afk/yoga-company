@@ -1,5 +1,5 @@
 -- =============================================================================
--- Yoga Companie — mailings afmaken en bewaartermijnen automatiseren
+-- YogaCompany — mailings afmaken en bewaartermijnen automatiseren
 -- (BOUWPROMPT §10.7, §15, §17.6)
 --
 -- Twee dingen gebeuren hier:

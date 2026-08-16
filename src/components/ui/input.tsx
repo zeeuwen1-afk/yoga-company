@@ -11,7 +11,7 @@ export const Input = React.forwardRef<
       ref={ref}
       type={type}
       className={cn(
-        "h-11 w-full rounded-lg border border-line bg-background px-3 text-base placeholder:text-muted/70",
+        "h-11 w-full rounded-lg border border-line-strong bg-background px-3 text-base placeholder:text-muted/70",
         "disabled:cursor-not-allowed disabled:opacity-60",
         "aria-invalid:border-error",
         className,
@@ -29,7 +29,7 @@ export const Textarea = React.forwardRef<
     <textarea
       ref={ref}
       className={cn(
-        "min-h-28 w-full rounded-lg border border-line bg-background p-3 text-base placeholder:text-muted/70",
+        "min-h-28 w-full rounded-lg border border-line-strong bg-background p-3 text-base placeholder:text-muted/70",
         "disabled:cursor-not-allowed disabled:opacity-60",
         "aria-invalid:border-error",
         className,

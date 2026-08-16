@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { vindJuridischeTekst } from "@/content/juridisch";
 import { haalConceptPagina } from "@/features/cms";
+import { haalRooster, Rooster } from "@/features/bookings";
 import { HomeInhoud } from "@/features/cms/paginas/home-inhoud";
 import {
   ContactInhoud,
@@ -26,6 +27,7 @@ const PAGINAS = [
   "footer",
   "opleidingen",
   "trainingen",
+  "lessen",
   "over-ons",
   "contact",
 ];
@@ -80,6 +82,12 @@ export default async function VoorbeeldPagina({
         return (
           <OverzichtInhoud pagina={pagina}>
             <CursusRooster cursussen={await haalAanbod("training")} />
+          </OverzichtInhoud>
+        );
+      case "lessen":
+        return (
+          <OverzichtInhoud pagina={pagina}>
+            <Rooster lessen={await haalRooster()} />
           </OverzichtInhoud>
         );
       case "over-ons":

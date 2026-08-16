@@ -1,4 +1,4 @@
-# Beheerhandleiding — Yoga Companie
+# Beheerhandleiding — YogaCompany
 
 Praktisch naslagwerk voor het opzetten, draaien en onderhouden van het
 platform. Aangevuld per fase.
@@ -149,53 +149,39 @@ Voor de e2e-tests eenmalig: `pnpm exec playwright install chromium webkit`.
 
 ---
 
-## 7. Betalingen (Stripe)
+## 7. Betalingen (Mollie)
 
-### Testmodus inrichten
+De volledige uitleg staat in **`docs/payments.md`** — inclusief waarom de
+webhook geen handtekening controleert en hoe je hem in testmodus uitprobeert.
+Hier de korte versie.
 
-1. Maak een account op [stripe.com](https://stripe.com) en blijf in
-   **testmodus** (schakelaar rechtsboven).
-2. Zet in `.env.local` uit **Developers → API keys**:
-   - `STRIPE_SECRET_KEY` — de secret key, begint met `sk_test_`
-   - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` — de publishable key
-3. Zet **iDEAL** aan onder Settings → Payment methods.
+### Aanzetten
 
-### De webhook koppelen
+Eén omgevingsvariabele:
 
-De webhook is de enige manier waarop een inschrijving op betaald komt. Zonder
-werkende webhook blijft elke betaling in afwachting staan.
-
-Lokaal, met de Stripe CLI:
-
-```bash
-stripe listen --forward-to localhost:3000/api/v1/webhooks/stripe
+```
+MOLLIE_API_KEY=test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-De CLI toont een `whsec_…`; zet die in `.env.local` als
-`STRIPE_WEBHOOK_SECRET`. Een betaling naspelen kan met:
+Test- of live-modus volgt uit het voorvoegsel van de sleutel (`test_` of
+`live_`), dus daar valt niets verkeerd in te stellen. In het beheer onder
+**Instellingen → Koppelingen** zie je welke van de twee actief is.
 
-```bash
-stripe trigger checkout.session.completed
-```
+Aan de kant van Mollie hoef je geen webhook in te stellen: het adres gaat mee
+met elke betaling die we aanmaken. Wat wél moet kloppen is
+`NEXT_PUBLIC_SITE_URL`.
 
-In productie: **Developers → Webhooks → Add endpoint**, adres
-`https://<jouw-domein>/api/v1/webhooks/stripe`, met deze gebeurtenissen:
+### Zolang er geen sleutel is
 
-| Gebeurtenis                                | Wat er gebeurt                                        |
-| ------------------------------------------ | ----------------------------------------------------- |
-| `checkout.session.completed`               | Inschrijving op betaald, bevestigingsmail             |
-| `checkout.session.async_payment_succeeded` | iDEAL-betaling die later slaagt                       |
-| `checkout.session.async_payment_failed`    | iDEAL-betaling die alsnog mislukt                     |
-| `charge.refunded`                          | Inschrijving geannuleerd, vastgelegd in het audit log |
-
-De verwerking is idempotent: dezelfde gebeurtenis tweemaal afleveren verandert
-niets extra's. Faalt de verwerking, dan geeft de webhook een 500 zodat Stripe
-het opnieuw probeert.
+De site blijft werken. Een inschrijving wordt dan een **aanvraag**: hij komt in
+het beheer bij Aanvragen te staan en de klant krijgt een mail dat je binnen
+twee werkdagen contact opneemt. De knop heet in die stand "Aanmelden".
 
 ### Terugbetalen en termijnen
 
-Terugbetalen doe je in het Stripe-dashboard; de webhook zet de inschrijving
-daarna automatisch op geannuleerd en de toegang tot digitale content vervalt.
+Terugbetalen doe je in het Mollie-dashboard; de webhook zet de bestelling
+daarna op terugbetaald, trekt de inschrijving in en schrijft een regel in het
+logboek.
 
 Voor betalen in termijnen zijn er twee mogelijkheden in de beheeromgeving: een
 losse **betaallink** maken, of een inschrijving **handmatig op betaald** zetten.
@@ -203,22 +189,21 @@ Beide worden vastgelegd in het audit log, met de reden erbij.
 
 ### Live gaan
 
-Zet de schakelaar in Stripe op live, vervang de sleutels door de `sk_live_`- en
-`pk_live_`-varianten, en maak een nieuwe webhook aan voor het productieadres —
-die heeft een eigen `whsec_`. Doe eerst één echte betaling van een klein bedrag
-en betaal die daarna terug, om te zien dat beide kanten werken.
+Vervang de `test_`-sleutel door de `live_`-sleutel en deploy opnieuw. Doe daarna
+één echte betaling van een klein bedrag en betaal die terug, om te zien dat
+beide kanten werken.
 
 ---
 
 ## 8. E-mail (Resend)
 
 1. Maak een account op [resend.com](https://resend.com) en voeg het domein
-   `yogacompanie.nl` toe.
+   `yogacompany.eu` toe.
 2. Zet de DNS-records die Resend toont (SPF, DKIM en DMARC). Zonder die records
    komen mails in de spammap terecht.
 3. Zet in `.env.local`:
    - `RESEND_API_KEY`
-   - `EMAIL_FROM="Yoga Companie <info@yogacompanie.nl>"`
+   - `EMAIL_FROM="YogaCompany <info@yogacompany.eu>"`
 
 Ontbreekt de sleutel, dan wordt er niets verstuurd en gaat de rest gewoon door:
 een mail die niet weggaat mag nooit een betaling of inschrijving laten
@@ -328,7 +313,7 @@ Daarna:
 
 De instructie ligt vast in code en is niet via het beheer aan te passen. Daarin
 staat onder meer: altijd Nederlands, de toon uit de huisstijl, en géén
-uitspraken over gezondheid, genezing of behandeling. Yoga Companie is een
+uitspraken over gezondheid, genezing of behandeling. YogaCompany is een
 opleidingsinstituut, geen zorgverlener; "helpt tegen burn-out" is een belofte
 die we niet kunnen waarmaken en juridisch riskant is. Wat wél kan: beschrijven
 wat je in een les dóét en wat deelnemers leren.
@@ -435,7 +420,7 @@ Zelf een ronde draaien:
 
 ```bash
 curl -H "Authorization: Bearer $CRON_SECRET" \
-  https://yogacompanie.nl/api/v1/cron/opschonen
+  https://yogacompany.eu/api/v1/cron/opschonen
 ```
 
 Elke ronde schrijft een regel in het logboek met de aantallen. Zie `docs/avg.md`
@@ -448,6 +433,6 @@ voor de onderbouwing van de termijnen.
 Wordt aangevuld zodra de betreffende fase is opgeleverd:
 
 - Deploy naar Vercel (regio `fra1`) en de benodigde environment variables
-- Stripe live zetten en de webhook koppelen
+- Mollie live zetten (de `live_`-sleutel plaatsen)
 - Resend instellen als SMTP van Supabase Auth
 - Back-ups en de herstelprocedure

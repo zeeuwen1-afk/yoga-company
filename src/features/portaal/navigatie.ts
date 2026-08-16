@@ -1,4 +1,5 @@
 import {
+  CalendarDays,
   GraduationCap,
   Home,
   Inbox,
@@ -8,11 +9,11 @@ import {
 } from "lucide-react";
 
 /**
- * De navigatie van het klantportaal (BOUWPROMPT §11).
+ * De navigatie van het klantportaal (bouwprompt §9).
  *
- * Op de telefoon zijn het er bewust vier: meer past niet comfortabel en meer
- * keuzes maken het schermpje onrustig. De vijfde ingang (Aanvragen) staat op
- * de telefoon binnen het profiel, en in de zijbalk op grotere schermen.
+ * Op de telefoon zijn het er vijf — Home, Opleidingen, Lessen, Berichten en
+ * Profiel — en dat is ook het maximum dat §9 toestaat. Aanvragen staat op de
+ * telefoon binnen het profiel, en in de zijbalk op grotere schermen.
  */
 
 export type NavItem = {
@@ -31,6 +32,12 @@ export const PORTAAL_NAVIGATIE: NavItem[] = [
     href: "/portaal/opleidingen",
     label: "Opleidingen",
     icoon: GraduationCap,
+    mobiel: true,
+  },
+  {
+    href: "/portaal/lessen",
+    label: "Lessen",
+    icoon: CalendarDays,
     mobiel: true,
   },
   {

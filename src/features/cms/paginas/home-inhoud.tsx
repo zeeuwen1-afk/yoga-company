@@ -149,7 +149,7 @@ export function HomeInhoud({
         </ul>
       </Sectie>
 
-      {/* Waarom Yoga Companie ---------------------------------------------- */}
+      {/* Waarom YogaCompany ---------------------------------------------- */}
       {redenen.length > 0 ? (
         <Sectie>
           <SectieKop titel={pagina.tekst("waarom_titel")} />

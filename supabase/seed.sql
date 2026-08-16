@@ -1,5 +1,5 @@
 -- =============================================================================
--- Yoga Companie — startinhoud (BOUWPROMPT §19)
+-- YogaCompany — startinhoud (BOUWPROMPT §19)
 --
 -- GEGENEREERD BESTAND. Niet met de hand aanpassen.
 -- Wijzig de inhoud in src/content/ en draai: pnpm db:generate-seed
@@ -22,9 +22,9 @@ De opleiding bestaat uit vier modules van elk 50 uur. Je volgt ze achter elkaar 
 We werken in kleine groepen van maximaal twaalf deelnemers. Dat is een bewuste keuze: je krijgt persoonlijke begeleiding en er is ruimte om te oefenen met echte mensen en echte lichamen.',
   'Yogadocenten die zich willen specialiseren, professionals in zorg en beweging die Yin Yoga in hun werk willen inzetten, en mensen die zich vanuit persoonlijke interesse grondig willen verdiepen.', 'Voor module 1 is geen vooropleiding vereist. Ervaring met yoga is prettig, maar geen voorwaarde. Wil je lesgeven, dan is een afgeronde basisopleiding tot yogadocent aan te raden.',
   '[{"nummer":1,"titel":"De basis van Yin Yoga","uren":50,"samenvatting":"Je leert waar Yin Yoga vandaan komt, hoe de houdingen werken en wat ze met het lichaam doen.","blokken":[{"titel":"Fundamenten van yin en yang","onderdelen":["Het onderscheid tussen yin en yang in beweging en in rust","Waar de vorm vandaan komt en welke visie eronder ligt"]},{"titel":"Basisprincipes","onderdelen":["De drie principes van een yin-houding","Tijd, diepte en de rol van stilte","Hulpmiddelen inzetten voor verschillende lichamen"]},{"titel":"Houdingen en hun werking","onderdelen":["De kernhoudingen en hun varianten","Werking op bindweefsel, gewrichten en botten","Anatomische verschillen en wat die betekenen voor je lesgeven"]}]},{"nummer":2,"titel":"Het zenuwstelsel & de basis van de meridiaanleer","uren":50,"samenvatting":"Waarom Yin Yoga rust brengt, en de eerste kennismaking met de meridianen.","blokken":[{"titel":"Het zenuwstelsel","onderdelen":["Sympathisch en parasympathisch: spanning en herstel","Wat langdurige stress met het lichaam doet","Hoe een yin-les het herstelvermogen aanspreekt"]},{"titel":"Basis van de meridiaanleer","onderdelen":["Wat meridianen zijn en hoe ze zijn geordend","De verbinding tussen houding en meridiaan","Eerste toepassing in het opbouwen van een les"]}]},{"nummer":3,"titel":"Chinese geneeskunde en Yin Yoga","uren":50,"samenvatting":"Werken met meridianen, de vijf elementen en de orgaanklok.","blokken":[{"titel":"Werken met meridianen","onderdelen":["De meridianen in de praktijk van een yin-les","Houdingen kiezen op basis van wat iemand nodig heeft"]},{"titel":"De elementen","onderdelen":["De vijf elementen en hun onderlinge samenhang","Seizoenen en wat ze vragen"]},{"titel":"De orgaanklok","onderdelen":["Het ritme van de dag en de organen","Een les afstemmen op tijd en seizoen"]}]},{"nummer":4,"titel":"Herstel & revalidatie","uren":50,"samenvatting":"Alle kennis komt samen: je leert Yin Yoga inzetten bij herstel en revalidatie, en persoonlijke lessen maken.","blokken":[{"titel":"Kennis integreren","onderdelen":["De vier modules samenbrengen in één werkwijze","Kijken naar de mens tegenover je, niet naar de houding"]},{"titel":"Herstel en revalidatie","onderdelen":["Yin Yoga bij overbelasting, blessures en langdurige klachten","Grenzen van je vak: wanneer je doorverwijst"]},{"titel":"Persoonlijke lessen maken","onderdelen":["Een programma opbouwen voor één persoon","Begeleiden, bijstellen en opvolgen"]}]}]'::jsonb,
-  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van Yoga Companie (adres volgt)',
+  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   12, 'Certificaat Yin Yoga niveau 1 t/m 4 per module; diploma Yin Yoga Specialist na alle vier de modules — modules zijn ook los te volgen',
-  299500, false, true, 1
+  279500, false, true, 1
 )
 on conflict (slug) do update set
   type = excluded.type,
@@ -55,9 +55,9 @@ Je leert waar Yin Yoga vandaan komt, hoe de houdingen werken en wat ze met het l
 Je sluit de module af met het certificaat **Yin Yoga niveau 1**. Volg je alle vier de modules, dan ontvang je het diploma Yin Yoga Specialist.',
   'Yogadocenten en professionals die zich willen verdiepen, en mensen die deze module als losse verdieping willen volgen.', 'Geen vooropleiding vereist. Ervaring met yoga is prettig, maar geen voorwaarde.',
   '[{"nummer":1,"titel":"De basis van Yin Yoga","uren":50,"samenvatting":"Je leert waar Yin Yoga vandaan komt, hoe de houdingen werken en wat ze met het lichaam doen.","blokken":[{"titel":"Fundamenten van yin en yang","onderdelen":["Het onderscheid tussen yin en yang in beweging en in rust","Waar de vorm vandaan komt en welke visie eronder ligt"]},{"titel":"Basisprincipes","onderdelen":["De drie principes van een yin-houding","Tijd, diepte en de rol van stilte","Hulpmiddelen inzetten voor verschillende lichamen"]},{"titel":"Houdingen en hun werking","onderdelen":["De kernhoudingen en hun varianten","Werking op bindweefsel, gewrichten en botten","Anatomische verschillen en wat die betekenen voor je lesgeven"]}]}]'::jsonb,
-  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van Yoga Companie (adres volgt)',
+  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   12, 'Certificaat Yin Yoga niveau 1',
-  84500, false, true, 11
+  79500, false, true, 11
 )
 on conflict (slug) do update set
   type = excluded.type,
@@ -88,9 +88,9 @@ Waarom Yin Yoga rust brengt, en de eerste kennismaking met de meridianen.
 Je sluit de module af met het certificaat **Yin Yoga niveau 2**. Volg je alle vier de modules, dan ontvang je het diploma Yin Yoga Specialist.',
   'Yogadocenten en professionals die zich willen verdiepen, en mensen die deze module als losse verdieping willen volgen.', 'Afronding van module 1, of een vergelijkbare basis in overleg.',
   '[{"nummer":2,"titel":"Het zenuwstelsel & de basis van de meridiaanleer","uren":50,"samenvatting":"Waarom Yin Yoga rust brengt, en de eerste kennismaking met de meridianen.","blokken":[{"titel":"Het zenuwstelsel","onderdelen":["Sympathisch en parasympathisch: spanning en herstel","Wat langdurige stress met het lichaam doet","Hoe een yin-les het herstelvermogen aanspreekt"]},{"titel":"Basis van de meridiaanleer","onderdelen":["Wat meridianen zijn en hoe ze zijn geordend","De verbinding tussen houding en meridiaan","Eerste toepassing in het opbouwen van een les"]}]}]'::jsonb,
-  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van Yoga Companie (adres volgt)',
+  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   12, 'Certificaat Yin Yoga niveau 2',
-  84500, false, true, 12
+  79500, false, true, 12
 )
 on conflict (slug) do update set
   type = excluded.type,
@@ -121,9 +121,9 @@ Werken met meridianen, de vijf elementen en de orgaanklok.
 Je sluit de module af met het certificaat **Yin Yoga niveau 3**. Volg je alle vier de modules, dan ontvang je het diploma Yin Yoga Specialist.',
   'Yogadocenten en professionals die zich willen verdiepen, en mensen die deze module als losse verdieping willen volgen.', 'Afronding van module 2, of een vergelijkbare basis in overleg.',
   '[{"nummer":3,"titel":"Chinese geneeskunde en Yin Yoga","uren":50,"samenvatting":"Werken met meridianen, de vijf elementen en de orgaanklok.","blokken":[{"titel":"Werken met meridianen","onderdelen":["De meridianen in de praktijk van een yin-les","Houdingen kiezen op basis van wat iemand nodig heeft"]},{"titel":"De elementen","onderdelen":["De vijf elementen en hun onderlinge samenhang","Seizoenen en wat ze vragen"]},{"titel":"De orgaanklok","onderdelen":["Het ritme van de dag en de organen","Een les afstemmen op tijd en seizoen"]}]}]'::jsonb,
-  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van Yoga Companie (adres volgt)',
+  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   12, 'Certificaat Yin Yoga niveau 3',
-  84500, false, true, 13
+  79500, false, true, 13
 )
 on conflict (slug) do update set
   type = excluded.type,
@@ -154,9 +154,9 @@ Alle kennis komt samen: je leert Yin Yoga inzetten bij herstel en revalidatie, e
 Je sluit de module af met het certificaat **Yin Yoga niveau 4**. Volg je alle vier de modules, dan ontvang je het diploma Yin Yoga Specialist.',
   'Yogadocenten en professionals die zich willen verdiepen, en mensen die deze module als losse verdieping willen volgen.', 'Afronding van module 3, of een vergelijkbare basis in overleg.',
   '[{"nummer":4,"titel":"Herstel & revalidatie","uren":50,"samenvatting":"Alle kennis komt samen: je leert Yin Yoga inzetten bij herstel en revalidatie, en persoonlijke lessen maken.","blokken":[{"titel":"Kennis integreren","onderdelen":["De vier modules samenbrengen in één werkwijze","Kijken naar de mens tegenover je, niet naar de houding"]},{"titel":"Herstel en revalidatie","onderdelen":["Yin Yoga bij overbelasting, blessures en langdurige klachten","Grenzen van je vak: wanneer je doorverwijst"]},{"titel":"Persoonlijke lessen maken","onderdelen":["Een programma opbouwen voor één persoon","Begeleiden, bijstellen en opvolgen"]}]}]'::jsonb,
-  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van Yoga Companie (adres volgt)',
+  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   12, 'Certificaat Yin Yoga niveau 4',
-  84500, false, true, 14
+  79500, false, true, 14
 )
 on conflict (slug) do update set
   type = excluded.type,
@@ -218,7 +218,7 @@ insert into courses (
 We kijken naar wat het lichaam in verschillende levensfasen nodig heeft en hoe je daar in een les rekening mee houdt. Praktijkgericht: je oefent zelf en leert de opbouw kennen die je daarna kunt toepassen.',
   'Yogadocenten die hun aanbod willen verbreden, en mensen die hormoonyoga voor zichzelf willen leren.', null,
   null,
-  'Zie de lesdata; neem gerust contact op voor de planning.', 'Studio van Yoga Companie (adres volgt)',
+  'Zie de lesdata; neem gerust contact op voor de planning.', 'Studio van YogaCompany (adres volgt)',
   12, null,
   29500, false, true, 21
 )
@@ -696,7 +696,7 @@ $seed$;
 -- iemand in de site-editor een concept maakt (BOUWPROMPT §14).
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'hero_titel', 'text', '{"text":"Yoga Companie — opleidingsinstituut voor yoga"}'::jsonb)
+values ('home', 'hero_titel', 'text', '{"text":"YogaCompany — opleidingsinstituut voor yoga"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -714,7 +714,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'hero_beeld', 'image', '{"url":"","alt":""}'::jsonb)
+values ('home', 'hero_beeld', 'image', '{"url":"/beeld/hero-vloer.jpg","alt":"Zonlicht valt door een raam op een houten vloer"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -744,7 +744,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'waarom_titel', 'text', '{"text":"Waarom Yoga Companie"}'::jsonb)
+values ('home', 'waarom_titel', 'text', '{"text":"Waarom YogaCompany"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -786,7 +786,37 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('opleidingen', 'beeld', 'image', '{"url":"/beeld/opleidingen-zaal.jpg","alt":"Een zaal met yogamatten en blokken klaargelegd, zonder deelnemers"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('lessen', 'titel', 'text', '{"text":"Yogalessen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('lessen', 'inleiding', 'text', '{"text":"Wekelijkse lessen in kleine groepen. Kijk wanneer het je uitkomt en boek je plek — met een account gaat dat in één klik."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('lessen', 'beeld', 'image', '{"url":"/beeld/lessen-studio.jpg","alt":"Een rustige ruimte met een houten bank, twee zitkussens en een rond raam"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('trainingen', 'titel', 'text', '{"text":"Trainingen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('trainingen', 'beeld', 'image', '{"url":"/beeld/trainingen-blad.jpg","alt":"De schaduw van een plant op een lichte muur"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -798,13 +828,13 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('over-ons', 'titel', 'text', '{"text":"Over Yoga Companie"}'::jsonb)
+values ('over-ons', 'titel', 'text', '{"text":"Over YogaCompany"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('over-ons', 'verhaal', 'richtext', '{"html":"<p>Yoga Companie is een opleidingsinstituut voor yoga. We leiden op, we trainen, en we geven les — in die volgorde van nadruk.</p><p>Wat ons bindt is een manier van kijken: yoga is geen prestatie. Een houding die er goed uitziet zegt niets als het lichaam eronder gespannen blijft. We leren onze deelnemers kijken naar de mens tegenover hen, niet naar de vorm.</p><p>Daarom werken we in kleine groepen. Daarom duren onze opleidingen langer dan strikt nodig. En daarom kun je onze modules los volgen: niet iedereen heeft hetzelfde tempo, en dat hoeft ook niet.</p>"}'::jsonb)
+values ('over-ons', 'verhaal', 'richtext', '{"html":"<p>YogaCompany is een opleidingsinstituut voor yoga. We leiden op, we trainen, en we geven les — in die volgorde van nadruk.</p><p>Wat ons bindt is een manier van kijken: yoga is geen prestatie. Een houding die er goed uitziet zegt niets als het lichaam eronder gespannen blijft. We leren onze deelnemers kijken naar de mens tegenover hen, niet naar de vorm.</p><p>Daarom werken we in kleine groepen. Daarom duren onze opleidingen langer dan strikt nodig. En daarom kun je onze modules los volgen: niet iedereen heeft hetzelfde tempo, en dat hoeft ook niet.</p>"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -828,7 +858,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('contact', 'gegevens', 'richtext', '{"items":[{"label":"E-mail","waarde":"info@yogacompanie.nl"},{"label":"Telefoon","waarde":"Telefoonnummer volgt"},{"label":"Studio","waarde":"Adres volgt"}]}'::jsonb)
+values ('contact', 'gegevens', 'richtext', '{"items":[{"label":"E-mail","waarde":"info@yogacompany.eu"},{"label":"Telefoon","waarde":"Telefoonnummer volgt"},{"label":"Studio","waarde":"Adres volgt"}]}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -840,7 +870,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('footer', 'bedrijfsgegevens', 'richtext', '{"items":[{"label":"E-mail","waarde":"info@yogacompanie.nl"},{"label":"KvK","waarde":"KvK-nummer volgt"}]}'::jsonb)
+values ('footer', 'bedrijfsgegevens', 'richtext', '{"items":[{"label":"E-mail","waarde":"info@yogacompany.eu"},{"label":"KvK","waarde":"KvK-nummer volgt"}]}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -858,7 +888,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('privacyverklaring', 'inhoud', 'richtext', '{"html":"\n<h2>1. Wie zijn wij</h2>\n<p>Yoga Companie is verantwoordelijk voor de verwerking van je persoonsgegevens zoals beschreven in deze verklaring. Je bereikt ons via info@yogacompanie.nl.</p>\n\n<h2>2. Welke gegevens we verwerken</h2>\n<p>We verwerken zo min mogelijk gegevens. Concreet gaat het om:</p>\n<ul>\n<li><strong>Bij een account:</strong> je voor- en achternaam, e-mailadres en — als je dat zelf invult — je telefoonnummer.</li>\n<li><strong>Bij een inschrijving:</strong> welke opleiding je volgt, de betaalstatus en het bedrag. Betaalgegevens zelf komen nooit bij ons binnen; die verwerkt Stripe.</li>\n<li><strong>Bij digitale content:</strong> waar je in een video of les gebleven bent, zodat je verder kunt waar je stopte.</li>\n<li><strong>Bij berichten:</strong> de inhoud van wat je ons via je eigen omgeving of het contactformulier stuurt.</li>\n<li><strong>Bij toestemming voor mailings:</strong> het moment waarop je die toestemming gaf.</li>\n</ul>\n\n<h2>3. Waarom we ze verwerken</h2>\n<p>Om je opleiding te kunnen leveren en je vragen te beantwoorden (uitvoering van de overeenkomst), om aan onze administratieve en fiscale verplichtingen te voldoen (wettelijke plicht), en — alleen als je daar toestemming voor gaf — om je af en toe iets te mailen over ons aanbod.</p>\n\n<h2>4. Hoe lang we ze bewaren</h2>\n<ul>\n<li>Contactberichten: 12 maanden.</li>\n<li>Accountgegevens: zolang je account bestaat. Na verwijdering anonimiseren we je gegevens; inschrijvings- en omzetgegevens blijven geanonimiseerd staan voor de boekhouding, zoals de wet vereist.</li>\n<li>Logboek van beheerhandelingen: 24 maanden.</li>\n</ul>\n\n<h2>5. Met wie we ze delen</h2>\n<p>We verkopen je gegevens niet. We werken met de volgende dienstverleners, die uitsluitend in onze opdracht handelen en waarmee we een verwerkersovereenkomst hebben:</p>\n<ul>\n<li><strong>Supabase</strong> — database, inloggen en bestandsopslag (servers in Frankfurt, EU)</li>\n<li><strong>Vercel</strong> — hosting van de website (regio Frankfurt, EU)</li>\n<li><strong>Stripe</strong> — betalingen</li>\n<li><strong>Resend</strong> — verzenden van e-mail</li>\n<li><strong>Anthropic</strong> — hulp bij het opstellen van berichten voor sociale media; hier gaan geen klantgegevens naartoe</li>\n<li><strong>Meta</strong> — alleen wanneer wij zelf iets plaatsen op Facebook of Instagram</li>\n</ul>\n\n<h2>6. Waar je gegevens staan</h2>\n<p>Je gegevens staan op servers binnen de Europese Unie. Waar een dienstverlener gegevens buiten de EU zou verwerken, gebeurt dat op basis van de standaardcontractbepalingen van de Europese Commissie.</p>\n\n<h2>7. Beveiliging</h2>\n<p>Verkeer met onze website is versleuteld. Gegevens staan versleuteld opgeslagen. De scheiding tussen klanten is op databaseniveau afgedwongen: het is technisch niet mogelijk dat je de gegevens van een andere klant ziet. Beschermde video''s en documenten zijn alleen bereikbaar via tijdelijke links die verlopen. Beheerders kunnen alleen inloggen met tweestapsverificatie.</p>\n\n<h2>8. Cookies</h2>\n<p>We gebruiken uitsluitend functionele cookies: die zijn nodig om ingelogd te blijven. We volgen je niet en gebruiken geen advertentie- of statistiekcookies. Daarom zie je bij ons geen cookiemelding.</p>\n\n<h2>9. Je rechten</h2>\n<p>Je mag je gegevens inzien, corrigeren, meenemen of laten verwijderen, en je toestemming voor mailings altijd intrekken. Heb je een account, dan doe je dat zelf onder <em>Profiel</em>: je downloadt daar je gegevens als bestand en kunt verwijdering aanvragen. Liever per e-mail? Stuur een bericht naar info@yogacompanie.nl.</p>\n<p>Ben je het oneens met hoe wij met je gegevens omgaan, dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens.</p>\n\n<h2>10. Wijzigingen</h2>\n<p>Verandert deze verklaring, dan passen we de datum bovenaan aan. Bij ingrijpende wijzigingen laten we het je weten.</p>\n"}'::jsonb)
+values ('privacyverklaring', 'inhoud', 'richtext', '{"html":"\n<h2>1. Wie zijn wij</h2>\n<p>YogaCompany is verantwoordelijk voor de verwerking van je persoonsgegevens zoals beschreven in deze verklaring. Je bereikt ons via info@yogacompany.eu.</p>\n\n<h2>2. Welke gegevens we verwerken</h2>\n<p>We verwerken zo min mogelijk gegevens. Concreet gaat het om:</p>\n<ul>\n<li><strong>Bij een account:</strong> je voor- en achternaam, e-mailadres en — als je dat zelf invult — je telefoonnummer.</li>\n<li><strong>Bij een inschrijving:</strong> welke opleiding je volgt, de betaalstatus en het bedrag. Betaalgegevens zelf komen nooit bij ons binnen; die verwerkt Mollie.</li>\n<li><strong>Bij digitale content:</strong> waar je in een video of les gebleven bent, zodat je verder kunt waar je stopte.</li>\n<li><strong>Bij berichten:</strong> de inhoud van wat je ons via je eigen omgeving of het contactformulier stuurt.</li>\n<li><strong>Bij toestemming voor mailings:</strong> het moment waarop je die toestemming gaf.</li>\n</ul>\n\n<h2>3. Waarom we ze verwerken</h2>\n<p>Om je opleiding te kunnen leveren en je vragen te beantwoorden (uitvoering van de overeenkomst), om aan onze administratieve en fiscale verplichtingen te voldoen (wettelijke plicht), en — alleen als je daar toestemming voor gaf — om je af en toe iets te mailen over ons aanbod.</p>\n\n<h2>4. Hoe lang we ze bewaren</h2>\n<ul>\n<li>Contactberichten: 12 maanden.</li>\n<li>Accountgegevens: zolang je account bestaat. Na verwijdering anonimiseren we je gegevens; inschrijvings- en omzetgegevens blijven geanonimiseerd staan voor de boekhouding, zoals de wet vereist.</li>\n<li>Logboek van beheerhandelingen: 24 maanden.</li>\n</ul>\n\n<h2>5. Met wie we ze delen</h2>\n<p>We verkopen je gegevens niet. We werken met de volgende dienstverleners, die uitsluitend in onze opdracht handelen en waarmee we een verwerkersovereenkomst hebben:</p>\n<ul>\n<li><strong>Supabase</strong> — database, inloggen en bestandsopslag (servers in Frankfurt, EU)</li>\n<li><strong>Vercel</strong> — hosting van de website (regio Frankfurt, EU)</li>\n<li><strong>Mollie</strong> — betalingen (Amsterdam, EU)</li>\n<li><strong>Resend</strong> — verzenden van e-mail</li>\n<li><strong>Anthropic</strong> — hulp bij het opstellen van berichten voor sociale media, en bij het maken van een gespreksverslag voor je begeleiding. Voor dat verslag gaan je naam, e-mailadres, telefoonnummer en woonplaats <strong>niet</strong> mee; wel je leeftijd, je doelen, je voortgang en de aantekeningen die wij bij je hebben gemaakt. Heb je toestemming gegeven voor het vastleggen van gezondheidsinformatie, dan gaat die alleen mee als dat voor dat verslag nodig is</li>\n<li><strong>Meta</strong> — alleen wanneer wij zelf iets plaatsen op Facebook of Instagram</li>\n</ul>\n\n<h2>6. Waar je gegevens staan</h2>\n<p>Je gegevens staan op servers binnen de Europese Unie. Waar een dienstverlener gegevens buiten de EU zou verwerken, gebeurt dat op basis van de standaardcontractbepalingen van de Europese Commissie.</p>\n\n<h2>7. Beveiliging</h2>\n<p>Verkeer met onze website is versleuteld. Gegevens staan versleuteld opgeslagen. De scheiding tussen klanten is op databaseniveau afgedwongen: het is technisch niet mogelijk dat je de gegevens van een andere klant ziet. Beschermde video''s en documenten zijn alleen bereikbaar via tijdelijke links die verlopen. Beheerders kunnen alleen inloggen met tweestapsverificatie.</p>\n\n<h2>8. Cookies</h2>\n<p>We gebruiken uitsluitend functionele cookies: die zijn nodig om ingelogd te blijven. We volgen je niet en gebruiken geen advertentie- of statistiekcookies. Daarom zie je bij ons geen cookiemelding.</p>\n\n<h2>9. Je rechten</h2>\n<p>Je mag je gegevens inzien, corrigeren, meenemen of laten verwijderen, en je toestemming voor mailings altijd intrekken. Heb je een account, dan doe je dat zelf onder <em>Profiel</em>: je downloadt daar je gegevens als bestand en kunt verwijdering aanvragen. Liever per e-mail? Stuur een bericht naar info@yogacompany.eu.</p>\n<p>Ben je het oneens met hoe wij met je gegevens omgaan, dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens.</p>\n\n<h2>10. Wijzigingen</h2>\n<p>Verandert deze verklaring, dan passen we de datum bovenaan aan. Bij ingrijpende wijzigingen laten we het je weten.</p>\n"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -882,7 +912,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('algemene-voorwaarden', 'inhoud', 'richtext', '{"html":"\n<h2>1. Waar deze voorwaarden over gaan</h2>\n<p>Deze voorwaarden gelden voor alle opleidingen, trainingen, lessen en digitale content van Yoga Companie.</p>\n\n<h2>2. Inschrijven</h2>\n<p>Je schrijft je in via de website. De inschrijving is definitief zodra we je betaling hebben ontvangen en je van ons een bevestiging per e-mail hebt gekregen. Plaatsing gebeurt op volgorde van betaling; onze groepen zijn klein, dus vol is vol.</p>\n\n<h2>3. Prijzen en betalen</h2>\n<p>Alle genoemde prijzen zijn in euro''s. Betalen kan met iDEAL of creditcard. Betalen in termijnen is in overleg mogelijk — neem daarvoor contact met ons op vóór je inschrijving.</p>\n\n<h2>4. Bedenktijd</h2>\n<p>Schrijf je je als consument online in, dan heb je veertien dagen bedenktijd waarin je zonder opgaaf van reden kunt annuleren. Begint de opleiding binnen die veertien dagen en heb je gevraagd om eerder te starten, dan vervalt de bedenktijd zodra je toegang hebt gekregen tot het lesmateriaal.</p>\n\n<h2>5. Annuleren</h2>\n<ul>\n<li>Meer dan 30 dagen voor aanvang: je krijgt het volledige bedrag terug, minus € 50 administratiekosten.</li>\n<li>Tussen 30 en 14 dagen voor aanvang: je krijgt de helft terug.</li>\n<li>Binnen 14 dagen voor aanvang: geen restitutie. In overleg kun je je plek overdragen aan iemand anders, of doorschuiven naar een volgende groep.</li>\n</ul>\n<p>Word je ziek of overkomt je iets waardoor deelname echt niet gaat, neem dan contact met ons op. We zoeken dan samen naar een oplossing.</p>\n\n<h2>6. Annulering door ons</h2>\n<p>Gaat een opleiding niet door door te weinig aanmeldingen of overmacht, dan krijg je het volledige bedrag terug. Moeten we een lesdag verplaatsen, dan plannen we een vervangende datum.</p>\n\n<h2>7. Digitale content</h2>\n<p>Video''s, documenten en teksten in je eigen omgeving zijn persoonlijk. Je mag ze bekijken en gebruiken voor je eigen leerproces, maar niet delen, doorverkopen of openbaar maken. Je toegang loopt zolang de opleiding loopt en daarna nog een redelijke periode; wij laten het weten als daar iets aan verandert.</p>\n\n<h2>8. Certificaten</h2>\n<p>Je ontvangt een certificaat als je de module hebt afgerond: aanwezig bij de lesdagen en de eindopdracht voldoende afgesloten. Rond je alle vier de modules van de Yin Yoga Specialist Opleiding af, dan ontvang je het diploma.</p>\n\n<h2>9. Wat wij van je vragen</h2>\n<p>Yoga is geen medische behandeling. Heb je klachten, een blessure of ben je zwanger, laat het ons dan vóór aanvang weten en overleg zo nodig met je arts. Je blijft zelf verantwoordelijk voor wat je tijdens een les wel en niet doet — luister naar je lichaam en forceer niets.</p>\n\n<h2>10. Aansprakelijkheid</h2>\n<p>We doen ons werk zorgvuldig. Onze aansprakelijkheid is beperkt tot het bedrag dat je voor de betreffende opleiding hebt betaald, behalve bij opzet of grove nalatigheid van onze kant.</p>\n\n<h2>11. Klachten</h2>\n<p>Ben je ergens niet tevreden over, laat het ons weten via info@yogacompanie.nl. We reageren binnen veertien dagen en zoeken samen naar een oplossing.</p>\n\n<h2>12. Toepasselijk recht</h2>\n<p>Op deze voorwaarden is Nederlands recht van toepassing.</p>\n"}'::jsonb)
+values ('algemene-voorwaarden', 'inhoud', 'richtext', '{"html":"\n<h2>1. Waar deze voorwaarden over gaan</h2>\n<p>Deze voorwaarden gelden voor alle opleidingen, trainingen, lessen en digitale content van YogaCompany.</p>\n\n<h2>2. Inschrijven</h2>\n<p>Je schrijft je in via de website. De inschrijving is definitief zodra we je betaling hebben ontvangen en je van ons een bevestiging per e-mail hebt gekregen. Plaatsing gebeurt op volgorde van betaling; onze groepen zijn klein, dus vol is vol.</p>\n\n<h2>3. Prijzen en betalen</h2>\n<p>Alle genoemde prijzen zijn in euro''s. Betalen kan met iDEAL of creditcard. Betalen in termijnen is in overleg mogelijk — neem daarvoor contact met ons op vóór je inschrijving.</p>\n\n<h2>4. Bedenktijd</h2>\n<p>Schrijf je je als consument online in, dan heb je veertien dagen bedenktijd waarin je zonder opgaaf van reden kunt annuleren. Begint de opleiding binnen die veertien dagen en heb je gevraagd om eerder te starten, dan vervalt de bedenktijd zodra je toegang hebt gekregen tot het lesmateriaal.</p>\n\n<h2>5. Annuleren</h2>\n<ul>\n<li>Meer dan 30 dagen voor aanvang: je krijgt het volledige bedrag terug, minus € 50 administratiekosten.</li>\n<li>Tussen 30 en 14 dagen voor aanvang: je krijgt de helft terug.</li>\n<li>Binnen 14 dagen voor aanvang: geen restitutie. In overleg kun je je plek overdragen aan iemand anders, of doorschuiven naar een volgende groep.</li>\n</ul>\n<p>Word je ziek of overkomt je iets waardoor deelname echt niet gaat, neem dan contact met ons op. We zoeken dan samen naar een oplossing.</p>\n\n<h2>6. Annulering door ons</h2>\n<p>Gaat een opleiding niet door door te weinig aanmeldingen of overmacht, dan krijg je het volledige bedrag terug. Moeten we een lesdag verplaatsen, dan plannen we een vervangende datum.</p>\n\n<h2>7. Digitale content</h2>\n<p>Video''s, documenten en teksten in je eigen omgeving zijn persoonlijk. Je mag ze bekijken en gebruiken voor je eigen leerproces, maar niet delen, doorverkopen of openbaar maken. Je toegang loopt zolang de opleiding loopt en daarna nog een redelijke periode; wij laten het weten als daar iets aan verandert.</p>\n\n<h2>8. Certificaten</h2>\n<p>Je ontvangt een certificaat als je de module hebt afgerond: aanwezig bij de lesdagen en de eindopdracht voldoende afgesloten. Rond je alle vier de modules van de Yin Yoga Specialist Opleiding af, dan ontvang je het diploma.</p>\n\n<h2>9. Wat wij van je vragen</h2>\n<p>Yoga is geen medische behandeling. Heb je klachten, een blessure of ben je zwanger, laat het ons dan vóór aanvang weten en overleg zo nodig met je arts. Je blijft zelf verantwoordelijk voor wat je tijdens een les wel en niet doet — luister naar je lichaam en forceer niets.</p>\n\n<h2>10. Aansprakelijkheid</h2>\n<p>We doen ons werk zorgvuldig. Onze aansprakelijkheid is beperkt tot het bedrag dat je voor de betreffende opleiding hebt betaald, behalve bij opzet of grove nalatigheid van onze kant.</p>\n\n<h2>11. Klachten</h2>\n<p>Ben je ergens niet tevreden over, laat het ons weten via info@yogacompany.eu. We reageren binnen veertien dagen en zoeken samen naar een oplossing.</p>\n\n<h2>12. Toepasselijk recht</h2>\n<p>Op deze voorwaarden is Nederlands recht van toepassing.</p>\n"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -906,7 +936,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('cookies', 'inhoud', 'richtext', '{"html":"\n<h2>Kort gezegd</h2>\n<p>We volgen je niet. Yoga Companie gebruikt geen advertentiecookies, geen statistiekcookies en geen trackers van derden. Daarom krijg je bij ons geen cookiemelding: die is alleen verplicht voor cookies die wij niet gebruiken.</p>\n\n<h2>Welke cookies dan wel</h2>\n<p>Alleen cookies die nodig zijn om de site te laten werken:</p>\n<ul>\n<li><strong>Inlogcookies.</strong> Zodra je inlogt, onthouden we dat je ingelogd bent. Zonder deze cookie zou je bij elke pagina opnieuw moeten inloggen. Hij verdwijnt als je uitlogt.</li>\n<li><strong>Beveiligingscookies.</strong> Deze beschermen formulieren tegen misbruik.</li>\n</ul>\n<p>Voor functionele cookies is geen toestemming vereist. Je kunt ze in je browser blokkeren, maar dan kun je niet inloggen.</p>\n\n<h2>Cookies van anderen</h2>\n<p>Betaal je via Stripe, dan gebeurt dat op de omgeving van Stripe zelf, dat daar eigen cookies plaatst. Sluiten we ooit een video van YouTube of Vimeo in, dan doen we dat in de privacyvriendelijke modus.</p>\n\n<h2>Vragen</h2>\n<p>Stuur gerust een bericht naar info@yogacompanie.nl.</p>\n"}'::jsonb)
+values ('cookies', 'inhoud', 'richtext', '{"html":"\n<h2>Kort gezegd</h2>\n<p>We volgen je niet. YogaCompany gebruikt geen advertentiecookies, geen statistiekcookies en geen trackers van derden. Daarom krijg je bij ons geen cookiemelding: die is alleen verplicht voor cookies die wij niet gebruiken.</p>\n\n<h2>Welke cookies dan wel</h2>\n<p>Alleen cookies die nodig zijn om de site te laten werken:</p>\n<ul>\n<li><strong>Inlogcookies.</strong> Zodra je inlogt, onthouden we dat je ingelogd bent. Zonder deze cookie zou je bij elke pagina opnieuw moeten inloggen. Hij verdwijnt als je uitlogt.</li>\n<li><strong>Beveiligingscookies.</strong> Deze beschermen formulieren tegen misbruik.</li>\n</ul>\n<p>Voor functionele cookies is geen toestemming vereist. Je kunt ze in je browser blokkeren, maar dan kun je niet inloggen.</p>\n\n<h2>Cookies van anderen</h2>\n<p>Betaal je via Mollie, dan gebeurt dat op de omgeving van Mollie zelf, dat daar eigen cookies plaatst. Sluiten we ooit een video van YouTube of Vimeo in, dan doen we dat in de privacyvriendelijke modus.</p>\n\n<h2>Vragen</h2>\n<p>Stuur gerust een bericht naar info@yogacompany.eu.</p>\n"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

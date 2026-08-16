@@ -1,7 +1,7 @@
 import type { CourseType } from "@/lib/supabase/types";
 
 /**
- * Het aanbod van Yoga Companie (BOUWPROMPT §19).
+ * Het aanbod van YogaCompany (BOUWPROMPT §19).
  *
  * Dit bestand is de bron van waarheid voor de startinhoud. Twee dingen komen
  * hiervandaan:
@@ -178,9 +178,20 @@ const yinCurriculum: CurriculumModule[] = [
   },
 ];
 
-const MODULE_LOCATIE = "Studio van Yoga Companie (adres volgt)";
+const MODULE_LOCATIE = "Studio van YogaCompany (adres volgt)";
 const MODULE_STUDIEBELASTING =
   "Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht";
+
+/**
+ * Prijsstelling uit §6 van de bouwprompt: € 795 per losse module, € 2.795 voor
+ * de volledige opleiding. Vier losse modules kosten samen € 3.180, dus de
+ * bundel scheelt € 385. Die korting wordt op de overzichtspagina getoond en
+ * hier berekend, zodat hij nooit uit de pas kan lopen met de prijzen.
+ */
+export const MODULE_PRIJS_CENTEN = 79500;
+export const OPLEIDING_PRIJS_CENTEN = 279500;
+export const OPLEIDING_KORTING_CENTEN =
+  MODULE_PRIJS_CENTEN * 4 - OPLEIDING_PRIJS_CENTEN;
 
 /** De vier losse modules, elk apart te volgen (BOUWPROMPT §19). */
 const losseModules: CursusSeed[] = yinCurriculum.map((module, index) => ({
@@ -205,7 +216,7 @@ const losseModules: CursusSeed[] = yinCurriculum.map((module, index) => ({
   locatie: MODULE_LOCATIE,
   maxDeelnemers: 12,
   certificaat: `Certificaat Yin Yoga niveau ${module.nummer}`,
-  prijsCenten: 84500,
+  prijsCenten: MODULE_PRIJS_CENTEN,
   digitaleContent: false,
   sort: 10 + module.nummer,
 }));
@@ -265,7 +276,7 @@ export const AANBOD: CursusSeed[] = [
     maxDeelnemers: 12,
     certificaat:
       "Certificaat Yin Yoga niveau 1 t/m 4 per module; diploma Yin Yoga Specialist na alle vier de modules — modules zijn ook los te volgen",
-    prijsCenten: 299500,
+    prijsCenten: OPLEIDING_PRIJS_CENTEN,
     digitaleContent: false,
     sort: 1,
   },

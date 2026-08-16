@@ -7,11 +7,12 @@ import { cn } from "@/lib/utils";
 import { isActief, PORTAAL_NAVIGATIE } from "../navigatie";
 
 /**
- * Bottom-navigatie voor de telefoon (BOUWPROMPT §11 en §18).
+ * Bottom-navigatie voor de telefoon (bouwprompt §9).
  *
- * Vier items, elk een tap-target van minstens 64 bij 44 pixels — ruim boven de
- * 44px die de richtlijn vraagt, want dit is de plek waar mensen met een duim
- * mikken. Verdwijnt vanaf tabletformaat, waar de zijbalk het overneemt.
+ * Vijf items — het maximum dat §9 toestaat — elk met een tap-target van
+ * minstens 56 pixels hoog, ruim boven de 44px die de richtlijn vraagt. Dit is
+ * de plek waar mensen met een duim mikken. Verdwijnt vanaf tabletformaat,
+ * waar de zijbalk het overneemt.
  */
 export function PortaalBottomNav({ ongelezen }: { ongelezen: number }) {
   const pad = usePathname();

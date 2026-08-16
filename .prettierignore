@@ -1,3 +1,7 @@
+# De bouwprompt blijft exact zoals de opdrachtgever hem heeft aangeleverd;
+# opmaak van dit bestand mag niet afwijken van het origineel.
+docs/YogaCompany-claude-code-prompt.md
+
 .next
 node_modules
 pnpm-lock.yaml

@@ -22,7 +22,7 @@ test.describe("Landingspagina", () => {
     }
 
     await expect(
-      page.getByRole("heading", { name: "Waarom Yoga Companie", level: 2 }),
+      page.getByRole("heading", { name: "Waarom YogaCompany", level: 2 }),
     ).toBeVisible();
     await expect(page.getByText("Maximaal twaalf deelnemers")).toBeVisible();
   });
@@ -30,7 +30,7 @@ test.describe("Landingspagina", () => {
   test("toont opleidingen met prijs", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByText("€ 2.995").first()).toBeVisible();
+    await expect(page.getByText("€ 2.795").first()).toBeVisible();
   });
 
   test("toont drie ervaringen van deelnemers", async ({ page }) => {
@@ -54,7 +54,11 @@ test.describe("Opleidingen", () => {
     // De volledige opleiding plus de vier losse modules. Tellen op de links
     // naar detailpagina's, zodat de lijsten in de paginavoet niet meetellen.
     await expect(page.locator('main a[href^="/opleidingen/"]')).toHaveCount(5);
-    await expect(page.getByText("€ 845").first()).toBeVisible();
+    await expect(page.getByText("€ 795").first()).toBeVisible();
+
+    // De bundel wordt getoond met het voordeel ten opzichte van vier losse
+    // modules: 4 × € 795 = € 3.180, min € 2.795 (§7.1 van de bouwprompt).
+    await expect(page.getByText("bespaar € 385")).toBeVisible();
   });
 
   test("de detailpagina toont curriculum, praktische gegevens en prijs", async ({
@@ -69,7 +73,7 @@ test.describe("Opleidingen", () => {
       }),
     ).toBeVisible();
 
-    await expect(page.getByText("€ 2.995")).toBeVisible();
+    await expect(page.getByText("€ 2.795")).toBeVisible();
     await expect(
       page.getByText("Betalen in termijnen is mogelijk"),
     ).toBeVisible();
@@ -119,9 +123,9 @@ test.describe("Opleidingen", () => {
     const data = JSON.parse(jsonLd ?? "{}");
 
     expect(data["@type"]).toBe("Course");
-    expect(data.offers.price).toBe("2995.00");
+    expect(data.offers.price).toBe("2795.00");
     expect(data.offers.priceCurrency).toBe("EUR");
-    expect(data.provider.name).toBe("Yoga Companie");
+    expect(data.provider.name).toBe("YogaCompany");
   });
 });
 
@@ -179,7 +183,7 @@ test.describe("Juridische pagina's", () => {
     for (const verwerker of [
       "Supabase",
       "Vercel",
-      "Stripe",
+      "Mollie",
       "Resend",
       "Anthropic",
       "Meta",
@@ -209,24 +213,31 @@ test.describe("SEO", () => {
     expect(tekst).toContain("Sitemap:");
   });
 
-  test("elke pagina heeft een eigen titel en omschrijving", async ({
-    page,
-  }) => {
-    for (const [pad, fragment] of [
-      ["/", "opleidingsinstituut voor yoga"],
-      ["/opleidingen", "Yogaopleidingen"],
-      ["/over-ons", "Over ons"],
-      ["/contact", "Contact"],
-    ]) {
-      await page.goto(pad!);
-      await expect(page).toHaveTitle(new RegExp(fragment!, "i"));
+  /**
+   * Eén test per pagina, en niet vier pagina's in één test.
+   *
+   * De suite draait tegen `next dev`, die een route pas compileert bij het
+   * eerste bezoek. Vier van die eerste bezoeken achter elkaar passen op een
+   * koude CI-machine niet in de tijdslimiet van één test — dat is precies wat
+   * er gebeurde toen de pijplijn voor het eerst draaide. Zo krijgt elke pagina
+   * zijn eigen tijd, en wijst een rode test meteen de pagina aan.
+   */
+  for (const [pad, fragment] of [
+    ["/", "opleidingsinstituut voor yoga"],
+    ["/opleidingen", "Yogaopleidingen"],
+    ["/over-ons", "Over ons"],
+    ["/contact", "Contact"],
+  ] as const) {
+    test(`${pad} heeft een eigen titel en omschrijving`, async ({ page }) => {
+      await page.goto(pad);
+      await expect(page).toHaveTitle(new RegExp(fragment, "i"));
 
       const omschrijving = await page
         .locator('meta[name="description"]')
         .getAttribute("content");
       expect(omschrijving?.length).toBeGreaterThan(50);
-    }
-  });
+    });
+  }
 });
 
 test.describe("Beveiligingsheaders", () => {

@@ -13,7 +13,7 @@ import { afmeldsecretIngericht } from "@/features/mailing";
 import { metaIngericht } from "@/features/social";
 import { aiIngericht } from "@/lib/anthropic";
 import { mailIngericht } from "@/lib/notificatie";
-import { stripeIngericht } from "@/lib/stripe";
+import { betaalModus, betalenIngericht } from "@/lib/mollie";
 
 export const metadata: Metadata = {
   title: "Instellingen",
@@ -26,10 +26,13 @@ function Koppeling({
   naam,
   ingericht,
   toelichting,
+  label,
 }: {
   naam: string;
   ingericht: boolean;
   toelichting: string;
+  /** Vervangt "Ingericht", bijvoorbeeld om testmodus te tonen. */
+  label?: string;
 }) {
   return (
     <li className="flex flex-wrap items-start justify-between gap-3 px-5 py-4">
@@ -44,11 +47,22 @@ function Koppeling({
             : "rounded-full bg-sand-light px-3 py-1 text-xs font-semibold text-muted"
         }
       >
-        {ingericht ? "Ingericht" : "Nog niet ingericht"}
+        {label ?? (ingericht ? "Ingericht" : "Nog niet ingericht")}
       </span>
     </li>
   );
 }
+
+/**
+ * Wat de beheerder over de betaalkoppeling te zien krijgt. De modus komt van
+ * het voorvoegsel van de sleutel zelf, dus hij kan niet verkeerd staan.
+ */
+const MOLLIE_LABEL: Record<string, string> = {
+  geen: "Nog niet gekoppeld",
+  test: "Testmodus",
+  live: "Live",
+  onbekend: "Sleutel niet herkend",
+};
 
 export default async function InstellingenPage() {
   const beheerders = await haalKlanten({ rol: "admin" });
@@ -103,9 +117,10 @@ export default async function InstellingenPage() {
         <Paneel titel="Koppelingen">
           <ul className="divide-y divide-line">
             <Koppeling
-              naam="Stripe"
-              ingericht={stripeIngericht()}
-              toelichting="Betalingen met iDEAL en creditcard. Zie docs/beheer.md §7."
+              naam="Mollie"
+              ingericht={betalenIngericht()}
+              label={MOLLIE_LABEL[betaalModus() ?? "geen"]}
+              toelichting="Betalingen met iDEAL en creditcard. Koppelen doe je met één sleutel — zie docs/payments.md."
             />
             <Koppeling
               naam="Resend"
