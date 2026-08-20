@@ -164,6 +164,7 @@ testdata achter. **Draai deze suite na elke wijziging aan het datamodel.**
 | `pnpm db:generate-seed`     | Schrijft `supabase/seed.sql` uit `src/content/` |
 | `pnpm db:check-seed`        | Controleert dat de seed draait en klopt         |
 | `pnpm db:seed-admin`        | Eerste beheerder uitnodigen                     |
+| `pnpm mail:test <adres>`    | Verstuurt één proefmail via Resend              |
 
 Voor de e2e-tests eenmalig: `pnpm exec playwright install chromium webkit`.
 
@@ -219,32 +220,84 @@ beide kanten werken.
 
 1. Maak een account op [resend.com](https://resend.com) en voeg het domein
    `yogacompany.eu` toe.
-2. Zet de DNS-records die Resend toont (SPF, DKIM en DMARC). Zonder die records
-   komen mails in de spammap terecht.
-3. Zet in `.env.local`:
-   - `RESEND_API_KEY`
-   - `EMAIL_FROM="YogaCompany <info@yogacompany.eu>"`
+2. Zet de DNS-records die Resend toont (SPF, DKIM en DMARC) bij je registrar.
+   Zonder die records komen mails in de spammap terecht. Doorvoeren duurt
+   meestal minuten, soms tot 24 uur.
+3. Maak onder **API Keys** een sleutel met rechten "Sending access".
+4. Zet hem op **twee** plekken — dat wordt het vaakst vergeten:
+   - in `.env.local`, voor de scripts en de ontwikkelmachine;
+   - in Vercel onder **Settings → Environment Variables**, voor de site zelf.
+
+   ```
+   RESEND_API_KEY=re_...
+   EMAIL_FROM="YogaCompany <info@yogacompany.eu>"
+   ```
 
 Ontbreekt de sleutel, dan wordt er niets verstuurd en gaat de rest gewoon door:
 een mail die niet weggaat mag nooit een betaling of inschrijving laten
-mislukken. In het logboek staat dan wat er niet verstuurd is.
+mislukken. In het logboek staat dan wat er niet verstuurd is. Let op wat dat
+betekent zolang het zo staat: een aanvraag komt wél bij jou binnen, maar de
+klant krijgt geen bevestiging en denkt dat er niets gebeurd is.
+
+### Controleren dat het werkt
+
+```bash
+pnpm mail:test jouw@adres.nl
+```
+
+Dit verstuurt één echte proefmail. Het script kijkt eerst of de sleutel klopt
+en of het afzenderdomein bij Resend geverifieerd is, en vertaalt daarna de
+melding van Resend naar wat je eraan kunt doen.
+
+Gebruik een adres bij Gmail of Outlook: die filteren streng, dus komt hij dáár
+in het postvak IN, dan zit het goed. Belandt hij in de spammap, dan zijn de
+DNS-records nog niet in orde.
+
+> Dit test alleen de mail die de site zelf verstuurt. De verificatie- en
+> herstelmails komen van Supabase; die test je apart, via "wachtwoord vergeten"
+> op de inlogpagina. Zie de SMTP-stap hieronder.
 
 ### Welke mails het platform verstuurt
 
-| Mail                 | Wanneer                                                    |
-| -------------------- | ---------------------------------------------------------- |
-| Accountverificatie   | Bij registratie — verstuurd door Supabase Auth             |
-| Wachtwoordherstel    | Bij een herstelverzoek — verstuurd door Supabase Auth      |
-| Inschrijfbevestiging | Na een geslaagde betaling                                  |
-| Contactbevestiging   | Naar de afzender van het contactformulier                  |
-| Contactnotificatie   | Naar jou, zonder de inhoud van het bericht                 |
-| Nieuw bericht        | Bij een bericht in de beveiligde dialoog, zonder de inhoud |
+| Mail                 | Wanneer                                                    | Wie verstuurt |
+| -------------------- | ---------------------------------------------------------- | ------------- |
+| Accountverificatie   | Bij registratie                                            | Supabase Auth |
+| Wachtwoordherstel    | Bij een herstelverzoek                                     | Supabase Auth |
+| Inschrijfaanvraag    | Na aanmelding voor een opleiding, zolang Mollie uit staat  | de site       |
+| Inschrijfbevestiging | Na een geslaagde betaling                                  | de site       |
+| Kaartaanvraag        | Na het aanvragen van een strippenkaart of abonnement       | de site       |
+| Contactbevestiging   | Naar de afzender van het contactformulier                  | de site       |
+| Contactnotificatie   | Naar jou, zonder de inhoud van het bericht                 | de site       |
+| Nieuw bericht        | Bij een bericht in de beveiligde dialoog, zonder de inhoud | de site       |
+| Mailing              | Bij het versturen van een mailing                          | de site       |
 
-De twee mails van Supabase Auth stel je in onder **Authentication → Emails** in
-het Supabase-dashboard. Laat Supabase via Resend versturen door onder
-**Project Settings → Authentication → SMTP Settings** de SMTP-gegevens van
-Resend in te vullen; anders komen die mails van Supabase zelf en ogen ze
-anders dan de rest.
+`pnpm mail:test` dekt de regels met "de site". De twee bovenste komen van
+Supabase en gaan een andere weg.
+
+### Supabase zijn eigen mails laten versturen via Resend
+
+Doe dit ook als je denkt dat het wel meevalt: de standaardmailer van Supabase
+stuurt **maximaal drie mails per uur** en is uitdrukkelijk niet voor productie
+bedoeld. Zonder deze stap kan de vierde klant die dag zijn wachtwoord niet
+herstellen.
+
+In het Supabase-dashboard onder **Project Settings → Authentication → SMTP
+Settings**:
+
+| Veld         | Waarde                |
+| ------------ | --------------------- |
+| Host         | `smtp.resend.com`     |
+| Port         | `465`                 |
+| Username     | `resend`              |
+| Password     | je `RESEND_API_KEY`   |
+| Sender email | `info@yogacompany.eu` |
+| Sender name  | `YogaCompany`         |
+
+De teksten van die twee mails pas je aan onder **Authentication → Emails**.
+
+**Controle:** klik op de inlogpagina op "wachtwoord vergeten", vul je eigen
+adres in, en kijk of de mail binnen een minuut binnenkomt — van
+`@yogacompany.eu`, en niet in de spammap.
 
 Berichten met persoonsgegevens gaan nooit per mail mee: de notificatie meldt
 alleen dát er iets klaarstaat, de inhoud staat achter de inlog (§17.11).

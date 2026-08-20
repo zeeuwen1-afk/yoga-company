@@ -28,6 +28,7 @@
     "db:seed-admin": "node scripts/seed-admin.mjs",
     "db:generate-seed": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-seed.mjs",
     "db:check-seed": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/seed-check.mjs",
+    "mail:test": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/mail-test.mjs",
     "verify": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm test:rls && pnpm db:check-seed"
   },
   "dependencies": {
