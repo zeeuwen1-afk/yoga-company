@@ -50,7 +50,9 @@ begin
   );
 
   perform tests.expect(
-    not has_function_privilege('anon', 'boek_les(uuid)', 'execute'),
+    -- De handtekening kreeg er een parameter bij voor de strippenkaart; bij
+    -- een rechtencontrole moet die voluit, ook al is hij optioneel.
+    not has_function_privilege('anon', 'boek_les(uuid, uuid)', 'execute'),
     'een bezoeker kan niet boeken zonder in te loggen'
   );
 

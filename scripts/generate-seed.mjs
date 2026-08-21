@@ -19,6 +19,7 @@ import path from "node:path";
 // bestandsextensie en zonder pad-alias.
 const { AANBOD } = await import("../src/content/aanbod.ts");
 const { BLOKKEN } = await import("../src/content/blokken.ts");
+const { STUDIO, PRODUCTEN } = await import("../src/content/tarieven.ts");
 
 /** SQL-tekstwaarde, veilig ontsnapt. */
 const q = (waarde) =>
@@ -145,6 +146,52 @@ $seed$;
 -- ${moduleVar}`);
     }
   }
+}
+
+// -----------------------------------------------------------------------------
+// Studio en producten (docentenlaag)
+//
+// Vaste id's, zodat een herhaalde seed dezelfde rijen bijwerkt in plaats van
+// er nieuwe naast te zetten. De bedragen komen uit dezelfde lijst als de
+// tarievenpagina; `tarieven.test.ts` bewaakt dat die twee gelijk blijven.
+// -----------------------------------------------------------------------------
+const nul = (waarde) =>
+  waarde === null || waarde === undefined ? "null" : waarde;
+
+regels.push(`
+-- Studio en producten -------------------------------------------------------
+
+insert into studios (id, naam, plaats, max_deelnemers)
+values (${q(STUDIO.id)}, ${q(STUDIO.naam)}, ${q(STUDIO.plaats)}, ${STUDIO.max_deelnemers})
+on conflict (id) do update set
+  naam = excluded.naam,
+  plaats = excluded.plaats,
+  max_deelnemers = excluded.max_deelnemers;`);
+
+for (const [index, product] of PRODUCTEN.entries()) {
+  regels.push(`
+insert into pass_products (
+  id, studio_id, naam, aantal_lessen, prijs_centen, verrekenwaarde_centen,
+  geldigheid_dagen, uitloop_dagen, kruisgebruik_toegestaan,
+  max_kruislessen_per_maand, volgorde
+)
+values (
+  ${q(product.id)}, ${q(STUDIO.id)}, ${q(product.naam)},
+  ${nul(product.aantal_lessen)}, ${product.prijs_centen},
+  ${nul(product.verrekenwaarde_centen)}, ${nul(product.geldigheid_dagen)},
+  ${product.uitloop_dagen}, ${product.kruisgebruik_toegestaan},
+  ${nul(product.max_kruislessen_per_maand)}, ${index}
+)
+on conflict (id) do update set
+  naam = excluded.naam,
+  aantal_lessen = excluded.aantal_lessen,
+  prijs_centen = excluded.prijs_centen,
+  verrekenwaarde_centen = excluded.verrekenwaarde_centen,
+  geldigheid_dagen = excluded.geldigheid_dagen,
+  uitloop_dagen = excluded.uitloop_dagen,
+  kruisgebruik_toegestaan = excluded.kruisgebruik_toegestaan,
+  max_kruislessen_per_maand = excluded.max_kruislessen_per_maand,
+  volgorde = excluded.volgorde;`);
 }
 
 // -----------------------------------------------------------------------------

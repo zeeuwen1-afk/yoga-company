@@ -26,6 +26,7 @@ const {
   OPLEIDING_KORTING_CENTEN,
 } = await import("../src/content/aanbod.ts");
 const { BLOKKEN } = await import("../src/content/blokken.ts");
+const { STUDIO, PRODUCTEN } = await import("../src/content/tarieven.ts");
 
 const db = new PGlite();
 await db.waitReady;
@@ -82,6 +83,42 @@ try {
   controleer(
     blokken === BLOKKEN.length,
     `${BLOKKEN.length} CMS-blokken ingeladen (gevonden: ${blokken})`,
+  );
+
+  // --- Studio en producten (docentenlaag) ------------------------------------
+  const producten = await tel("select count(*)::int as n from pass_products");
+  controleer(
+    producten === PRODUCTEN.length,
+    `${PRODUCTEN.length} producten ingeladen (gevonden: ${producten})`,
+  );
+
+  const studiomax = await tel(
+    "select max_deelnemers::int as n from studios where naam = 'Rinske Yoga Almere'",
+  );
+  controleer(
+    studiomax === STUDIO.max_deelnemers,
+    `de studio heeft plaats voor ${STUDIO.max_deelnemers} (gevonden: ${studiomax})`,
+  );
+
+  // Elk product dat bij een collega mag worden gebruikt heeft een bedrag om te
+  // factureren; zonder dat ontstaat er een afboeking zonder waarde. De
+  // database dwingt het af, maar hier zie je het meteen.
+  const zonderWaarde = await tel(
+    `select count(*)::int as n from pass_products
+      where kruisgebruik_toegestaan and verrekenwaarde_centen is null`,
+  );
+  controleer(
+    zonderWaarde === 0,
+    `elk product met kruisgebruik heeft een verrekenwaarde (zonder: ${zonderWaarde})`,
+  );
+
+  const tienstrip = await tel(
+    `select verrekenwaarde_centen::int as n from pass_products
+      where naam = '10-strippenkaart'`,
+  );
+  controleer(
+    tienstrip === 1330,
+    `de 10-strippenkaart verrekent op € 13,30 excl. btw (gevonden: ${tienstrip})`,
   );
 
   const hoofdopleiding = await db.query(

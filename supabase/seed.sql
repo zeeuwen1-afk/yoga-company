@@ -691,6 +691,199 @@ end
 $seed$;
 -- mod_eerst_jij_7
 
+-- Studio en producten -------------------------------------------------------
+
+insert into studios (id, naam, plaats, max_deelnemers)
+values ('0a5e1c40-0000-4000-8000-000000000001', 'Rinske Yoga Almere', 'Almere', 8)
+on conflict (id) do update set
+  naam = excluded.naam,
+  plaats = excluded.plaats,
+  max_deelnemers = excluded.max_deelnemers;
+
+insert into pass_products (
+  id, studio_id, naam, aantal_lessen, prijs_centen, verrekenwaarde_centen,
+  geldigheid_dagen, uitloop_dagen, kruisgebruik_toegestaan,
+  max_kruislessen_per_maand, volgorde
+)
+values (
+  '0a5e1c40-0000-4000-8000-000000000101', '0a5e1c40-0000-4000-8000-000000000001', 'Snuffelkaart',
+  3, 900,
+  null, 30,
+  0, false,
+  null, 0
+)
+on conflict (id) do update set
+  naam = excluded.naam,
+  aantal_lessen = excluded.aantal_lessen,
+  prijs_centen = excluded.prijs_centen,
+  verrekenwaarde_centen = excluded.verrekenwaarde_centen,
+  geldigheid_dagen = excluded.geldigheid_dagen,
+  uitloop_dagen = excluded.uitloop_dagen,
+  kruisgebruik_toegestaan = excluded.kruisgebruik_toegestaan,
+  max_kruislessen_per_maand = excluded.max_kruislessen_per_maand,
+  volgorde = excluded.volgorde;
+
+insert into pass_products (
+  id, studio_id, naam, aantal_lessen, prijs_centen, verrekenwaarde_centen,
+  geldigheid_dagen, uitloop_dagen, kruisgebruik_toegestaan,
+  max_kruislessen_per_maand, volgorde
+)
+values (
+  '0a5e1c40-0000-4000-8000-000000000102', '0a5e1c40-0000-4000-8000-000000000001', 'Losse les',
+  1, 1700,
+  1560, null,
+  0, true,
+  null, 1
+)
+on conflict (id) do update set
+  naam = excluded.naam,
+  aantal_lessen = excluded.aantal_lessen,
+  prijs_centen = excluded.prijs_centen,
+  verrekenwaarde_centen = excluded.verrekenwaarde_centen,
+  geldigheid_dagen = excluded.geldigheid_dagen,
+  uitloop_dagen = excluded.uitloop_dagen,
+  kruisgebruik_toegestaan = excluded.kruisgebruik_toegestaan,
+  max_kruislessen_per_maand = excluded.max_kruislessen_per_maand,
+  volgorde = excluded.volgorde;
+
+insert into pass_products (
+  id, studio_id, naam, aantal_lessen, prijs_centen, verrekenwaarde_centen,
+  geldigheid_dagen, uitloop_dagen, kruisgebruik_toegestaan,
+  max_kruislessen_per_maand, volgorde
+)
+values (
+  '0a5e1c40-0000-4000-8000-000000000103', '0a5e1c40-0000-4000-8000-000000000001', '3-strippenkaart',
+  3, 4750,
+  1453, 30,
+  15, true,
+  null, 2
+)
+on conflict (id) do update set
+  naam = excluded.naam,
+  aantal_lessen = excluded.aantal_lessen,
+  prijs_centen = excluded.prijs_centen,
+  verrekenwaarde_centen = excluded.verrekenwaarde_centen,
+  geldigheid_dagen = excluded.geldigheid_dagen,
+  uitloop_dagen = excluded.uitloop_dagen,
+  kruisgebruik_toegestaan = excluded.kruisgebruik_toegestaan,
+  max_kruislessen_per_maand = excluded.max_kruislessen_per_maand,
+  volgorde = excluded.volgorde;
+
+insert into pass_products (
+  id, studio_id, naam, aantal_lessen, prijs_centen, verrekenwaarde_centen,
+  geldigheid_dagen, uitloop_dagen, kruisgebruik_toegestaan,
+  max_kruislessen_per_maand, volgorde
+)
+values (
+  '0a5e1c40-0000-4000-8000-000000000104', '0a5e1c40-0000-4000-8000-000000000001', '10-strippenkaart',
+  10, 14500,
+  1330, 90,
+  30, true,
+  null, 3
+)
+on conflict (id) do update set
+  naam = excluded.naam,
+  aantal_lessen = excluded.aantal_lessen,
+  prijs_centen = excluded.prijs_centen,
+  verrekenwaarde_centen = excluded.verrekenwaarde_centen,
+  geldigheid_dagen = excluded.geldigheid_dagen,
+  uitloop_dagen = excluded.uitloop_dagen,
+  kruisgebruik_toegestaan = excluded.kruisgebruik_toegestaan,
+  max_kruislessen_per_maand = excluded.max_kruislessen_per_maand,
+  volgorde = excluded.volgorde;
+
+insert into pass_products (
+  id, studio_id, naam, aantal_lessen, prijs_centen, verrekenwaarde_centen,
+  geldigheid_dagen, uitloop_dagen, kruisgebruik_toegestaan,
+  max_kruislessen_per_maand, volgorde
+)
+values (
+  '0a5e1c40-0000-4000-8000-000000000105', '0a5e1c40-0000-4000-8000-000000000001', '20-strippenkaart',
+  20, 28000,
+  1284, 180,
+  30, true,
+  null, 4
+)
+on conflict (id) do update set
+  naam = excluded.naam,
+  aantal_lessen = excluded.aantal_lessen,
+  prijs_centen = excluded.prijs_centen,
+  verrekenwaarde_centen = excluded.verrekenwaarde_centen,
+  geldigheid_dagen = excluded.geldigheid_dagen,
+  uitloop_dagen = excluded.uitloop_dagen,
+  kruisgebruik_toegestaan = excluded.kruisgebruik_toegestaan,
+  max_kruislessen_per_maand = excluded.max_kruislessen_per_maand,
+  volgorde = excluded.volgorde;
+
+insert into pass_products (
+  id, studio_id, naam, aantal_lessen, prijs_centen, verrekenwaarde_centen,
+  geldigheid_dagen, uitloop_dagen, kruisgebruik_toegestaan,
+  max_kruislessen_per_maand, volgorde
+)
+values (
+  '0a5e1c40-0000-4000-8000-000000000106', '0a5e1c40-0000-4000-8000-000000000001', 'Maandabonnement',
+  null, 5850,
+  1239, 30,
+  0, true,
+  2, 5
+)
+on conflict (id) do update set
+  naam = excluded.naam,
+  aantal_lessen = excluded.aantal_lessen,
+  prijs_centen = excluded.prijs_centen,
+  verrekenwaarde_centen = excluded.verrekenwaarde_centen,
+  geldigheid_dagen = excluded.geldigheid_dagen,
+  uitloop_dagen = excluded.uitloop_dagen,
+  kruisgebruik_toegestaan = excluded.kruisgebruik_toegestaan,
+  max_kruislessen_per_maand = excluded.max_kruislessen_per_maand,
+  volgorde = excluded.volgorde;
+
+insert into pass_products (
+  id, studio_id, naam, aantal_lessen, prijs_centen, verrekenwaarde_centen,
+  geldigheid_dagen, uitloop_dagen, kruisgebruik_toegestaan,
+  max_kruislessen_per_maand, volgorde
+)
+values (
+  '0a5e1c40-0000-4000-8000-000000000107', '0a5e1c40-0000-4000-8000-000000000001', 'Kwartaalabonnement',
+  null, 16900,
+  1193, 90,
+  0, true,
+  2, 6
+)
+on conflict (id) do update set
+  naam = excluded.naam,
+  aantal_lessen = excluded.aantal_lessen,
+  prijs_centen = excluded.prijs_centen,
+  verrekenwaarde_centen = excluded.verrekenwaarde_centen,
+  geldigheid_dagen = excluded.geldigheid_dagen,
+  uitloop_dagen = excluded.uitloop_dagen,
+  kruisgebruik_toegestaan = excluded.kruisgebruik_toegestaan,
+  max_kruislessen_per_maand = excluded.max_kruislessen_per_maand,
+  volgorde = excluded.volgorde;
+
+insert into pass_products (
+  id, studio_id, naam, aantal_lessen, prijs_centen, verrekenwaarde_centen,
+  geldigheid_dagen, uitloop_dagen, kruisgebruik_toegestaan,
+  max_kruislessen_per_maand, volgorde
+)
+values (
+  '0a5e1c40-0000-4000-8000-000000000108', '0a5e1c40-0000-4000-8000-000000000001', 'Halfjaarabonnement',
+  null, 31600,
+  1115, 180,
+  0, true,
+  2, 7
+)
+on conflict (id) do update set
+  naam = excluded.naam,
+  aantal_lessen = excluded.aantal_lessen,
+  prijs_centen = excluded.prijs_centen,
+  verrekenwaarde_centen = excluded.verrekenwaarde_centen,
+  geldigheid_dagen = excluded.geldigheid_dagen,
+  uitloop_dagen = excluded.uitloop_dagen,
+  kruisgebruik_toegestaan = excluded.kruisgebruik_toegestaan,
+  max_kruislessen_per_maand = excluded.max_kruislessen_per_maand,
+  volgorde = excluded.volgorde;
+
 -- CMS-blokken ---------------------------------------------------------------
 -- De publieke site leest uitsluitend 'value'; 'draft_value' blijft leeg tot
 -- iemand in de site-editor een concept maakt (BOUWPROMPT §14).
