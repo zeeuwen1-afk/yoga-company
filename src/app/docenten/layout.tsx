@@ -41,6 +41,12 @@ export default async function DocentenLayout({
             <Link href="/lessen" className="text-sm text-ink hover:text-green">
               Rooster
             </Link>
+            <Link
+              href="/docenten/pagina"
+              className="text-sm text-ink hover:text-green"
+            >
+              Mijn pagina
+            </Link>
             <Link href="/portaal" className="text-sm text-ink hover:text-green">
               Mijn omgeving
             </Link>

@@ -318,6 +318,36 @@ test.describe("Voor yogadocenten", () => {
   });
 });
 
+test.describe("Docentenpagina's", () => {
+  test("de lijst met docenten is openbaar", async ({ page }) => {
+    await page.goto("/onze-docenten");
+
+    await expect(
+      page.getByRole("heading", { name: "Onze docenten", level: 2 }),
+    ).toBeVisible();
+  });
+
+  /**
+   * Een adres dat niet bestaat, een pagina die nog concept is, en een docent
+   * zonder abonnement zijn van buitenaf niet te onderscheiden — alle drie een
+   * 404. Dat is met opzet: een bezoeker hoeft niet te weten of iemand zijn
+   * rekening niet betaald heeft.
+   */
+  test("een onbekende docent geeft een nette 404", async ({ page }) => {
+    const antwoord = await page.goto("/docent/bestaat-niet");
+
+    expect(antwoord?.status()).toBe(404);
+    await expect(
+      page.getByRole("heading", { name: "Deze pagina bestaat niet" }),
+    ).toBeVisible();
+  });
+
+  test("de editor vraagt eerst om inloggen", async ({ page }) => {
+    await page.goto("/docenten/pagina");
+    await expect(page).toHaveURL(/\/inloggen\?vervolg=/);
+  });
+});
+
 test.describe("Veiligheid en privacy", () => {
   test("is bereikbaar via het hoofdmenu", async ({ page }) => {
     await page.goto("/");
@@ -382,6 +412,7 @@ test.describe("SEO", () => {
     expect(xml).toContain("/veiligheid");
     expect(xml).toContain("/lessen/tarieven");
     expect(xml).toContain("/voor-yogadocenten");
+    expect(xml).toContain("/onze-docenten");
   });
 
   test("robots.txt sluit de afgeschermde delen uit", async ({ request }) => {

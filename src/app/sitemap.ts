@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { JURIDISCHE_TEKSTEN } from "@/content/juridisch";
 import { haalAanbod } from "@/features/courses";
+import { haalDocentenlijst } from "@/features/docentpagina/server/queries";
 import { publicEnv } from "@/lib/env";
 
 export const revalidate = 3600;
@@ -28,6 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.5,
     },
+    { url: `${basis}/onze-docenten`, changeFrequency: "weekly", priority: 0.7 },
   ];
 
   const aanbod: MetadataRoute.Sitemap = cursussen.map((cursus) => ({
@@ -42,5 +44,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.3,
   }));
 
-  return [...vast, ...aanbod, ...juridisch];
+  // Alleen gepubliceerde pagina's van docenten met een lopend abonnement. Dat
+  // filter staat niet hier maar in de policy: `haalDocentenlijst` levert er per
+  // definitie niets anders uit.
+  const docenten: MetadataRoute.Sitemap = (await haalDocentenlijst()).map(
+    (docent) => ({
+      url: `${basis}/docent/${docent.slug}`,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    }),
+  );
+
+  return [...vast, ...aanbod, ...juridisch, ...docenten];
 }

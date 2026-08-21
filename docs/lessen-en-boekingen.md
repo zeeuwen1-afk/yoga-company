@@ -217,3 +217,118 @@ komen. Tweemaal afsluiten levert geen tweede factuur op.
 - Geen creditfacturen. Een correctie na afsluiten is nu nog handwerk.
 - Het maandplafond op abonnementen blokkeert niet: boven het plafond gaat de
   les door en betaalt de uitgever ook. Het is een signaal, geen deur.
+
+---
+
+## Een eigen pagina per docent
+
+Elke docent met een lopend abonnement krijgt een landingspagina op
+`/docent/{slug}` die hij zelf indeelt: tekst, foto's en de volgorde van de
+blokken. Toegevoegd op 21 augustus 2026.
+
+### Dit wijkt bewust af van de site-editor
+
+Bovenin `src/content/blokken.ts` staat: _"De structuur van een pagina ligt vast
+in code; alleen de inhoud van de blokken is bewerkbaar."_ Dat blijft gelden voor
+de studio-pagina's, en het is de reden dat die niet half kunnen breken door een
+verkeerde klik.
+
+Voor een docentenpagina geldt het omgekeerde: daar ís de volgorde inhoud. Die
+twee soorten pagina's staan daarom naast elkaar en niet door elkaar heen —
+`content_blocks` is niet verbouwd.
+
+Vrij is wel begrensd. De bloktypen liggen vast in
+`src/content/docent-blokken.ts`. Een docent kiest eruit, zet ze op volgorde en
+verbergt wat hij niet wil; hij kan geen eigen HTML plaatsen, geen scripts en
+geen bloktype verzinnen dat de pagina niet kent.
+
+### Twee blokken met vaste inhoud
+
+`mijn_lessen` en `wat_het_kost` halen hun inhoud uit de database. De docent mag
+ze verplaatsen, verbergen en de kop erboven aanpassen — niet typen wat erin
+staat.
+
+Dat is geen betutteling maar een afspraak die anders sneuvelt: de docenten
+moeten zich aan de prijzen van de studio houden, en een met de hand bijgehouden
+rooster loopt binnen een maand achter op de werkelijkheid.
+
+### Concept en publiceren
+
+De bezoeker ziet `inhoud`, `volgorde` en `zichtbaar`. De editor schrijft
+uitsluitend in de conceptkolommen. Publiceren kopieert die eroverheen, gooit weg
+wat als verwijderd is gemarkeerd, en nummert opnieuw door.
+
+| Wat je doet      | Wat er gebeurt                                            |
+| ---------------- | --------------------------------------------------------- |
+| Tekst aanpassen  | `concept_inhoud`                                          |
+| Blok verplaatsen | `concept_volgorde`                                        |
+| Blok verbergen   | `concept_zichtbaar`                                       |
+| Blok toevoegen   | rij met `volgorde` leeg — publiek dus onzichtbaar         |
+| Blok weggooien   | `concept_verwijderd`; de rij verdwijnt pas bij publiceren |
+
+Op `volgorde` staat geen unieke index: tijdens het verplaatsen komen twee
+blokken kortstondig op hetzelfde nummer. `publiceer_docentpagina()` maakt de
+reeks weer sluitend, met de kop altijd voorop.
+
+### Het abonnement, en wat het níét afsluit
+
+| Toestand                | Pagina online | Bewerken | Nieuwe kaarten uitgeven |
+| ----------------------- | ------------- | -------- | ----------------------- |
+| Abonnement loopt        | ja            | ja       | ja                      |
+| Gestopt, binnen respijt | ja, 30 dagen  | nee      | nee                     |
+| Respijt voorbij         | nee           | nee      | nee                     |
+
+Twee dingen die het abonnement **nooit** afsluit, en dat is met opzet:
+
+- **De verrekening met collega's.** Een docent die stopt met betalen moet zijn
+  openstaande maand nog kunnen afsluiten en zijn facturen kunnen versturen. Dat
+  geld is van hem en komt van een derde; dat houd je niet tegen omdat er een
+  rekening bij ons openstaat.
+- **Reeds verkochte kaarten.** Die klant heeft aan zijn docent betaald, niet aan
+  het platform. `boek_les` kijkt daarom niet naar het abonnement van de
+  uitgever. Er staat een test op die dat vastlegt.
+
+Inhoud wordt nooit verwijderd, alleen onzichtbaar. Betaalt iemand alsnog, dan
+staat alles er weer precies zoals hij het achterliet.
+
+### Wie mag wat
+
+- Een docent kan uitsluitend zijn **eigen** pagina, blokken en media lezen en
+  schrijven. `pagina_id` is gelijk aan zijn profiel-id, dus ook de omweg — een
+  blok toevoegen aan de pagina van een collega — loopt stuk op de policy.
+- Een bezoeker ziet alleen een pagina die gepubliceerd is **én** van een docent
+  met een lopend abonnement of respijt. Een onbekend adres, een conceptpagina en
+  een onbetaalde pagina zijn van buitenaf niet te onderscheiden: alle drie een 404. Een bezoeker hoeft niet te weten of iemand zijn rekening niet betaald
+  heeft.
+- Foto's staan in `public-media` onder `docent/{profile_id}/`, met dezelfde
+  policyvorm die de bucket `avatars` al gebruikt. Zonder die scheiding kan
+  docent A het bestand van docent B overschrijven door een foto met dezelfde
+  naam te uploaden.
+
+### Het webadres
+
+De slug komt op visitekaartjes en in Instagram-bio's te staan. Hij is uniek, mag
+alleen kleine letters, cijfers en koppeltekens bevatten, en een lijst
+gereserveerde woorden (`admin`, `lessen`, `tarieven`, …) kan het pad niet kapen.
+Wijzigt hij ooit, dan blijft het oude adres doorverwijzen via
+`docent_slug_historie` — anders breekt elke gedeelde link.
+
+### De prijs van het abonnement
+
+Staat in `platform_instellingen` onder `docentabonnement_centen`, nu € 25 per
+maand. Wijzigbaar zonder uitrol. Bij het afsluiten van een abonnement wordt het
+bedrag gekopieerd naar `teacher_subscriptions.bedrag_centen`, zodat een latere
+prijswijziging een lopende afspraak niet verandert.
+
+### Wat er nog niet is
+
+- **Geen factuur voor het abonnement zelf.** Dat is een derde factuurrichting —
+  YogaCompany aan de docent — en daarvoor zijn eigen bedrijfsgegevens en een
+  eigen nummerreeks nodig. Die staan nergens; `teacher_billing` is per docent.
+  Het abonnement en het bedrag worden wel vastgelegd.
+- Geen eigen domein of subdomein per docent.
+- Geen thema's of kleurkeuze.
+- Geen statistieken per pagina.
+- Geen automatische incasso.
+- Het respijt van dertig dagen wordt niet automatisch gezet; `respijt_tot` vult
+  de beheerder in wanneer een abonnement stopt.

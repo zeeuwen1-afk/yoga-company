@@ -1,0 +1,214 @@
+"use client";
+
+import { useActionState, useState } from "react";
+
+import { FormMessage } from "@/components/ui/form-message";
+import { Input, Label, Textarea } from "@/components/ui/input";
+import { RichtextEditor } from "@/components/ui/richtext-editor";
+import { SubmitButton } from "@/components/ui/submit-button";
+import type { Bloktype } from "@/content/docent-blokken";
+import { bewaarBlok, type PaginaResultaat } from "../server/acties";
+
+const BEGIN: PaginaResultaat = { status: "idle" };
+
+type Waarde = Record<string, unknown>;
+
+/**
+ * De velden van één blok.
+ *
+ * Welke velden er zijn komt uit de catalogus in code; de waarden komen uit de
+ * database. Bij een blok dat zijn inhoud uit de database haalt zijn alleen de
+ * kop en de instellingen te typen — dat staat er ook bij, want anders zoekt
+ * iemand tien minuten naar het invoerveld voor zijn prijzen.
+ */
+export function BlokFormulier({
+  blokId,
+  definitie,
+  waarde,
+  fotos,
+}: {
+  blokId: string;
+  definitie: Bloktype;
+  waarde: Waarde;
+  fotos: { url: string; bestandsnaam: string }[];
+}) {
+  const [resultaat, actie] = useActionState(bewaarBlok, BEGIN);
+  const [inhoud, setInhoud] = useState<Waarde>(waarde);
+
+  const zet = (naam: string, nieuw: unknown) =>
+    setInhoud((vorig) => ({ ...vorig, [naam]: nieuw }));
+
+  const tekst = (naam: string) =>
+    typeof inhoud[naam] === "string" ? (inhoud[naam] as string) : "";
+
+  const beeld = (naam: string) =>
+    (inhoud[naam] as { url?: string; alt?: string } | undefined) ?? {
+      url: "",
+      alt: "",
+    };
+
+  return (
+    <form action={actie} className="space-y-4 border-t border-line px-4 py-5">
+      <input type="hidden" name="blok_id" value={blokId} />
+      <input type="hidden" name="inhoud" value={JSON.stringify(inhoud)} />
+
+      {definitie.vast ? (
+        <p className="rounded-lg border border-sage bg-cream px-4 py-3 text-sm">
+          <strong>Deze inhoud komt uit de database.</strong> Je kunt hem
+          verplaatsen en verbergen, en de kop erboven aanpassen — maar niet
+          typen wat erin staat.{" "}
+          {definitie.type === "wat_het_kost"
+            ? "De prijzen zijn die van de studio."
+            : "Je lessen verschijnen vanzelf, met het aantal vrije plekken erbij."}
+        </p>
+      ) : null}
+
+      {definitie.velden.map((veld) => (
+        <div key={veld.naam}>
+          <Label htmlFor={`${blokId}-${veld.naam}`}>{veld.label}</Label>
+
+          {veld.soort === "regel" ? (
+            <Input
+              id={`${blokId}-${veld.naam}`}
+              value={tekst(veld.naam)}
+              onChange={(e) => zet(veld.naam, e.target.value)}
+            />
+          ) : null}
+
+          {veld.soort === "tekst" ? (
+            <Textarea
+              id={`${blokId}-${veld.naam}`}
+              rows={3}
+              value={tekst(veld.naam)}
+              onChange={(e) => zet(veld.naam, e.target.value)}
+            />
+          ) : null}
+
+          {veld.soort === "richtext" ? (
+            <RichtextEditor
+              waarde={tekst(veld.naam)}
+              onWijzig={(html) => zet(veld.naam, html)}
+            />
+          ) : null}
+
+          {veld.soort === "beeld" ? (
+            <div className="space-y-2">
+              <select
+                id={`${blokId}-${veld.naam}`}
+                value={beeld(veld.naam).url ?? ""}
+                onChange={(e) =>
+                  zet(veld.naam, {
+                    url: e.target.value,
+                    alt: beeld(veld.naam).alt ?? "",
+                  })
+                }
+                className="h-11 w-full rounded-lg border border-line-strong bg-background px-3"
+              >
+                <option value="">— geen foto —</option>
+                {fotos.map((foto) => (
+                  <option key={foto.url} value={foto.url}>
+                    {foto.bestandsnaam}
+                  </option>
+                ))}
+              </select>
+              <Input
+                aria-label="Wat er op de foto te zien is"
+                placeholder="Wat er op de foto te zien is"
+                value={beeld(veld.naam).alt ?? ""}
+                onChange={(e) =>
+                  zet(veld.naam, {
+                    url: beeld(veld.naam).url ?? "",
+                    alt: e.target.value,
+                  })
+                }
+              />
+              <p className="text-xs text-muted">
+                De omschrijving wordt voorgelezen aan wie de foto niet ziet, en
+                verschijnt als de foto niet laadt.
+              </p>
+            </div>
+          ) : null}
+
+          {veld.soort === "lijst" && veld.velden ? (
+            <ul className="space-y-3">
+              {(Array.isArray(inhoud[veld.naam])
+                ? (inhoud[veld.naam] as Record<string, string>[])
+                : []
+              ).map((item, index) => (
+                <li key={index} className="rounded-lg border border-line p-3">
+                  {veld.velden!.map((sub) => (
+                    <div key={sub.naam} className="mt-2 first:mt-0">
+                      <Label
+                        htmlFor={`${blokId}-${veld.naam}-${index}-${sub.naam}`}
+                      >
+                        {sub.label}
+                      </Label>
+                      {sub.soort === "tekst" ? (
+                        <Textarea
+                          id={`${blokId}-${veld.naam}-${index}-${sub.naam}`}
+                          rows={2}
+                          value={item[sub.naam] ?? ""}
+                          onChange={(e) => {
+                            const lijst = [
+                              ...(inhoud[veld.naam] as Record<
+                                string,
+                                string
+                              >[]),
+                            ];
+                            lijst[index] = {
+                              ...item,
+                              [sub.naam]: e.target.value,
+                            };
+                            zet(veld.naam, lijst);
+                          }}
+                        />
+                      ) : (
+                        <Input
+                          id={`${blokId}-${veld.naam}-${index}-${sub.naam}`}
+                          value={item[sub.naam] ?? ""}
+                          onChange={(e) => {
+                            const lijst = [
+                              ...(inhoud[veld.naam] as Record<
+                                string,
+                                string
+                              >[]),
+                            ];
+                            lijst[index] = {
+                              ...item,
+                              [sub.naam]: e.target.value,
+                            };
+                            zet(veld.naam, lijst);
+                          }}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          {veld.hulp ? (
+            <p className="mt-1 text-xs text-muted">{veld.hulp}</p>
+          ) : null}
+        </div>
+      ))}
+
+      {resultaat.status === "fout" ? (
+        <FormMessage variant="fout">{resultaat.bericht}</FormMessage>
+      ) : null}
+      {resultaat.status === "gelukt" ? (
+        <FormMessage variant="gelukt">{resultaat.bericht}</FormMessage>
+      ) : null}
+
+      <div className="flex flex-wrap items-center gap-3">
+        <SubmitButton size="sm" bezigLabel="Opslaan…">
+          Opslaan als concept
+        </SubmitButton>
+        <span className="text-sm text-muted">
+          Je bezoekers zien dit pas als je publiceert.
+        </span>
+      </div>
+    </form>
+  );
+}

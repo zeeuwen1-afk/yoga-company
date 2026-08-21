@@ -65,6 +65,15 @@ begin
   insert into studio_teachers (studio_id, profile_id)
   values (v_studio, v_docent_a), (v_studio, v_docent_b), (v_studio, v_docent_c);
 
+  -- A en B betalen, C niet. Dat onderscheid is nodig zodra het uitgeven van
+  -- kaarten een abonnement vraagt: zonder abonnement bij A en B zou de test
+  -- "je kunt geen kaart uitgeven op naam van een collega" slagen om de
+  -- verkeerde reden, namelijk omdat er niet betaald is.
+  insert into teacher_subscriptions (profile_id, bedrag_centen, ingangsdatum)
+  values
+    (v_docent_a, 2500, current_date - 30),
+    (v_docent_b, 2500, current_date - 30);
+
   insert into pass_products (
     id, studio_id, naam, aantal_lessen, prijs_centen, verrekenwaarde_centen,
     geldigheid_dagen, kruisgebruik_toegestaan
@@ -287,7 +296,9 @@ begin
   );
 
   -- --- Een docent kan geen kaart op naam van een collega uitgeven -----------
-  perform tests.act_as(v_docent_c);
+  -- Docent B betaalt wél, dus wat hem hier tegenhoudt is de eigendomsregel en
+  -- niet het ontbreken van een abonnement.
+  perform tests.act_as(v_docent_b);
 
   perform tests.expect(
     tests.mutation_blocked(
@@ -295,8 +306,38 @@ begin
       || 'values (' || quote_literal(v_klant_a) || ', '
       || quote_literal(v_product) || ', ' || quote_literal(v_docent_a) || ', 10)'
     ),
-    'een docent kan geen kaart uitgeven op naam van een collega'
+    'een docent met abonnement kan geen kaart uitgeven op naam van een collega'
   );
+
+  -- --- Zonder abonnement kun je niets meer verkopen --------------------------
+  perform tests.act_as(v_docent_c);
+
+  perform tests.expect(
+    tests.mutation_blocked(
+      'insert into passes (profile_id, product_id, uitgevende_docent_id, saldo) '
+      || 'values (' || quote_literal(v_klant_a) || ', '
+      || quote_literal(v_product) || ', ' || quote_literal(v_docent_c) || ', 10)'
+    ),
+    'een docent zonder abonnement kan geen nieuwe kaart uitgeven'
+  );
+
+  -- --- Maar een verkochte kaart blijft gewoon werken -------------------------
+  -- De belangrijkste regel van het abonnement is wat het NIET afsluit. Deze
+  -- klant heeft betaald aan zijn docent, niet aan het platform; zijn strippen
+  -- mogen niet vervallen omdat die docent een rekening liet lopen.
+  perform tests.act_as_owner();
+  update teacher_subscriptions set actief = false where profile_id = v_docent_a;
+
+  perform tests.act_as(v_klant_a);
+  perform boek_les(v_les_a, v_kaart);
+
+  perform tests.act_as_owner();
+  perform tests.expect(
+    (select saldo from passes where id = v_kaart) = 8,
+    'een klant boekt gewoon door nadat het abonnement van zijn docent is gestopt'
+  );
+
+  update teacher_subscriptions set actief = true where profile_id = v_docent_a;
 
   -- --- De capaciteit van een les past in de ruimte --------------------------
   perform tests.act_as_owner();

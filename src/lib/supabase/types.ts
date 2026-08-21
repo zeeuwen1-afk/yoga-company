@@ -26,6 +26,7 @@ export type PassUsageStatus = "open" | "verrekend" | "teruggedraaid";
 export type SettlementStatus =
   "concept" | "zichtbaar" | "definitief" | "gefactureerd";
 export type InvoiceType = "factuur" | "credit";
+export type DocentPaginaStatus = "concept" | "gepubliceerd";
 
 export type Json =
   | string
@@ -364,6 +365,61 @@ export type TeacherSubscription = {
   opzegdatum: string | null;
   actief: boolean;
   created_at: string;
+  /** Wat het standaardtarief was toen dit abonnement begon. */
+  bron_instelling_centen: number | null;
+  /** Tot wanneer de pagina online blijft nadat het abonnement is gestopt. */
+  respijt_tot: string | null;
+};
+
+// --- Docentenpagina's -------------------------------------------------------
+
+export type PlatformInstelling = {
+  sleutel: string;
+  waarde: string;
+  omschrijving: string;
+  updated_at: string;
+};
+
+export type DocentPagina = {
+  profile_id: string;
+  slug: string;
+  seo_titel: string | null;
+  seo_omschrijving: string | null;
+  status: DocentPaginaStatus;
+  gepubliceerd_op: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type DocentSlugHistorie = {
+  slug: string;
+  profile_id: string;
+  vervangen_op: string;
+};
+
+export type DocentBlok = {
+  id: string;
+  pagina_id: string;
+  type: string;
+  /** Leeg betekent: bestaat alleen als concept, publiek nooit zichtbaar. */
+  volgorde: number | null;
+  zichtbaar: boolean;
+  inhoud: Json;
+  concept_inhoud: Json | null;
+  concept_volgorde: number | null;
+  concept_zichtbaar: boolean | null;
+  concept_verwijderd: boolean;
+  created_at: string;
+};
+
+export type DocentMedia = {
+  id: string;
+  profile_id: string;
+  pad: string;
+  bestandsnaam: string;
+  bytes: number;
+  alt: string | null;
+  geupload_op: string;
 };
 
 /** Het rooster zoals bezoekers het zien: zonder wie er geboekt heeft. */
@@ -688,6 +744,25 @@ export type Database = {
         TeacherSubscription,
         [FK<"teacher_subscriptions_profile_id_fkey", "profile_id", "profiles">]
       >;
+
+      // --- Docentenpagina's --------------------------------------------------
+      platform_instellingen: Table<PlatformInstelling>;
+      docent_paginas: Table<
+        DocentPagina,
+        [FK<"docent_paginas_profile_id_fkey", "profile_id", "profiles", true>]
+      >;
+      docent_slug_historie: Table<
+        DocentSlugHistorie,
+        [FK<"docent_slug_historie_profile_id_fkey", "profile_id", "profiles">]
+      >;
+      docent_blokken: Table<
+        DocentBlok,
+        [FK<"docent_blokken_pagina_id_fkey", "pagina_id", "docent_paginas">]
+      >;
+      docent_media: Table<
+        DocentMedia,
+        [FK<"docent_media_profile_id_fkey", "profile_id", "profiles">]
+      >;
     };
     Views: {
       content_blocks_public: {
@@ -718,6 +793,14 @@ export type Database = {
         Returns: { profile_id: string; naam: string }[];
       };
       sluit_maand_af: { Args: { p_periode: string }; Returns: number };
+      // Docentenpagina's. `heeft_abonnement` bepaalt of iemand mag bewerken en
+      // nieuwe kaarten mag uitgeven; `pagina_mag_online` telt het respijt mee.
+      heeft_abonnement: { Args: { p_profile_id: string }; Returns: boolean };
+      pagina_mag_online: { Args: { p_profile_id: string }; Returns: boolean };
+      publiceer_docentpagina: {
+        Args: Record<string, never>;
+        Returns: number;
+      };
       has_course_access: { Args: { p_course_id: string }; Returns: boolean };
       course_id_for_lesson: { Args: { p_lesson_id: string }; Returns: string };
       // AVG-functies; de rechtencontrole zit in de functies zelf (§17.7).
