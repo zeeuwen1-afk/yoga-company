@@ -565,3 +565,40 @@ overmaken.
 Alleen zijn naam, en de afboekingen die jullie samen aangaan. Zijn klanten,
 zijn andere kaarten en zijn afrekeningen met derden blijven dicht. Dat is een
 regel in de database, geen instelling in een scherm.
+
+---
+
+## 15. Een docent klaarzetten
+
+```bash
+pnpm db:seed-docent trisha@voorbeeld.nl Trisha "de Vries" trisha
+```
+
+Zet in één keer alles klaar wat een docent nodig heeft: het account (of een
+uitnodiging), de koppeling met de studio, factuurgegevens, een lopend
+abonnement, en een pagina met het sjabloon erin. Het laatste woord is het
+webadres: dat wordt `/docent/trisha`.
+
+Het script is herhaalbaar — wat er al staat blijft staan.
+
+> **Het verstuurt een echte uitnodigingsmail.** Zolang Resend niet is ingericht
+> gaat die niet weg; zet het wachtwoord dan via het Supabase-dashboard, of doe
+> eerst §8.
+
+### Wat het onderweg rechtzet
+
+Bestaande lessen in het rooster hebben nog geen studio en geen docent — die
+kolommen kwamen pas met de docentenlaag. Het script hangt ze aan de studio en
+aan deze docent, want zonder studio werkt een strippenkaart er niet op en zonder
+docent valt er niets te verrekenen.
+
+Staat er een les met meer plekken dan de ruimte heeft, dan gaat de capaciteit
+omlaag naar het maximum van de studio. Anders weigert de vangrail de koppeling.
+Draai je dit met meerdere docenten, dan krijgt de eerste alle bestaande lessen;
+verdeel ze daarna in **Beheer → Lesrooster**.
+
+### Wat je daarna zelf nog invult
+
+De factuurgegevens die het script neerzet zijn plaatshouders: adres
+`Straatnaam 1`, KvK `00000000`, btw `NL000000000B00`. **Werk ze bij voordat er
+een factuur uitgaat**, anders staat er onzin op een echt document.

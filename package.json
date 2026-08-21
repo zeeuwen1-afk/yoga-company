@@ -26,6 +26,7 @@
     "db:migrate": "node scripts/db-migrate.mjs",
     "db:seed": "node scripts/db-seed.mjs",
     "db:seed-admin": "node scripts/seed-admin.mjs",
+    "db:seed-docent": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/seed-docent.mjs",
     "db:generate-seed": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-seed.mjs",
     "db:check-seed": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/seed-check.mjs",
     "mail:test": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/mail-test.mjs",
