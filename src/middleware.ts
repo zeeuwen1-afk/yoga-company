@@ -7,8 +7,10 @@ import { createMiddlewareClient } from "@/lib/supabase/middleware";
  * Toegangscontrole voor de afgeschermde delen van het platform
  * (BOUWPROMPT §7).
  *
- *   /portaal/*  ingelogd zijn is genoeg
- *   /admin/*    adminrol én een sessie met tweestapsverificatie (aal2)
+ *   /portaal/*   ingelogd zijn is genoeg
+ *   /docenten/*  ingelogd zijn is genoeg; of iemand ergens lesgeeft wordt in
+ *                de layout gecontroleerd, want dat vraagt de database
+ *   /admin/*     adminrol én een sessie met tweestapsverificatie (aal2)
  *
  * De controle staat hier zodat een pagina nooit per ongeluk onbeschermd kan
  * worden opgeleverd. Rechten op de data zelf komen daarnaast uit RLS: deze
@@ -27,7 +29,7 @@ function redirect(request: NextRequest, pad: string, params?: URLSearchParams) {
 
 export async function middleware(request: NextRequest) {
   const pad = request.nextUrl.pathname;
-  const isPortaal = pad.startsWith("/portaal");
+  const isPortaal = pad.startsWith("/portaal") || pad.startsWith("/docenten");
   // De voorvertoning van de site-editor staat buiten /admin omdat hij anders
   // de zijbalk van het beheer zou erven, maar krijgt dezelfde bescherming:
   // hij toont ongepubliceerde inhoud (BOUWPROMPT §14).

@@ -38,6 +38,8 @@ declare
   v_afboeking uuid;
   v_staat uuid := 'ffffffff-0000-0000-0000-000000000001';
   v_bevroren int;
+  v_vorige_maand date;
+  v_aantal int;
 begin
   -- --- Opbouw ---------------------------------------------------------------
   insert into auth.users (
@@ -318,6 +320,93 @@ begin
       'select 1 from teacher_billing where profile_id = ' || quote_literal(v_docent_a)
     ) = 0,
     'een docent ziet de factuurgegevens van een collega niet'
+  );
+
+  -- --- Een maand afsluiten -------------------------------------------------
+  perform tests.act_as_owner();
+
+  insert into teacher_billing (
+    profile_id, bedrijfsnaam, adres, postcode, plaats, factuur_voorvoegsel
+  ) values (v_docent_b, 'Docent B', 'Straat 2', '1300 BB', 'Almere', 'DB');
+
+  -- De afboeking naar vorige maand schuiven: een lopende maand afsluiten mag
+  -- niet, want er kunnen nog lessen bij komen.
+  v_vorige_maand := (date_trunc('month', current_date) - interval '1 month')::date;
+  update pass_usages
+     set afgeboekt_op = v_vorige_maand + interval '3 days'
+   where id = v_afboeking;
+
+  perform tests.act_as(v_docent_b);
+  select sluit_maand_af(v_vorige_maand) into v_aantal;
+
+  perform tests.expect(
+    v_aantal = 1,
+    'afsluiten levert één factuur op, aan de docent die de kaart uitgaf'
+  );
+
+  perform tests.act_as_owner();
+
+  perform tests.expect(
+    (select count(*) from settlements
+      where periode = v_vorige_maand
+        and van_docent_id = v_docent_a and naar_docent_id = v_docent_b) = 1,
+    'de maandstaat loopt van de uitgever naar de docent die lesgaf'
+  );
+
+  -- 1330 excl., 21% btw = 279 (afgerond), samen 1609.
+  perform tests.expect(
+    (select subtotaal_centen = 1330 and btw_centen = 279 and totaal_centen = 1609
+       from settlements
+      where periode = v_vorige_maand and naar_docent_id = v_docent_b),
+    'de btw wordt over het nettobedrag gerekend en opgeteld'
+  );
+
+  perform tests.expect(
+    (select factuurnummer from invoices where docent_id = v_docent_b)
+      = 'DB-' || to_char(v_vorige_maand, 'YYYY') || '-001',
+    'de factuur krijgt het eerste nummer uit de eigen reeks van de docent'
+  );
+
+  perform tests.expect(
+    (select volgend_factuurnummer from teacher_billing where profile_id = v_docent_b) = 2,
+    'de nummerreeks staat daarna op het volgende nummer'
+  );
+
+  perform tests.expect(
+    (select status from pass_usages where id = v_afboeking) = 'verrekend',
+    'de afboeking is daarna verrekend en telt niet nog een keer mee'
+  );
+
+  -- Nog een keer afsluiten mag niets opleveren. Twee facturen voor dezelfde
+  -- maand is erger dan geen.
+  perform tests.act_as(v_docent_b);
+  select sluit_maand_af(v_vorige_maand) into v_aantal;
+
+  perform tests.expect(
+    v_aantal = 0,
+    'een tweede keer afsluiten levert geen tweede factuur op'
+  );
+
+  perform tests.act_as_owner();
+
+  perform tests.expect(
+    (select count(*) from invoices where docent_id = v_docent_b) = 1,
+    'er staat na tweemaal afsluiten nog steeds één factuur'
+  );
+
+  -- --- Een collega ziet alleen namen, geen dossiers -------------------------
+  perform tests.act_as(v_docent_a);
+
+  perform tests.expect(
+    (select count(*) from collega_namen() where profile_id = v_docent_b) = 1,
+    'een docent kan de naam van een collega opzoeken'
+  );
+
+  perform tests.expect(
+    tests.visible_count(
+      'select 1 from profiles where id = ' || quote_literal(v_klant_b)
+    ) = 0,
+    'een docent ziet het profiel van een klant van een collega niet'
   );
 
   perform tests.act_as_owner();

@@ -54,6 +54,10 @@ const PAGINA_NAMEN: Record<string, { titel: string; pad: string }> = {
   cookies: { titel: "Cookies", pad: "/cookies" },
   veiligheid: { titel: "Veiligheid en privacy", pad: "/veiligheid" },
   tarieven: { titel: "Tarieven", pad: "/lessen/tarieven" },
+  "voor-yogadocenten": {
+    titel: "Voor yogadocenten",
+    pad: "/voor-yogadocenten",
+  },
 };
 
 export function paginaNaam(pageKey: string) {

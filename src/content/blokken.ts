@@ -10,6 +10,14 @@ import {
   VEILIGHEID_TITEL,
 } from "./veiligheid.ts";
 import {
+  DOCENTEN_INLEIDING,
+  DOCENTEN_LOCATIE,
+  DOCENTEN_TITEL,
+  DOCENTEN_UITLEG,
+  DOCENTEN_VOORWAARDEN,
+  DOCENTEN_VOORWAARDEN_TITEL,
+} from "./docenten.ts";
+import {
   TARIEVEN,
   TARIEVEN_INLEIDING,
   TARIEVEN_LOCATIE,
@@ -191,6 +199,52 @@ const tarievenBlokken: BlokSeed[] = [
     kind: "text" as const,
     omschrijving: "Zinnetje onderaan het zijbalkje",
     value: { text: TARIEVEN_RAIL_VOET },
+  },
+];
+
+/** De pagina "Voor yogadocenten" (§ docentenlaag). */
+const docentenBlokken: BlokSeed[] = [
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "titel",
+    kind: "text" as const,
+    omschrijving: "Kop van de pagina Voor yogadocenten",
+    value: { text: DOCENTEN_TITEL },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "locatie",
+    kind: "text" as const,
+    omschrijving: "Regel boven de kop, met de studio",
+    value: { text: DOCENTEN_LOCATIE },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "inleiding",
+    kind: "text" as const,
+    omschrijving: "Inleidende zin onder de kop",
+    value: { text: DOCENTEN_INLEIDING },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "uitleg",
+    kind: "richtext" as const,
+    omschrijving: "De uitleg: hoe het werkt, wat het kost, wat je ziet",
+    value: { html: DOCENTEN_UITLEG },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "voorwaarden_titel",
+    kind: "text" as const,
+    omschrijving: "Kop van het blok met de voorwaarden onderaan",
+    value: { text: DOCENTEN_VOORWAARDEN_TITEL },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "voorwaarden",
+    kind: "richtext" as const,
+    omschrijving: "Wat een docent nodig heeft om mee te doen",
+    value: { html: DOCENTEN_VOORWAARDEN },
   },
 ];
 
@@ -530,6 +584,7 @@ export const BLOKKEN: BlokSeed[] = [
   ...juridischeBlokken,
   ...veiligheidBlokken,
   ...tarievenBlokken,
+  ...docentenBlokken,
 ];
 
 /** Alle blokken van één pagina, als kaart van block_key naar waarde. */

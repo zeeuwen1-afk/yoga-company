@@ -21,6 +21,11 @@ export type PostStatus = "concept" | "gepland" | "gepubliceerd" | "mislukt";
 export type OrderStatus = "concept" | "open" | "paid" | "canceled" | "refunded";
 export type BookingStatus =
   "geboekt" | "wachtlijst" | "geannuleerd" | "niet_verschenen";
+export type PassStatus = "actief" | "verlopen" | "ingetrokken";
+export type PassUsageStatus = "open" | "verrekend" | "teruggedraaid";
+export type SettlementStatus =
+  "concept" | "zichtbaar" | "definitief" | "gefactureerd";
+export type InvoiceType = "factuur" | "credit";
 
 export type Json =
   | string
@@ -215,6 +220,150 @@ export type ClassSession = {
   is_published: boolean;
   created_at: string;
   updated_at: string;
+  /** De docentenlaag: waar de les is en wie hem geeft. */
+  studio_id: string | null;
+  docent_id: string | null;
+};
+
+// --- De docentenlaag --------------------------------------------------------
+
+export type Studio = {
+  id: string;
+  naam: string;
+  plaats: string;
+  max_deelnemers: number;
+  actief: boolean;
+  created_at: string;
+};
+
+export type StudioTeacher = {
+  id: string;
+  studio_id: string;
+  profile_id: string;
+  actief_vanaf: string;
+  actief_tot: string | null;
+  created_at: string;
+};
+
+export type TeacherBilling = {
+  profile_id: string;
+  bedrijfsnaam: string;
+  adres: string;
+  postcode: string;
+  plaats: string;
+  kvk_nummer: string | null;
+  btw_nummer: string | null;
+  btw_profiel: string;
+  btw_tarief_promille: number;
+  factuur_voorvoegsel: string;
+  volgend_factuurnummer: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type RoomSlot = {
+  id: string;
+  studio_id: string;
+  docent_id: string;
+  weekdag: number;
+  begintijd: string;
+  duur_minuten: number;
+  maandhuur_centen: number;
+  actief_vanaf: string;
+  actief_tot: string | null;
+  created_at: string;
+};
+
+export type PassProduct = {
+  id: string;
+  studio_id: string;
+  naam: string;
+  toelichting: string | null;
+  aantal_lessen: number | null;
+  prijs_centen: number;
+  verrekenwaarde_centen: number | null;
+  geldigheid_dagen: number | null;
+  uitloop_dagen: number;
+  kruisgebruik_toegestaan: boolean;
+  max_kruislessen_per_maand: number | null;
+  geldig_vanaf: string;
+  volgorde: number;
+  actief: boolean;
+  created_at: string;
+};
+
+export type Pass = {
+  id: string;
+  profile_id: string;
+  product_id: string;
+  uitgevende_docent_id: string;
+  saldo: number | null;
+  geldig_van: string;
+  geldig_tot: string | null;
+  status: PassStatus;
+  uitgegeven_op: string;
+  opmerking: string | null;
+};
+
+export type PassUsage = {
+  id: string;
+  pass_id: string;
+  booking_id: string;
+  class_session_id: string;
+  docent_die_lesgaf_id: string;
+  verrekenwaarde_centen: number;
+  is_kruisgebruik: boolean;
+  status: PassUsageStatus;
+  afgeboekt_op: string;
+  teruggedraaid_op: string | null;
+};
+
+export type Settlement = {
+  id: string;
+  periode: string;
+  van_docent_id: string;
+  naar_docent_id: string;
+  subtotaal_centen: number;
+  btw_tarief_promille: number;
+  btw_centen: number;
+  totaal_centen: number;
+  status: SettlementStatus;
+  zichtbaar_vanaf: string | null;
+  definitief_op: string | null;
+  created_at: string;
+};
+
+export type SettlementLine = {
+  id: string;
+  settlement_id: string;
+  pass_usage_id: string;
+  bedrag_centen: number;
+};
+
+export type Invoice = {
+  id: string;
+  settlement_id: string;
+  docent_id: string;
+  factuurnummer: string;
+  factuurdatum: string;
+  type: InvoiceType;
+  subtotaal_centen: number;
+  btw_tarief_promille: number;
+  btw_centen: number;
+  totaal_centen: number;
+  afzender_gegevens: Json;
+  ontvanger_gegevens: Json;
+  created_at: string;
+};
+
+export type TeacherSubscription = {
+  id: string;
+  profile_id: string;
+  bedrag_centen: number;
+  ingangsdatum: string;
+  opzegdatum: string | null;
+  actief: boolean;
+  created_at: string;
 };
 
 /** Het rooster zoals bezoekers het zien: zonder wie er geboekt heeft. */
@@ -454,6 +603,91 @@ export type Database = {
           FK<"bookings_profile_id_fkey", "profile_id", "profiles">,
         ]
       >;
+
+      // --- De docentenlaag ---------------------------------------------------
+      studios: Table<Studio>;
+      studio_teachers: Table<
+        StudioTeacher,
+        [
+          FK<"studio_teachers_studio_id_fkey", "studio_id", "studios">,
+          FK<"studio_teachers_profile_id_fkey", "profile_id", "profiles">,
+        ]
+      >;
+      teacher_billing: Table<TeacherBilling>;
+      room_slots: Table<
+        RoomSlot,
+        [
+          FK<"room_slots_studio_id_fkey", "studio_id", "studios">,
+          FK<"room_slots_docent_id_fkey", "docent_id", "profiles">,
+        ]
+      >;
+      pass_products: Table<
+        PassProduct,
+        [FK<"pass_products_studio_id_fkey", "studio_id", "studios">]
+      >;
+      passes: Table<
+        Pass,
+        [
+          FK<"passes_profile_id_fkey", "profile_id", "profiles">,
+          FK<"passes_product_id_fkey", "product_id", "pass_products">,
+          FK<
+            "passes_uitgevende_docent_id_fkey",
+            "uitgevende_docent_id",
+            "profiles"
+          >,
+        ]
+      >;
+      pass_usages: Table<
+        PassUsage,
+        [
+          FK<"pass_usages_pass_id_fkey", "pass_id", "passes">,
+          FK<"pass_usages_booking_id_fkey", "booking_id", "bookings", true>,
+          FK<
+            "pass_usages_class_session_id_fkey",
+            "class_session_id",
+            "class_sessions"
+          >,
+          FK<
+            "pass_usages_docent_die_lesgaf_id_fkey",
+            "docent_die_lesgaf_id",
+            "profiles"
+          >,
+        ]
+      >;
+      settlements: Table<
+        Settlement,
+        [
+          FK<"settlements_van_docent_id_fkey", "van_docent_id", "profiles">,
+          FK<"settlements_naar_docent_id_fkey", "naar_docent_id", "profiles">,
+        ]
+      >;
+      settlement_lines: Table<
+        SettlementLine,
+        [
+          FK<
+            "settlement_lines_settlement_id_fkey",
+            "settlement_id",
+            "settlements"
+          >,
+          FK<
+            "settlement_lines_pass_usage_id_fkey",
+            "pass_usage_id",
+            "pass_usages",
+            true
+          >,
+        ]
+      >;
+      invoices: Table<
+        Invoice,
+        [
+          FK<"invoices_settlement_id_fkey", "settlement_id", "settlements">,
+          FK<"invoices_docent_id_fkey", "docent_id", "profiles">,
+        ]
+      >;
+      teacher_subscriptions: Table<
+        TeacherSubscription,
+        [FK<"teacher_subscriptions_profile_id_fkey", "profile_id", "profiles">]
+      >;
     };
     Views: {
       content_blocks_public: {
@@ -467,6 +701,23 @@ export type Database = {
     };
     Functions: {
       is_admin: { Args: Record<string, never>; Returns: boolean };
+      // De docentenlaag. `boek_les` kreeg er een optionele parameter bij voor
+      // de strippenkaart; zie de migration van 20 augustus 2026.
+      is_docent: { Args: Record<string, never>; Returns: boolean };
+      geeft_les: { Args: { p_session_id: string }; Returns: boolean };
+      collega_namen: {
+        Args: Record<string, never>;
+        Returns: { profile_id: string; naam: string }[];
+      };
+      klant_namen: {
+        Args: Record<string, never>;
+        Returns: { profile_id: string; naam: string }[];
+      };
+      zoek_klant_op_email: {
+        Args: { p_email: string };
+        Returns: { profile_id: string; naam: string }[];
+      };
+      sluit_maand_af: { Args: { p_periode: string }; Returns: number };
       has_course_access: { Args: { p_course_id: string }; Returns: boolean };
       course_id_for_lesson: { Args: { p_lesson_id: string }; Returns: string };
       // AVG-functies; de rechtencontrole zit in de functies zelf (§17.7).
@@ -506,7 +757,10 @@ export type Database = {
         Returns: undefined;
       };
       vrije_plekken: { Args: { p_session_id: string }; Returns: number };
-      boek_les: { Args: { p_session_id: string }; Returns: BookingStatus };
+      boek_les: {
+        Args: { p_session_id: string; p_pass_id?: string };
+        Returns: BookingStatus;
+      };
       annuleer_boeking: { Args: { p_session_id: string }; Returns: undefined };
       // Maandelijkse opschoontaak (§17.6); geeft terug wat er is opgeruimd.
       opruimen_bewaartermijnen: {

@@ -1213,7 +1213,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('veiligheid', 'sectie_5_antwoord', 'richtext', '{"html":"\n<p>Omdat er niets online gaat voordat een reeks controles automatisch is doorlopen. Die controles kijken niet of de site er mooi uitziet, maar of hij zich gedraagt:</p>\n<ul>\n<li><strong>72 controles op losse onderdelen</strong> — rekent de prijs goed, wordt een te late annulering geweigerd.</li>\n<li><strong>206 controles die juist proberen wat niet mag:</strong> klant A die het dossier van klant B opvraagt, iemand die zichzelf beheerder maakt, betaalde content bekijken zonder betaling, een concepttekst die uitlekt voordat hij gepubliceerd is. Elk van die pogingen hóórt te mislukken, en de controle valt om zodra er ééntje slaagt.</li>\n<li><strong>198 controles die de site in twee echte browsers doorlopen</strong> — op een laptop en op een telefoon — van begin tot eind: inschrijven, inloggen, boeken, annuleren.</li>\n</ul>\n<p>Samen zijn dat ruim vierhonderd controles, en ze draaien bij elke wijziging opnieuw. Springt er één op rood, dan gaat de wijziging niet door. Niet \"we kijken er nog naar\" — hij komt er eenvoudigweg niet in.</p>\n"}'::jsonb)
+values ('veiligheid', 'sectie_5_antwoord', 'richtext', '{"html":"\n<p>Omdat er niets online gaat voordat een reeks controles automatisch is doorlopen. Die controles kijken niet of de site er mooi uitziet, maar of hij zich gedraagt:</p>\n<ul>\n<li><strong>78 controles op losse onderdelen</strong> — rekent de prijs goed, wordt een te late annulering geweigerd.</li>\n<li><strong>228 controles die juist proberen wat niet mag:</strong> klant A die het dossier van klant B opvraagt, iemand die zichzelf beheerder maakt, betaalde content bekijken zonder betaling, een concepttekst die uitlekt voordat hij gepubliceerd is. Elk van die pogingen hóórt te mislukken, en de controle valt om zodra er ééntje slaagt.</li>\n<li><strong>206 controles die de site in twee echte browsers doorlopen</strong> — op een laptop en op een telefoon — van begin tot eind: inschrijven, inloggen, boeken, annuleren.</li>\n</ul>\n<p>Samen zijn dat ruim vierhonderd controles, en ze draaien bij elke wijziging opnieuw. Springt er één op rood, dan gaat de wijziging niet door. Niet \"we kijken er nog naar\" — hij komt er eenvoudigweg niet in.</p>\n"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1268,6 +1268,42 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('tarieven', 'rail_voet', 'text', '{"text":"Een kaart geldt voor alle lessen hiernaast."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'titel', 'text', '{"text":"Voor yogadocenten"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'locatie', 'text', '{"text":"Rinske Yoga Almere"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'inleiding', 'text', '{"text":"Geef je les bij Rinske Yoga in Almere? Dan kun je hier je eigen strippenkaarten verkopen, ze bij je collega''s laten gelden, en aan het eind van de maand netjes met elkaar afrekenen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'uitleg', 'richtext', '{"html":"\n<h2>Hoe het werkt</h2>\n<p>Je verkoopt je eigen kaarten en int dat geld zelf, op je eigen rekening. Je legt in de portal vast wat je hebt verkocht; vanaf dat moment kan je klant lessen boeken en telt zijn saldo af.</p>\n<p>Komt jouw klant met die kaart bij een collega, dan wordt dat geregistreerd en betaal jij die collega per gegeven les. Komt zíjn klant bij jou, dan werkt het andersom. Aan het eind van de maand sluit je af en staan de facturen klaar.</p>\n\n<h2>Wat het kost aan een collega</h2>\n<p>Je betaalt de werkelijke waarde van één les van díé kaart, exclusief btw. Bij een 10-strippenkaart is dat <strong>€ 13,30</strong> — precies wat jij er zelf van overhield nadat je de btw had afgedragen. Je levert er dus niets op in, en je verdient er ook niets aan.</p>\n<p>Op een kennismakingskaart geldt dit niet: die is alleen bij jou geldig. Anders zou je de kennismaking van een collega betalen.</p>\n\n<h2>Het geld loopt niet via ons</h2>\n<p>Wij ontvangen niets en betalen niets door. Jij factureert je collega rechtstreeks, en hij jou. Wij houden bij wat er is gebeurd, rekenen het uit en zetten de factuur klaar met jouw gegevens en jouw nummerreeks.</p>\n\n<h2>Wat je ziet, en wat niet</h2>\n<p>Je ziet de kaarten die jij hebt verkocht en elke afboeking daarop — ook wanneer die bij een collega plaatsvond, want daar factureer je op. Van je eigen lessen zie je wie er komt.</p>\n<p>Je ziet nooit de kaarten, klanten of afrekeningen van een collega waar je zelf niet in zit. Dat is geen instelling in een scherm maar een regel in de database.</p>\n"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'voorwaarden_titel', 'text', '{"text":"Wat je nodig hebt om mee te doen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'voorwaarden', 'richtext', '{"html":"\n<ul>\n<li>Je geeft les bij een aangesloten studio en huurt daar zelf je plek in het rooster.</li>\n<li>Je bent ingeschreven bij de Kamer van Koophandel en factureert met btw.</li>\n<li>Je vult je factuurgegevens in de portal in — naam, adres, KvK, btw-nummer en de nummerreeks die je zelf gebruikt.</li>\n<li>Je houdt je aan de prijzen van de studio. Die staan vast; daar valt niet mee te schuiven.</li>\n<li>Je neemt een abonnement op de docentenlaag. Wat dat kost hoor je bij de aansluiting.</li>\n</ul>\n<p>Er komt een verwerkersovereenkomst bij: als een klant van jou bij een collega les volgt, deel je noodzakelijkerwijs zijn naam. Dat hoort op papier te staan, en het staat ook in de privacyverklaring.</p>\n"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

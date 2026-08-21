@@ -509,3 +509,59 @@ Wordt aangevuld zodra de betreffende fase is opgeleverd:
 - Mollie live zetten (de `live_`-sleutel plaatsen)
 - Resend instellen als SMTP van Supabase Auth
 - Back-ups en de herstelprocedure
+
+---
+
+## 14. Facturatie tussen docenten
+
+Geven er meerdere docenten les bij dezelfde studio en gelden jullie kaarten bij
+elkaar, dan ontstaat er elke maand een rekening over en weer. De volledige
+uitleg staat in **`docs/lessen-en-boekingen.md`** onder "De docentenlaag"; hier
+staat wat je als docent maandelijks doet.
+
+### Eenmalig instellen
+
+Vul je factuurgegevens in via de docentenportal: bedrijfsnaam, adres,
+KvK-nummer, btw-nummer, en de nummerreeks die je zelf gebruikt.
+
+> **De nummerreeks is het punt waar het misgaat.** Elke factuur moet een uniek
+> en doorlopend nummer hebben; gaten of dubbelingen zijn een rode vlag bij de
+> Belastingdienst. Heb je al een eigen reeks voor je andere werk, kies dan hier
+> een ander voorvoegsel — bijvoorbeeld `YC` — zodat de twee reeksen elkaar niet
+> in de weg zitten.
+
+### Een kaart uitgeven
+
+Iemand heeft bij je betaald? Ga naar **Docentenportal → Kaart uitgeven**, vul
+het e-mailadres van de klant in en kies de kaart. Vanaf dat moment kan hij
+boeken en telt zijn saldo af.
+
+Er is bewust geen keuzelijst met klanten: die zou het hele klantenbestand van
+de studio openzetten voor iedereen die er lesgeeft. Heeft de klant nog geen
+account, dan maakt hij dat eerst zelf aan.
+
+### Elke maand afsluiten
+
+Zodra een maand voorbij is staat er onderaan de portal een knop. Die doet drie
+dingen tegelijk: de bedragen liggen vast, er komt per collega één maandstaat,
+en de factuurnummers worden uitgedeeld.
+
+- Een maand die nog loopt kan niet worden afgesloten — er kunnen nog lessen
+  bij komen.
+- Tweemaal afsluiten levert geen tweede factuur op.
+- **Na afsluiten kan er niets meer worden gewijzigd.** Klopt er iets niet, dan
+  hoort daar een creditfactuur bij; die is nog niet gebouwd, dus overleg dat
+  voorlopig even met elkaar.
+
+### Twee facturen, één betaling
+
+Zijn jullie elkaar allebei iets schuldig, dan krijgt ieder een eigen factuur.
+Die mogen niet worden samengevoegd tot één factuur van het verschil — dat mag
+de Belastingdienst niet. Het bedrag dat overblijft mag je wél in één keer
+overmaken.
+
+### Wat je van een collega ziet
+
+Alleen zijn naam, en de afboekingen die jullie samen aangaan. Zijn klanten,
+zijn andere kaarten en zijn afrekeningen met derden blijven dicht. Dat is een
+regel in de database, geen instelling in een scherm.

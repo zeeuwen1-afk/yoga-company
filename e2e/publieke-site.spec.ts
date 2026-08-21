@@ -272,6 +272,52 @@ test.describe("Tarieven", () => {
   });
 });
 
+test.describe("Voor yogadocenten", () => {
+  test("is bereikbaar via de knop in de balk", async ({ page }) => {
+    await page.goto("/");
+
+    const knop = page
+      .getByRole("navigation", { name: "Hoofdmenu" })
+      .getByRole("link", { name: "Voor yogadocenten" });
+
+    if (!(await knop.isVisible())) {
+      await page.getByRole("button", { name: "Menu openen" }).click();
+    }
+
+    await page.getByRole("link", { name: "Voor yogadocenten" }).first().click();
+    await expect(page).toHaveURL(/\/voor-yogadocenten$/);
+    await expect(
+      page.getByRole("heading", { name: "Voor yogadocenten", level: 1 }),
+    ).toBeVisible();
+  });
+
+  /**
+   * De twee dingen die bepalen of een docent meedoet: het geld blijft van hem,
+   * en wat een kruisles kost. Allebei horen ze op de pagina zelf te staan en
+   * niet in een gesprek achteraf.
+   */
+  test("noemt het bedrag en dat het geld niet via het platform loopt", async ({
+    page,
+  }) => {
+    await page.goto("/voor-yogadocenten");
+
+    await expect(page.getByText("€ 13,30")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Het geld loopt niet via ons" }),
+    ).toBeVisible();
+  });
+
+  test("de docentenportal vraagt eerst om inloggen", async ({ page }) => {
+    await page.goto("/docenten");
+    await expect(page).toHaveURL(/\/inloggen\?vervolg=/);
+  });
+
+  test("mijn kaarten vraagt eerst om inloggen", async ({ page }) => {
+    await page.goto("/portaal/kaarten");
+    await expect(page).toHaveURL(/\/inloggen\?vervolg=/);
+  });
+});
+
 test.describe("Veiligheid en privacy", () => {
   test("is bereikbaar via het hoofdmenu", async ({ page }) => {
     await page.goto("/");
@@ -335,6 +381,7 @@ test.describe("SEO", () => {
     expect(xml).toContain("/privacyverklaring");
     expect(xml).toContain("/veiligheid");
     expect(xml).toContain("/lessen/tarieven");
+    expect(xml).toContain("/voor-yogadocenten");
   });
 
   test("robots.txt sluit de afgeschermde delen uit", async ({ request }) => {

@@ -96,6 +96,15 @@ export function SiteHeader() {
               </Link>
             ),
           )}
+          {/* Een lijn in plaats van een vlak: voor de bezoeker die een les
+              zoekt is de docentenkant ruis, dus de inlogknop blijft de enige
+              die roept. Voor de docent die hem zoekt is hij wel aanwezig. */}
+          <Link
+            href="/voor-yogadocenten"
+            className="inline-flex h-10 items-center rounded-lg border border-green px-3.5 text-sm font-semibold text-green transition-colors hover:bg-cream"
+          >
+            Voor yogadocenten
+          </Link>
           <Link
             href="/inloggen"
             className="inline-flex h-10 items-center rounded-lg bg-green px-4 text-sm font-semibold text-cream transition-colors hover:bg-green-dark"
@@ -146,9 +155,16 @@ export function SiteHeader() {
             </div>
           ))}
           <Link
+            href="/voor-yogadocenten"
+            onClick={() => setOpen(false)}
+            className="mt-3 inline-flex h-11 items-center justify-center rounded-lg border border-green font-semibold text-green"
+          >
+            Voor yogadocenten
+          </Link>
+          <Link
             href="/inloggen"
             onClick={() => setOpen(false)}
-            className="mt-3 mb-3 inline-flex h-11 items-center justify-center rounded-lg bg-green font-semibold text-cream"
+            className="mt-2 mb-3 inline-flex h-11 items-center justify-center rounded-lg bg-green font-semibold text-cream"
           >
             Inloggen
           </Link>
