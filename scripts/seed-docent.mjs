@@ -16,7 +16,7 @@
  * Herhaalbaar: alles wat er al staat blijft staan. Draai hem gerust twee keer.
  *
  * Let op: dit is opzetgereedschap, geen onderdeel van de gewone seed. Het maakt
- * een echt account aan en verstuurt een echte uitnodigingsmail.
+ * een echt account aan met een wachtwoord dat het één keer toont.
  */
 import "./omgeving.mjs";
 import { createClient } from "@supabase/supabase-js";
@@ -70,37 +70,69 @@ const stap = (tekst) => console.log(`${GRIJS}  ·${RESET} ${tekst}`);
 const klaar = (tekst) => console.log(`${GROEN}  ✓${RESET} ${tekst}`);
 const let_op = (tekst) => console.log(`${GEEL}  !${RESET} ${tekst}`);
 
-async function vindOfNodigUit() {
+/**
+ * Een wachtwoord dat je één keer overtypt en daarna vervangt.
+ *
+ * Geen uitnodigingsmail: zolang Resend niet is ingericht komt die niet aan, en
+ * dan sta je met een account waar je niet in kunt. Dit is opzetgereedschap voor
+ * een site die nog niet live is; een echte docent nodig je later gewoon uit.
+ */
+function wachtwoord() {
+  const letters = "abcdefghjkmnpqrstuvwxyz";
+  const cijfers = "23456789";
+  const kies = (bron) => bron[Math.floor(Math.random() * bron.length)];
+  return (
+    Array.from({ length: 4 }, () => kies(letters)).join("") +
+    "-" +
+    Array.from({ length: 4 }, () => kies(letters)).join("") +
+    "-" +
+    Array.from({ length: 3 }, () => kies(cijfers)).join("")
+  );
+}
+
+async function vindOfMaakAan() {
   const { data: bestaand } = await supabase
     .from("profiles")
-    .select("id, first_name, last_name")
+    .select("id, first_name, last_name, role")
     .eq("email", email.toLowerCase())
     .maybeSingle();
 
   if (bestaand) {
     klaar(`account gevonden: ${bestaand.first_name} ${bestaand.last_name}`);
-    return bestaand.id;
+    if (bestaand.role === "admin") {
+      let_op(
+        "Dit is een beheerder. Als testdocent is dat ongelukkig: een admin mag\n" +
+          "    overal bij, dus je test de beperkingen van een docent dan niet.\n" +
+          "    Gebruik liever een apart account.",
+      );
+    }
+    return { id: bestaand.id, nieuw: false };
   }
 
-  const { data, error } = await supabase.auth.admin.inviteUserByEmail(email, {
-    redirectTo: `${siteUrl}/auth/bevestigen?volgende=/wachtwoord-herstellen`,
-    data: { first_name: voornaam, last_name: achternaam },
+  const geheim = wachtwoord();
+
+  const { data, error } = await supabase.auth.admin.createUser({
+    email,
+    password: geheim,
+    // Meteen bevestigd: er gaat geen mail uit, dus er valt niets te bevestigen.
+    email_confirm: true,
+    user_metadata: { first_name: voornaam, last_name: achternaam },
   });
 
-  if (error) throw new Error(`uitnodigen mislukte: ${error.message}`);
+  if (error) throw new Error(`account aanmaken mislukte: ${error.message}`);
 
-  klaar(`uitnodiging verstuurd naar ${email}`);
-  let_op(
-    "Zonder Resend gaat die mail niet echt weg — zie docs/beheer.md §8.\n" +
-      "    Je kunt het wachtwoord ook zetten via het Supabase-dashboard.",
-  );
-  return data.user.id;
+  klaar(`account aangemaakt voor ${email}`);
+  console.log(`\n    inloggen met:  ${email}`);
+  console.log(`    wachtwoord:    ${geheim}\n`);
+  let_op("Verander dit wachtwoord na de eerste keer inloggen.");
+
+  return { id: data.user.id, nieuw: true };
 }
 
 async function main() {
   console.log(`\nDocent klaarzetten: ${email}\n`);
 
-  const docentId = await vindOfNodigUit();
+  const { id: docentId } = await vindOfMaakAan();
 
   // --- De studio ------------------------------------------------------------
   const { data: studio } = await supabase
