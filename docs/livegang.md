@@ -1,11 +1,11 @@
 # Livegang — het stappenplan
 
-Van "draait op de ontwikkelmachine" naar "staat online en is getest".
-Opgesteld op 15 augustus 2026.
+Van "draait op de ontwikkelmachine" naar "staat online". Herschreven op
+29 augustus 2026, na de huisstijlwissel en de nieuwe landingspagina.
 
-De volgorde is niet vrijblijvend: elke stap maakt de volgende mogelijk. Achter
-elke stap staat **hoe we controleren dat het werkt**. Een stap is pas klaar als
-die controle groen is — niet als de wijziging is doorgevoerd.
+Het doel is nu **zo snel mogelijk zichtbaar zijn**: mensen moeten de site en het
+aanbod kunnen bekijken. Betalen en mailen komen daarna. De volgorde hieronder is
+daarop gebouwd.
 
 Wie wat doet staat erbij: **[jij]** is iets in een dashboard van een externe
 partij, **[ik]** is code en controles.
@@ -14,121 +14,55 @@ partij, **[ik]** is code en controles.
 
 ## Waar we nu staan
 
-Bijgewerkt op 15 augustus 2026, aan het eind van de dag.
-
-|                            |                                                                        |
-| -------------------------- | ---------------------------------------------------------------------- |
-| Alle 10 migrations         | staan op het echte Supabase-project                                    |
-| `pnpm verify`              | groen (typecheck, lint, opmaak, 63 unittests, 206 RLS-controles, seed) |
-| Testpijplijn (CI)          | **groen**, beide taken — voor het eerst                                |
-| Inhoud in de live database | **gevuld** — 7 opleidingen, 42 tekstblokken                            |
-| Beveiliging in productie   | nagelopen, alles zoals ontworpen (fase E4)                             |
-| Beheerdersaccount          | nog alleen testaccounts                                                |
-| Online                     | nergens                                                                |
+| Wat                        | Stand                                                               |
+| -------------------------- | ------------------------------------------------------------------- |
+| Alle 12 migrations         | staan op het echte Supabase-project                                 |
+| `pnpm verify`              | groen — 84 unittests, 271 RLS-controles, seedcontrole               |
+| Browsertests               | 212 groen op twee browsers                                          |
+| Inhoud in de live database | gevuld — 7 opleidingen, 85 tekstblokken                             |
+| Huisstijl                  | palet "Petrol en abrikoos", nieuwe landingspagina                   |
+| Code                       | tak `huisstijl-petrol`, gepusht, **nog niet samengevoegd met main** |
+| Online                     | **nergens**                                                         |
 
 ---
 
-## Fase A — De basis op orde (lokaal)
+## Sessie 1 — Online op een proefadres
 
-### A1 · De twee ontbrekende sleutels **[jij, ± 5 minuten]**
+**Ongeveer een uur, en dan staat het ergens.** Nog niet op je eigen domein:
+eerst een adres van Vercel, zodat je alles kunt bekijken zonder dat iemand op
+`yogacompany.eu` iets halfs ziet.
 
-In het Supabase-dashboard van project `hfsxncotxlenxrkycxsv`:
+> **De site blijft vanzelf uit Google zolang hij niet op het eigen domein
+> staat.** Dat is geen instelling die je kunt vergeten: de blokkade hangt aan
+> `NEXT_PUBLIC_SITE_URL` en gaat vanzelf uit zodra dat het echte domein wordt.
 
-1. **Project Settings → API keys → `service_role`** — klik "Reveal", kopieer.
-2. **Project Settings → Database → Connection string → URI** — kopieer, en
-   vervang `[YOUR-PASSWORD]` door het databasewachtwoord.
+### 1 · Pull request openen en samenvoegen **[jij, 2 minuten]**
 
-Beide in `.env.local` achter `SUPABASE_SERVICE_ROLE_KEY=` en `SUPABASE_DB_URL=`.
-Dat bestand staat in `.gitignore` en komt nooit in git.
+De testpijplijn luistert alleen op `main` en op een pull request. Open er dus
+één, laat hem groen worden, en voeg samen:
 
-> De service-role sleutel omzeilt alle beveiliging in de database. Hij hoort
-> alleen in `.env.local` en straks in Vercel — nooit in een bericht, een
-> screenshot of de broncode.
+https://github.com/zeeuwen1-afk/yoga-company/pull/new/huisstijl-petrol
 
-**Controle:** `pnpm db:seed` draait zonder foutmelding.
+**Controle:** beide taken (`kwaliteit` en `e2e`) staan op groen.
 
-### A2 · De live database vullen **[ik]**
+### 2 · Vercel koppelen **[jij, ± 10 minuten]**
 
-- `pnpm db:seed` — het aanbod, de modules en de 42 tekstblokken.
-- `pnpm db:seed-admin` — jouw account als beheerder.
+Nieuw project, gekoppeld aan de GitHub-repository. De regio staat al vast op
+Frankfurt (`vercel.json`), zodat de gegevens de EU niet verlaten.
 
-**Controle:** een telling in de database laat 7 opleidingen en 42 blokken zien,
-en `pnpm dev` toont het aanbod op de homepage — met de echte database, niet
-lokale voorbeelddata.
+### 3 · De zes waarden invullen **[jij, ± 5 minuten]**
 
-### A3 · Opruimen wat er niet meer hoort **[ik]**
-
-Er staan nog resten van Stripe in de code van vóór de overstap naar Mollie:
-
-- de Content-Security-Policy geeft `js.stripe.com`, `api.stripe.com` en
-  `hooks.stripe.com` toestemming — die hoeven er niet meer in;
-- `.env.local` bevat nog twee Stripe-testwaarden;
-- **belangrijker:** `form-action 'self'` in diezelfde policy zou de doorverwijzing
-  naar het betaalscherm van Mollie kunnen blokkeren als de bezoeker geen
-  JavaScript heeft. Mollie moet daar dus bij.
-
-**Controle:** `pnpm verify` blijft groen, en de site laadt zonder meldingen in
-de foutconsole van de browser.
-
----
-
-## Fase B — De testpijplijn voor het eerst laten draaien
-
-De CI staat klaar in `.github/workflows/ci.yml` maar heeft nog nooit gedraaid.
-Hij draait alles wat `pnpm verify` doet, plus de 170 browsertests op twee
-browsers, plus een productiebuild. Dat is de vangrail voor alles wat hierna komt.
-
-### B1 · Pull request openen **[jij, 1 minuut]**
-
-Open in de browser:
-`https://github.com/zeeuwen1-afk/yoga-company/compare/main...huisstijl-yogacompany`
-en klik **Create pull request**.
-
-### B2 · Groen krijgen **[ik]**
-
-De kans is groot dat er iets omvalt dat lokaal net goed ging — een andere
-tijdzone, een trager scherm, een browser die hier niet is getest. Dat is precies
-waarom we hem laten draaien vóór de livegang, niet erna.
-
-**Controle:** beide taken (`kwaliteit` en `e2e`) staan op groen in GitHub.
-
-### B3 · Samenvoegen naar `main` **[jij]**
-
-Pas als B2 groen is.
-
-**Controle:** de CI draait nog een keer op `main` en is groen.
-
----
-
-## Fase C — Online op een proefadres
-
-Nog niet op je eigen domein. Eerst een adres van Vercel, zodat we alles kunnen
-uitproberen zonder dat er iemand op `yogacompany.eu` iets halfs ziet staan.
-
-### C1 · Vercel koppelen **[jij, ± 10 minuten]**
-
-Nieuw project, gekoppeld aan de GitHub-repo. Regio staat al vast op Frankfurt
-(`vercel.json`), zodat de gegevens de EU niet verlaten.
-
-### C2 · Omgevingsvariabelen invullen **[jij]**
-
-In Vercel: Settings → Environment Variables. Zet ze op **alle drie** de
-omgevingen (Production, Preview, Development), tenzij anders vermeld.
-
-Nu invullen — zonder deze zes draait de site niet:
+In Vercel: Settings → Environment Variables, op **alle drie** de omgevingen.
+Zonder deze zes draait de site niet.
 
 | Naam                            | Waarde                                                        |
 | ------------------------------- | ------------------------------------------------------------- |
 | `NEXT_PUBLIC_SUPABASE_URL`      | `https://hfsxncotxlenxrkycxsv.supabase.co`                    |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | uit `.env.local` regel 8 (openbaar, mag iedereen zien)        |
-| `SUPABASE_SERVICE_ROLE_KEY`     | uit `.env.local` regel 17 — **geheim**                        |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | uit `.env.local` (openbaar, mag iedereen zien)                |
+| `SUPABASE_SERVICE_ROLE_KEY`     | uit `.env.local` — **geheim**                                 |
 | `NEXT_PUBLIC_SITE_URL`          | het adres dat Vercel je geeft, mét `https://` en zonder slash |
 | `CRON_SECRET`                   | uit `.env.local`                                              |
 | `MAILING_UNSUBSCRIBE_SECRET`    | uit `.env.local`                                              |
-
-Later, als die diensten er zijn: `RESEND_API_KEY`, `EMAIL_FROM`,
-`MOLLIE_API_KEY`, `ANTHROPIC_API_KEY`, `SEED_ADMIN_EMAIL`. Zolang ze ontbreken
-werkt de site gewoon; alleen dat ene onderdeel doet dan niets.
 
 > **`SUPABASE_DB_URL` hoort hier niet.** Die wordt alleen gelezen door de
 > scripts op de ontwikkelmachine — migrations, de seed, de RLS-tests — en nooit
@@ -136,66 +70,101 @@ werkt de site gewoon; alleen dat ene onderdeel doet dan niets.
 > niet. Zet hem er niet "voor de zekerheid" bij.
 
 > **`NEXT_PUBLIC_SITE_URL` moet met `https://` beginnen.** Daar hangt de
-> beveiligingsheader `upgrade-insecure-requests` aan: staat er `http://`, dan
-> wordt die weggelaten en dwingt de site https niet af. Zie `next.config.ts`.
+> beveiligingsheader `upgrade-insecure-requests` aan.
 
-### C3 · Eerste deploy **[ik]**
-
-**Controle:** de proef-URL laadt, inloggen werkt, het beheer werkt, en de
-securityheaders staan er (`curl -I`).
-
-### C4 · Supabase weet van het nieuwe adres **[jij]**
+### 4 · Supabase weet van het nieuwe adres **[jij, 2 minuten]**
 
 Authentication → URL Configuration: Site URL en de redirect-URL's naar het
 proefadres. Zonder dit komt iemand na het bevestigen van zijn e-mail op
 `localhost` terecht.
 
-**Controle:** een testaccount aanmaken, de bevestigingsmail volgen, en op de
-juiste plek uitkomen.
+### 5 · Nalopen **[ik]**
+
+De proef-URL laadt, de securityheaders staan erop, inloggen werkt, het beheer
+werkt, en de site staat aantoonbaar op `noindex`.
 
 ---
 
-## Fase D — Echte e-mail
+## Sessie 2 — Opschonen vóór de eerste echte bezoeker
 
-Dit is de stap die het vaakst wordt overgeslagen en dan pijn doet. De
-standaardmailer van Supabase stuurt **maximaal drie mails per uur** en is
-uitdrukkelijk niet voor productie bedoeld. Zonder eigen mailserver kan de vierde
-klant die dag zijn wachtwoord niet herstellen.
+**Dit is de belangrijkste sessie.** Er staat testmateriaal in de database dat
+straks gewoon meegaat naar het proefadres. Niets daarvan is een storing; het is
+alleen niet wat je wilt laten zien.
 
-- **D1 [jij]** — Resend-account, `yogacompany.eu` verifiëren (drie DNS-regels).
-- **D2 [jij]** — die gegevens als SMTP in Supabase zetten.
-- **D3 [ik]** — `RESEND_API_KEY` en `EMAIL_FROM` in Vercel.
+| Wat staat er nu                                                     | Wie      |
+| ------------------------------------------------------------------- | -------- |
+| Eén testles in het rooster, locatie "Rafa Yoga Almere"              | ik + jij |
+| Docentpagina `/docent/pieter` staat gepubliceerd, met sjabloontekst | jij      |
+| Zes accounts, waarvan vier test                                     | ik       |
+| Drie ervaringen met "Deelnemer — naam volgt"                        | jij      |
+| Adres, telefoon en KvK als plaatshouder in de voettekst             | jij      |
+| Privacyverklaring en voorwaarden met een zichtbare conceptmelding   | jij      |
 
-**Controle:** "wachtwoord vergeten" levert binnen een minuut een mail op, van
+**Het echte rooster** is het enige dat werk kost: die lessen moeten erin voordat
+de pagina "Lessen" iets waard is. Dat kan via **Beheer → Lesrooster**.
+
+**De ervaringen** kun je nu ook gewoon verbergen tot je echte namen hebt —
+Site-editor → Startpagina → **Van de pagina halen**. Beter een pagina zonder
+ervaringen dan een pagina met "naam volgt".
+
+**De juridische teksten** zijn concept en zeggen dat ook tegen bezoekers. Voor
+een etalage is dat te verdedigen; vóór je de eerste betaling aanneemt niet.
+
+---
+
+## Sessie 3 — Het eigen domein en de mail
+
+### Domein **[jij, ± 15 minuten]**
+
+`yogacompany.eu` bij Vercel toevoegen en de DNS aanpassen bij je registrar.
+Daarna zet ik `NEXT_PUBLIC_SITE_URL` om — en daarmee gaat de zoekmachine
+vanzelf aan.
+
+**Controle:** `https://yogacompany.eu` laadt, `http://` stuurt door naar https,
+en `X-Robots-Tag` is verdwenen.
+
+### E-mail **[jij, ± 20 minuten]**
+
+De standaardmailer van Supabase stuurt **maximaal drie mails per uur** en is
+uitdrukkelijk niet voor productie bedoeld. Zolang Resend niet staat, kan de
+vierde bezoeker die dag zijn wachtwoord niet herstellen.
+
+Voor een etalage waar niemand een account maakt, kun je hiermee wachten. Maar
+op de startpagina staan twee inlogdeuren, dus iemand gáát het proberen.
+
+1. Resend-account, `yogacompany.eu` verifiëren (drie DNS-regels).
+2. Die gegevens als SMTP in Supabase zetten.
+3. `RESEND_API_KEY` en `EMAIL_FROM` in Vercel — dat doe ik.
+
+**Controle:** "wachtwoord vergeten" levert binnen een minuut een mail op van
 `@yogacompany.eu`, en die belandt niet in spam.
 
+### Beveiliging aanzetten **[jij, 5 minuten]**
+
+- Authentication → Passwords → **Leaked password protection** aan. Dit is de
+  enige echte bevinding uit de beveiligingsscan van Supabase zelf.
+- Tweestapsverificatie op je beheerdersaccount (`wietskevis@hotmail.com`). De
+  code eist het al; dit is het bevestigen dat het aanstaat.
+- Controleren dat de dagelijkse back-up loopt.
+
 ---
 
-## Fase E — Beveiliging aan vóór de eerste echte klant
+## Wat bewust nog niet meegaat
 
-- **E1 [jij]** — Authentication → Passwords → **Leaked password protection** aan.
-  Dit is de enige echte bevinding uit de beveiligingsscan van Supabase zelf, en
-  het is één schakelaar.
-- **E2 [jij]** — tweestapsverificatie op je eigen beheerdersaccount. De code
-  eist het al; dit is het bevestigen dat het aanstaat.
-- **E3 [jij]** — controleren dat de dagelijkse back-up aanstaat.
-- **E4 [ik]** — controleren dat het echte project dezelfde regels afdwingt als
-  de nagebootste database waar de tests op draaien. **Gedaan op 15 augustus
-  2026**; zie hieronder.
+|                              | Waarom                                                                                                                                            |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Mollie**                   | Nog geen account. De site werkt zonder: een inschrijving wordt een aanvraag en je neemt zelf contact op. Aanzetten is later één sleutel invullen. |
+| **Kaarten online verkopen**  | Bestaat nog niet. Kaarten worden met de hand door de docent uitgegeven.                                                                           |
+| **Mailings**                 | Vraagt eerst een schone toestemmingsadministratie.                                                                                                |
+| **Meta-koppeling**           | Staat achter een schakelaar, uit.                                                                                                                 |
+| **Verwerkersovereenkomsten** | Anthropic en Resend — juridisch, geen code. Moet rond zijn vóór de eerste echte klant.                                                            |
+| **Meerdere studio's**        | Zie de verkenning over landelijk gebruik. Het model draagt het al; de rechtenlaag moet er nog bij.                                                |
 
-**Controle:** de beveiligingsscan van Supabase komt schoon terug, op de twee
-bewust gemaakte uitzonderingen na (die staan uitgelegd in `docs/beheer.md`).
+---
 
-### Wat E4 wél en niet is
+## De beveiliging is al tegen productie nagelopen
 
-De gedragstests (`pnpm test:rls:project`) gaan uit van een **lege** database:
-89 van de controles tellen absolute aantallen — "de admin ziet twee cursussen".
-Tegen het gevulde project kloppen die aantallen niet meer, en botsen de
-testgegevens bovendien op de seed. Ze allemaal herschrijven zou de tests eerder
-verzwakken dan versterken, dus dat is niet gedaan. De gedragstests draaien waar
-ze voor gemaakt zijn: tegen een wegwerpdatabase, bij elke wijziging, in CI.
-
-Wat tegen productie wél is nagelopen, alleen lezend:
+Gedaan op 15 augustus 2026, alleen lezend, tegen het echte project:
 
 | Controle                                           | Uitkomst                                                                         |
 | -------------------------------------------------- | -------------------------------------------------------------------------------- |
@@ -205,46 +174,6 @@ Wat tegen productie wél is nagelopen, alleen lezend:
 | `search_path` vastgezet op elke `security definer` | ja                                                                               |
 | `sensitive.client_health`                          | RLS aan, nul policies, schema onbereikbaar voor `anon` en voor ingelogde klanten |
 
-Wil je de gedragstests ooit tegen een échte Supabase draaien, dan hoort daar
-een apart, leeg project of een preview-branch bij — niet productie.
-
----
-
-## Fase F — Het eigen domein
-
-- **F1 [jij]** — `yogacompany.eu` bij Vercel toevoegen, DNS aanpassen bij je
-  registrar.
-- **F2 [ik]** — `NEXT_PUBLIC_SITE_URL` bijwerken, en de URL's in Supabase mee.
-- **F3 [ik]** — controleren: https, de headers, `robots.txt`, `sitemap.xml`.
-
-**Controle:** `https://yogacompany.eu` laadt, `http://` stuurt door naar https,
-en een deel van de e-mails komt aan met de juiste links erin.
-
----
-
-## Fase G — De testronde
-
-Samen doorlopen, elk scenario van begin tot eind:
-
-1. Bezoeker leest over een opleiding en schrijft zich in → dat wordt een
-   **aanvraag** (er is nog geen Mollie-account, dus geen betaling).
-2. Klant maakt een account, bevestigt zijn e-mail, logt in met 2FA.
-3. Klant boekt een les, ziet hem terug, annuleert hem.
-4. Les zit vol → volgende gaat op de wachtlijst → iemand annuleert →
-   wachtlijstplek schuift door.
-5. Jij bewerkt een pagina in de site-editor en publiceert.
-6. Jij opent een klantenkaart, schrijft een notitie, maakt een gespreksverslag.
-7. Jij verwijdert een testklant volgens de AVG-knop.
-
-Wat er misgaat, gaat op een lijst en wordt gefixt vóór de eerste echte klant.
-
----
-
-## Wat bewust nog niet meegaat
-
-|                              | Waarom                                                                                                                                            |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Mollie**                   | Nog geen account. De site werkt zonder: een inschrijving wordt een aanvraag en je neemt zelf contact op. Aanzetten is later één sleutel invullen. |
-| **Mailings**                 | Vraagt eerst een schone toestemmingsadministratie.                                                                                                |
-| **Meta-koppeling**           | Staat achter een schakelaar, uit.                                                                                                                 |
-| **Verwerkersovereenkomsten** | Anthropic en Resend — juridisch, geen code. Moet wel rond zijn vóór de eerste echte klant.                                                        |
+De gedragstests (`pnpm test:rls`) draaien tegen een wegwerpdatabase, bij elke
+wijziging. Wil je ze ooit tegen een échte Supabase draaien, dan hoort daar een
+apart, leeg project of een preview-branch bij — niet productie.
