@@ -7,6 +7,9 @@ const legal = [
   { href: "/privacyverklaring", label: "Privacyverklaring" },
   { href: "/algemene-voorwaarden", label: "Algemene voorwaarden" },
   { href: "/cookies", label: "Cookies" },
+  // Stond in de menubalk. Hier staat hij bij de andere pagina's waar iemand
+  // bewust naartoe gaat om te lezen hoe er met zijn gegevens wordt omgegaan.
+  { href: "/veiligheid", label: "Veiligheid" },
 ];
 
 const navigatie = [
@@ -14,6 +17,8 @@ const navigatie = [
   { href: "/trainingen", label: "Trainingen" },
   { href: "/lessen", label: "Lessen" },
   { href: "/bedrijfsyoga", label: "Bedrijfsyoga" },
+  { href: "/sportclubs", label: "Sportclubs" },
+  { href: "/onderwijs", label: "Onderwijs" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },
 ];

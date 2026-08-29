@@ -6,8 +6,8 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { vindJuridischeTekst } from "@/content/juridisch";
 import { haalConceptPagina } from "@/features/cms";
 import { haalRooster, Rooster } from "@/features/bookings";
-import { BedrijfsyogaInhoud } from "@/features/cms/paginas/bedrijfsyoga-inhoud";
 import { HomeInhoud } from "@/features/cms/paginas/home-inhoud";
+import { OrganisatieInhoud } from "@/features/cms/paginas/organisatie-inhoud";
 import { PortfolioInhoud } from "@/features/cms/paginas/portfolio-inhoud";
 import {
   ContactInhoud,
@@ -81,7 +81,9 @@ export default async function VoorbeeldPagina({
       case "portfolio":
         return <PortfolioInhoud pagina={pagina} />;
       case "bedrijfsyoga":
-        return <BedrijfsyogaInhoud pagina={pagina} />;
+      case "sportclubs":
+      case "onderwijs":
+        return <OrganisatieInhoud pagina={pagina} pageKey={inhoudKey} />;
       case "opleidingen":
         return (
           <OverzichtInhoud pagina={pagina}>

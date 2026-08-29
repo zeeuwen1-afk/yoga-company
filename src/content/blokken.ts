@@ -591,31 +591,65 @@ export const BLOKKEN: BlokSeed[] = [
     },
   },
 
-  // De verwijzing naar bedrijfsyoga. Eén strook, geen vierde deur: dat is een
-  // ander soort klant — een werkgever, geen bezoeker die zelf een les zoekt.
+  // De ingang voor organisaties. Eén blok met drie kaarten en geen drie extra
+  // deuren bovenaan: dat is een andere klant. Bij de deuren erboven kiest
+  // iemand voor zichzelf; hier regelt iemand het vóór een groep die er zelf
+  // niet om vroeg. Die twee door elkaar zetten maakt beide onduidelijk.
   {
     page_key: "home",
-    block_key: "bedrijf_titel",
+    block_key: "organisaties_titel",
     kind: "text",
     verbergbaar: true,
-    omschrijving: "Kop van de strook over bedrijfsyoga",
-    value: { text: "Yoga op de werkvloer" },
+    omschrijving: "Kop van het blok voor organisaties",
+    value: { text: "Yoga voor een groep die er zelf niet om vroeg" },
   },
   {
     page_key: "home",
-    block_key: "bedrijf_tekst",
+    block_key: "organisaties_inleiding",
     kind: "text",
-    omschrijving: "Tekst in die strook",
+    omschrijving: "Zin onder die kop",
     value: {
-      text: "Vaste lessen op kantoor of online, een workshop op een teamdag, of een programma rond werkdruk en herstel. We komen langs of ontvangen jullie in de studio.",
+      text: "Op kantoor, op de club of in de klas. Wij komen langs, nemen alles mee en werken met mensen die nog nooit op een mat hebben gestaan.",
     },
   },
   {
     page_key: "home",
-    block_key: "bedrijf_knop",
-    kind: "text",
-    omschrijving: "Tekst op de knop in die strook",
-    value: { text: "Bekijk bedrijfsyoga" },
+    block_key: "organisaties",
+    kind: "richtext",
+    lijst: { max: 4, itemNaam: "ingang" },
+    omschrijving:
+      "De ingangen voor organisaties. Per ingang: label, kop, tekst, prijsregel, knoptekst en het adres.",
+    value: {
+      items: [
+        {
+          label: "Bedrijven",
+          titel: "Yoga op de werkvloer",
+          tekst:
+            "Een vast moment in de week, een workshop op een teamdag, of een programma rond werkdruk en herstel.",
+          prijs: "Vanaf [prijs per dagdeel]",
+          knop: "Bekijk bedrijfsyoga",
+          href: "/bedrijfsyoga",
+        },
+        {
+          label: "Sportclubs",
+          titel: "De dag na de wedstrijd",
+          tekst:
+            "Mobiliteit, herstel en ademhaling voor teams en individuele sporters. In de kantine of op het veld, na de training.",
+          prijs: "Vanaf [prijs per sessie]",
+          knop: "Bekijk yoga bij je club",
+          href: "/sportclubs",
+        },
+        {
+          label: "Onderwijs",
+          titel: "Een lesuur waarin het stil wordt",
+          tekst:
+            "Voortgezet onderwijs, mbo, hbo en universiteit. In het mentoruur, vóór de examenweek, of voor het team dat er de hele week staat.",
+          prijs: "Vanaf [prijs per dagdeel]",
+          knop: "Bekijk yoga in het onderwijs",
+          href: "/onderwijs",
+        },
+      ],
+    },
   },
 
   {
@@ -644,6 +678,13 @@ export const BLOKKEN: BlokSeed[] = [
   // ---------------------------------------------------------------------------
   {
     page_key: "bedrijfsyoga",
+    block_key: "label",
+    kind: "text",
+    omschrijving: "Kleine regel boven de kop",
+    value: { text: "Voor werkgevers" },
+  },
+  {
+    page_key: "bedrijfsyoga",
     block_key: "titel",
     kind: "text",
     omschrijving: "Kop van de pagina",
@@ -657,6 +698,13 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       text: "Vaste lessen op kantoor of online, een workshop op een teamdag, of een programma rond werkdruk en herstel. We komen langs, of jullie komen naar de studio.",
     },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "knop",
+    kind: "text",
+    omschrijving: "Tekst op de knop naar het aanvraagformulier",
+    value: { text: "Vraag een proefles aan" },
   },
   {
     page_key: "bedrijfsyoga",
@@ -677,10 +725,35 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "bedrijfsyoga",
+    block_key: "doelgroepen_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kop boven de kaarten met doelgroepen",
+    value: { text: "" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "doelgroepen",
+    kind: "richtext",
+    lijst: { max: 6, itemNaam: "doelgroep" },
+    verbergbaar: true,
+    omschrijving:
+      "Kaarten met doelgroepen. Leeg laten kan; dan verdwijnt het blok.",
+    value: { items: [] },
+  },
+  {
+    page_key: "bedrijfsyoga",
     block_key: "vormen_titel",
     kind: "text",
     omschrijving: "Kop boven de vormen",
     value: { text: "In welke vorm" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "vormen_inleiding",
+    kind: "text",
+    omschrijving: "Zin onder de kop met de vormen",
+    value: { text: "" },
   },
   {
     page_key: "bedrijfsyoga",
@@ -765,6 +838,447 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving: "Tekst van het afsluitende blok",
     value: {
       text: "We komen graag eerst een keer langs voor een proefles, zodat jullie weten waar je ja tegen zegt. Laat weten met hoeveel mensen jullie zijn en waar jullie zitten.",
+    },
+  },
+
+  // ---------------------------------------------------------------------------
+  // Een lesuur waarin het stil wordt
+  // ---------------------------------------------------------------------------
+  {
+    page_key: "onderwijs",
+    block_key: "label",
+    kind: "text",
+    omschrijving: "Kleine regel boven de kop",
+    value: { text: "Voor het onderwijs" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "titel",
+    kind: "text",
+    omschrijving: "Kop van de pagina",
+    value: { text: "Een lesuur waarin het stil wordt" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "inleiding",
+    kind: "text",
+    omschrijving: "Zin onder de kop",
+    value: {
+      text: "Yoga in het voortgezet onderwijs, op het mbo en in het hoger onderwijs. In het eigen lokaal, zonder omkleden en zonder gymzaal — en zonder dat het zweverig wordt, want daar prikken ze binnen een minuut doorheen.",
+    },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "knop",
+    kind: "text",
+    omschrijving: "Tekst op de knop naar het aanvraagformulier",
+    value: { text: "Vraag een proefles aan" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "beeld",
+    kind: "image",
+    verbergbaar: true,
+    omschrijving: "Sfeerbeeld boven aan de pagina",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "verhaal",
+    kind: "richtext",
+    verbergbaar: true,
+    omschrijving: "Vrije tekst onder het beeld",
+    value: {
+      html: "<p>Yoga hoeft er niet uit te zien zoals het op foto's staat. Wat een klas van vijftien nodig heeft is iets wat genoeg vraagt om de aandacht vast te houden, en daarna vijf minuten waarin er niets hoeft.</p><p>We werken met wat er is: een lokaal met de tafels aan de kant, de aula, of een collegezaal. Geen matten die niemand wil aanraken, geen kleedkamer, geen muziek die je toch niet mooi vindt.</p>",
+    },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "doelgroepen_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kop boven de kaarten",
+    value: { text: "Voor wie" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "doelgroepen",
+    kind: "richtext",
+    lijst: { max: 8, itemNaam: "kaart" },
+    omschrijving:
+      "De kaarten. Per kaart een kop en een tekst; zet 'ja' bij uitgelicht om er één te laten opvallen.",
+    value: {
+      items: [
+        {
+          titel: "Onderbouw voortgezet onderwijs",
+          tekst:
+            "Twaalf tot vijftien: veel prikkels, weinig taal om te zeggen wat er aan de hand is. We werken met houdingen die iets vrágen — daar zit de aandacht vanzelf — en eindigen met vijf minuten liggen. In het mentoruur of aansluitend op gym.",
+          uitgelicht: "",
+        },
+        {
+          titel: "Examenklassen",
+          tekst:
+            "De weken vóór de toetsweek en het eindexamen. Ademhaling die je in een examenzaal kunt gebruiken, en een manier om je hoofd leeg te maken die niet 'even ontspannen' heet. Ook als los rustuur tijdens de examenweek.",
+          uitgelicht: "",
+        },
+        {
+          titel: "Mbo",
+          tekst:
+            "Bij zorg, techniek en bouw komt er iets fysieks bij: tillen, staan, herhaalde belasting. Daar gaat het over houding en beweeglijkheid, en over de spanning die stage met zich meebrengt.",
+          uitgelicht: "",
+        },
+        {
+          titel: "Hbo en universiteit",
+          tekst:
+            "Rond tentamenperiodes, in een welzijnsprogramma, of via een studievereniging. Groepen van vijfentwintig tot dertig, in een collegezaal of een lege werkruimte.",
+          uitgelicht: "",
+        },
+        {
+          titel: "Het docenten- en medewerkersteam",
+          tekst:
+            "Een uur op een studiedag, of een blok van zes weken na schooltijd. Het kost geen lestijd, dus de beslissing is kleiner — en wie het zelf heeft gedaan, gunt het zijn klas ook.",
+          uitgelicht: "ja",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "praktisch_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kop boven de praktische regels",
+    value: { text: "Hoe het gaat" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "praktisch",
+    kind: "richtext",
+    lijst: { max: 10, itemNaam: "regel" },
+    omschrijving: "Praktische regels: links het onderwerp, rechts de uitleg.",
+    value: {
+      items: [
+        {
+          titel: "Duur",
+          tekst:
+            "Eén lesuur. Veertig minuten werk, de rest is binnenkomen en weer opruimen.",
+        },
+        {
+          titel: "Waar",
+          tekst:
+            "Het eigen lokaal met de tafels aan de kant, de aula, de gymzaal of een collegezaal. Wat er is.",
+        },
+        {
+          titel: "Kleding",
+          tekst:
+            "Wat ze aanhebben. Schoenen uit. Niemand hoeft zich om te kleden — dat is precies de drempel waar de helft op afhaakt.",
+        },
+        {
+          titel: "Telefoons",
+          tekst:
+            "In de tas. Ik neem ze niet in; dat is een afspraak tussen de docent en de klas, niet tussen mij en de klas.",
+        },
+        {
+          titel: "De docent",
+          tekst:
+            "Blijft erbij en doet mee. Een klas die ziet dat een volwassene het ook onhandig vindt, doet zelf ook mee.",
+        },
+        {
+          titel: "Groepsgrootte",
+          tekst:
+            "Eén klas, tot dertig. Grotere groepen splitsen we — anders zie ik niet wie er iets doet wat pijn gaat doen.",
+        },
+        {
+          titel: "Een dagdeel",
+          tekst:
+            "Drie tot vier klassen achter elkaar. Zo is ook de prijs opgebouwd.",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "vormen_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kop boven de tarieven",
+    value: { text: "Wat het kost" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "vormen_inleiding",
+    kind: "text",
+    omschrijving: "Zin onder die kop",
+    value: {
+      text: "De prijs hangt aan het dagdeel, niet aan de les. Rijden en opbouwen kost meer tijd dan lesgeven, dus drie klassen op één ochtend is per klas een stuk voordeliger dan één losse les.",
+    },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "vormen",
+    kind: "richtext",
+    lijst: { max: 8, itemNaam: "vorm" },
+    omschrijving:
+      "De vormen met hun prijs. Per vorm: naam, duur, toelichting en bedrag.",
+    value: {
+      items: [
+        {
+          naam: "Kennismaking",
+          duur: "één dagdeel",
+          tekst:
+            "Twee klassen naar keuze. Om te zien of het bij jullie school past — en of de klas meedoet.",
+          prijs: "[bedrag]",
+          uitgelicht: "",
+        },
+        {
+          naam: "Blok van zes weken",
+          duur: "zes dagdelen",
+          tekst:
+            "Eén dagdeel per week tussen twee vakanties, drie tot vier klassen per keer. Past op de jaarplanning en op één factuur.",
+          prijs: "[bedrag per dagdeel]",
+          uitgelicht: "ja",
+        },
+        {
+          naam: "Rustuur in de examenweek",
+          duur: "één dagdeel",
+          tekst:
+            "Open inloop tijdens de toets- of examenweek. Leerlingen komen tussen twee vakken door binnenlopen.",
+          prijs: "[bedrag]",
+          uitgelicht: "",
+        },
+        {
+          naam: "Voor het team",
+          duur: "een uur of zes bijeenkomsten",
+          tekst:
+            "Op een studiedag of na schooltijd. Meestal uit een ander budget dan de lessen — vaak dat voor duurzame inzetbaarheid.",
+          prijs: "[bedrag]",
+          uitgelicht: "",
+        },
+        {
+          naam: "Docenten opleiden",
+          duur: "drie bijeenkomsten",
+          tekst:
+            "Mentoren leren het zelf te geven, met een werkboek per persoon. Daarna kunnen ze het zonder mij.",
+          prijs: "[bedrag]",
+          uitgelicht: "",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "cta_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kop van het afsluitende blok met het formulier",
+    value: { text: "Een keer proberen?" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "cta_tekst",
+    kind: "text",
+    omschrijving: "Tekst boven het aanvraagformulier",
+    value: {
+      text: "Vertel om hoeveel klassen of groepen het gaat en in welke periode het zou moeten vallen — dan stuur ik binnen twee werkdagen een voorstel met een prijs erin.",
+    },
+  },
+
+  // ---------------------------------------------------------------------------
+  // De dag na de wedstrijd
+  // ---------------------------------------------------------------------------
+  {
+    page_key: "sportclubs",
+    block_key: "label",
+    kind: "text",
+    omschrijving: "Kleine regel boven de kop",
+    value: { text: "Voor sportclubs" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "titel",
+    kind: "text",
+    omschrijving: "Kop van de pagina",
+    value: { text: "De dag na de wedstrijd" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "inleiding",
+    kind: "text",
+    omschrijving: "Zin onder de kop",
+    value: {
+      text: "Mobiliteit, herstel en ademhaling voor teams en individuele sporters. In de kantine, in de gymzaal of gewoon op het veld. Vijfenveertig minuten, na de training of op de hersteldag.",
+    },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "knop",
+    kind: "text",
+    omschrijving: "Tekst op de knop naar het aanvraagformulier",
+    value: { text: "Vraag een proefsessie aan" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "beeld",
+    kind: "image",
+    verbergbaar: true,
+    omschrijving: "Sfeerbeeld boven aan de pagina",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "verhaal",
+    kind: "richtext",
+    verbergbaar: true,
+    omschrijving: "Vrije tekst onder het beeld",
+    value: {
+      html: "<p>Geen kaarsen, geen ohm. Wel werk aan de gewrichten die in jullie sport het meest vastlopen, en aan ademhaling die je onder druk kunt gebruiken.</p><p>Ik kom naar de club en werk met wat er is: de kantine, een zaal, of het veld als het droog is. Matten neem ik mee, maar op gras heb je ze niet eens nodig.</p>",
+    },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "doelgroepen_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kop boven de kaarten",
+    value: { text: "Waar het over gaat" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "doelgroepen",
+    kind: "richtext",
+    lijst: { max: 8, itemNaam: "kaart" },
+    omschrijving:
+      "De kaarten. Per kaart een kop en een tekst; zet 'ja' bij uitgelicht om er één te laten opvallen.",
+    value: {
+      items: [
+        {
+          titel: "Beweeglijkheid",
+          tekst:
+            "De gewrichten die in jullie sport het meest vastlopen. Bij voetbal en hockey zijn dat heupen en enkels, bij volleybal en handbal de schouders.",
+          uitgelicht: "",
+        },
+        {
+          titel: "Herstel",
+          tekst:
+            "Een rustige sessie de dag na een wedstrijd, gericht op weer soepel worden. Geen zware belasting erbovenop.",
+          uitgelicht: "",
+        },
+        {
+          titel: "Ademhaling en focus",
+          tekst:
+            "Rustiger worden op de bank, en terug bij de les komen na een tegendoelpunt. Dit is wat spelers zelf het vaakst noemen.",
+          uitgelicht: "",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "praktisch_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kop boven de praktische regels",
+    value: { text: "Voor welke groep" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "praktisch",
+    kind: "richtext",
+    lijst: { max: 10, itemNaam: "regel" },
+    omschrijving: "Praktische regels: links het onderwerp, rechts de uitleg.",
+    value: {
+      items: [
+        {
+          titel: "Een selectieteam",
+          tekst:
+            "Wekelijks in het seizoen, of een blok in de voorbereiding. Meestal aansluitend op de training, zodat niemand een extra avond kwijt is.",
+        },
+        {
+          titel: "Jeugdteams",
+          tekst:
+            "Korter en speelser. Werkt goed op een zaterdagochtend, met ouders die kijken — dat levert vaak weer aanmeldingen voor de studio op.",
+        },
+        {
+          titel: "Individuele sporters",
+          tekst:
+            "Hardlopers, wielrenners, tennissers. Een vaste groep uit de club, of een programma voor één iemand die ergens tegenaan loopt.",
+        },
+        {
+          titel: "De trainersstaf",
+          tekst:
+            "Zij bepalen of het blijft. Een sessie met de trainers vóór je bij het team begint, is de beste investering van het hele traject.",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "vormen_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kop boven de tarieven",
+    value: { text: "Wat het kost" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "vormen_inleiding",
+    kind: "text",
+    omschrijving: "Zin onder die kop",
+    value: {
+      text: "Per sessie of per blok. Veel clubs betalen dit uit het budget voor blessurepreventie of vanuit een sponsor — vraag ernaar bij je bestuur.",
+    },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "vormen",
+    kind: "richtext",
+    lijst: { max: 8, itemNaam: "vorm" },
+    omschrijving:
+      "De vormen met hun prijs. Per vorm: naam, duur, toelichting en bedrag.",
+    value: {
+      items: [
+        {
+          naam: "Proefsessie",
+          duur: "45 minuten",
+          tekst:
+            "Eén sessie met één team. Zonder verplichting, zodat de trainer kan zien wat het is.",
+          prijs: "[bedrag]",
+          uitgelicht: "",
+        },
+        {
+          naam: "Seizoensblok",
+          duur: "tien sessies",
+          tekst:
+            "Wekelijks of om de week. Eén factuur aan de club, of verdeeld over de spelers.",
+          prijs: "[bedrag]",
+          uitgelicht: "ja",
+        },
+        {
+          naam: "Clubjaar",
+          duur: "vast dagdeel per week",
+          tekst:
+            "Meerdere teams door het seizoen heen. Maandelijkse factuur, voorspelbaar in jullie begroting.",
+          prijs: "[bedrag per maand]",
+          uitgelicht: "",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "cta_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kop van het afsluitende blok met het formulier",
+    value: { text: "Een keer proberen?" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "cta_tekst",
+    kind: "text",
+    omschrijving: "Tekst boven het aanvraagformulier",
+    value: {
+      text: "Laat weten om welk team het gaat en op welke avond jullie trainen — dan stuur ik binnen twee werkdagen een voorstel.",
     },
   },
 

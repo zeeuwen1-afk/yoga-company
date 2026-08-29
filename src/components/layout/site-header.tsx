@@ -25,9 +25,23 @@ const navigation: NavItem[] = [
       { href: "/lessen/tarieven", label: "Tarieven" },
     ],
   },
+  {
+    // Eén ingang voor de drie markten waar niet de deelnemer betaalt maar zijn
+    // werkgever, club of school. Drie losse items zouden de balk overladen en
+    // ze op één hoop gooien met het aanbod waar iemand zelf voor kiest.
+    href: "/bedrijfsyoga",
+    label: "Voor organisaties",
+    sub: [
+      { href: "/bedrijfsyoga", label: "Bedrijven" },
+      { href: "/sportclubs", label: "Sportclubs" },
+      { href: "/onderwijs", label: "Onderwijs" },
+    ],
+  },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },
-  { href: "/veiligheid", label: "Veiligheid" },
+  // "Veiligheid" stond hier ook; die staat nu in de paginavoet bij de
+  // juridische pagina's. Dat is een pagina waar iemand bewust naartoe gaat, en
+  // hij kostte een van de zes plekken die de balk aankan.
 ];
 
 export function SiteHeader() {

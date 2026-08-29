@@ -323,6 +323,24 @@ niet de structuur. Dat houdt de site consistent.
 Bevalt een concept toch niet, dan gooit **Concepten weggooien** ze weg. De
 website is dan onveranderd gebleven.
 
+### De pagina's voor organisaties
+
+Bedrijven, sportclubs en onderwijs zijn drie pagina's met dezelfde opbouw, en
+allemaal aanpasbaar in de site-editor: de kop, het verhaal, de kaarten met
+doelgroepen, de praktische regels en de tarieven. Elk onderdeel heeft een
+toevoegknop, dus een vorm of een doelgroep erbij kan zonder mij.
+
+Twee velden werken met **ja** of leeg, net als bij de tarieven:
+
+- **uitgelicht** bij een kaart — die krijgt dan een rand in abrikoos en het
+  label "Vaak de eerste stap" (bij doelgroepen) of "Meest gekozen" (bij een
+  vorm). Bedoeld voor één per blok.
+
+Laat je een heel blok leeg, dan verdwijnt het van de pagina in plaats van dat
+er een lege kop blijft staan. De aanvraag onderaan komt binnen bij
+**Beheer → Contactberichten**, samen met de andere berichten van mensen zonder
+account.
+
 ### Lijsten uitbreiden
 
 Bij een blok dat uit meerdere onderdelen bestaat — de docenten op "Over ons",

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { haalPagina } from "@/features/cms";
-import { BedrijfsyogaInhoud } from "@/features/cms/paginas/bedrijfsyoga-inhoud";
+import { OrganisatieInhoud } from "@/features/cms/paginas/organisatie-inhoud";
 
 export const revalidate = 300;
 
@@ -14,5 +14,5 @@ export const metadata: Metadata = {
 
 export default async function BedrijfsyogaPage() {
   const pagina = await haalPagina("bedrijfsyoga");
-  return <BedrijfsyogaInhoud pagina={pagina} />;
+  return <OrganisatieInhoud pagina={pagina} pageKey="bedrijfsyoga" />;
 }

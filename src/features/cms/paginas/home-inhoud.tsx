@@ -244,6 +244,51 @@ function Rooster({
   );
 }
 
+/**
+ * De ingang voor organisaties.
+ *
+ * Eén blok met drie kaarten, en geen drie extra deuren bovenaan: bij de deuren
+ * daar kiest iemand voor zichzelf, hier regelt iemand het vóór een groep die er
+ * zelf niet om vroeg. Die twee door elkaar zetten maakt ze allebei onduidelijk.
+ */
+function Organisaties({ pagina }: { pagina: Pagina }) {
+  const ingangen = pagina.lijst<Deur>("organisaties");
+  if (ingangen.length === 0) return null;
+
+  return (
+    <Sectie achtergrond="creme" lijnBoven>
+      <SectieKop
+        titel={pagina.tekst("organisaties_titel")}
+        inleiding={pagina.tekst("organisaties_inleiding")}
+      />
+      <ul className="mt-10 grid gap-6 md:grid-cols-3">
+        {ingangen.map((ingang) => (
+          <li key={ingang.titel} className="relative flex">
+            <Card className="flex flex-1 flex-col transition-colors hover:border-accent/60">
+              <CardContent className="flex flex-1 flex-col gap-3 p-7">
+                <p className="label-klein">{ingang.label}</p>
+                <h3 className="text-2xl">
+                  <Link href={ingang.href}>
+                    <span className="absolute inset-0" aria-hidden />
+                    {ingang.titel}
+                  </Link>
+                </h3>
+                <p className="flex-1 text-[0.975rem] text-muted">
+                  {ingang.tekst}
+                </p>
+                {ingang.prijs ? (
+                  <p className="text-[0.975rem] text-green">{ingang.prijs}</p>
+                ) : null}
+                <p className="font-semibold text-green">{ingang.knop} &rarr;</p>
+              </CardContent>
+            </Card>
+          </li>
+        ))}
+      </ul>
+    </Sectie>
+  );
+}
+
 function Inlogdeuren({ pagina }: { pagina: Pagina }) {
   const deuren = pagina.lijst<Deur>("inlog_deuren");
   if (deuren.length === 0) return null;
@@ -361,27 +406,7 @@ export function HomeInhoud({
         </Sectie>
       ) : null}
 
-      {pagina.tekst("bedrijf_titel") ? (
-        <Sectie achtergrond="creme" lijnBoven>
-          <div className="flex flex-wrap items-center justify-between gap-8 rounded-[var(--radius-card)] border border-line bg-white p-8 sm:p-10">
-            <div className="max-w-xl">
-              <p className="label-klein">Voor werkgevers</p>
-              <h2 className="mt-3 text-2xl sm:text-3xl">
-                {pagina.tekst("bedrijf_titel")}
-              </h2>
-              <p className="mt-3 text-[0.975rem] text-muted">
-                {pagina.tekst("bedrijf_tekst")}
-              </p>
-            </div>
-            <Link
-              href="/bedrijfsyoga"
-              className="inline-flex h-12 shrink-0 items-center rounded-lg border border-line-strong px-7 font-semibold text-green-dark transition-colors hover:bg-hover"
-            >
-              {pagina.tekst("bedrijf_knop")}
-            </Link>
-          </div>
-        </Sectie>
-      ) : null}
+      <Organisaties pagina={pagina} />
 
       <Inlogdeuren pagina={pagina} />
 

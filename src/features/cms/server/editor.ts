@@ -58,6 +58,8 @@ const PAGINA_NAMEN: Record<string, { titel: string; pad: string }> = {
   trainingen: { titel: "Trainingen", pad: "/trainingen" },
   lessen: { titel: "Lessen", pad: "/lessen" },
   bedrijfsyoga: { titel: "Bedrijfsyoga", pad: "/bedrijfsyoga" },
+  sportclubs: { titel: "Sportclubs", pad: "/sportclubs" },
+  onderwijs: { titel: "Onderwijs", pad: "/onderwijs" },
   portfolio: { titel: "Portfolio", pad: "/portfolio" },
   "over-ons": { titel: "Over ons", pad: "/over-ons" },
   contact: { titel: "Contact", pad: "/contact" },

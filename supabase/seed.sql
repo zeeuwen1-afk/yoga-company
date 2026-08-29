@@ -1045,19 +1045,19 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'bedrijf_titel', 'text', '{"text":"Yoga op de werkvloer"}'::jsonb)
+values ('home', 'organisaties_titel', 'text', '{"text":"Yoga voor een groep die er zelf niet om vroeg"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'bedrijf_tekst', 'text', '{"text":"Vaste lessen op kantoor of online, een workshop op een teamdag, of een programma rond werkdruk en herstel. We komen langs of ontvangen jullie in de studio."}'::jsonb)
+values ('home', 'organisaties_inleiding', 'text', '{"text":"Op kantoor, op de club of in de klas. Wij komen langs, nemen alles mee en werken met mensen die nog nooit op een mat hebben gestaan."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'bedrijf_knop', 'text', '{"text":"Bekijk bedrijfsyoga"}'::jsonb)
+values ('home', 'organisaties', 'richtext', '{"items":[{"label":"Bedrijven","titel":"Yoga op de werkvloer","tekst":"Een vast moment in de week, een workshop op een teamdag, of een programma rond werkdruk en herstel.","prijs":"Vanaf [prijs per dagdeel]","knop":"Bekijk bedrijfsyoga","href":"/bedrijfsyoga"},{"label":"Sportclubs","titel":"De dag na de wedstrijd","tekst":"Mobiliteit, herstel en ademhaling voor teams en individuele sporters. In de kantine of op het veld, na de training.","prijs":"Vanaf [prijs per sessie]","knop":"Bekijk yoga bij je club","href":"/sportclubs"},{"label":"Onderwijs","titel":"Een lesuur waarin het stil wordt","tekst":"Voortgezet onderwijs, mbo, hbo en universiteit. In het mentoruur, vóór de examenweek, of voor het team dat er de hele week staat.","prijs":"Vanaf [prijs per dagdeel]","knop":"Bekijk yoga in het onderwijs","href":"/onderwijs"}]}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1075,6 +1075,12 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'label', 'text', '{"text":"Voor werkgevers"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('bedrijfsyoga', 'titel', 'text', '{"text":"Yoga op de werkvloer"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
@@ -1082,6 +1088,12 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('bedrijfsyoga', 'inleiding', 'text', '{"text":"Vaste lessen op kantoor of online, een workshop op een teamdag, of een programma rond werkdruk en herstel. We komen langs, of jullie komen naar de studio."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'knop', 'text', '{"text":"Vraag een proefles aan"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1099,7 +1111,25 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'doelgroepen_titel', 'text', '{"text":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'doelgroepen', 'richtext', '{"items":[]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('bedrijfsyoga', 'vormen_titel', 'text', '{"text":"In welke vorm"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'vormen_inleiding', 'text', '{"text":""}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1130,6 +1160,186 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('bedrijfsyoga', 'cta_tekst', 'text', '{"text":"We komen graag eerst een keer langs voor een proefles, zodat jullie weten waar je ja tegen zegt. Laat weten met hoeveel mensen jullie zijn en waar jullie zitten."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'label', 'text', '{"text":"Voor het onderwijs"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'titel', 'text', '{"text":"Een lesuur waarin het stil wordt"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'inleiding', 'text', '{"text":"Yoga in het voortgezet onderwijs, op het mbo en in het hoger onderwijs. In het eigen lokaal, zonder omkleden en zonder gymzaal — en zonder dat het zweverig wordt, want daar prikken ze binnen een minuut doorheen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'knop', 'text', '{"text":"Vraag een proefles aan"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'beeld', 'image', '{"url":"","alt":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'verhaal', 'richtext', '{"html":"<p>Yoga hoeft er niet uit te zien zoals het op foto''s staat. Wat een klas van vijftien nodig heeft is iets wat genoeg vraagt om de aandacht vast te houden, en daarna vijf minuten waarin er niets hoeft.</p><p>We werken met wat er is: een lokaal met de tafels aan de kant, de aula, of een collegezaal. Geen matten die niemand wil aanraken, geen kleedkamer, geen muziek die je toch niet mooi vindt.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'doelgroepen_titel', 'text', '{"text":"Voor wie"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'doelgroepen', 'richtext', '{"items":[{"titel":"Onderbouw voortgezet onderwijs","tekst":"Twaalf tot vijftien: veel prikkels, weinig taal om te zeggen wat er aan de hand is. We werken met houdingen die iets vrágen — daar zit de aandacht vanzelf — en eindigen met vijf minuten liggen. In het mentoruur of aansluitend op gym.","uitgelicht":""},{"titel":"Examenklassen","tekst":"De weken vóór de toetsweek en het eindexamen. Ademhaling die je in een examenzaal kunt gebruiken, en een manier om je hoofd leeg te maken die niet ''even ontspannen'' heet. Ook als los rustuur tijdens de examenweek.","uitgelicht":""},{"titel":"Mbo","tekst":"Bij zorg, techniek en bouw komt er iets fysieks bij: tillen, staan, herhaalde belasting. Daar gaat het over houding en beweeglijkheid, en over de spanning die stage met zich meebrengt.","uitgelicht":""},{"titel":"Hbo en universiteit","tekst":"Rond tentamenperiodes, in een welzijnsprogramma, of via een studievereniging. Groepen van vijfentwintig tot dertig, in een collegezaal of een lege werkruimte.","uitgelicht":""},{"titel":"Het docenten- en medewerkersteam","tekst":"Een uur op een studiedag, of een blok van zes weken na schooltijd. Het kost geen lestijd, dus de beslissing is kleiner — en wie het zelf heeft gedaan, gunt het zijn klas ook.","uitgelicht":"ja"}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'praktisch_titel', 'text', '{"text":"Hoe het gaat"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'praktisch', 'richtext', '{"items":[{"titel":"Duur","tekst":"Eén lesuur. Veertig minuten werk, de rest is binnenkomen en weer opruimen."},{"titel":"Waar","tekst":"Het eigen lokaal met de tafels aan de kant, de aula, de gymzaal of een collegezaal. Wat er is."},{"titel":"Kleding","tekst":"Wat ze aanhebben. Schoenen uit. Niemand hoeft zich om te kleden — dat is precies de drempel waar de helft op afhaakt."},{"titel":"Telefoons","tekst":"In de tas. Ik neem ze niet in; dat is een afspraak tussen de docent en de klas, niet tussen mij en de klas."},{"titel":"De docent","tekst":"Blijft erbij en doet mee. Een klas die ziet dat een volwassene het ook onhandig vindt, doet zelf ook mee."},{"titel":"Groepsgrootte","tekst":"Eén klas, tot dertig. Grotere groepen splitsen we — anders zie ik niet wie er iets doet wat pijn gaat doen."},{"titel":"Een dagdeel","tekst":"Drie tot vier klassen achter elkaar. Zo is ook de prijs opgebouwd."}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'vormen_titel', 'text', '{"text":"Wat het kost"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'vormen_inleiding', 'text', '{"text":"De prijs hangt aan het dagdeel, niet aan de les. Rijden en opbouwen kost meer tijd dan lesgeven, dus drie klassen op één ochtend is per klas een stuk voordeliger dan één losse les."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'vormen', 'richtext', '{"items":[{"naam":"Kennismaking","duur":"één dagdeel","tekst":"Twee klassen naar keuze. Om te zien of het bij jullie school past — en of de klas meedoet.","prijs":"[bedrag]","uitgelicht":""},{"naam":"Blok van zes weken","duur":"zes dagdelen","tekst":"Eén dagdeel per week tussen twee vakanties, drie tot vier klassen per keer. Past op de jaarplanning en op één factuur.","prijs":"[bedrag per dagdeel]","uitgelicht":"ja"},{"naam":"Rustuur in de examenweek","duur":"één dagdeel","tekst":"Open inloop tijdens de toets- of examenweek. Leerlingen komen tussen twee vakken door binnenlopen.","prijs":"[bedrag]","uitgelicht":""},{"naam":"Voor het team","duur":"een uur of zes bijeenkomsten","tekst":"Op een studiedag of na schooltijd. Meestal uit een ander budget dan de lessen — vaak dat voor duurzame inzetbaarheid.","prijs":"[bedrag]","uitgelicht":""},{"naam":"Docenten opleiden","duur":"drie bijeenkomsten","tekst":"Mentoren leren het zelf te geven, met een werkboek per persoon. Daarna kunnen ze het zonder mij.","prijs":"[bedrag]","uitgelicht":""}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'cta_titel', 'text', '{"text":"Een keer proberen?"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('onderwijs', 'cta_tekst', 'text', '{"text":"Vertel om hoeveel klassen of groepen het gaat en in welke periode het zou moeten vallen — dan stuur ik binnen twee werkdagen een voorstel met een prijs erin."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'label', 'text', '{"text":"Voor sportclubs"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'titel', 'text', '{"text":"De dag na de wedstrijd"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'inleiding', 'text', '{"text":"Mobiliteit, herstel en ademhaling voor teams en individuele sporters. In de kantine, in de gymzaal of gewoon op het veld. Vijfenveertig minuten, na de training of op de hersteldag."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'knop', 'text', '{"text":"Vraag een proefsessie aan"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'beeld', 'image', '{"url":"","alt":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'verhaal', 'richtext', '{"html":"<p>Geen kaarsen, geen ohm. Wel werk aan de gewrichten die in jullie sport het meest vastlopen, en aan ademhaling die je onder druk kunt gebruiken.</p><p>Ik kom naar de club en werk met wat er is: de kantine, een zaal, of het veld als het droog is. Matten neem ik mee, maar op gras heb je ze niet eens nodig.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'doelgroepen_titel', 'text', '{"text":"Waar het over gaat"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'doelgroepen', 'richtext', '{"items":[{"titel":"Beweeglijkheid","tekst":"De gewrichten die in jullie sport het meest vastlopen. Bij voetbal en hockey zijn dat heupen en enkels, bij volleybal en handbal de schouders.","uitgelicht":""},{"titel":"Herstel","tekst":"Een rustige sessie de dag na een wedstrijd, gericht op weer soepel worden. Geen zware belasting erbovenop.","uitgelicht":""},{"titel":"Ademhaling en focus","tekst":"Rustiger worden op de bank, en terug bij de les komen na een tegendoelpunt. Dit is wat spelers zelf het vaakst noemen.","uitgelicht":""}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'praktisch_titel', 'text', '{"text":"Voor welke groep"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'praktisch', 'richtext', '{"items":[{"titel":"Een selectieteam","tekst":"Wekelijks in het seizoen, of een blok in de voorbereiding. Meestal aansluitend op de training, zodat niemand een extra avond kwijt is."},{"titel":"Jeugdteams","tekst":"Korter en speelser. Werkt goed op een zaterdagochtend, met ouders die kijken — dat levert vaak weer aanmeldingen voor de studio op."},{"titel":"Individuele sporters","tekst":"Hardlopers, wielrenners, tennissers. Een vaste groep uit de club, of een programma voor één iemand die ergens tegenaan loopt."},{"titel":"De trainersstaf","tekst":"Zij bepalen of het blijft. Een sessie met de trainers vóór je bij het team begint, is de beste investering van het hele traject."}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'vormen_titel', 'text', '{"text":"Wat het kost"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'vormen_inleiding', 'text', '{"text":"Per sessie of per blok. Veel clubs betalen dit uit het budget voor blessurepreventie of vanuit een sponsor — vraag ernaar bij je bestuur."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'vormen', 'richtext', '{"items":[{"naam":"Proefsessie","duur":"45 minuten","tekst":"Eén sessie met één team. Zonder verplichting, zodat de trainer kan zien wat het is.","prijs":"[bedrag]","uitgelicht":""},{"naam":"Seizoensblok","duur":"tien sessies","tekst":"Wekelijks of om de week. Eén factuur aan de club, of verdeeld over de spelers.","prijs":"[bedrag]","uitgelicht":"ja"},{"naam":"Clubjaar","duur":"vast dagdeel per week","tekst":"Meerdere teams door het seizoen heen. Maandelijkse factuur, voorspelbaar in jullie begroting.","prijs":"[bedrag per maand]","uitgelicht":""}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'cta_titel', 'text', '{"text":"Een keer proberen?"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('sportclubs', 'cta_tekst', 'text', '{"text":"Laat weten om welk team het gaat en op welke avond jullie trainen — dan stuur ik binnen twee werkdagen een voorstel."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
