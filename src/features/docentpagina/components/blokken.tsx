@@ -63,7 +63,7 @@ function KopPortret({ inhoud }: { inhoud: Record<string, unknown> }) {
             {tekst(inhoud, "knop_een") ? (
               <Link
                 href="/lessen"
-                className="inline-flex h-12 items-center rounded-lg bg-green px-7 font-semibold text-cream transition-colors hover:bg-green-dark"
+                className="inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
               >
                 {tekst(inhoud, "knop_een")}
               </Link>
@@ -71,7 +71,7 @@ function KopPortret({ inhoud }: { inhoud: Record<string, unknown> }) {
             {tekst(inhoud, "knop_twee") ? (
               <Link
                 href="/lessen/tarieven"
-                className="inline-flex h-12 items-center rounded-lg border border-green px-7 font-semibold text-green transition-colors hover:bg-cream"
+                className="inline-flex h-12 items-center rounded-lg border border-green px-7 font-semibold text-green transition-colors hover:bg-hover"
               >
                 {tekst(inhoud, "knop_twee")}
               </Link>
@@ -142,7 +142,7 @@ function MijnLessen({
               </p>
               <Link
                 href="/lessen"
-                className="mt-4 inline-flex h-10 items-center rounded-lg bg-green px-4 text-sm font-semibold text-cream transition-colors hover:bg-green-dark"
+                className="mt-4 inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
               >
                 Boeken
               </Link>
@@ -183,7 +183,7 @@ function WatHetKost({
 
         <Link
           href="/lessen/tarieven"
-          className="mt-8 inline-flex h-11 items-center rounded-lg border border-green px-5 font-semibold text-green transition-colors hover:bg-cream"
+          className="mt-8 inline-flex h-11 items-center rounded-lg border border-green px-5 font-semibold text-green transition-colors hover:bg-hover"
         >
           Alle tarieven en voorwaarden
         </Link>
@@ -247,6 +247,56 @@ function Beeldblok({ inhoud }: { inhoud: Record<string, unknown> }) {
           </figcaption>
         ) : null}
       </figure>
+    </Sectie>
+  );
+}
+
+/**
+ * Een reeks foto's naast elkaar.
+ *
+ * Lege plekken vallen weg: kiest een docent een foto en haalt hij hem later uit
+ * zijn beeldbank, dan blijft er een gat achter in plaats van een kapot beeld.
+ * Blijft er niets over, dan verdwijnt het hele blok.
+ */
+function Fotoreeks({ inhoud }: { inhoud: Record<string, unknown> }) {
+  const ruw = Array.isArray(inhoud.fotos)
+    ? (inhoud.fotos as { url?: string; alt?: string }[])
+    : [];
+  const fotos = ruw
+    .filter((foto) => typeof foto?.url === "string" && foto.url.length > 0)
+    .map((foto) => ({ url: foto.url as string, alt: foto.alt ?? "" }));
+
+  if (fotos.length === 0) return null;
+
+  return (
+    <Sectie lijnBoven>
+      {tekst(inhoud, "kop") ? (
+        <h2 className="mb-8 text-3xl">{tekst(inhoud, "kop")}</h2>
+      ) : null}
+
+      <ul
+        className={
+          fotos.length === 2
+            ? "grid gap-4 sm:grid-cols-2"
+            : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        }
+      >
+        {fotos.map((foto, index) => (
+          <li key={`${foto.url}-${index}`}>
+            <Image
+              src={foto.url}
+              alt={foto.alt}
+              width={800}
+              height={600}
+              className="aspect-[4/3] w-full rounded-[var(--radius-card)] border border-line object-cover"
+            />
+          </li>
+        ))}
+      </ul>
+
+      {tekst(inhoud, "bijschrift") ? (
+        <p className="mt-4 text-sm text-muted">{tekst(inhoud, "bijschrift")}</p>
+      ) : null}
     </Sectie>
   );
 }
@@ -408,6 +458,8 @@ export function DocentBlokken({
             return <Tekstblok key={blok.id} inhoud={blok.inhoud} />;
           case "beeld":
             return <Beeldblok key={blok.id} inhoud={blok.inhoud} />;
+          case "fotoreeks":
+            return <Fotoreeks key={blok.id} inhoud={blok.inhoud} />;
           case "citaat":
             return <Citaatblok key={blok.id} inhoud={blok.inhoud} />;
           case "video":

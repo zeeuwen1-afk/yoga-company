@@ -52,7 +52,7 @@ export default async function KaartenPage() {
           </p>
           <Link
             href="/lessen/tarieven"
-            className="mt-6 inline-flex h-11 items-center rounded-lg bg-green px-5 font-semibold text-cream transition-colors hover:bg-green-dark"
+            className="mt-6 inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
           >
             Bekijk de tarieven
           </Link>
@@ -90,7 +90,7 @@ export default async function KaartenPage() {
                 {percentage !== null ? (
                   <div className="mt-3 h-2 overflow-hidden rounded-full bg-line">
                     <div
-                      className="h-full bg-green"
+                      className="h-full bg-accent"
                       style={{ width: `${percentage}%` }}
                     />
                   </div>
@@ -107,7 +107,7 @@ export default async function KaartenPage() {
                   </p>
                 ) : null}
 
-                <div className="mt-4 rounded-lg border border-sage bg-cream px-4 py-3 text-sm">
+                <div className="mt-4 rounded-lg border border-sand bg-cream px-4 py-3 text-sm">
                   <p className="font-semibold">
                     Geldig bij {studio?.naam ?? "de studio"}
                   </p>

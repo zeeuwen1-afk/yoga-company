@@ -131,6 +131,16 @@ values (
   '{"text":"GEHEIM CONCEPT"}'::jsonb
 );
 
+-- Een blok dat van de pagina is gehaald. De rij blijft bestaan — de publieke
+-- site moet weten dát hij verborgen is, anders komt de startinhoud uit de code
+-- ervoor in de plaats — maar de inhoud hoort er niet uit te komen.
+insert into content_blocks (page_key, block_key, kind, value, zichtbaar)
+values (
+  'home', 'banner_tekst', 'text',
+  '{"text":"NOG NIET AANGEKONDIGD"}'::jsonb,
+  false
+);
+
 -- Een CRM-notitie en een auditregel: beide uitsluitend voor admins.
 insert into crm_notes (profile_id, author_id, body)
 values (

@@ -28,7 +28,7 @@ export default async function DocentenLayout({
 
   return (
     <div className="min-h-screen bg-cream">
-      <header className="sticky top-0 z-30 border-b border-line bg-white">
+      <header className="op-donker sticky top-0 z-30 border-b border-line bg-petrol">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
           <div className="flex items-baseline gap-3">
             <Link href="/" className="font-serif text-xl text-green-dark">

@@ -242,6 +242,24 @@ Vrij is wel begrensd. De bloktypen liggen vast in
 verbergt wat hij niet wil; hij kan geen eigen HTML plaatsen, geen scripts en
 geen bloktype verzinnen dat de pagina niet kent.
 
+### Foto's: één, of een reeks
+
+Drie blokken nemen één foto — het portret in de kop, het beeld naast "Over mij"
+en het losse fotoblok over de volle breedte. Daarnaast is er **Fotoreeks**: twee
+tot zes foto's naast elkaar met één bijschrift eronder, voor sfeer uit de
+lessen of de ruimte.
+
+De grens van zes is geen willekeur: meer naast elkaar wordt te klein om iets op
+te zien, en elke foto erbij is een verzoek extra bij het laden van de pagina.
+Wie er meer kwijt wil, zet een tweede reeks neer.
+
+Elke foto draagt zijn eigen omschrijving voor wie hem niet ziet. Die staat per
+foto en niet per blok — een reeks van zes met één omschrijving zegt niets.
+
+Een reeks slaat lege plekken over. Kiest een docent een foto en haalt hij hem
+later uit zijn beeldbank, dan valt die ene weg in plaats van dat er een kapot
+beeld op de pagina staat; blijft er niets over, dan verdwijnt het hele blok.
+
 ### Twee blokken met vaste inhoud
 
 `mijn_lessen` en `wat_het_kost` halen hun inhoud uit de database. De docent mag

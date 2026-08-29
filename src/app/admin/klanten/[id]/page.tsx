@@ -87,7 +87,7 @@ export default async function KlantDetailPage({
           <a
             href={`/api/v1/admin/klant-export/${id}`}
             download
-            className="inline-flex h-11 items-center gap-2 rounded-lg border border-line bg-white px-5 font-semibold text-green-dark transition-colors hover:bg-cream"
+            className="inline-flex h-11 items-center gap-2 rounded-lg border border-line bg-white px-5 font-semibold text-green-dark transition-colors hover:bg-hover"
           >
             <Download className="size-4" aria-hidden />
             Exporteer gegevens
@@ -154,7 +154,7 @@ export default async function KlantDetailPage({
                         className={
                           bericht.vanKlant
                             ? "max-w-[80%] rounded-[var(--radius-card)] border border-line px-4 py-2.5"
-                            : "max-w-[80%] rounded-[var(--radius-card)] bg-green px-4 py-2.5 text-cream"
+                            : "max-w-[80%] rounded-[var(--radius-card)] bg-primary px-4 py-2.5 text-primary-foreground"
                         }
                       >
                         <p className="text-sm whitespace-pre-wrap">

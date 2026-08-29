@@ -10,7 +10,7 @@ import { RichtextEditor } from "@/components/ui/richtext-editor";
 import type { Json } from "@/lib/supabase/types";
 
 import { BeeldKiezer } from "./beeld-kiezer";
-import { bewaarConcept } from "../server/editor-acties";
+import { bewaarConcept, zetZichtbaarheid } from "../server/editor-acties";
 
 /**
  * Eén bewerkbaar blok in de site-editor (BOUWPROMPT §14).
@@ -50,6 +50,8 @@ const VELD_LABEL: Record<string, string> = {
   geldig: "Geldigheid",
   uitgelicht: 'Uitgelicht als "meest gekozen"? (ja of leeg)',
   rail: "In het zijbalkje bij het rooster? (ja of leeg)",
+  knop: "Tekst op de knop",
+  href: "Waar de knop heen gaat, bijvoorbeeld /lessen",
 };
 
 export function BlokBewerker({
@@ -59,6 +61,8 @@ export function BlokBewerker({
   omschrijving,
   gepubliceerd,
   concept,
+  verbergbaar = false,
+  zichtbaarNaPubliceren = true,
 }: {
   pageKey: string;
   blockKey: string;
@@ -66,6 +70,10 @@ export function BlokBewerker({
   omschrijving: string;
   gepubliceerd: Json;
   concept: Json | null;
+  /** Mag dit blok van de pagina worden weggenomen? */
+  verbergbaar?: boolean;
+  /** Staat het blok op de pagina zodra er gepubliceerd wordt? */
+  zichtbaarNaPubliceren?: boolean;
 }) {
   const beginwaarde = alsWaarde(concept ?? gepubliceerd);
   const [waarde, setWaarde] = useState<Waarde>(beginwaarde);
@@ -75,6 +83,26 @@ export function BlokBewerker({
   const router = useRouter();
 
   const gewijzigd = JSON.stringify(waarde) !== JSON.stringify(beginwaarde);
+
+  function wisselZichtbaarheid() {
+    setMelding(null);
+    setFout(null);
+
+    const formData = new FormData();
+    formData.set("page_key", pageKey);
+    formData.set("block_key", blockKey);
+    formData.set("zichtbaar", zichtbaarNaPubliceren ? "nee" : "ja");
+
+    startOvergang(async () => {
+      const uitkomst = await zetZichtbaarheid({ status: "idle" }, formData);
+      if (uitkomst.status === "fout") {
+        setFout(uitkomst.bericht);
+        return;
+      }
+      if (uitkomst.status === "gelukt") setMelding(uitkomst.bericht);
+      router.refresh();
+    });
+  }
 
   function opslaan() {
     setMelding(null);
@@ -104,13 +132,33 @@ export function BlokBewerker({
 
   return (
     <div className="border-b border-line p-5 last:border-0">
-      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <p className="font-semibold">{omschrijving}</p>
-        {concept !== null ? (
-          <span className="rounded-full bg-sand px-3 py-1 text-xs font-semibold text-green-dark">
-            Concept
-          </span>
-        ) : null}
+        <div className="flex flex-wrap items-center gap-2">
+          {!zichtbaarNaPubliceren ? (
+            <span className="rounded-full border border-line px-3 py-1 text-xs font-semibold text-muted">
+              Verborgen
+            </span>
+          ) : null}
+          {concept !== null ? (
+            <span className="rounded-full bg-sand px-3 py-1 text-xs font-semibold text-green-dark">
+              Concept
+            </span>
+          ) : null}
+          {verbergbaar ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={wisselZichtbaarheid}
+              disabled={bezig}
+            >
+              {zichtbaarNaPubliceren
+                ? "Van de pagina halen"
+                : "Terug op de pagina"}
+            </Button>
+          ) : null}
+        </div>
       </div>
 
       {/* Losse regel tekst -------------------------------------------------- */}

@@ -16,7 +16,11 @@
  * bijgehouden rooster loopt binnen een maand achter op de werkelijkheid.
  */
 
-export type VeldSoort = "regel" | "tekst" | "richtext" | "beeld" | "lijst";
+export type VeldSoort =
+  "regel" | "tekst" | "richtext" | "beeld" | "beeldreeks" | "lijst";
+
+/** Meer foto's naast elkaar wordt een rommeltje, en het laden duurt te lang. */
+export const MAX_FOTOS_IN_REEKS = 6;
 
 export type BlokVeld = {
   naam: string;
@@ -155,6 +159,28 @@ export const BLOKTYPEN: Bloktype[] = [
       { naam: "bijschrift", label: "Bijschrift", soort: "regel" },
     ],
     start: { foto: { url: "", alt: "" }, bijschrift: "" },
+  },
+  {
+    type: "fotoreeks",
+    naam: "Fotoreeks",
+    omschrijving:
+      "Twee tot zes foto's naast elkaar, met één bijschrift eronder. Voor sfeer uit je lessen of je ruimte.",
+    vast: false,
+    velden: [
+      { naam: "kop", label: "Kop boven de reeks", soort: "regel" },
+      {
+        naam: "fotos",
+        label: "De foto's",
+        soort: "beeldreeks",
+        hulp: "Maximaal zes. Ze staan naast elkaar op een groot scherm en onder elkaar op een telefoon.",
+      },
+      { naam: "bijschrift", label: "Bijschrift", soort: "regel" },
+    ],
+    start: {
+      kop: "Uit mijn lessen",
+      fotos: [],
+      bijschrift: "",
+    },
   },
   {
     type: "citaat",

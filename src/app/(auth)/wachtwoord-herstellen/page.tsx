@@ -25,7 +25,7 @@ export default async function WachtwoordHerstellenPage() {
           </FormMessage>
           <Link
             href="/wachtwoord-vergeten"
-            className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-green font-semibold text-cream transition-colors hover:bg-green-dark"
+            className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-primary font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
           >
             Nieuwe link aanvragen
           </Link>

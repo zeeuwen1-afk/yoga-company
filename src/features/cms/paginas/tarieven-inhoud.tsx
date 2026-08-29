@@ -35,8 +35,8 @@ function AanvraagKnop({
         "inline-flex h-10 items-center justify-center rounded-lg px-4 text-sm font-semibold transition-colors",
         breed ? "w-full" : "",
         nadruk
-          ? "bg-green text-cream hover:bg-green-dark"
-          : "border border-green text-green hover:bg-cream",
+          ? "bg-primary text-primary-foreground hover:bg-accent-light"
+          : "border border-green text-green hover:bg-hover",
       ].join(" ")}
     >
       Aanvragen
@@ -104,13 +104,13 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
                   <tr
                     key={index}
                     className={`border-b border-line last:border-0 ${
-                      nadruk ? "bg-cream/60" : ""
+                      nadruk ? "bg-hover" : ""
                     }`}
                   >
                     <th scope="row" className="px-5 py-4 font-normal">
                       <span className="font-semibold">{tarief.naam}</span>
                       {nadruk ? (
-                        <span className="ml-2 rounded-full bg-green px-2 py-0.5 text-[0.7rem] font-semibold tracking-wide text-cream uppercase">
+                        <span className="ml-2 rounded-full bg-primary px-2 py-0.5 text-[0.7rem] font-semibold tracking-wide text-primary-foreground uppercase">
                           Meest gekozen
                         </span>
                       ) : null}
@@ -155,7 +155,7 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
               <li
                 key={index}
                 className={`rounded-[var(--radius-card)] border p-5 ${
-                  nadruk ? "border-green bg-cream/60" : "border-line"
+                  nadruk ? "border-accent bg-hover" : "border-line"
                 }`}
               >
                 {nadruk ? (
@@ -241,7 +241,7 @@ export function TarievenRail({ pagina }: { pagina: Pagina }) {
 
       <Link
         href="/lessen/tarieven"
-        className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-lg bg-green px-4 font-semibold text-cream transition-colors hover:bg-green-dark"
+        className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-lg bg-primary px-4 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
       >
         Kaart kopen
       </Link>

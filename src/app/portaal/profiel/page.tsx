@@ -111,7 +111,7 @@ export default async function ProfielPage() {
             <a
               href="/api/v1/mijn-gegevens"
               download
-              className="mt-3 inline-flex h-11 items-center gap-2 rounded-lg border border-line px-5 font-semibold text-green-dark transition-colors hover:bg-cream"
+              className="mt-3 inline-flex h-11 items-center gap-2 rounded-lg border border-line px-5 font-semibold text-green-dark transition-colors hover:bg-hover"
             >
               <Download className="size-4" aria-hidden />
               Download mijn gegevens

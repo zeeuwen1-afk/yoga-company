@@ -9,7 +9,7 @@ describe("Button", () => {
 
     const button = screen.getByRole("button", { name: "Inschrijven" });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass("bg-green");
+    expect(button).toHaveClass("bg-primary");
   });
 
   it("houdt een tap-target van minimaal 44px aan", () => {

@@ -43,7 +43,7 @@ export function SiteHeader() {
               volledige variant staat in de paginavoet. Het beeld draagt geen
               tekst voor schermlezers, vandaar de aria-label op de link. */}
           <Image
-            src="/brand/logo-compact.png"
+            src="/brand/logo-compact-donker.png"
             alt=""
             width={900}
             height={248}
@@ -77,7 +77,7 @@ export function SiteHeader() {
                       <li key={onder.href}>
                         <Link
                           href={onder.href}
-                          className="block px-4 py-2 text-[0.925rem] text-ink transition-colors hover:bg-cream hover:text-green"
+                          className="block px-4 py-2 text-[0.925rem] text-ink transition-colors hover:bg-hover hover:text-green"
                         >
                           {onder.label}
                         </Link>
@@ -101,13 +101,13 @@ export function SiteHeader() {
               die roept. Voor de docent die hem zoekt is hij wel aanwezig. */}
           <Link
             href="/voor-yogadocenten"
-            className="inline-flex h-10 items-center rounded-lg border border-green px-3.5 text-sm font-semibold text-green transition-colors hover:bg-cream"
+            className="inline-flex h-10 items-center rounded-lg border border-green px-3.5 text-sm font-semibold text-green transition-colors hover:bg-hover"
           >
             Voor yogadocenten
           </Link>
           <Link
             href="/inloggen"
-            className="inline-flex h-10 items-center rounded-lg bg-green px-4 text-sm font-semibold text-cream transition-colors hover:bg-green-dark"
+            className="inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
           >
             Inloggen
           </Link>
@@ -164,7 +164,7 @@ export function SiteHeader() {
           <Link
             href="/inloggen"
             onClick={() => setOpen(false)}
-            className="mt-2 mb-3 inline-flex h-11 items-center justify-center rounded-lg bg-green font-semibold text-cream"
+            className="mt-2 mb-3 inline-flex h-11 items-center justify-center rounded-lg bg-primary font-semibold text-primary-foreground"
           >
             Inloggen
           </Link>

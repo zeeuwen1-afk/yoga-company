@@ -29,7 +29,7 @@ export function Voortgangsbalk({
         className="mt-2 h-2 overflow-hidden rounded-full bg-sand"
       >
         <div
-          className="h-full rounded-full bg-green transition-[width] duration-500"
+          className="h-full rounded-full bg-accent transition-[width] duration-500"
           style={{ width: `${percentage}%` }}
         />
       </div>

@@ -46,13 +46,13 @@ export default async function AanbodBewerkenPage({
           <div className="flex gap-3">
             <Link
               href={`${publiekPad}/${cursus.slug}`}
-              className="inline-flex h-11 items-center rounded-lg border border-line px-5 font-semibold text-green-dark transition-colors hover:bg-white"
+              className="inline-flex h-11 items-center rounded-lg border border-line px-5 font-semibold text-green-dark transition-colors hover:bg-hover"
             >
               Bekijk op de site
             </Link>
             <Link
               href={`/admin/aanbod/${cursus.slug}/content`}
-              className="inline-flex h-11 items-center rounded-lg bg-green px-5 font-semibold text-cream transition-colors hover:bg-green-dark"
+              className="inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
             >
               Lesmateriaal
             </Link>

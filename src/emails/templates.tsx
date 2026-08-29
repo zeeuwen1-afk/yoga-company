@@ -202,7 +202,7 @@ export function MailingMail({
       <Scheiding />
       <Alinea gedempt>
         Je ontvangt deze mail omdat je daar toestemming voor gaf.{" "}
-        <a href={afmeldUrl} style={{ color: "#6E6A5C" }}>
+        <a href={afmeldUrl} style={{ color: "#4E6970" }}>
           Afmelden
         </a>{" "}
         kan met één klik.

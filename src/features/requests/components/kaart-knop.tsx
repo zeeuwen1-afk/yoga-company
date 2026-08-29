@@ -26,13 +26,13 @@ export function KaartKnop({ index }: { index: number }) {
         <div className="flex flex-wrap gap-3">
           <Link
             href="/portaal/aanvragen"
-            className="inline-flex h-11 items-center rounded-lg bg-green px-5 font-semibold text-cream transition-colors hover:bg-green-dark"
+            className="inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
           >
             Naar mijn aanvragen
           </Link>
           <Link
             href="/lessen"
-            className="inline-flex h-11 items-center rounded-lg border border-green px-5 font-semibold text-green transition-colors hover:bg-cream"
+            className="inline-flex h-11 items-center rounded-lg border border-green px-5 font-semibold text-green transition-colors hover:bg-hover"
           >
             Terug naar het rooster
           </Link>

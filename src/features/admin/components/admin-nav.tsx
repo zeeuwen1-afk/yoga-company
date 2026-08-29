@@ -41,7 +41,7 @@ export function AdminNav() {
                       "flex min-h-11 items-center gap-3 rounded-lg px-3 text-[0.95rem] transition-colors",
                       actief
                         ? "bg-white font-semibold text-green-dark"
-                        : "text-ink hover:bg-white/60",
+                        : "text-ink hover:bg-hover",
                     )}
                   >
                     <Icoon className="size-5 shrink-0 text-muted" aria-hidden />

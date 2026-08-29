@@ -11,7 +11,7 @@ export function PortaalTopbalk({
   isAdmin: boolean;
 }) {
   return (
-    <header className="sticky top-0 z-30 border-b border-line bg-white">
+    <header className="op-donker sticky top-0 z-30 border-b border-line bg-petrol">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link
           href="/portaal"
@@ -30,7 +30,7 @@ export function PortaalTopbalk({
           {isAdmin ? (
             <Link
               href="/admin"
-              className="inline-flex h-9 items-center rounded-lg border border-line px-3 text-sm font-semibold text-green-dark transition-colors hover:bg-sand-light"
+              className="inline-flex h-9 items-center rounded-lg border border-line px-3 text-sm font-semibold text-green-dark transition-colors hover:bg-hover"
             >
               Beheer
             </Link>

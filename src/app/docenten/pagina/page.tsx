@@ -55,7 +55,7 @@ export default async function MijnPaginaPage() {
             </p>
             <Link
               href="/contact"
-              className="mt-4 inline-flex h-11 items-center rounded-lg bg-green px-5 font-semibold text-cream transition-colors hover:bg-green-dark"
+              className="mt-4 inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
             >
               Neem contact op
             </Link>
@@ -93,7 +93,7 @@ export default async function MijnPaginaPage() {
 
         <Link
           href="/docenten/pagina/voorbeeld"
-          className="inline-flex h-11 items-center rounded-lg border border-green px-5 font-semibold text-green transition-colors hover:bg-cream"
+          className="inline-flex h-11 items-center rounded-lg border border-green px-5 font-semibold text-green transition-colors hover:bg-hover"
         >
           Voorvertoning
         </Link>

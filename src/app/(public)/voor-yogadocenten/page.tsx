@@ -34,13 +34,13 @@ export default async function VoorYogadocentenPage() {
           <div className="mt-10 flex flex-wrap gap-3">
             <Link
               href="/docenten"
-              className="inline-flex h-12 items-center rounded-lg bg-green px-7 font-semibold text-cream transition-colors hover:bg-green-dark"
+              className="inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
             >
               Naar de docentenportal
             </Link>
             <Link
               href="/contact"
-              className="inline-flex h-12 items-center rounded-lg border border-green px-7 font-semibold text-green transition-colors hover:bg-cream"
+              className="inline-flex h-12 items-center rounded-lg border border-green px-7 font-semibold text-green transition-colors hover:bg-hover"
             >
               Vraag een aansluiting aan
             </Link>

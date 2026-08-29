@@ -64,7 +64,7 @@ export function DocumentViewer({
       <a
         href={bron}
         download
-        className="inline-flex h-11 items-center gap-2 rounded-lg bg-green px-5 font-semibold text-cream transition-colors hover:bg-green-dark"
+        className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
       >
         <Download className="size-5" aria-hidden />
         Download {titel}

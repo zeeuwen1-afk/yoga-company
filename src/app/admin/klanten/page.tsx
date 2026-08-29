@@ -100,7 +100,7 @@ export default async function KlantenPage({
 
         <button
           type="submit"
-          className="h-11 rounded-lg bg-green px-5 font-semibold text-cream transition-colors hover:bg-green-dark"
+          className="h-11 rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
         >
           Filteren
         </button>
@@ -134,7 +134,7 @@ export default async function KlantenPage({
                 {klanten.map((klant) => (
                   <tr
                     key={klant.id}
-                    className="transition-colors hover:bg-cream"
+                    className="transition-colors hover:bg-hover"
                   >
                     <td className="px-5 py-3">
                       <Link

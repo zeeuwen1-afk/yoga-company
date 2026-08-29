@@ -39,7 +39,7 @@ export default async function SiteEditorPage() {
             <li key={pagina.pageKey}>
               <Link
                 href={`/admin/site-editor/${pagina.pageKey}`}
-                className="flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-cream"
+                className="flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-hover"
               >
                 <span className="min-w-0">
                   <span className="block font-semibold">{pagina.titel}</span>

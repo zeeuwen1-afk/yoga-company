@@ -889,49 +889,109 @@ on conflict (id) do update set
 -- iemand in de site-editor een concept maakt (BOUWPROMPT §14).
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'hero_titel', 'text', '{"text":"YogaCompany — opleidingsinstituut voor yoga"}'::jsonb)
+values ('home', 'banner_tekst', 'text', '{"text":""}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'hero_subtitel', 'text', '{"text":"Opleidingen, trainingen en yogalessen. Deskundig en betrouwbaar, warm en persoonlijk."}'::jsonb)
+values ('home', 'banner_knop', 'text', '{"text":""}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'hero_knop', 'text', '{"text":"Bekijk de opleidingen"}'::jsonb)
+values ('home', 'banner_link', 'text', '{"text":""}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'hero_beeld', 'image', '{"url":"/beeld/hero-vloer.jpg","alt":"Zonlicht valt door een raam op een houten vloer"}'::jsonb)
+values ('home', 'banner_kleur', 'text', '{"text":"zand"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'zakelijk_titel', 'text', '{"text":"Voor je vak"}'::jsonb)
+values ('home', 'hero_bovenkop', 'text', '{"text":"Opleidingen · trainingen · lessen"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'zakelijk_tekst', 'richtext', '{"html":"<p>Specialiseren in een vorm die je aanvult in plaats van uitput. Onze opleidingen zijn praktijkgericht en erkend met een certificaat per module, zodat je stap voor stap kunt bouwen.</p><p>Ook voor werkgevers die willen investeren in duurzame inzetbaarheid van hun mensen.</p>"}'::jsonb)
+values ('home', 'hero_titel', 'text', '{"text":"Van je eerste les tot je eigen lespraktijk."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'persoonlijk_titel', 'text', '{"text":"Voor jezelf"}'::jsonb)
+values ('home', 'hero_subtitel', 'text', '{"text":"Wekelijkse yogalessen in kleine groepen in Almere, korte trainingen om je te verdiepen, en de 200-uurs Yin Yoga Specialist Opleiding."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'persoonlijk_tekst', 'richtext', '{"html":"<p>Soms is het je eigen lichaam dat om aandacht vraagt. Herstel na een periode van te veel, terugvinden van balans, of gewoon verdieping omdat je nieuwsgierig bent.</p><p>Je hoeft geen doel te hebben om te beginnen.</p>"}'::jsonb)
+values ('home', 'hero_knop', 'text', '{"text":"Bekijk het lesrooster"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'hero_knop_twee', 'text', '{"text":"Ontdek de opleidingen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'hero_kenmerken', 'text', '{"text":"Kleine groepen · Certificaat per module · Annuleren tot 24 uur vooraf"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'hero_achtergrond', 'image', '{"url":"/beeld/hero-yoga.jpg","alt":"Een vrouw in een voorwaartse buiging over een bolster, op een mat in laag ochtendlicht"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'deuren_titel', 'text', '{"text":"Waar wil je beginnen?"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'deuren_inleiding', 'text', '{"text":"Drie manieren om met ons te werken — elk met een eigen tempo, en een eigen prijs."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'deuren', 'richtext', '{"items":[{"label":"Yogalessen","titel":"Elke week op de mat","tekst":"Yin, Vinyasa en Restorative in de studio in Almere. Kleine groepen, dus je wordt gezien.","prijs":"Losse les € 17,00 · 10-strippenkaart € 145,00","knop":"Bekijk het rooster en boek","href":"/lessen"},{"label":"Trainingen","titel":"Verdiep je in één onderwerp","tekst":"Kortere programma''s, online of in de studio. Zoals het 8-weekse herstelprogramma Eerst Jij.","prijs":"Vanaf € 295,00","knop":"Bekijk de trainingen","href":"/trainingen"},{"label":"Opleidingen","titel":"Leer het vak","tekst":"De 200-uurs Yin Yoga Specialist Opleiding in vier modules van 50 uur. Ook los te volgen.","prijs":"€ 795,00 per module · € 2.795,00 in één keer","knop":"Bekijk de opleidingen","href":"/opleidingen"}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'rooster_titel', 'text', '{"text":"De eerstvolgende lessen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'rooster_inleiding', 'text', '{"text":"Reserveer je plek vooraf. Met een account kost dat één klik en gaat er een strip van je kaart af."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'kaarten_titel', 'text', '{"text":"Nog geen kaart?"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'kaarten_inleiding', 'text', '{"text":"Je kaart staat meteen in je eigen omgeving en je saldo loopt vanzelf mee."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -949,7 +1009,37 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'aanbod_titel', 'text', '{"text":"Opleidingen en trainingen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'aanbod_inleiding', 'text', '{"text":"De volledige opleiding, één losse module, of een korte training. Je schrijft je online in."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('home', 'testimonials', 'richtext', '{"items":[{"citaat":"Voor het eerst een opleiding waar het tempo klopte met wat ik aankon.","naam":"Deelnemer — naam volgt","rol":"Yin Yoga niveau 1 en 2"},{"citaat":"De kleine groep maakte het verschil. Er was echt tijd voor mijn vragen.","naam":"Deelnemer — naam volgt","rol":"200-uurs Yin Yoga Specialist"},{"citaat":"Ik kwam binnen als deelnemer en ging weg met een manier van kijken.","naam":"Deelnemer — naam volgt","rol":"Eerst Jij"}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'inlog_titel', 'text', '{"text":"Al bij ons bekend?"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'inlog_inleiding', 'text', '{"text":"Twee deuren, allebei achter dezelfde inlog. Je komt vanzelf in de juiste omgeving terecht."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'inlog_deuren', 'richtext', '{"items":[{"label":"Voor leden","titel":"Mijn omgeving","tekst":"Je lessen, je strippenkaarten met saldo, je opleidingen en het lesmateriaal. En je eigen gegevens, die je kunt inzien en laten wissen.","knop":"Inloggen als lid","href":"/inloggen?vervolg=/portaal"},{"label":"Voor docenten","titel":"Docentenportal","tekst":"Kaarten uitgeven, afboekingen zien, de maand afsluiten met een factuur, en je eigen pagina inrichten.","knop":"Inloggen als docent","href":"/inloggen?vervolg=/docenten"}]}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1213,7 +1303,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('veiligheid', 'sectie_5_antwoord', 'richtext', '{"html":"\n<p>Omdat er niets online gaat voordat een reeks controles automatisch is doorlopen. Die controles kijken niet of de site er mooi uitziet, maar of hij zich gedraagt:</p>\n<ul>\n<li><strong>84 controles op losse onderdelen</strong> — rekent de prijs goed, wordt een te late annulering geweigerd.</li>\n<li><strong>269 controles die juist proberen wat niet mag:</strong> klant A die het dossier van klant B opvraagt, iemand die zichzelf beheerder maakt, betaalde content bekijken zonder betaling, een concepttekst die uitlekt voordat hij gepubliceerd is. Elk van die pogingen hóórt te mislukken, en de controle valt om zodra er ééntje slaagt.</li>\n<li><strong>212 controles die de site in twee echte browsers doorlopen</strong> — op een laptop en op een telefoon — van begin tot eind: inschrijven, inloggen, boeken, annuleren.</li>\n</ul>\n<p>Samen zijn dat ruim vierhonderd controles, en ze draaien bij elke wijziging opnieuw. Springt er één op rood, dan gaat de wijziging niet door. Niet \"we kijken er nog naar\" — hij komt er eenvoudigweg niet in.</p>\n"}'::jsonb)
+values ('veiligheid', 'sectie_5_antwoord', 'richtext', '{"html":"\n<p>Omdat er niets online gaat voordat een reeks controles automatisch is doorlopen. Die controles kijken niet of de site er mooi uitziet, maar of hij zich gedraagt:</p>\n<ul>\n<li><strong>84 controles op losse onderdelen</strong> — rekent de prijs goed, wordt een te late annulering geweigerd.</li>\n<li><strong>271 controles die juist proberen wat niet mag:</strong> klant A die het dossier van klant B opvraagt, iemand die zichzelf beheerder maakt, betaalde content bekijken zonder betaling, een concepttekst die uitlekt voordat hij gepubliceerd is. Elk van die pogingen hóórt te mislukken, en de controle valt om zodra er ééntje slaagt.</li>\n<li><strong>212 controles die de site in twee echte browsers doorlopen</strong> — op een laptop en op een telefoon — van begin tot eind: inschrijven, inloggen, boeken, annuleren.</li>\n</ul>\n<p>Samen zijn dat ruim vierhonderd controles, en ze draaien bij elke wijziging opnieuw. Springt er één op rood, dan gaat de wijziging niet door. Niet \"we kijken er nog naar\" — hij komt er eenvoudigweg niet in.</p>\n"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

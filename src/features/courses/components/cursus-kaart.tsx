@@ -23,7 +23,7 @@ export function CursusKaart({
     <Card
       className={
         kortingCenten
-          ? "flex flex-col border-green/50 bg-sand-light/40 transition-colors hover:border-green"
+          ? "flex flex-col border-accent/60 bg-hover transition-colors hover:border-accent"
           : "flex flex-col transition-colors hover:border-green/40"
       }
     >

@@ -130,6 +130,87 @@ export async function bewaarConcept(
   return { status: "gelukt", bericht: "Concept opgeslagen." };
 }
 
+const zichtbaarheidSchema = z.object({
+  page_key: z.string().min(1),
+  block_key: z.string().min(1),
+  zichtbaar: z.enum(["ja", "nee"]),
+});
+
+/**
+ * Zet een blok aan of uit op de pagina.
+ *
+ * Gaat naar `draft_zichtbaar` en niet meteen naar `zichtbaar`: de schakelaar
+ * hoort bij dezelfde publiceerknop als de teksten ernaast. Zou één klik direct
+ * op de site staan, dan verdwijnt een sectie terwijl de bijbehorende
+ * tekstwijziging nog als concept wacht.
+ *
+ * Alleen blokken die in de code als `verbergbaar` staan aangemerkt mogen weg.
+ * Een kop of een prijs verbergen laat een half scherm achter; dat hoort geen
+ * keuze te zijn die per ongeluk gemaakt kan worden.
+ */
+export async function zetZichtbaarheid(
+  _vorige: EditorResultaat,
+  formData: FormData,
+): Promise<EditorResultaat> {
+  const context = await vereisAdmin();
+  if (!context) return GEEN_RECHTEN;
+
+  const parsed = zichtbaarheidSchema.safeParse(
+    Object.fromEntries(formData.entries()),
+  );
+  if (!parsed.success) {
+    return { status: "fout", bericht: "Controleer de invoer." };
+  }
+
+  const definitie = kentBlok(parsed.data.page_key, parsed.data.block_key);
+  if (!definitie) return { status: "fout", bericht: "Dit blok bestaat niet." };
+
+  if (definitie.verbergbaar !== true) {
+    return {
+      status: "fout",
+      bericht: "Dit blok hoort bij de indeling van de pagina en kan niet weg.",
+    };
+  }
+
+  const { supabase, adminId } = context;
+  const wordtZichtbaar = parsed.data.zichtbaar === "ja";
+
+  const { data: bestaand } = await supabase
+    .from("content_blocks")
+    .select("zichtbaar")
+    .eq("page_key", parsed.data.page_key)
+    .eq("block_key", parsed.data.block_key)
+    .maybeSingle();
+
+  const nuZichtbaar = bestaand?.zichtbaar ?? true;
+
+  const { error } = await supabase.from("content_blocks").upsert(
+    {
+      page_key: parsed.data.page_key,
+      block_key: parsed.data.block_key,
+      kind: definitie.kind,
+      value: definitie.value as unknown as Json,
+      // Terug naar de stand die al online staat is geen wijziging meer; dan
+      // hoort het blok ook niet als concept te blijven tellen.
+      draft_zichtbaar: wordtZichtbaar === nuZichtbaar ? null : wordtZichtbaar,
+      updated_by: adminId,
+    },
+    { onConflict: "page_key,block_key", ignoreDuplicates: false },
+  );
+
+  if (error) {
+    return { status: "fout", bericht: "De schakelaar kon niet worden gezet." };
+  }
+
+  revalidatePath(`/admin/site-editor/${parsed.data.page_key}`);
+  return {
+    status: "gelukt",
+    bericht: wordtZichtbaar
+      ? "Dit blok staat weer op de pagina zodra je publiceert."
+      : "Dit blok verdwijnt van de pagina zodra je publiceert.",
+  };
+}
+
 /** Publiceert alle concepten van één pagina (BOUWPROMPT §14). */
 export async function publiceerPagina(pageKey: string) {
   const context = await vereisAdmin();
@@ -139,9 +220,9 @@ export async function publiceerPagina(pageKey: string) {
 
   const { data: concepten } = await supabase
     .from("content_blocks")
-    .select("block_key, draft_value")
+    .select("block_key, draft_value, value, draft_zichtbaar, zichtbaar")
     .eq("page_key", pageKey)
-    .not("draft_value", "is", null);
+    .or("draft_value.not.is.null,draft_zichtbaar.not.is.null");
 
   if (!concepten || concepten.length === 0) {
     return {
@@ -150,13 +231,17 @@ export async function publiceerPagina(pageKey: string) {
     };
   }
 
-  // Per blok: concept naar gepubliceerd, en het concept opruimen.
+  // Per blok: concept naar gepubliceerd, en het concept opruimen. Dat geldt
+  // voor de inhoud én voor de schakelaar — een blok kan alleen verborgen zijn,
+  // alleen gewijzigd, of allebei.
   for (const concept of concepten) {
     const { error } = await supabase
       .from("content_blocks")
       .update({
-        value: concept.draft_value as Json,
+        value: (concept.draft_value ?? concept.value) as Json,
         draft_value: null,
+        zichtbaar: concept.draft_zichtbaar ?? concept.zichtbaar,
+        draft_zichtbaar: null,
         updated_by: adminId,
       })
       .eq("page_key", pageKey)
@@ -200,9 +285,9 @@ export async function herstelPagina(pageKey: string) {
 
   const { error } = await supabase
     .from("content_blocks")
-    .update({ draft_value: null })
+    .update({ draft_value: null, draft_zichtbaar: null })
     .eq("page_key", pageKey)
-    .not("draft_value", "is", null);
+    .or("draft_value.not.is.null,draft_zichtbaar.not.is.null");
 
   if (error) {
     return {

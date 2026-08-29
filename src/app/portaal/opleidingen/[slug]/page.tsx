@@ -87,7 +87,7 @@ export default async function OpleidingOverzichtPage({
               {volgende ? (
                 <Link
                   href={`/portaal/opleidingen/${materiaal.cursusSlug}/${volgende.id}`}
-                  className="mt-5 inline-flex h-11 items-center rounded-lg bg-green px-5 font-semibold text-cream transition-colors hover:bg-green-dark"
+                  className="mt-5 inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
                 >
                   {afgerond === 0
                     ? "Beginnen"
@@ -115,7 +115,7 @@ export default async function OpleidingOverzichtPage({
                         <li key={item.id}>
                           <Link
                             href={`/portaal/opleidingen/${materiaal.cursusSlug}/${item.id}`}
-                            className="flex min-h-14 items-center gap-4 px-5 py-3 transition-colors hover:bg-cream"
+                            className="flex min-h-14 items-center gap-4 px-5 py-3 transition-colors hover:bg-hover"
                           >
                             <span
                               className={cn(

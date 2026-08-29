@@ -67,7 +67,7 @@ export function WachtwoordHerstellenFormulier() {
         <FormMessage variant="gelukt">{resultaat.bericht}</FormMessage>
         <Link
           href="/portaal"
-          className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-green font-semibold text-cream transition-colors hover:bg-green-dark"
+          className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-primary font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
         >
           Naar mijn omgeving
         </Link>

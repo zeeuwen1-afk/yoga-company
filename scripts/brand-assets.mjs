@@ -30,16 +30,16 @@ const BRON_SALIE = [0xa9, 0xbc, 0xa1];
 const BRON_ONDERTITEL = [0x77, 0x84, 0x72];
 
 /**
- * De kleuren van de huidige huisstijl, palet "Helder water". Het logo is
+ * De kleuren van de huidige huisstijl, palet "Petrol en abrikoos". Het logo is
  * getekend in het oorspronkelijke nachtgroen; hier wordt het omgezet naar de
  * merkkleuren die ook in `globals.css` staan. Wijzigt de huisstijl, dan
  * veranderen deze drie waarden mee en levert `pnpm brand:assets` het merk
  * opnieuw in de juiste tinten.
  */
-const MERK_GROEN = [0x1f, 0x55, 0x51];
-const MERK_SALIE = [0xa0, 0xcb, 0xc4];
-const MERK_ONDERTITEL = [0x6f, 0x99, 0x93];
-const PAPER = [0xf6, 0xfa, 0xf9];
+const MERK_GROEN = [0x1f, 0x4d, 0x58];
+const MERK_SALIE = [0xde, 0xcc, 0xaa];
+const MERK_ONDERTITEL = [0x4e, 0x69, 0x70];
+const PAPER = [0xfc, 0xfa, 0xf6];
 
 // ---------------------------------------------------------------------------
 // De bitmap uit de PDF halen

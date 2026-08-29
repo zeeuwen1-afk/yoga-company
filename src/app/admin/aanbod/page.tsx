@@ -32,7 +32,7 @@ export default async function AanbodPage() {
         actie={
           <Link
             href="/admin/aanbod/nieuw"
-            className="inline-flex h-11 items-center gap-2 rounded-lg bg-green px-5 font-semibold text-cream transition-colors hover:bg-green-dark"
+            className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
           >
             <Plus className="size-4" aria-hidden />
             Nieuw aanbod

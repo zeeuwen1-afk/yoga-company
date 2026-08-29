@@ -17,12 +17,12 @@ export default function OpenGraphImage() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        backgroundColor: "#F6FAF9",
+        backgroundColor: "#1F4D58",
         padding: "80px",
         fontFamily: "serif",
       }}
     >
-      <div style={{ display: "flex", fontSize: 34, color: "#566E6A" }}>
+      <div style={{ display: "flex", fontSize: 34, color: "#B4C7CC" }}>
         YogaCompany
       </div>
 
@@ -37,13 +37,13 @@ export default function OpenGraphImage() {
           style={{
             fontSize: 82,
             lineHeight: 1.1,
-            color: "#163F3C",
+            color: "#FCFAF6",
             maxWidth: "900px",
           }}
         >
           Opleidingsinstituut voor yoga
         </div>
-        <div style={{ fontSize: 36, color: "#566E6A" }}>
+        <div style={{ fontSize: 36, color: "#B4C7CC" }}>
           Opleidingen, trainingen en yogalessen
         </div>
       </div>
@@ -53,7 +53,7 @@ export default function OpenGraphImage() {
           display: "flex",
           height: "10px",
           width: "220px",
-          backgroundColor: "#1F5551",
+          backgroundColor: "#EA976E",
         }}
       />
     </div>,

@@ -192,6 +192,10 @@ export type ContentBlock = {
   kind: BlockKind;
   value: Json;
   draft_value: Json | null;
+  /** Staat dit blok online? Verbergen laat de inhoud staan. */
+  zichtbaar: boolean;
+  /** De schakelaar in concept; leeg betekent: geen wijziging. */
+  draft_zichtbaar: boolean | null;
   updated_by: string | null;
   updated_at: string;
 };
@@ -200,7 +204,9 @@ export type ContentBlockPublic = {
   page_key: string;
   block_key: string;
   kind: BlockKind;
-  value: Json;
+  /** Leeg bij een verborgen blok: die inhoud verlaat de database niet. */
+  value: Json | null;
+  zichtbaar: boolean;
   updated_at: string;
 };
 

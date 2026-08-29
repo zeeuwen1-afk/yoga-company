@@ -54,7 +54,7 @@ export default async function VoorbeeldPage() {
           </p>
           <Link
             href="/docenten/pagina"
-            className="inline-flex h-9 items-center rounded-lg border border-green px-4 text-sm font-semibold text-green transition-colors hover:bg-cream"
+            className="inline-flex h-9 items-center rounded-lg border border-green px-4 text-sm font-semibold text-green transition-colors hover:bg-hover"
           >
             Terug naar bewerken
           </Link>
