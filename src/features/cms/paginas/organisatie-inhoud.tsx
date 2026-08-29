@@ -160,9 +160,23 @@ export function OrganisatieInhoud({
               </li>
             ))}
           </ul>
-          <p className="mt-8 text-sm text-muted">
-            Alle bedragen exclusief btw. Betaling per factuur.
-          </p>
+          {pagina.tekst("vormen_voetnoot") ? (
+            <p className="mt-8 max-w-3xl text-sm text-muted">
+              {pagina.tekst("vormen_voetnoot")}
+            </p>
+          ) : null}
+
+          {/* Het fiscale kader. Staat bewust ná de prijzen: wie de bedragen
+              nog niet heeft gezien, heeft er niets aan. */}
+          {pagina.html("fiscaal") ? (
+            <div className="mt-10 max-w-3xl rounded-[var(--radius-card)] border border-line bg-background p-6">
+              <p className="mb-3 label-klein">Wat dit fiscaal betekent</p>
+              <Richtext
+                html={pagina.html("fiscaal")}
+                className="text-[0.975rem] text-muted"
+              />
+            </div>
+          ) : null}
         </Sectie>
       ) : null}
 

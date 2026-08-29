@@ -341,6 +341,26 @@ er een lege kop blijft staan. De aanvraag onderaan komt binnen bij
 **Beheer → Contactberichten**, samen met de andere berichten van mensen zonder
 account.
 
+### De tarieven op die pagina's
+
+De bedragen komen uit **Prijsopbouw voor organisaties, versie 1.0 (29 augustus 2026)**. Drie dingen zitten er bewust in en horen zo te blijven:
+
+- **Bedrijven zien alleen de prijs exclusief btw**, want die kunnen ze
+  terugvragen. **Scholen en clubs zien beide bedragen**, want die kunnen dat
+  niet — voor hen is de btw een echte kostenpost van 21%.
+- **De prijs hangt aan het bezoek, niet aan de les.** Drie klassen op één
+  ochtend is per les veel voordeliger dan één losse les. Verander je één van
+  de twee, verander dan ook de tekst erboven.
+- **Onder € 145 per sessie ga je niet.** Dat is de kostprijs van een sessie in
+  een reeks, inclusief reistijd en voorbereiding. De enige bedragen die daar
+  onder liggen zijn de dagdeelprijzen per les (€ 125 en € 115) — die mogen dat,
+  omdat je in dat dagdeel drie of vijf lessen geeft voor één keer reizen.
+
+Het blok **Wat dit fiscaal betekent** op de bedrijvenpagina is nagelopen tekst
+over de werkkostenregeling. Wijzig die niet zonder je adviseur, en zet er in
+geen geval "arbovoorziening" in: die vrijstelling geldt sinds 2022 niet meer
+voor dit soort voorzieningen, en veel concurrenten schrijven dat nog wel.
+
 ### Lijsten uitbreiden
 
 Bij een blok dat uit meerdere onderdelen bestaat — de docenten op "Over ons",

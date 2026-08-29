@@ -626,7 +626,7 @@ export const BLOKKEN: BlokSeed[] = [
           titel: "Yoga op de werkvloer",
           tekst:
             "Een vast moment in de week, een workshop op een teamdag, of een programma rond werkdruk en herstel.",
-          prijs: "Vanaf [prijs per dagdeel]",
+          prijs: "Reeks vanaf € 155 per sessie, excl. btw",
           knop: "Bekijk bedrijfsyoga",
           href: "/bedrijfsyoga",
         },
@@ -635,7 +635,7 @@ export const BLOKKEN: BlokSeed[] = [
           titel: "De dag na de wedstrijd",
           tekst:
             "Mobiliteit, herstel en ademhaling voor teams en individuele sporters. In de kantine of op het veld, na de training.",
-          prijs: "Vanaf [prijs per sessie]",
+          prijs: "Blok vanaf € 145 per sessie, excl. btw",
           knop: "Bekijk yoga bij je club",
           href: "/sportclubs",
         },
@@ -644,7 +644,7 @@ export const BLOKKEN: BlokSeed[] = [
           titel: "Een lesuur waarin het stil wordt",
           tekst:
             "Voortgezet onderwijs, mbo, hbo en universiteit. In het mentoruur, vóór de examenweek, of voor het team dat er de hele week staat.",
-          prijs: "Vanaf [prijs per dagdeel]",
+          prijs: "Dagdeel van drie lessen € 375, excl. btw",
           knop: "Bekijk yoga in het onderwijs",
           href: "/onderwijs",
         },
@@ -765,25 +765,52 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       items: [
         {
-          naam: "Wekelijkse les op locatie",
-          duur: "45 tot 60 minuten",
+          naam: "Kennismakingssessie",
+          duur: "60 minuten, eenmalig",
           tekst:
-            "Een vast moment in de week, in jullie eigen ruimte. Matten nemen we mee. Vanaf acht deelnemers loont het om met twee groepen te werken.",
-          prijs: "[prijs per les invullen]",
+            "Om te zien wat het is en of het bij jullie werkt. Start je binnen drie maanden een reeks, dan wordt dit bedrag verrekend.",
+          prijs: "€ 195",
+          uitgelicht: "",
         },
         {
-          naam: "Workshop op een teamdag",
-          duur: "90 minuten tot een dagdeel",
+          naam: "Reeks van 8 sessies",
+          duur: "wekelijks, 60 minuten",
           tekst:
-            "Een losse sessie rond ademhaling, spanning en herstel. Werkt goed als onderbreking van een dag vol praten.",
-          prijs: "[prijs invullen]",
+            "Een vast moment in de week, met dezelfde groep en dezelfde ruimte.",
+          prijs: "€ 1.400 — € 175 per sessie",
+          uitgelicht: "",
         },
         {
-          naam: "Programma rond werkdruk",
-          duur: "8 weken",
+          naam: "Reeks van 12 sessies",
+          duur: "wekelijks, 60 minuten",
           tekst:
-            "Wekelijkse lessen met een opbouw, plus materiaal om zelf mee verder te gaan. Ook geschikt als onderdeel van een verzuimtraject.",
-          prijs: "[prijs invullen]",
+            "Lang genoeg om iets te merken. Inclusief een korte energiemeting in week 1 en week 12, anoniem gerapporteerd.",
+          prijs: "€ 1.980 — € 165 per sessie",
+          uitgelicht: "ja",
+        },
+        {
+          naam: "Jaarcontract, 40 sessies",
+          duur: "het hele jaar door",
+          tekst:
+            "Vaste dag, vaste groep, facturatie per maand of kwartaal. Opzegtermijn twee maanden.",
+          prijs: "€ 6.200 — € 155 per sessie",
+          uitgelicht: "",
+        },
+        {
+          naam: "Workshop ‘Vertragen’",
+          duur: "2 tot 3 uur, tot 20 deelnemers",
+          tekst:
+            "Op maat gemaakt na een intakegesprek. Werkt goed als onderbreking van een teamdag vol praten.",
+          prijs: "€ 595",
+          uitgelicht: "",
+        },
+        {
+          naam: "Online live sessie",
+          duur: "60 minuten, onbeperkt deelnemers",
+          tekst:
+            "Voor teams die verspreid zitten of thuiswerken. Ook in 30 of 45 minuten, vanaf € 95.",
+          prijs: "€ 140",
+          uitgelicht: "",
         },
       ],
     },
@@ -822,6 +849,27 @@ export const BLOKKEN: BlokSeed[] = [
           tekst: "Tot twaalf mensen per groep. Daarboven splitsen we.",
         },
       ],
+    },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "fiscaal",
+    kind: "richtext",
+    verbergbaar: true,
+    omschrijving:
+      "Het fiscale kader onder de tarieven. Let op: dit is nagelopen tekst, wijzig hem niet zonder je adviseur.",
+    value: {
+      html: "<p>Yoga op de werkvloer onder werktijd valt voor de loonheffingen doorgaans onder de nihilwaardering voor voorzieningen op de werkplek: geen loonheffing, en geen beslag op de vrije ruimte. Online programma's die medewerkers thuis volgen kunnen worden aangewezen in de vrije ruimte van de werkkostenregeling (2026: 2% over de eerste € 400.000 loonsom).</p><p>Laat de toepassing in jullie situatie bevestigen door de salarisadministratie of een adviseur. Wat wij niet zeggen, en andere aanbieders nog wel: dat dit een vrijgestelde arbovoorziening is. Sinds 2022 geldt die vrijstelling alleen nog voor voorzieningen die rechtstreeks uit de Arbowet volgen.</p>",
+    },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "vormen_voetnoot",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "De kleine letters onder de tarieven",
+    value: {
+      text: "Alle bedragen zijn exclusief btw en gelden tot 15 deelnemers; daarboven € 5 per extra deelnemer per sessie. Matten en props nemen we mee. Gratis binnen 20 kilometer van Almere, daarbuiten € 0,35 per gereden kilometer. Reeksen vooraf te voldoen, betaaltermijn 14 dagen.",
     },
   },
   {
@@ -991,7 +1039,7 @@ export const BLOKKEN: BlokSeed[] = [
         {
           titel: "Een dagdeel",
           tekst:
-            "Drie tot vier klassen achter elkaar. Zo is ook de prijs opgebouwd.",
+            "Drie klassen achter elkaar op één ochtend, of vijf op een hele dag. Zo is ook de prijs opgebouwd: hoe meer klassen per bezoek, hoe lager de prijs per les.",
         },
       ],
     },
@@ -1023,46 +1071,72 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       items: [
         {
-          naam: "Kennismaking",
-          duur: "één dagdeel",
+          naam: "Bezoek met één les",
+          duur: "45 tot 60 minuten",
           tekst:
-            "Twee klassen naar keuze. Om te zien of het bij jullie school past — en of de klas meedoet.",
-          prijs: "[bedrag]",
+            "Eén klas of groep. Alleen los te boeken als het niet anders kan — per les is dit de duurste vorm.",
+          prijs: "€ 165 excl. btw · € 199,65 incl.",
           uitgelicht: "",
         },
         {
-          naam: "Blok van zes weken",
-          duur: "zes dagdelen",
+          naam: "Dagdeel: drie lessen",
+          duur: "aaneengesloten, één ochtend",
           tekst:
-            "Eén dagdeel per week tussen twee vakanties, drie tot vier klassen per keer. Past op de jaarplanning en op één factuur.",
-          prijs: "[bedrag per dagdeel]",
+            "Drie klassen achter elkaar. Dit is de vorm waar de prijs op is gebouwd: € 125 per les.",
+          prijs: "€ 375 excl. btw · € 453,75 incl.",
           uitgelicht: "ja",
         },
         {
-          naam: "Rustuur in de examenweek",
-          duur: "één dagdeel",
+          naam: "Hele dag: vijf lessen",
+          duur: "ochtend en middag",
           tekst:
-            "Open inloop tijdens de toets- of examenweek. Leerlingen komen tussen twee vakken door binnenlopen.",
-          prijs: "[bedrag]",
+            "Vijf klassen op één dag, € 115 per les. De voordeligste manier om een hele jaarlaag te bereiken.",
+          prijs: "€ 575 excl. btw · € 695,75 incl.",
           uitgelicht: "",
         },
         {
-          naam: "Voor het team",
-          duur: "een uur of zes bijeenkomsten",
+          naam: "Examenweek-dagdeel",
+          duur: "drie groepen van 75 minuten",
           tekst:
-            "Op een studiedag of na schooltijd. Meestal uit een ander budget dan de lessen — vaak dat voor duurzame inzetbaarheid.",
-          prijs: "[bedrag]",
+            "Ademhaling en Yin in de week zelf. Ook als los rustuur voor één examenklas, voor € 195 excl. btw.",
+          prijs: "€ 495 excl. btw · € 598,95 incl.",
           uitgelicht: "",
         },
         {
-          naam: "Docenten opleiden",
-          duur: "drie bijeenkomsten",
+          naam: "Studiedag voor het team",
+          duur: "2 uur, tot 25 deelnemers",
           tekst:
-            "Mentoren leren het zelf te geven, met een werkboek per persoon. Daarna kunnen ze het zonder mij.",
-          prijs: "[bedrag]",
+            "‘Vertragen voor de klas’. Past in het scholingsbudget; een hele studiedag met twee groepen kost € 845 excl. btw.",
+          prijs: "€ 495 excl. btw · € 598,95 incl.",
+          uitgelicht: "",
+        },
+        {
+          naam: "Medewerkersreeks",
+          duur: "10 lessen na schooltijd, tot 15",
+          tekst:
+            "Wekelijks een uur voor docenten en ondersteunend personeel. € 155 per les.",
+          prijs: "€ 1.550 excl. btw · € 1.875,50 incl.",
+          uitgelicht: "",
+        },
+        {
+          naam: "Jaarpartner",
+          duur: "een heel schooljaar",
+          tekst:
+            "30 medewerkerslessen, een studiedag-workshop en een examenweek-dagdeel. Los zou dat € 5.640 kosten.",
+          prijs: "€ 4.950 excl. btw · € 5.989,50 incl.",
           uitgelicht: "",
         },
       ],
+    },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "vormen_voetnoot",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "De kleine letters onder de tarieven",
+    value: {
+      text: "Bedragen staan er twee keer bij omdat scholen de btw niet kunnen terugvragen: eerst exclusief, dan inclusief 21%. Inbegrepen tot één klas van 30 leerlingen, of een medewerkersgroep van 15. Matten en props nemen we mee. Gratis binnen 20 kilometer van Almere, daarbuiten € 0,35 per gereden kilometer. Bij een reeks van zes bezoeken gaat er 5% af, bij tien bezoeken 10%.",
     },
   },
   {
@@ -1238,30 +1312,72 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       items: [
         {
-          naam: "Proefsessie",
-          duur: "45 minuten",
+          naam: "Kennismakingsclinic",
+          duur: "60 minuten, tot 20 spelers",
           tekst:
-            "Eén sessie met één team. Zonder verplichting, zodat de trainer kan zien wat het is.",
-          prijs: "[bedrag]",
+            "Eén sessie met één team, zodat de trainer kan zien wat het is. Wordt verrekend bij een blok binnen drie maanden.",
+          prijs: "€ 185 excl. btw · € 223,85 incl.",
           uitgelicht: "",
         },
         {
-          naam: "Seizoensblok",
-          duur: "tien sessies",
+          naam: "Blok van 6 sessies",
+          duur: "wekelijks, in de trainingsavond",
           tekst:
-            "Wekelijks of om de week. Eén factuur aan de club, of verdeeld over de spelers.",
-          prijs: "[bedrag]",
+            "Kort genoeg om mee te beginnen, lang genoeg om verschil te merken. € 162,50 per sessie.",
+          prijs: "€ 975 excl. btw · € 1.179,75 incl.",
+          uitgelicht: "",
+        },
+        {
+          naam: "Blok van 12 sessies",
+          duur: "een halve competitie",
+          tekst:
+            "De helft van het seizoen, aansluitend op de training. € 150 per sessie.",
+          prijs: "€ 1.800 excl. btw · € 2.178 incl.",
           uitgelicht: "ja",
         },
         {
-          naam: "Clubjaar",
-          duur: "vast dagdeel per week",
+          naam: "Heel seizoen: 30 sessies",
+          duur: "augustus tot mei",
           tekst:
-            "Meerdere teams door het seizoen heen. Maandelijkse factuur, voorspelbaar in jullie begroting.",
-          prijs: "[bedrag per maand]",
+            "Vaste avond, vaste groep. € 145 per sessie — dat is onze ondergrens.",
+          prijs: "€ 4.350 excl. btw · € 5.263,50 incl.",
+          uitgelicht: "",
+        },
+        {
+          naam: "Trainersworkshop",
+          duur: "2 uur, tot 20 trainers",
+          tekst:
+            "Herstel en mobiliteit voor trainers en coaches. Sluit aan op ‘kwaliteit van het kader’ in het lokale sportakkoord.",
+          prijs: "€ 450 excl. btw · € 544,50 incl.",
+          uitgelicht: "",
+        },
+        {
+          naam: "Open ledenles",
+          duur: "vanaf 10 lessen, open inschrijving",
+          tekst:
+            "Voor alle leden in plaats van één team. Met een bijdrage van € 10 per deelnemer is de les voor de club kostenneutraal.",
+          prijs: "€ 145 per les excl. btw · € 175,45 incl.",
+          uitgelicht: "",
+        },
+        {
+          naam: "Tweede team op dezelfde avond",
+          duur: "aansluitend",
+          tekst:
+            "Geen extra reis, wel een extra lesuur. Bij elk blok en elk seizoenscontract.",
+          prijs: "+ € 120 per sessie",
           uitgelicht: "",
         },
       ],
+    },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "vormen_voetnoot",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "De kleine letters onder de tarieven",
+    value: {
+      text: "Bedragen staan er twee keer bij omdat de meeste clubs de btw niet kunnen terugvragen: eerst exclusief, dan inclusief 21%. Inbegrepen tot 20 deelnemers. Matten nemen we mee — op gras heb je ze niet eens nodig. Gratis binnen 20 kilometer van Almere, daarbuiten € 0,35 per gereden kilometer.",
     },
   },
   {
