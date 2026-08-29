@@ -69,7 +69,11 @@ export default async function VoorbeeldPagina({
         return (
           <HomeInhoud
             pagina={pagina}
+            tarievenPagina={await haalConceptPagina("tarieven")}
             opleidingen={await haalAanbod("opleiding")}
+            lessen={(await haalRooster(7))
+              .filter((les) => !les.afgelastOp)
+              .slice(0, 4)}
           />
         );
       case "opleidingen":

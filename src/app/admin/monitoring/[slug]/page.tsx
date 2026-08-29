@@ -47,7 +47,7 @@ export default async function MonitoringPage({
             <a
               href={`/api/v1/admin/voortgang-csv/${cursus.slug}`}
               download
-              className="inline-flex h-11 items-center gap-2 rounded-lg border border-line bg-white px-5 font-semibold text-green-dark transition-colors hover:bg-cream"
+              className="inline-flex h-11 items-center gap-2 rounded-lg border border-line bg-white px-5 font-semibold text-green-dark transition-colors hover:bg-hover"
             >
               <Download className="size-4" aria-hidden />
               Exporteer als CSV
@@ -90,7 +90,7 @@ export default async function MonitoringPage({
               </thead>
               <tbody className="divide-y divide-line">
                 {rijen.map((rij) => (
-                  <tr key={rij.profileId} className="hover:bg-cream">
+                  <tr key={rij.profileId} className="hover:bg-hover">
                     <th
                       scope="row"
                       className="sticky left-0 bg-white px-5 py-3 text-left font-normal"

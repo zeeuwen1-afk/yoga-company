@@ -1,155 +1,313 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
+import { Sectie, SectieKop } from "@/components/layout/sectie";
 import { Card, CardContent } from "@/components/ui/card";
+import { formateerTijdvak, type Les } from "@/features/bookings";
 import { CursusRooster, type Cursus } from "@/features/courses";
-import { cn } from "@/lib/utils";
 import type { Pagina } from "../server/queries";
+import { TarievenRail } from "./tarieven-inhoud";
 
 /**
- * De landingspagina (BOUWPROMPT §8.1).
+ * De landingspagina van YogaCompany.
  *
- * Losgemaakt van het ophalen van de inhoud, zodat de site-editor exact
- * dezelfde opmaak kan tonen met de concepten erin (§14). De publieke pagina
- * geeft de gepubliceerde inhoud mee, de voorvertoning de concepten.
+ * Anders opgebouwd dan een docentpagina, en met opzet. Een docent stelt zijn
+ * pagina zelf samen uit blokken die hij mag verschuiven; hier ligt de volgorde
+ * vast in code. De volgorde ís hier namelijk de boodschap: eerst wie we zijn,
+ * dan de drie deuren met een prijs erbij, dan het bewijs, en pas onderaan de
+ * twee inlogdeuren — wie hier al thuis is, hoeft niet overtuigd te worden.
+ *
+ * Losgemaakt van het ophalen van de inhoud, zodat de site-editor exact dezelfde
+ * opmaak kan tonen met de concepten erin. De publieke pagina geeft de
+ * gepubliceerde inhoud mee, de voorvertoning de concepten.
  */
 
 type Reden = { titel: string; tekst: string };
 type Ervaring = { citaat: string; naam: string; rol: string };
+type Deur = {
+  label: string;
+  titel: string;
+  tekst: string;
+  prijs: string;
+  knop: string;
+  href: string;
+};
+
+/** De drie kleuren die de banner mag hebben. Alles daarbuiten wordt zand. */
+const BANNERKLEUR: Record<string, string> = {
+  zand: "bg-sand text-petrol-deep",
+  abrikoos: "bg-accent text-accent-foreground",
+  petrol: "op-donker bg-petrol-card text-cream",
+};
+
+function Banner({ pagina }: { pagina: Pagina }) {
+  const tekst = pagina.tekst("banner_tekst").trim();
+
+  // Geen tekst betekent: geen banner. Er blijft dan ook geen lege strook staan.
+  if (!tekst) return null;
+
+  const knop = pagina.tekst("banner_knop").trim();
+  const link = pagina.tekst("banner_link").trim();
+  const kleur =
+    BANNERKLEUR[pagina.tekst("banner_kleur").trim().toLowerCase()] ??
+    BANNERKLEUR.zand;
+
+  return (
+    <div className={kleur}>
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-5 gap-y-1 px-4 py-3 text-center sm:px-6">
+        <p className="text-[0.95rem]">{tekst}</p>
+        {knop && link ? (
+          <Link
+            href={link}
+            className="text-[0.95rem] font-semibold underline underline-offset-4"
+          >
+            {knop} &rarr;
+          </Link>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+function Hero({ pagina }: { pagina: Pagina }) {
+  const achtergrond = pagina.beeld("hero_achtergrond");
+  const bovenkop = pagina.tekst("hero_bovenkop");
+  const kenmerken = pagina.tekst("hero_kenmerken");
+  const knopTwee = pagina.tekst("hero_knop_twee");
+
+  return (
+    <section className="relative isolate overflow-hidden bg-petrol-deep">
+      {achtergrond ? (
+        <>
+          <Image
+            src={achtergrond.url}
+            alt={achtergrond.alt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          {/* Houdt de kop leesbaar, wélke foto de beheerder ook kiest. */}
+          <div className="absolute inset-0 hero-waas" aria-hidden />
+        </>
+      ) : null}
+
+      <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:py-36">
+        <div className="max-w-2xl">
+          {bovenkop ? (
+            <p className="text-xs font-medium tracking-[0.16em] text-accent-light uppercase">
+              {bovenkop}
+            </p>
+          ) : null}
+          <div className="mt-5 h-0.5 w-16 bg-accent" aria-hidden />
+          <h1 className="mt-7 text-4xl text-cream sm:text-5xl lg:text-6xl">
+            {pagina.tekst("hero_titel")}
+          </h1>
+          <p className="mt-6 max-w-xl text-lg text-muted">
+            {pagina.tekst("hero_subtitel")}
+          </p>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link
+              href="/lessen"
+              className="inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+            >
+              {pagina.tekst("hero_knop")}
+            </Link>
+            {knopTwee ? (
+              <Link
+                href="/opleidingen"
+                className="inline-flex h-12 items-center rounded-lg border border-line-strong px-7 font-semibold text-cream transition-colors hover:bg-hover"
+              >
+                {knopTwee}
+              </Link>
+            ) : null}
+          </div>
+          {kenmerken ? (
+            <p className="mt-8 text-sm text-muted">{kenmerken}</p>
+          ) : null}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Deuren({ pagina }: { pagina: Pagina }) {
+  const deuren = pagina.lijst<Deur>("deuren");
+  if (deuren.length === 0) return null;
+
+  return (
+    <Sectie>
+      <SectieKop
+        titel={pagina.tekst("deuren_titel")}
+        inleiding={pagina.tekst("deuren_inleiding")}
+      />
+      <ul className="mt-10 grid gap-6 md:grid-cols-3">
+        {deuren.map((deur) => (
+          <li key={deur.titel} className="relative flex">
+            <Card className="flex flex-1 flex-col transition-colors hover:border-accent/60">
+              <CardContent className="flex flex-1 flex-col gap-3 p-7">
+                <p className="label-klein text-accent-light">{deur.label}</p>
+                <h3 className="text-2xl">
+                  <Link href={deur.href}>
+                    <span className="absolute inset-0" aria-hidden />
+                    {deur.titel}
+                  </Link>
+                </h3>
+                <p className="flex-1 text-[0.975rem] text-muted">
+                  {deur.tekst}
+                </p>
+                {deur.prijs ? (
+                  <p className="text-[0.975rem] text-sand">{deur.prijs}</p>
+                ) : null}
+                <p className="font-semibold text-accent-light">
+                  {deur.knop} &rarr;
+                </p>
+              </CardContent>
+            </Card>
+          </li>
+        ))}
+      </ul>
+    </Sectie>
+  );
+}
+
+/**
+ * De eerstvolgende lessen, met het kaartenbalkje ernaast.
+ *
+ * Staat er niets in het rooster, dan verdwijnt de hele sectie. Een kop met
+ * "geen lessen gevonden" eronder verkoopt niets en roept alleen de vraag op of
+ * de studio nog bestaat.
+ */
+function Rooster({
+  pagina,
+  tarievenPagina,
+  lessen,
+}: {
+  pagina: Pagina;
+  tarievenPagina: Pagina;
+  lessen: Les[];
+}) {
+  if (lessen.length === 0) return null;
+
+  return (
+    <Sectie achtergrond="creme" lijnBoven>
+      <div className="grid gap-10 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          <SectieKop
+            titel={pagina.tekst("rooster_titel")}
+            inleiding={pagina.tekst("rooster_inleiding")}
+          />
+
+          <ul className="mt-8 overflow-hidden rounded-[var(--radius-card)] border border-line bg-white">
+            {lessen.map((les) => (
+              <li
+                key={les.id}
+                className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-line p-5 last:border-b-0"
+              >
+                <div className="min-w-0">
+                  <p className="label-klein">
+                    {formateerTijdvak(les.begintOp, les.duurMinuten)}
+                  </p>
+                  <h3 className="mt-1 text-xl">{les.titel}</h3>
+                  <p className="mt-0.5 text-sm text-muted">{les.locatie}</p>
+                </div>
+                <div className="flex shrink-0 items-center gap-4">
+                  <p className="text-sm text-muted">
+                    {les.vrijePlekken > 0
+                      ? `${les.vrijePlekken} ${les.vrijePlekken === 1 ? "plek" : "plekken"} vrij`
+                      : "Vol — wachtlijst"}
+                  </p>
+                  <Link
+                    href="/lessen"
+                    className="inline-flex h-11 items-center rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+                  >
+                    {les.vrijePlekken > 0 ? "Boek" : "Wachtlijst"}
+                  </Link>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            href="/lessen"
+            className="mt-6 inline-flex font-semibold text-green underline"
+          >
+            Bekijk het volledige weekrooster
+          </Link>
+        </div>
+
+        <div>
+          <TarievenRail pagina={tarievenPagina} />
+        </div>
+      </div>
+    </Sectie>
+  );
+}
+
+function Inlogdeuren({ pagina }: { pagina: Pagina }) {
+  const deuren = pagina.lijst<Deur>("inlog_deuren");
+  if (deuren.length === 0) return null;
+
+  return (
+    <section className="border-t border-line bg-petrol-deep px-4 py-16 sm:px-6 sm:py-20">
+      <div className="mx-auto max-w-6xl">
+        <SectieKop
+          titel={pagina.tekst("inlog_titel")}
+          inleiding={pagina.tekst("inlog_inleiding")}
+        />
+        <ul className="mt-10 grid gap-6 md:grid-cols-2">
+          {deuren.map((deur, index) => (
+            <li key={deur.titel}>
+              <div className="flex h-full flex-col gap-3 rounded-[var(--radius-card)] border border-line bg-petrol p-8">
+                <p className="label-klein text-accent-light">{deur.label}</p>
+                <h3 className="text-2xl">{deur.titel}</h3>
+                <p className="flex-1 text-[0.975rem] text-muted">
+                  {deur.tekst}
+                </p>
+                <Link
+                  href={deur.href}
+                  className={
+                    index === 0
+                      ? "mt-2 inline-flex h-12 w-fit items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+                      : "mt-2 inline-flex h-12 w-fit items-center rounded-lg border border-line-strong px-7 font-semibold text-cream transition-colors hover:bg-hover"
+                  }
+                >
+                  {deur.knop}
+                </Link>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
 
 export function HomeInhoud({
   pagina,
+  tarievenPagina,
   opleidingen,
+  lessen,
 }: {
   pagina: Pagina;
+  tarievenPagina: Pagina;
   opleidingen: Cursus[];
+  lessen: Les[];
 }) {
-  const beeld = pagina.beeld("hero_beeld");
   const redenen = pagina.lijst<Reden>("waarom_punten");
   const ervaringen = pagina.lijst<Ervaring>("testimonials");
 
   return (
     <>
-      {/* Hero -------------------------------------------------------------- */}
-      <section className="border-b border-line bg-cream">
-        {/* Zolang er geen hero-foto is gekozen, krijgt de tekst de volle
-            breedte in plaats van de helft met een leeg vlak ernaast. */}
-        <div
-          className={cn(
-            "mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:px-6 sm:py-28",
-            beeld && "lg:grid-cols-2",
-          )}
-        >
-          <div>
-            <h1 className="max-w-3xl text-4xl sm:text-5xl">
-              {pagina.tekst("hero_titel")}
-            </h1>
-            <p className="mt-6 max-w-xl text-lg text-muted">
-              {pagina.tekst("hero_subtitel")}
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link
-                href="/opleidingen"
-                className="inline-flex h-12 items-center rounded-lg bg-green px-7 font-semibold text-cream transition-colors hover:bg-green-dark"
-              >
-                {pagina.tekst("hero_knop")}
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex h-12 items-center rounded-lg border border-line px-7 font-semibold text-green-dark transition-colors hover:bg-sand-light"
-              >
-                Stel je vraag
-              </Link>
-            </div>
-          </div>
+      <Banner pagina={pagina} />
+      <Hero pagina={pagina} />
+      <Deuren pagina={pagina} />
+      <Rooster
+        pagina={pagina}
+        tarievenPagina={tarievenPagina}
+        lessen={lessen}
+      />
 
-          {beeld ? (
-            <Image
-              src={beeld.url}
-              alt={beeld.alt}
-              width={720}
-              height={540}
-              priority
-              className="rounded-[var(--radius-card)] border border-line object-cover"
-            />
-          ) : null}
-        </div>
-      </section>
-
-      {/* Twee proposities: zakelijk en persoonlijk (§8.1) ------------------- */}
-      <Sectie>
-        <div className="grid gap-6 md:grid-cols-2">
-          <Card className="border-transparent bg-sand-light">
-            <CardContent className="p-7">
-              <h2 className="text-2xl">{pagina.tekst("zakelijk_titel")}</h2>
-              <Richtext
-                html={pagina.html("zakelijk_tekst")}
-                className="mt-4 text-[0.975rem]"
-              />
-            </CardContent>
-          </Card>
-
-          <Card className="border-transparent bg-sand-light">
-            <CardContent className="p-7">
-              <h2 className="text-2xl">{pagina.tekst("persoonlijk_titel")}</h2>
-              <Richtext
-                html={pagina.html("persoonlijk_tekst")}
-                className="mt-4 text-[0.975rem]"
-              />
-            </CardContent>
-          </Card>
-        </div>
-      </Sectie>
-
-      {/* Drie ingangen ----------------------------------------------------- */}
-      <Sectie achtergrond="creme" lijnBoven>
-        <SectieKop
-          titel="Waar wil je beginnen?"
-          inleiding="Drie manieren om met ons te werken, elk met een eigen tempo."
-        />
-        <ul className="mt-10 grid gap-6 md:grid-cols-3">
-          {[
-            {
-              titel: "Opleidingen",
-              tekst:
-                "Meerdaagse opleidingen met certificaat per module. Voor wie het vak grondig wil leren.",
-              href: "/opleidingen",
-            },
-            {
-              titel: "Trainingen",
-              tekst:
-                "Kortere programma's rond één onderwerp. Online of in de studio.",
-              href: "/trainingen",
-            },
-            {
-              titel: "Yogalessen",
-              tekst:
-                "Wekelijkse lessen in kleine groepen. Neem contact op voor het actuele rooster.",
-              href: "/contact",
-            },
-          ].map((ingang) => (
-            <li key={ingang.titel} className="relative flex">
-              <Card className="flex flex-1 flex-col bg-white transition-colors hover:border-green/40">
-                <CardContent className="p-7">
-                  <h3 className="text-xl">
-                    <Link
-                      href={ingang.href}
-                      className="transition-colors hover:text-green"
-                    >
-                      <span className="absolute inset-0" aria-hidden />
-                      {ingang.titel}
-                    </Link>
-                  </h3>
-                  <p className="mt-3 text-sm">{ingang.tekst}</p>
-                </CardContent>
-              </Card>
-            </li>
-          ))}
-        </ul>
-      </Sectie>
-
-      {/* Waarom YogaCompany ---------------------------------------------- */}
       {redenen.length > 0 ? (
         <Sectie>
           <SectieKop titel={pagina.tekst("waarom_titel")} />
@@ -166,11 +324,10 @@ export function HomeInhoud({
         </Sectie>
       ) : null}
 
-      {/* Opleidingen in het kort ------------------------------------------- */}
       <Sectie achtergrond="creme" lijnBoven>
         <SectieKop
-          titel="Onze opleidingen"
-          inleiding="De volledige opleiding of losse modules — je kiest zelf het tempo."
+          titel={pagina.tekst("aanbod_titel")}
+          inleiding={pagina.tekst("aanbod_inleiding")}
         />
         <div className="mt-10">
           <CursusRooster cursussen={opleidingen.slice(0, 3)} />
@@ -183,16 +340,15 @@ export function HomeInhoud({
         </Link>
       </Sectie>
 
-      {/* Ervaringen --------------------------------------------------------- */}
       {ervaringen.length > 0 ? (
         <Sectie>
           <SectieKop titel="Wat deelnemers zeggen" />
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
             {ervaringen.map((ervaring, index) => (
               <li key={index}>
-                <figure className="h-full rounded-[var(--radius-card)] border border-line p-6">
-                  <blockquote className="font-serif text-lg text-green-dark">
-                    “{ervaring.citaat}”
+                <figure className="h-full rounded-[var(--radius-card)] border-l-2 border-accent bg-petrol-card p-6">
+                  <blockquote className="font-serif text-lg text-cream">
+                    &ldquo;{ervaring.citaat}&rdquo;
                   </blockquote>
                   <figcaption className="mt-4 text-sm text-muted">
                     {ervaring.naam}
@@ -205,14 +361,15 @@ export function HomeInhoud({
         </Sectie>
       ) : null}
 
-      {/* Afsluitende oproep -------------------------------------------------- */}
+      <Inlogdeuren pagina={pagina} />
+
       <Sectie achtergrond="zand" lijnBoven>
         <div className="max-w-2xl">
           <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
           <p className="mt-4 text-lg text-muted">{pagina.tekst("cta_tekst")}</p>
           <Link
             href="/contact"
-            className="mt-8 inline-flex h-12 items-center rounded-lg bg-green px-7 font-semibold text-cream transition-colors hover:bg-green-dark"
+            className="mt-8 inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
           >
             Neem contact op
           </Link>

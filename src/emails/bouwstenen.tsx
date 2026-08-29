@@ -10,14 +10,22 @@
  * moderne CSS. Dat verklaart de manier waarop dit is opgeschreven.
  */
 
+/**
+ * Palet "Petrol en abrikoos", dezelfde waarden als in `globals.css`.
+ *
+ * De mail blijft licht van achtergrond terwijl de site donker is. Dat is met
+ * opzet: een donkere mail vecht met de eigen weergave van elke mailclient, en
+ * de meeste tonen hem ergens tussen jouw kleur en die van henzelf in. Het
+ * merk zit hier in de petrolkleurige balk, de knop en het zand.
+ */
 const KLEUR = {
-  groen: "#2E4A3B",
-  groenDonker: "#22382C",
-  creme: "#FAF6EC",
-  zandLicht: "#F4EEDF",
-  inkt: "#2B2A26",
-  gedempt: "#6E6A5C",
-  lijn: "#D9D0BC",
+  groen: "#1F4D58",
+  groenDonker: "#133B45",
+  creme: "#FCFAF6",
+  zandLicht: "#F3EBDC",
+  inkt: "#16323A",
+  gedempt: "#4E6970",
+  lijn: "#DECCAA",
 } as const;
 
 const SANS =

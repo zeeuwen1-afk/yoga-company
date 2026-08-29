@@ -104,7 +104,7 @@ export default async function ContentItemPage({
         {vorige ? (
           <Link
             href={`/portaal/opleidingen/${materiaal.cursusSlug}/${vorige.id}`}
-            className="inline-flex min-h-11 flex-1 items-center gap-2 rounded-lg border border-line px-4 text-green-dark transition-colors hover:bg-white sm:flex-none"
+            className="inline-flex min-h-11 flex-1 items-center gap-2 rounded-lg border border-line px-4 text-green-dark transition-colors hover:bg-hover sm:flex-none"
           >
             <ChevronLeft className="size-4 shrink-0" aria-hidden />
             <span className="min-w-0">
@@ -119,7 +119,7 @@ export default async function ContentItemPage({
         {volgende ? (
           <Link
             href={`/portaal/opleidingen/${materiaal.cursusSlug}/${volgende.id}`}
-            className="inline-flex min-h-11 flex-1 items-center justify-end gap-2 rounded-lg border border-line px-4 text-green-dark transition-colors hover:bg-white sm:flex-none"
+            className="inline-flex min-h-11 flex-1 items-center justify-end gap-2 rounded-lg border border-line px-4 text-green-dark transition-colors hover:bg-hover sm:flex-none"
           >
             <span className="min-w-0 text-right">
               <span className="block text-xs text-muted">Volgende</span>

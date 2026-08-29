@@ -93,7 +93,7 @@ export function BestandUpload({
         type="button"
         onClick={() => inputRef.current?.click()}
         disabled={voortgang !== null && voortgang < 100}
-        className="inline-flex h-11 items-center gap-2 rounded-lg border border-line px-5 font-semibold text-green-dark transition-colors hover:bg-cream disabled:opacity-60"
+        className="inline-flex h-11 items-center gap-2 rounded-lg border border-line px-5 font-semibold text-green-dark transition-colors hover:bg-hover disabled:opacity-60"
       >
         <Upload className="size-4" aria-hidden />
         {pad ? "Ander bestand kiezen" : "Bestand kiezen"}

@@ -206,7 +206,7 @@ export function PaginaEditor({
 
               {magBewerken ? (
                 <details className="group">
-                  <summary className="cursor-pointer list-none border-t border-line px-4 py-2.5 text-sm font-semibold text-green marker:content-none hover:bg-cream [&::-webkit-details-marker]:hidden">
+                  <summary className="cursor-pointer list-none border-t border-line px-4 py-2.5 text-sm font-semibold text-green marker:content-none hover:bg-hover [&::-webkit-details-marker]:hidden">
                     <span className="group-open:hidden">Bewerken</span>
                     <span className="hidden group-open:inline">Sluiten</span>
                   </summary>

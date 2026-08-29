@@ -88,7 +88,7 @@ export default async function PortaalDashboard() {
             </p>
             <Link
               href="/portaal/lessen"
-              className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg border border-line-strong px-5 font-semibold text-green-dark transition-colors hover:bg-sand-light"
+              className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg border border-line-strong px-5 font-semibold text-green-dark transition-colors hover:bg-hover"
             >
               Naar het rooster
               <ArrowRight className="size-4" aria-hidden />
@@ -113,7 +113,7 @@ export default async function PortaalDashboard() {
             </p>
             <Link
               href={`/portaal/opleidingen/${laatst.cursusSlug}/${laatst.itemId}`}
-              className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg bg-green px-5 font-semibold text-cream transition-colors hover:bg-green-dark"
+              className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
             >
               <PlayCircle className="size-5" aria-hidden />
               Verder gaan

@@ -87,7 +87,7 @@ export default async function AdminBerichtenPage() {
               <li key={gesprek.klantId}>
                 <Link
                   href={`/admin/klanten/${gesprek.klantId}`}
-                  className="block px-5 py-4 transition-colors hover:bg-cream"
+                  className="block px-5 py-4 transition-colors hover:bg-hover"
                 >
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <span className="font-semibold">

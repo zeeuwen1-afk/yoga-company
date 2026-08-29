@@ -65,7 +65,7 @@ export function AanvraagFormulier({
           {SOORTEN.map((optie) => (
             <label
               key={optie.waarde}
-              className="flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border border-line p-3 transition-colors hover:bg-cream has-[:checked]:border-green has-[:checked]:bg-cream"
+              className="flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border border-line p-3 transition-colors hover:bg-hover has-[:checked]:border-green has-[:checked]:bg-cream"
             >
               <input
                 type="radio"

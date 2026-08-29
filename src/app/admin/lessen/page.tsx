@@ -56,7 +56,7 @@ export default async function AdminLessenPage() {
               <li key={les.id}>
                 <Link
                   href={`/admin/lessen/${les.id}`}
-                  className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-4 transition-colors hover:bg-cream"
+                  className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-4 transition-colors hover:bg-hover"
                 >
                   <div className="min-w-0">
                     <p className="font-semibold text-green-dark">{les.titel}</p>
@@ -100,7 +100,7 @@ export default async function AdminLessenPage() {
               <li key={les.id}>
                 <Link
                   href={`/admin/lessen/${les.id}`}
-                  className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-3 text-sm transition-colors hover:bg-cream"
+                  className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-3 text-sm transition-colors hover:bg-hover"
                 >
                   <span className="first-letter:uppercase">
                     {formateerDag(les.begintOp)} — {les.titel}

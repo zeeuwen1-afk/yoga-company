@@ -1,24 +1,41 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("Landingspagina", () => {
-  test("toont beide proposities, zakelijk en persoonlijk", async ({ page }) => {
+  test("stuurt bezoekers met een account naar de juiste omgeving", async ({
+    page,
+  }) => {
     await page.goto("/");
 
+    // De twee inlogdeuren staan onderaan: eerst de bezoeker overtuigen, dan pas
+    // de mensen die hier al thuis zijn.
     await expect(
-      page.getByRole("heading", { name: "Voor je vak", level: 2 }),
+      page.getByRole("heading", { name: "Mijn omgeving", level: 3 }),
     ).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "Voor jezelf", level: 2 }),
+      page.getByRole("heading", { name: "Docentenportal", level: 3 }),
     ).toBeVisible();
+
+    await expect(
+      page.getByRole("link", { name: "Inloggen als docent" }),
+    ).toHaveAttribute("href", "/inloggen?vervolg=/docenten");
   });
 
   test("toont de drie ingangen en het waarom-blok", async ({ page }) => {
     await page.goto("/");
 
-    for (const ingang of ["Opleidingen", "Trainingen", "Yogalessen"]) {
+    // Elke deur draagt zijn categorie als label en een belofte als kop. Dat
+    // label staat ook in het hoofdmenu, dus zoek hem binnen de deur zelf —
+    // anders vindt de test op een telefoon het verborgen menu-item.
+    for (const [kop, label] of [
+      ["Elke week op de mat", "Yogalessen"],
+      ["Verdiep je in één onderwerp", "Trainingen"],
+      ["Leer het vak", "Opleidingen"],
+    ] as const) {
+      const deur = page.getByRole("listitem").filter({ hasText: kop });
       await expect(
-        page.getByRole("heading", { name: ingang, level: 3 }),
+        deur.getByRole("heading", { name: kop, level: 3 }),
       ).toBeVisible();
+      await expect(deur.getByText(label, { exact: true })).toBeVisible();
     }
 
     await expect(

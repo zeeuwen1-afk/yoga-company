@@ -163,7 +163,7 @@ export function NotitieOfVerslag({
             aria-pressed={soort === optie}
             className={
               soort === optie
-                ? "rounded-lg border border-green bg-green px-3 py-1.5 text-sm font-semibold text-cream"
+                ? "rounded-lg border border-primary bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground"
                 : "rounded-lg border border-line px-3 py-1.5 text-sm text-green-dark"
             }
           >

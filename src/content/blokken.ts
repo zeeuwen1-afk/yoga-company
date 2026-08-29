@@ -53,6 +53,14 @@ export type BlokSeed = {
   value: BlokWaarde;
   /** Waar dit blok op de pagina staat — hulp voor de site-editor. */
   omschrijving: string;
+  /**
+   * Mag de beheerder dit blok wegnemen van de pagina?
+   *
+   * Alleen blokken die een hele sectie dragen en die de pagina kan missen. Een
+   * kop of een prijs verbergen zou een half scherm achterlaten; dat is geen
+   * keuze die iemand per ongeluk moet kunnen maken.
+   */
+  verbergbaar?: true;
 };
 
 /**
@@ -250,14 +258,62 @@ const docentenBlokken: BlokSeed[] = [
 
 export const BLOKKEN: BlokSeed[] = [
   // ---------------------------------------------------------------------------
-  // Landingspagina (§8.1)
+  // Landingspagina
+  //
+  // Deze pagina is anders opgebouwd dan een docentpagina: een docent schuift
+  // zelf met blokken, hier ligt de volgorde vast. De volgorde ís hier namelijk
+  // de boodschap — eerst wie we zijn, dan de drie deuren, dan pas het bewijs —
+  // en de pagina moet het ook nog doen als hij een half jaar niet is
+  // aangeraakt. Wat een beheerder aanpast is de inhoud, niet de indeling.
   // ---------------------------------------------------------------------------
+
+  // De promobanner. Leeg laten betekent: geen banner. De balk verdwijnt dan
+  // helemaal, er blijft geen lege strook staan.
+  {
+    page_key: "home",
+    block_key: "banner_tekst",
+    verbergbaar: true,
+    kind: "text",
+    omschrijving: "Balk bovenaan de pagina. Leeg laten = geen banner.",
+    value: { text: "" },
+  },
+  {
+    page_key: "home",
+    block_key: "banner_knop",
+    kind: "text",
+    omschrijving: "Tekst op de knop in de banner (leeg = geen knop)",
+    value: { text: "" },
+  },
+  {
+    page_key: "home",
+    block_key: "banner_link",
+    kind: "text",
+    omschrijving: "Waar de bannerknop heen gaat, bijvoorbeeld /trainingen",
+    value: { text: "" },
+  },
+  {
+    page_key: "home",
+    block_key: "banner_kleur",
+    kind: "text",
+    omschrijving:
+      "Kleur van de banner: zand (aankondiging), abrikoos (actie) of petrol (mededeling)",
+    value: { text: "zand" },
+  },
+
+  // De hero, met de foto als paginabrede achtergrond.
+  {
+    page_key: "home",
+    block_key: "hero_bovenkop",
+    kind: "text",
+    omschrijving: "Kleine regel boven de grote kop",
+    value: { text: "Opleidingen · trainingen · lessen" },
+  },
   {
     page_key: "home",
     block_key: "hero_titel",
     kind: "text",
     omschrijving: "Grote kop bovenaan de startpagina",
-    value: { text: "YogaCompany — opleidingsinstituut voor yoga" },
+    value: { text: "Van je eerste les tot je eigen lespraktijk." },
   },
   {
     page_key: "home",
@@ -265,60 +321,138 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Zin onder de grote kop",
     value: {
-      text: "Opleidingen, trainingen en yogalessen. Deskundig en betrouwbaar, warm en persoonlijk.",
+      text: "Wekelijkse yogalessen in kleine groepen in Almere, korte trainingen om je te verdiepen, en de 200-uurs Yin Yoga Specialist Opleiding.",
     },
   },
   {
     page_key: "home",
     block_key: "hero_knop",
     kind: "text",
-    omschrijving: "Tekst op de knop in de hero",
-    value: { text: "Bekijk de opleidingen" },
+    omschrijving: "Tekst op de eerste knop in de hero — leidt naar het rooster",
+    value: { text: "Bekijk het lesrooster" },
   },
   {
     page_key: "home",
-    block_key: "hero_beeld",
+    block_key: "hero_knop_twee",
+    kind: "text",
+    omschrijving:
+      "Tekst op de tweede knop in de hero — leidt naar de opleidingen",
+    value: { text: "Ontdek de opleidingen" },
+  },
+  {
+    page_key: "home",
+    block_key: "hero_kenmerken",
+    kind: "text",
+    omschrijving: "Regel met kenmerken onder de knoppen, gescheiden door ·",
+    value: {
+      text: "Kleine groepen · Certificaat per module · Annuleren tot 24 uur vooraf",
+    },
+  },
+  {
+    page_key: "home",
+    block_key: "hero_achtergrond",
+    verbergbaar: true,
     kind: "image",
-    omschrijving: "Foto naast de hero",
+    omschrijving:
+      "Achtergrondfoto van het bovenste scherm. Liggend, minstens 1600 pixels breed.",
     value: {
-      url: "/beeld/hero-vloer.jpg",
-      alt: "Zonlicht valt door een raam op een houten vloer",
+      url: "/beeld/hero-yoga.jpg",
+      alt: "Een vrouw in een voorwaartse buiging over een bolster, op een mat in laag ochtendlicht",
     },
   },
 
+  // De drie deuren.
   {
     page_key: "home",
-    block_key: "zakelijk_titel",
+    block_key: "deuren_titel",
     kind: "text",
-    omschrijving: "Kop van het zakelijke propositieblok",
-    value: { text: "Voor je vak" },
+    omschrijving: "Kop boven de drie ingangen",
+    value: { text: "Waar wil je beginnen?" },
   },
   {
     page_key: "home",
-    block_key: "zakelijk_tekst",
-    kind: "richtext",
-    omschrijving: "Tekst van het zakelijke propositieblok",
+    block_key: "deuren_inleiding",
+    kind: "text",
+    omschrijving: "Zin onder die kop",
     value: {
-      html: "<p>Specialiseren in een vorm die je aanvult in plaats van uitput. Onze opleidingen zijn praktijkgericht en erkend met een certificaat per module, zodat je stap voor stap kunt bouwen.</p><p>Ook voor werkgevers die willen investeren in duurzame inzetbaarheid van hun mensen.</p>",
+      text: "Drie manieren om met ons te werken — elk met een eigen tempo, en een eigen prijs.",
     },
   },
   {
     page_key: "home",
-    block_key: "persoonlijk_titel",
-    kind: "text",
-    omschrijving: "Kop van het persoonlijke propositieblok",
-    value: { text: "Voor jezelf" },
-  },
-  {
-    page_key: "home",
-    block_key: "persoonlijk_tekst",
+    block_key: "deuren",
+    verbergbaar: true,
     kind: "richtext",
-    omschrijving: "Tekst van het persoonlijke propositieblok",
+    omschrijving:
+      "De drie ingangen. Per ingang: label, kop, tekst, prijsregel, knoptekst en het adres waar hij heen gaat.",
     value: {
-      html: "<p>Soms is het je eigen lichaam dat om aandacht vraagt. Herstel na een periode van te veel, terugvinden van balans, of gewoon verdieping omdat je nieuwsgierig bent.</p><p>Je hoeft geen doel te hebben om te beginnen.</p>",
+      items: [
+        {
+          label: "Yogalessen",
+          titel: "Elke week op de mat",
+          tekst:
+            "Yin, Vinyasa en Restorative in de studio in Almere. Kleine groepen, dus je wordt gezien.",
+          prijs: "Losse les € 17,00 · 10-strippenkaart € 145,00",
+          knop: "Bekijk het rooster en boek",
+          href: "/lessen",
+        },
+        {
+          label: "Trainingen",
+          titel: "Verdiep je in één onderwerp",
+          tekst:
+            "Kortere programma's, online of in de studio. Zoals het 8-weekse herstelprogramma Eerst Jij.",
+          prijs: "Vanaf € 295,00",
+          knop: "Bekijk de trainingen",
+          href: "/trainingen",
+        },
+        {
+          label: "Opleidingen",
+          titel: "Leer het vak",
+          tekst:
+            "De 200-uurs Yin Yoga Specialist Opleiding in vier modules van 50 uur. Ook los te volgen.",
+          prijs: "€ 795,00 per module · € 2.795,00 in één keer",
+          knop: "Bekijk de opleidingen",
+          href: "/opleidingen",
+        },
+      ],
     },
   },
 
+  // Het rooster en de kaarten.
+  {
+    page_key: "home",
+    block_key: "rooster_titel",
+    kind: "text",
+    omschrijving: "Kop boven de eerstvolgende lessen",
+    value: { text: "De eerstvolgende lessen" },
+  },
+  {
+    page_key: "home",
+    block_key: "rooster_inleiding",
+    kind: "text",
+    omschrijving: "Zin onder die kop",
+    value: {
+      text: "Reserveer je plek vooraf. Met een account kost dat één klik en gaat er een strip van je kaart af.",
+    },
+  },
+  {
+    page_key: "home",
+    block_key: "kaarten_titel",
+    kind: "text",
+    omschrijving: "Kop van het blok met strippenkaarten",
+    value: { text: "Nog geen kaart?" },
+  },
+  {
+    page_key: "home",
+    block_key: "kaarten_inleiding",
+    kind: "text",
+    omschrijving: "Zin in het blok met strippenkaarten",
+    value: {
+      text: "Je kaart staat meteen in je eigen omgeving en je saldo loopt vanzelf mee.",
+    },
+  },
+
+  // Waarom, het aanbod, en het bewijs.
   {
     page_key: "home",
     block_key: "waarom_titel",
@@ -329,6 +463,7 @@ export const BLOKKEN: BlokSeed[] = [
   {
     page_key: "home",
     block_key: "waarom_punten",
+    verbergbaar: true,
     kind: "richtext",
     omschrijving: "De vier redenen, elk met een korte toelichting",
     value: {
@@ -352,10 +487,26 @@ export const BLOKKEN: BlokSeed[] = [
       ],
     },
   },
-
+  {
+    page_key: "home",
+    block_key: "aanbod_titel",
+    kind: "text",
+    omschrijving: "Kop boven de uitgelichte opleidingen",
+    value: { text: "Opleidingen en trainingen" },
+  },
+  {
+    page_key: "home",
+    block_key: "aanbod_inleiding",
+    kind: "text",
+    omschrijving: "Zin onder die kop",
+    value: {
+      text: "De volledige opleiding, één losse module, of een korte training. Je schrijft je online in.",
+    },
+  },
   {
     page_key: "home",
     block_key: "testimonials",
+    verbergbaar: true,
     kind: "richtext",
     omschrijving: "Drie ervaringen van deelnemers",
     value: {
@@ -377,6 +528,53 @@ export const BLOKKEN: BlokSeed[] = [
             "Ik kwam binnen als deelnemer en ging weg met een manier van kijken.",
           naam: "Deelnemer — naam volgt",
           rol: "Eerst Jij",
+        },
+      ],
+    },
+  },
+
+  // De twee inlogdeuren, onderaan: eerst de bezoeker overtuigen, dan pas de
+  // mensen die hier al thuis zijn.
+  {
+    page_key: "home",
+    block_key: "inlog_titel",
+    kind: "text",
+    omschrijving: "Kop boven de twee inlogdeuren",
+    value: { text: "Al bij ons bekend?" },
+  },
+  {
+    page_key: "home",
+    block_key: "inlog_inleiding",
+    kind: "text",
+    omschrijving: "Zin onder die kop",
+    value: {
+      text: "Twee deuren, allebei achter dezelfde inlog. Je komt vanzelf in de juiste omgeving terecht.",
+    },
+  },
+  {
+    page_key: "home",
+    block_key: "inlog_deuren",
+    verbergbaar: true,
+    kind: "richtext",
+    omschrijving:
+      "De twee inlogdeuren. Per deur: label, kop, tekst, knoptekst en adres.",
+    value: {
+      items: [
+        {
+          label: "Voor leden",
+          titel: "Mijn omgeving",
+          tekst:
+            "Je lessen, je strippenkaarten met saldo, je opleidingen en het lesmateriaal. En je eigen gegevens, die je kunt inzien en laten wissen.",
+          knop: "Inloggen als lid",
+          href: "/inloggen?vervolg=/portaal",
+        },
+        {
+          label: "Voor docenten",
+          titel: "Docentenportal",
+          tekst:
+            "Kaarten uitgeven, afboekingen zien, de maand afsluiten met een factuur, en je eigen pagina inrichten.",
+          knop: "Inloggen als docent",
+          href: "/inloggen?vervolg=/docenten",
         },
       ],
     },

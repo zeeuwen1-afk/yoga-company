@@ -323,6 +323,40 @@ niet de structuur. Dat houdt de site consistent.
 Bevalt een concept toch niet, dan gooit **Concepten weggooien** ze weg. De
 website is dan onveranderd gebleven.
 
+### Een blok van de pagina halen
+
+Bij sommige blokken staat de knop **Van de pagina halen**. Daarmee verdwijnt het
+hele onderdeel van de site — de banner, de drie ingangen, de ervaringen van
+deelnemers, de achtergrondfoto of de inlogdeuren. De tekst blijft bewaard; je
+zet hem later met **Terug op de pagina** weer aan.
+
+Twee dingen om te weten:
+
+- **De schakelaar is ook een concept.** Hij gaat pas mee als je op
+  **Publiceren** drukt, net als de teksten ernaast. Zo verdwijnt er nooit een
+  sectie terwijl de bijbehorende tekstwijziging nog klaarstaat.
+- **Verborgen is echt verborgen.** De inhoud van een blok dat van de pagina af
+  is, wordt niet meer meegestuurd naar de browser van de bezoeker. Een
+  aankondiging die pas volgende maand mag, staat dus niet vandaag al ergens in
+  de code van de pagina.
+
+Niet elk blok heeft die knop. Een kop of een prijs weghalen zou een half scherm
+achterlaten; die horen bij de indeling en die ligt vast in code.
+
+### De promobanner op de startpagina
+
+De balk bovenaan de startpagina is een gewoon blok met vier velden: de tekst,
+de knoptekst, waar de knop heen gaat, en de kleur. Er zijn drie kleuren:
+
+| Kleur        | Waarvoor                                              |
+| ------------ | ----------------------------------------------------- |
+| **zand**     | een aankondiging — nieuw programma, nieuwe startdatum |
+| **abrikoos** | iets met haast — laatste plekken, inschrijving sluit  |
+| **petrol**   | een mededeling — lessen vervallen, gewijzigde tijden  |
+
+Laat je de tekst leeg, of haal je het blok van de pagina, dan is er geen balk
+en blijft er ook geen lege strook staan.
+
 ### Wat je per onderdeel kunt aanpassen
 
 | Soort      | Wat je krijgt                                                    |

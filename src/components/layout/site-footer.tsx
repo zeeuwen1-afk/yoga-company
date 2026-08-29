@@ -32,7 +32,7 @@ export async function SiteFooter({
   return (
     // §2: het nachtgroen draagt de paginavoet; daarop staat de lichte variant
     // van het logo.
-    <footer className="mt-20 bg-green text-cream">
+    <footer className="bg-petrol-deep text-cream">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
           <Image
@@ -42,7 +42,7 @@ export async function SiteFooter({
             height={326}
             className="h-10 w-auto"
           />
-          <p className="mt-4 max-w-xs text-sm text-sage">
+          <p className="mt-4 max-w-xs text-sm text-muted">
             {pagina.tekst("over")}
           </p>
         </div>
@@ -54,7 +54,7 @@ export async function SiteFooter({
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-sage transition-colors hover:text-sand-light"
+                  className="text-muted transition-colors hover:text-sand-light"
                 >
                   {item.label}
                 </Link>
@@ -70,7 +70,7 @@ export async function SiteFooter({
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-sage transition-colors hover:text-sand-light"
+                  className="text-muted transition-colors hover:text-sand-light"
                 >
                   {item.label}
                 </Link>
@@ -79,7 +79,7 @@ export async function SiteFooter({
           </ul>
 
           {gegevens.length > 0 ? (
-            <dl className="mt-4 space-y-0.5 text-sm text-sage">
+            <dl className="mt-4 space-y-0.5 text-sm text-muted">
               {gegevens.map((gegeven) => (
                 <div key={gegeven.label} className="flex gap-1">
                   <dt className="sr-only">{gegeven.label}</dt>
@@ -91,8 +91,8 @@ export async function SiteFooter({
         </div>
       </div>
 
-      <div className="border-t border-sage/25">
-        <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-sage sm:px-6">
+      <div className="border-t border-petrol-line">
+        <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-muted sm:px-6">
           © {new Date().getFullYear()} YogaCompany. Alle rechten voorbehouden.
         </p>
       </div>

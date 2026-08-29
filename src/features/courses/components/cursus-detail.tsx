@@ -54,7 +54,7 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
               </p>
             </div>
 
-            <div className="rounded-[var(--radius-card)] border border-line bg-white p-6 lg:w-72">
+            <div className="rounded-[var(--radius-card)] border border-sand bg-sand-light p-6 lg:w-72">
               <p className="font-serif text-3xl font-semibold text-green-dark">
                 {formateerPrijs(cursus.prijsCenten)}
               </p>
@@ -63,7 +63,7 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
               </p>
               <Link
                 href={`/inschrijven/${cursus.slug}`}
-                className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-lg bg-green font-semibold text-cream transition-colors hover:bg-green-dark"
+                className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-lg bg-primary font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
               >
                 Inschrijven
               </Link>
@@ -194,7 +194,7 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
           </p>
           <Link
             href="/contact"
-            className="mt-8 inline-flex h-12 items-center rounded-lg bg-green px-7 font-semibold text-cream transition-colors hover:bg-green-dark"
+            className="mt-8 inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
           >
             Stel je vraag
           </Link>

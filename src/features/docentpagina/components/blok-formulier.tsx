@@ -3,10 +3,11 @@
 import { useActionState, useState } from "react";
 
 import { FormMessage } from "@/components/ui/form-message";
+import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
 import { RichtextEditor } from "@/components/ui/richtext-editor";
 import { SubmitButton } from "@/components/ui/submit-button";
-import type { Bloktype } from "@/content/docent-blokken";
+import { MAX_FOTOS_IN_REEKS, type Bloktype } from "@/content/docent-blokken";
 import { bewaarBlok, type PaginaResultaat } from "../server/acties";
 
 const BEGIN: PaginaResultaat = { status: "idle" };
@@ -47,13 +48,28 @@ export function BlokFormulier({
       alt: "",
     };
 
+  const reeks = (naam: string) =>
+    Array.isArray(inhoud[naam])
+      ? (inhoud[naam] as { url?: string; alt?: string }[])
+      : [];
+
+  const zetInReeks = (
+    naam: string,
+    index: number,
+    nieuw: { url: string; alt: string },
+  ) =>
+    zet(
+      naam,
+      reeks(naam).map((foto, i) => (i === index ? nieuw : foto)),
+    );
+
   return (
     <form action={actie} className="space-y-4 border-t border-line px-4 py-5">
       <input type="hidden" name="blok_id" value={blokId} />
       <input type="hidden" name="inhoud" value={JSON.stringify(inhoud)} />
 
       {definitie.vast ? (
-        <p className="rounded-lg border border-sage bg-cream px-4 py-3 text-sm">
+        <p className="rounded-lg border border-sand bg-cream px-4 py-3 text-sm">
           <strong>Deze inhoud komt uit de database.</strong> Je kunt hem
           verplaatsen en verbergen, en de kop erboven aanpassen — maar niet
           typen wat erin staat.{" "}
@@ -125,6 +141,86 @@ export function BlokFormulier({
               <p className="text-xs text-muted">
                 De omschrijving wordt voorgelezen aan wie de foto niet ziet, en
                 verschijnt als de foto niet laadt.
+              </p>
+            </div>
+          ) : null}
+
+          {veld.soort === "beeldreeks" ? (
+            <div className="space-y-3">
+              {reeks(veld.naam).map((foto, index) => (
+                <div
+                  key={index}
+                  className="space-y-2 rounded-lg border border-line p-3"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-sm font-semibold">Foto {index + 1}</p>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        zet(
+                          veld.naam,
+                          reeks(veld.naam).filter((_, i) => i !== index),
+                        )
+                      }
+                    >
+                      Weghalen
+                    </Button>
+                  </div>
+                  <select
+                    aria-label={`Foto ${index + 1}`}
+                    value={foto.url ?? ""}
+                    onChange={(e) =>
+                      zetInReeks(veld.naam, index, {
+                        url: e.target.value,
+                        alt: foto.alt ?? "",
+                      })
+                    }
+                    className="h-11 w-full rounded-lg border border-line-strong bg-background px-3"
+                  >
+                    <option value="">— kies een foto —</option>
+                    {fotos.map((keuze) => (
+                      <option key={keuze.url} value={keuze.url}>
+                        {keuze.bestandsnaam}
+                      </option>
+                    ))}
+                  </select>
+                  <Input
+                    aria-label={`Wat er op foto ${index + 1} te zien is`}
+                    placeholder="Wat er op deze foto te zien is"
+                    value={foto.alt ?? ""}
+                    onChange={(e) =>
+                      zetInReeks(veld.naam, index, {
+                        url: foto.url ?? "",
+                        alt: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              ))}
+
+              {reeks(veld.naam).length < MAX_FOTOS_IN_REEKS ? (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  onClick={() =>
+                    zet(veld.naam, [...reeks(veld.naam), { url: "", alt: "" }])
+                  }
+                >
+                  Foto toevoegen
+                </Button>
+              ) : (
+                <p className="text-xs text-muted">
+                  Zes is het maximum. Meer naast elkaar wordt te klein om iets
+                  op te zien, en de pagina laadt er traag van.
+                </p>
+              )}
+
+              <p className="text-xs text-muted">
+                Staan hier geen foto&apos;s in de keuzelijst? Voeg ze eerst toe
+                aan je beeldbank, onderaan deze pagina.
               </p>
             </div>
           ) : null}

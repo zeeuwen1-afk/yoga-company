@@ -44,7 +44,9 @@ function Knop({
       title={label}
       className={cn(
         "inline-flex size-9 items-center justify-center rounded-md transition-colors",
-        actief ? "bg-green text-cream" : "text-muted hover:bg-sand-light",
+        actief
+          ? "bg-primary text-primary-foreground"
+          : "text-muted hover:bg-hover",
       )}
     >
       <Icoon className="size-4" aria-hidden />

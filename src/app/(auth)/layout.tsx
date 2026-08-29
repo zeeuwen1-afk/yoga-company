@@ -5,7 +5,7 @@ export default function AuthLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="flex min-h-screen flex-col bg-cream">
-      <header className="border-b border-line bg-white">
+      <header className="op-donker border-b border-line bg-petrol">
         <div className="mx-auto flex h-16 max-w-6xl items-center px-4 sm:px-6">
           <Link
             href="/"

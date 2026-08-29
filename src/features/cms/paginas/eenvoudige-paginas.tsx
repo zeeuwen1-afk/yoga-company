@@ -69,7 +69,7 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
           </p>
           <Link
             href="/contact"
-            className="mt-8 inline-flex h-12 items-center rounded-lg bg-green px-7 font-semibold text-cream transition-colors hover:bg-green-dark"
+            className="mt-8 inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
           >
             Neem contact op
           </Link>

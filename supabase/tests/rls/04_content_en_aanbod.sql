@@ -67,8 +67,24 @@ begin
   perform tests.act_as_anon();
 
   perform tests.expect(
-    tests.visible_count('select 1 from content_blocks_public') = 1,
+    tests.visible_count('select 1 from content_blocks_public') = 2,
     'de publieke view toont gepubliceerde blokken'
+  );
+
+  -- Een verborgen blok blijft in de view staan, maar zonder zijn inhoud. De
+  -- rij is nodig omdat de site anders terugvalt op de startinhoud uit de code;
+  -- de tekst is dat niet, en een aankondiging die nog niet mag hoort niet
+  -- vandaag al in de API te staan.
+  perform tests.expect(
+    (select zichtbaar from content_blocks_public
+     where block_key = 'banner_tekst') = false,
+    'de publieke view vertelt dat een blok verborgen is'
+  );
+
+  perform tests.expect(
+    (select value from content_blocks_public
+     where block_key = 'banner_tekst') is null,
+    'de inhoud van een verborgen blok verlaat de database niet'
   );
 
   perform tests.expect(

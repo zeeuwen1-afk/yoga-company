@@ -56,8 +56,8 @@ export default async function LogboekPage({
               }
               className={`inline-flex h-10 items-center rounded-lg border px-4 text-sm font-semibold transition-colors ${
                 actief
-                  ? "border-green bg-green text-cream"
-                  : "border-line hover:bg-white"
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-line hover:bg-hover"
               }`}
             >
               {optie.label}

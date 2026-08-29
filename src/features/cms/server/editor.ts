@@ -24,6 +24,12 @@ export type BewerkbaarBlok = {
   /** Het concept, of null wanneer er geen concept is. */
   concept: Json | null;
   heeftConcept: boolean;
+  /** Mag dit blok van de pagina worden weggenomen? */
+  verbergbaar: boolean;
+  /** Staat het blok nu online? */
+  zichtbaar: boolean;
+  /** Wat de schakelaar wordt na publiceren. */
+  zichtbaarNaPubliceren: boolean;
 };
 
 export type EditorPagina = {
@@ -74,7 +80,9 @@ export async function haalEditorPaginas(): Promise<EditorPagina[]> {
 
   const { data } = await supabase
     .from("content_blocks")
-    .select("page_key, block_key, value, draft_value");
+    .select(
+      "page_key, block_key, value, draft_value, zichtbaar, draft_zichtbaar",
+    );
 
   const opgeslagen = new Map(
     (data ?? []).map((rij) => [`${rij.page_key}:${rij.block_key}`, rij]),
@@ -87,6 +95,8 @@ export async function haalEditorPaginas(): Promise<EditorPagina[]> {
 
     const blokken = definitiesVan(pageKey).map((definitie): BewerkbaarBlok => {
       const rij = opgeslagen.get(`${pageKey}:${definitie.block_key}`);
+      const zichtbaar = rij?.zichtbaar ?? true;
+      const zichtbaarNaPubliceren = rij?.draft_zichtbaar ?? zichtbaar;
       return {
         pageKey,
         blockKey: definitie.block_key,
@@ -94,7 +104,13 @@ export async function haalEditorPaginas(): Promise<EditorPagina[]> {
         omschrijving: definitie.omschrijving,
         gepubliceerd: (rij?.value ?? definitie.value) as Json,
         concept: (rij?.draft_value ?? null) as Json | null,
-        heeftConcept: rij?.draft_value != null,
+        // Een omgezette schakelaar is óók een concept: hij telt mee in de
+        // teller en verdwijnt pas bij publiceren.
+        heeftConcept:
+          rij?.draft_value != null || zichtbaarNaPubliceren !== zichtbaar,
+        verbergbaar: definitie.verbergbaar === true,
+        zichtbaar,
+        zichtbaarNaPubliceren,
       };
     });
 
@@ -121,7 +137,7 @@ export async function telConcepten(): Promise<number> {
   const { count } = await supabase
     .from("content_blocks")
     .select("page_key", { count: "exact", head: true })
-    .not("draft_value", "is", null);
+    .or("draft_value.not.is.null,draft_zichtbaar.not.is.null");
 
   return count ?? 0;
 }

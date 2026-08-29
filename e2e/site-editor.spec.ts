@@ -42,7 +42,7 @@ test.describe("Publieke site blijft ongewijzigd", () => {
     // pagina per ongeluk concepten lezen, dan zou dat hier opvallen.
     await expect(
       page.getByRole("heading", {
-        name: "YogaCompany — opleidingsinstituut voor yoga",
+        name: "Van je eerste les tot je eigen lespraktijk.",
         level: 1,
       }),
     ).toBeVisible();

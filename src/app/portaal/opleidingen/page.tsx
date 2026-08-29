@@ -76,7 +76,7 @@ export default async function MijnOpleidingenPage() {
                         </div>
                         <Link
                           href={`/portaal/opleidingen/${opleiding.slug}`}
-                          className="mt-5 inline-flex h-11 items-center rounded-lg bg-green px-5 font-semibold text-cream transition-colors hover:bg-green-dark"
+                          className="mt-5 inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
                         >
                           {stand.afgerondItems > 0 ? "Verder gaan" : "Beginnen"}
                         </Link>

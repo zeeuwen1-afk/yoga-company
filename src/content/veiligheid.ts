@@ -103,7 +103,7 @@ export const VEILIGHEID_SECTIES: VeiligheidSectie[] = [
 <p>Omdat er niets online gaat voordat een reeks controles automatisch is doorlopen. Die controles kijken niet of de site er mooi uitziet, maar of hij zich gedraagt:</p>
 <ul>
 <li><strong>84 controles op losse onderdelen</strong> — rekent de prijs goed, wordt een te late annulering geweigerd.</li>
-<li><strong>269 controles die juist proberen wat niet mag:</strong> klant A die het dossier van klant B opvraagt, iemand die zichzelf beheerder maakt, betaalde content bekijken zonder betaling, een concepttekst die uitlekt voordat hij gepubliceerd is. Elk van die pogingen hóórt te mislukken, en de controle valt om zodra er ééntje slaagt.</li>
+<li><strong>271 controles die juist proberen wat niet mag:</strong> klant A die het dossier van klant B opvraagt, iemand die zichzelf beheerder maakt, betaalde content bekijken zonder betaling, een concepttekst die uitlekt voordat hij gepubliceerd is. Elk van die pogingen hóórt te mislukken, en de controle valt om zodra er ééntje slaagt.</li>
 <li><strong>212 controles die de site in twee echte browsers doorlopen</strong> — op een laptop en op een telefoon — van begin tot eind: inschrijven, inloggen, boeken, annuleren.</li>
 </ul>
 <p>Samen zijn dat ruim vierhonderd controles, en ze draaien bij elke wijziging opnieuw. Springt er één op rood, dan gaat de wijziging niet door. Niet "we kijken er nog naar" — hij komt er eenvoudigweg niet in.</p>

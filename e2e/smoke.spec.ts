@@ -11,7 +11,7 @@ test.describe("Fundament", () => {
 
     await expect(
       page.getByRole("heading", {
-        name: "YogaCompany — opleidingsinstituut voor yoga",
+        name: "Van je eerste les tot je eigen lespraktijk.",
         level: 1,
       }),
     ).toBeVisible();
@@ -27,10 +27,10 @@ test.describe("Fundament", () => {
       const stijl = getComputedStyle(document.body);
       return { kleur: stijl.color, achtergrond: stijl.backgroundColor };
     });
-    // --color-ink = #14332F
-    expect(kleur).toBe("rgb(20, 51, 47)");
-    // --color-paper = #F6FAF9
-    expect(achtergrond).toBe("rgb(246, 250, 249)");
+    // --color-foreground = #FCFAF6 (warm wit op donker)
+    expect(kleur).toBe("rgb(252, 250, 246)");
+    // --color-paper = #1F4D58 (petrol)
+    expect(achtergrond).toBe("rgb(31, 77, 88)");
   });
 
   /**
@@ -50,7 +50,7 @@ test.describe("Fundament", () => {
       page.getByRole("heading", { name: "Styleguide", level: 1 }),
     ).toBeVisible();
     await expect(
-      page.getByText("--color-green", { exact: true }),
+      page.getByText("--color-petrol", { exact: true }),
     ).toBeVisible();
   });
 

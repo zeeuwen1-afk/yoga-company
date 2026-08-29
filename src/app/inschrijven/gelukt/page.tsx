@@ -82,13 +82,13 @@ export default async function InschrijvingGeluktPage() {
             <div className="mt-9 flex flex-wrap gap-3">
               <Link
                 href="/portaal"
-                className="inline-flex h-12 items-center rounded-lg bg-green px-7 font-semibold text-cream transition-colors hover:bg-green-dark"
+                className="inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
               >
                 Naar mijn omgeving
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex h-12 items-center rounded-lg border border-line px-7 font-semibold text-green-dark transition-colors hover:bg-sand-light"
+                className="inline-flex h-12 items-center rounded-lg border border-line px-7 font-semibold text-green-dark transition-colors hover:bg-hover"
               >
                 Een vraag stellen
               </Link>

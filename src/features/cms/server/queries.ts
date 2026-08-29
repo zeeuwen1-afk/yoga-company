@@ -53,11 +53,17 @@ export async function haalPagina(pageKey: string): Promise<Pagina> {
     const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("content_blocks_public")
-      .select("block_key, value")
+      .select("block_key, value, zichtbaar")
       .eq("page_key", pageKey);
 
     if (!error && data) {
       for (const rij of data) {
+        if (!rij.zichtbaar) {
+          // Verborgen betekent: ook de startinhoud niet tonen. Zonder deze
+          // regel zou het blok terugkomen via de terugval hierboven.
+          waarden.delete(rij.block_key);
+          continue;
+        }
         waarden.set(rij.block_key, rij.value as unknown as BlokWaarde);
       }
     }
@@ -87,10 +93,16 @@ export async function haalConceptPagina(pageKey: string): Promise<Pagina> {
 
   const { data } = await supabase
     .from("content_blocks")
-    .select("block_key, value, draft_value")
+    .select("block_key, value, draft_value, zichtbaar, draft_zichtbaar")
     .eq("page_key", pageKey);
 
   for (const rij of data ?? []) {
+    // Ook de schakelaar kent een concept: de voorvertoning laat zien wat er
+    // ná publiceren staat, niet wat er nu online staat.
+    if (!(rij.draft_zichtbaar ?? rij.zichtbaar)) {
+      waarden.delete(rij.block_key);
+      continue;
+    }
     // Een concept wint van de gepubliceerde waarde; is er geen concept, dan
     // toont de voorvertoning wat er nu online staat.
     const waarde = rij.draft_value ?? rij.value;

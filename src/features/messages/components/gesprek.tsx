@@ -54,7 +54,7 @@ export function Gesprek({ berichten }: { berichten: Bericht[] }) {
                 className={cn(
                   "max-w-[85%] rounded-[var(--radius-card)] px-4 py-3 sm:max-w-[70%]",
                   bericht.vanKlant
-                    ? "bg-green text-cream"
+                    ? "bg-primary text-primary-foreground"
                     : "border border-line bg-white",
                 )}
               >
