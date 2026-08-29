@@ -301,6 +301,50 @@ function Fotoreeks({ inhoud }: { inhoud: Record<string, unknown> }) {
   );
 }
 
+/**
+ * De loopbaan op een rij.
+ *
+ * Dezelfde vorm als de portfoliopagina van de studio, zodat een docent die
+ * allebei bekijkt niet twee keer iets anders ziet. Lege regels vallen weg.
+ */
+function Portfolioblok({ inhoud }: { inhoud: Record<string, unknown> }) {
+  const regels = (
+    Array.isArray(inhoud.regels)
+      ? (inhoud.regels as Record<string, string>[])
+      : []
+  ).filter((regel) => regel?.titel || regel?.periode);
+
+  if (regels.length === 0) return null;
+
+  return (
+    <Sectie lijnBoven>
+      {tekst(inhoud, "kop") ? (
+        <h2 className="text-3xl">{tekst(inhoud, "kop")}</h2>
+      ) : null}
+
+      <ol className="mt-8 space-y-6">
+        {regels.map((regel, index) => (
+          <li
+            key={index}
+            className="grid gap-2 border-t border-line pt-5 sm:grid-cols-[12rem_minmax(0,1fr)] sm:gap-8"
+          >
+            <p className="text-sm text-muted tabular-nums">{regel.periode}</p>
+            <div>
+              <h3 className="text-lg">{regel.titel}</h3>
+              {regel.waar ? (
+                <p className="mt-0.5 text-sm text-sand">{regel.waar}</p>
+              ) : null}
+              {regel.tekst ? (
+                <p className="mt-2 text-[0.975rem] text-muted">{regel.tekst}</p>
+              ) : null}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </Sectie>
+  );
+}
+
 function Citaatblok({ inhoud }: { inhoud: Record<string, unknown> }) {
   return (
     <Sectie achtergrond="creme" lijnBoven>
@@ -460,6 +504,8 @@ export function DocentBlokken({
             return <Beeldblok key={blok.id} inhoud={blok.inhoud} />;
           case "fotoreeks":
             return <Fotoreeks key={blok.id} inhoud={blok.inhoud} />;
+          case "portfolio":
+            return <Portfolioblok key={blok.id} inhoud={blok.inhoud} />;
           case "citaat":
             return <Citaatblok key={blok.id} inhoud={blok.inhoud} />;
           case "video":

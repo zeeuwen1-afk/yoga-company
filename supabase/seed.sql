@@ -1045,6 +1045,24 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'bedrijf_titel', 'text', '{"text":"Yoga op de werkvloer"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'bedrijf_tekst', 'text', '{"text":"Vaste lessen op kantoor of online, een workshop op een teamdag, of een programma rond werkdruk en herstel. We komen langs of ontvangen jullie in de studio."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('home', 'bedrijf_knop', 'text', '{"text":"Bekijk bedrijfsyoga"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('home', 'cta_titel', 'text', '{"text":"Nog niet zeker welke stap past?"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
@@ -1052,6 +1070,138 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('home', 'cta_tekst', 'text', '{"text":"Laat het ons weten. We denken graag mee, zonder dat je ergens aan vastzit."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'titel', 'text', '{"text":"Yoga op de werkvloer"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'inleiding', 'text', '{"text":"Vaste lessen op kantoor of online, een workshop op een teamdag, of een programma rond werkdruk en herstel. We komen langs, of jullie komen naar de studio."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'beeld', 'image', '{"url":"","alt":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'verhaal', 'richtext', '{"html":"<p>Mensen die de hele dag in hun hoofd zitten, merken pas dat ze gespannen zijn als het al te veel is. Een uur per week op de mat verandert dat: even niet presteren, wél merken wat er in je lijf gebeurt.</p><p>We werken met wat er is — een vergaderzaal, een kantine, een hoek van het magazijn — en met mensen die nog nooit yoga hebben gedaan. Geen ingewikkelde houdingen, geen kleedkamer nodig.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'vormen_titel', 'text', '{"text":"In welke vorm"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'vormen', 'richtext', '{"items":[{"naam":"Wekelijkse les op locatie","duur":"45 tot 60 minuten","tekst":"Een vast moment in de week, in jullie eigen ruimte. Matten nemen we mee. Vanaf acht deelnemers loont het om met twee groepen te werken.","prijs":"[prijs per les invullen]"},{"naam":"Workshop op een teamdag","duur":"90 minuten tot een dagdeel","tekst":"Een losse sessie rond ademhaling, spanning en herstel. Werkt goed als onderbreking van een dag vol praten.","prijs":"[prijs invullen]"},{"naam":"Programma rond werkdruk","duur":"8 weken","tekst":"Wekelijkse lessen met een opbouw, plus materiaal om zelf mee verder te gaan. Ook geschikt als onderdeel van een verzuimtraject.","prijs":"[prijs invullen]"}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'praktisch_titel', 'text', '{"text":"Praktisch"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'praktisch', 'richtext', '{"items":[{"titel":"Wat jullie regelen","tekst":"Een ruimte waar iedereen kan liggen, en een kwartier om hem leeg te maken."},{"titel":"Wat wij meenemen","tekst":"Matten, blokken en alles wat er verder bij hoort."},{"titel":"Kleding","tekst":"Gewoon iets waarin je kunt bewegen. Niemand hoeft zich om te kleden voor een les die niet zweterig is."},{"titel":"Groepsgrootte","tekst":"Tot twaalf mensen per groep. Daarboven splitsen we."}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'cta_titel', 'text', '{"text":"Een keer proberen?"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('bedrijfsyoga', 'cta_tekst', 'text', '{"text":"We komen graag eerst een keer langs voor een proefles, zodat jullie weten waar je ja tegen zegt. Laat weten met hoeveel mensen jullie zijn en waar jullie zitten."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'naam', 'text', '{"text":"Wietske Visser"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'rol', 'text', '{"text":"Oprichter en hoofddocent · YogaCompany"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'foto', 'image', '{"url":"","alt":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'intro', 'richtext', '{"html":"<p>[Vertel hier in twee of drie alinea''s wie je bent, hoe je bij yoga terecht bent gekomen en waar je voor staat. Schrijf het zoals je het aan iemand zou vertellen die tegenover je zit.]</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'ervaring_titel', 'text', '{"text":"Wat ik doe en heb gedaan"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'ervaring', 'richtext', '{"items":[{"periode":"[jaartal] — heden","titel":"[Wat je doet]","waar":"[Waar]","tekst":"[Eén of twee zinnen over wat het inhoudt.]"},{"periode":"[jaartal] — [jaartal]","titel":"[Wat je deed]","waar":"[Waar]","tekst":"[Eén of twee zinnen.]"}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'opleiding_titel', 'text', '{"text":"Opleidingen en certificeringen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'opleidingen', 'richtext', '{"items":[{"jaar":"[jaartal]","titel":"[Naam van de opleiding]","instituut":"[Bij wie]"}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'specialisaties_titel', 'text', '{"text":"Waar ik goed in ben"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'specialisaties', 'richtext', '{"items":[{"titel":"[Specialisatie]","tekst":"[Wat je ermee doet, en voor wie het iets oplevert.]"}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'cta_titel', 'text', '{"text":"Iets samen doen?"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'cta_tekst', 'text', '{"text":"Voor lessen, een opleiding, yoga op de werkvloer of een samenwerking — laat het weten."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1118,6 +1268,12 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('over-ons', 'verhaal', 'richtext', '{"html":"<p>YogaCompany is een opleidingsinstituut voor yoga. We leiden op, we trainen, en we geven les — in die volgorde van nadruk.</p><p>Wat ons bindt is een manier van kijken: yoga is geen prestatie. Een houding die er goed uitziet zegt niets als het lichaam eronder gespannen blijft. We leren onze deelnemers kijken naar de mens tegenover hen, niet naar de vorm.</p><p>Daarom werken we in kleine groepen. Daarom duren onze opleidingen langer dan strikt nodig. En daarom kun je onze modules los volgen: niet iedereen heeft hetzelfde tempo, en dat hoeft ook niet.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('over-ons', 'beeld', 'image', '{"url":"","alt":""}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

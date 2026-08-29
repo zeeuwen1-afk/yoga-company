@@ -54,6 +54,13 @@ export type BlokSeed = {
   /** Waar dit blok op de pagina staat — hulp voor de site-editor. */
   omschrijving: string;
   /**
+   * Alleen bij een lijstblok: hoeveel items er maximaal in mogen, en hoe één
+   * item heet op de knop. Zonder dit blijft een lijst staan op het aantal
+   * waarmee hij begon — en dat was precies de klacht: een derde docent kwam er
+   * niet bij.
+   */
+  lijst?: { max: number; itemNaam: string };
+  /**
    * Mag de beheerder dit blok wegnemen van de pagina?
    *
    * Alleen blokken die een hele sectie dragen en die de pagina kan missen. Een
@@ -381,6 +388,7 @@ export const BLOKKEN: BlokSeed[] = [
   {
     page_key: "home",
     block_key: "deuren",
+    lijst: { max: 6, itemNaam: "ingang" },
     verbergbaar: true,
     kind: "richtext",
     omschrijving:
@@ -463,6 +471,7 @@ export const BLOKKEN: BlokSeed[] = [
   {
     page_key: "home",
     block_key: "waarom_punten",
+    lijst: { max: 8, itemNaam: "reden" },
     verbergbaar: true,
     kind: "richtext",
     omschrijving: "De vier redenen, elk met een korte toelichting",
@@ -506,6 +515,7 @@ export const BLOKKEN: BlokSeed[] = [
   {
     page_key: "home",
     block_key: "testimonials",
+    lijst: { max: 9, itemNaam: "ervaring" },
     verbergbaar: true,
     kind: "richtext",
     omschrijving: "Drie ervaringen van deelnemers",
@@ -554,6 +564,7 @@ export const BLOKKEN: BlokSeed[] = [
   {
     page_key: "home",
     block_key: "inlog_deuren",
+    lijst: { max: 2, itemNaam: "inlogdeur" },
     verbergbaar: true,
     kind: "richtext",
     omschrijving:
@@ -580,6 +591,33 @@ export const BLOKKEN: BlokSeed[] = [
     },
   },
 
+  // De verwijzing naar bedrijfsyoga. Eén strook, geen vierde deur: dat is een
+  // ander soort klant — een werkgever, geen bezoeker die zelf een les zoekt.
+  {
+    page_key: "home",
+    block_key: "bedrijf_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kop van de strook over bedrijfsyoga",
+    value: { text: "Yoga op de werkvloer" },
+  },
+  {
+    page_key: "home",
+    block_key: "bedrijf_tekst",
+    kind: "text",
+    omschrijving: "Tekst in die strook",
+    value: {
+      text: "Vaste lessen op kantoor of online, een workshop op een teamdag, of een programma rond werkdruk en herstel. We komen langs of ontvangen jullie in de studio.",
+    },
+  },
+  {
+    page_key: "home",
+    block_key: "bedrijf_knop",
+    kind: "text",
+    omschrijving: "Tekst op de knop in die strook",
+    value: { text: "Bekijk bedrijfsyoga" },
+  },
+
   {
     page_key: "home",
     block_key: "cta_titel",
@@ -594,6 +632,275 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving: "Tekst van het afsluitende blok",
     value: {
       text: "Laat het ons weten. We denken graag mee, zonder dat je ergens aan vastzit.",
+    },
+  },
+
+  // ---------------------------------------------------------------------------
+  // Bedrijfsyoga
+  //
+  // Een eigen pagina en geen vierde deur op de startpagina: dit is een andere
+  // klant. Een werkgever leest andere dingen dan iemand die zelf een les zoekt
+  // — wat het oplevert, wat het kost, en hoe het praktisch gaat.
+  // ---------------------------------------------------------------------------
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "titel",
+    kind: "text",
+    omschrijving: "Kop van de pagina",
+    value: { text: "Yoga op de werkvloer" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "inleiding",
+    kind: "text",
+    omschrijving: "Zin onder de kop",
+    value: {
+      text: "Vaste lessen op kantoor of online, een workshop op een teamdag, of een programma rond werkdruk en herstel. We komen langs, of jullie komen naar de studio.",
+    },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "beeld",
+    kind: "image",
+    verbergbaar: true,
+    omschrijving: "Sfeerbeeld boven aan de pagina",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "verhaal",
+    kind: "richtext",
+    omschrijving: "Het verhaal: waarom yoga op het werk",
+    value: {
+      html: "<p>Mensen die de hele dag in hun hoofd zitten, merken pas dat ze gespannen zijn als het al te veel is. Een uur per week op de mat verandert dat: even niet presteren, wél merken wat er in je lijf gebeurt.</p><p>We werken met wat er is — een vergaderzaal, een kantine, een hoek van het magazijn — en met mensen die nog nooit yoga hebben gedaan. Geen ingewikkelde houdingen, geen kleedkamer nodig.</p>",
+    },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "vormen_titel",
+    kind: "text",
+    omschrijving: "Kop boven de vormen",
+    value: { text: "In welke vorm" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "vormen",
+    kind: "richtext",
+    lijst: { max: 8, itemNaam: "vorm" },
+    omschrijving:
+      "De vormen waarin het kan. Per vorm: naam, duur, toelichting en wat het kost.",
+    value: {
+      items: [
+        {
+          naam: "Wekelijkse les op locatie",
+          duur: "45 tot 60 minuten",
+          tekst:
+            "Een vast moment in de week, in jullie eigen ruimte. Matten nemen we mee. Vanaf acht deelnemers loont het om met twee groepen te werken.",
+          prijs: "[prijs per les invullen]",
+        },
+        {
+          naam: "Workshop op een teamdag",
+          duur: "90 minuten tot een dagdeel",
+          tekst:
+            "Een losse sessie rond ademhaling, spanning en herstel. Werkt goed als onderbreking van een dag vol praten.",
+          prijs: "[prijs invullen]",
+        },
+        {
+          naam: "Programma rond werkdruk",
+          duur: "8 weken",
+          tekst:
+            "Wekelijkse lessen met een opbouw, plus materiaal om zelf mee verder te gaan. Ook geschikt als onderdeel van een verzuimtraject.",
+          prijs: "[prijs invullen]",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "praktisch_titel",
+    kind: "text",
+    omschrijving: "Kop boven de praktische punten",
+    value: { text: "Praktisch" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "praktisch",
+    kind: "richtext",
+    lijst: { max: 8, itemNaam: "punt" },
+    omschrijving: "Praktische punten: wat er nodig is, en wat wij meenemen.",
+    value: {
+      items: [
+        {
+          titel: "Wat jullie regelen",
+          tekst:
+            "Een ruimte waar iedereen kan liggen, en een kwartier om hem leeg te maken.",
+        },
+        {
+          titel: "Wat wij meenemen",
+          tekst: "Matten, blokken en alles wat er verder bij hoort.",
+        },
+        {
+          titel: "Kleding",
+          tekst:
+            "Gewoon iets waarin je kunt bewegen. Niemand hoeft zich om te kleden voor een les die niet zweterig is.",
+        },
+        {
+          titel: "Groepsgrootte",
+          tekst: "Tot twaalf mensen per groep. Daarboven splitsen we.",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "cta_titel",
+    kind: "text",
+    omschrijving: "Kop van het afsluitende blok",
+    value: { text: "Een keer proberen?" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "cta_tekst",
+    kind: "text",
+    omschrijving: "Tekst van het afsluitende blok",
+    value: {
+      text: "We komen graag eerst een keer langs voor een proefles, zodat jullie weten waar je ja tegen zegt. Laat weten met hoeveel mensen jullie zijn en waar jullie zitten.",
+    },
+  },
+
+  // ---------------------------------------------------------------------------
+  // Portfolio
+  //
+  // De persoonlijke pagina van wie het bedrijf draagt. Anders dan "Over ons":
+  // daar staat het verhaal van de studio, hier staat één loopbaan — wat iemand
+  // heeft gedaan, geleerd en waar ze goed in is. Dat is wat een opleider of
+  // een bedrijf wil lezen voordat ze iemand inhuren.
+  //
+  // Elke docent kan hetzelfde op zijn eigen pagina, met het bloktype
+  // "portfolio" in src/content/docent-blokken.ts.
+  // ---------------------------------------------------------------------------
+  {
+    page_key: "portfolio",
+    block_key: "naam",
+    kind: "text",
+    omschrijving: "De naam boven aan het portfolio",
+    value: { text: "Wietske Visser" },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "rol",
+    kind: "text",
+    omschrijving: "De regel onder de naam",
+    value: { text: "Oprichter en hoofddocent · YogaCompany" },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "foto",
+    kind: "image",
+    verbergbaar: true,
+    omschrijving: "Portretfoto",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "intro",
+    kind: "richtext",
+    omschrijving: "Het verhaal in een paar alinea's",
+    value: {
+      html: "<p>[Vertel hier in twee of drie alinea's wie je bent, hoe je bij yoga terecht bent gekomen en waar je voor staat. Schrijf het zoals je het aan iemand zou vertellen die tegenover je zit.]</p>",
+    },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "ervaring_titel",
+    kind: "text",
+    omschrijving: "Kop boven de werkervaring",
+    value: { text: "Wat ik doe en heb gedaan" },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "ervaring",
+    kind: "richtext",
+    lijst: { max: 14, itemNaam: "ervaring" },
+    omschrijving:
+      "De loopbaan, nieuwste bovenaan. Per regel: periode, wat je deed, waar, en een toelichting.",
+    value: {
+      items: [
+        {
+          periode: "[jaartal] — heden",
+          titel: "[Wat je doet]",
+          waar: "[Waar]",
+          tekst: "[Eén of twee zinnen over wat het inhoudt.]",
+        },
+        {
+          periode: "[jaartal] — [jaartal]",
+          titel: "[Wat je deed]",
+          waar: "[Waar]",
+          tekst: "[Eén of twee zinnen.]",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "opleiding_titel",
+    kind: "text",
+    omschrijving: "Kop boven de opleidingen",
+    value: { text: "Opleidingen en certificeringen" },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "opleidingen",
+    kind: "richtext",
+    lijst: { max: 16, itemNaam: "opleiding" },
+    omschrijving: "Wat je hebt gevolgd. Per regel: jaartal, naam en instituut.",
+    value: {
+      items: [
+        {
+          jaar: "[jaartal]",
+          titel: "[Naam van de opleiding]",
+          instituut: "[Bij wie]",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "specialisaties_titel",
+    kind: "text",
+    omschrijving: "Kop boven de specialisaties",
+    value: { text: "Waar ik goed in ben" },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "specialisaties",
+    kind: "richtext",
+    lijst: { max: 8, itemNaam: "specialisatie" },
+    omschrijving: "Waar je je in hebt verdiept, met een korte toelichting.",
+    value: {
+      items: [
+        {
+          titel: "[Specialisatie]",
+          tekst: "[Wat je ermee doet, en voor wie het iets oplevert.]",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "cta_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kop van het afsluitende blok",
+    value: { text: "Iets samen doen?" },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "cta_tekst",
+    kind: "text",
+    omschrijving: "Tekst van het afsluitende blok",
+    value: {
+      text: "Voor lessen, een opleiding, yoga op de werkvloer of een samenwerking — laat het weten.",
     },
   },
 
@@ -700,7 +1007,16 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "over-ons",
+    block_key: "beeld",
+    kind: "image",
+    omschrijving: "Sfeerbeeld boven het verhaal",
+    verbergbaar: true,
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "over-ons",
     block_key: "docenten",
+    lijst: { max: 12, itemNaam: "docent" },
     kind: "richtext",
     omschrijving: "Korte bio's van de docenten",
     value: {
@@ -743,6 +1059,7 @@ export const BLOKKEN: BlokSeed[] = [
   {
     page_key: "contact",
     block_key: "gegevens",
+    lijst: { max: 8, itemNaam: "gegeven" },
     kind: "richtext",
     omschrijving: "Contactgegevens naast het formulier",
     value: {
@@ -769,6 +1086,7 @@ export const BLOKKEN: BlokSeed[] = [
   {
     page_key: "footer",
     block_key: "bedrijfsgegevens",
+    lijst: { max: 6, itemNaam: "gegeven" },
     kind: "richtext",
     omschrijving: "E-mail, KvK en btw-nummer in de paginavoet",
     value: {

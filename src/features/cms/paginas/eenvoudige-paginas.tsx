@@ -19,6 +19,7 @@ type Gegeven = { label: string; waarde: string };
 
 export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
   const docenten = pagina.lijst<Docent>("docenten");
+  const beeld = pagina.beeld("beeld");
 
   return (
     <>
@@ -28,6 +29,18 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
           <Richtext html={pagina.html("verhaal")} className="mt-8 text-lg" />
         </div>
       </Sectie>
+
+      {beeld ? (
+        <Sectie className="!pt-0">
+          <Image
+            src={beeld.url}
+            alt={beeld.alt}
+            width={1600}
+            height={700}
+            className="aspect-[16/7] w-full rounded-[var(--radius-card)] border border-line object-cover"
+          />
+        </Sectie>
+      ) : null}
 
       {docenten.length > 0 ? (
         <Sectie lijnBoven>

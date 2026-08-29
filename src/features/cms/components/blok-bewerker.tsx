@@ -33,6 +33,13 @@ function alsWaarde(json: Json | null): Waarde {
   return { text: "" };
 }
 
+/** Welke velden in een lijst een foto zijn, en dus een uploadknop krijgen. */
+const IS_FOTOVELD = /^(foto|beeld|portret|afbeelding)$/;
+
+function hoofdletter(woord: string) {
+  return woord.charAt(0).toUpperCase() + woord.slice(1);
+}
+
 /** Labels voor de velden binnen een lijstblok. */
 const VELD_LABEL: Record<string, string> = {
   titel: "Titel",
@@ -41,7 +48,7 @@ const VELD_LABEL: Record<string, string> = {
   naam: "Naam",
   rol: "Rol",
   bio: "Korte biografie",
-  foto: "Foto (webadres)",
+  foto: "Foto",
   label: "Label",
   waarde: "Waarde",
   toelichting: "Toelichting",
@@ -63,6 +70,7 @@ export function BlokBewerker({
   concept,
   verbergbaar = false,
   zichtbaarNaPubliceren = true,
+  lijst = null,
 }: {
   pageKey: string;
   blockKey: string;
@@ -74,6 +82,12 @@ export function BlokBewerker({
   verbergbaar?: boolean;
   /** Staat het blok op de pagina zodra er gepubliceerd wordt? */
   zichtbaarNaPubliceren?: boolean;
+  /** Alleen bij een lijstblok: de grens, de naam van één item en het sjabloon. */
+  lijst?: {
+    max: number;
+    itemNaam: string;
+    sjabloon: Record<string, string>;
+  } | null;
 }) {
   const beginwaarde = alsWaarde(concept ?? gepubliceerd);
   const [waarde, setWaarde] = useState<Waarde>(beginwaarde);
@@ -194,52 +208,112 @@ export function BlokBewerker({
 
       {/* Lijst met vaste velden --------------------------------------------- */}
       {"items" in waarde ? (
-        <ul className="space-y-4">
-          {waarde.items.map((item, index) => (
-            <li key={index} className="rounded-lg border border-line p-4">
-              <p className="mb-3 text-sm font-semibold text-muted">
-                Item {index + 1}
+        <div className="space-y-4">
+          <ul className="space-y-4">
+            {waarde.items.map((item, index) => (
+              <li key={index} className="rounded-lg border border-line p-4">
+                <div className="mb-3 flex items-center justify-between gap-3">
+                  <p className="text-sm font-semibold text-muted">
+                    {lijst ? hoofdletter(lijst.itemNaam) : "Item"} {index + 1}
+                  </p>
+                  {lijst && waarde.items.length > 1 ? (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        setWaarde({
+                          items: waarde.items.filter((_, i) => i !== index),
+                        })
+                      }
+                    >
+                      Weghalen
+                    </Button>
+                  ) : null}
+                </div>
+
+                <div className="space-y-3">
+                  {/* De volgorde komt uit de code en niet uit het opgeslagen
+                      object: Postgres bewaart de sleutels van een jsonb-waarde
+                      gesorteerd op lengte, waardoor "naam" onder "bio" belandt
+                      en het formulier bij de biografie begint. */}
+                  {(lijst
+                    ? Object.keys(lijst.sjabloon)
+                    : Object.keys(item)
+                  ).map((veld) => {
+                    const inhoud = item[veld] ?? "";
+                    const wijzig = (nieuweWaarde: string) =>
+                      setWaarde({
+                        items: waarde.items.map((rij, i) =>
+                          i === index ? { ...rij, [veld]: nieuweWaarde } : rij,
+                        ),
+                      });
+
+                    // Een fotoveld krijgt de kiezer met uploadknop. De
+                    // beschrijving voor schermlezers komt uit de naam ernaast,
+                    // dus die vraagt hij hier niet nog eens.
+                    if (IS_FOTOVELD.test(veld)) {
+                      return (
+                        <div key={veld}>
+                          <Label>{VELD_LABEL[veld] ?? veld}</Label>
+                          <BeeldKiezer
+                            id={`${blockKey}-${index}-${veld}`}
+                            url={inhoud}
+                            alt={item.naam ?? item.titel ?? ""}
+                            toonAlt={false}
+                            onWijzig={({ url }) => wijzig(url)}
+                          />
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div key={veld}>
+                        <Label htmlFor={`${blockKey}-${index}-${veld}`}>
+                          {VELD_LABEL[veld] ?? veld}
+                        </Label>
+                        {inhoud.length > 90 ? (
+                          <Textarea
+                            id={`${blockKey}-${index}-${veld}`}
+                            rows={3}
+                            value={inhoud}
+                            onChange={(event) => wijzig(event.target.value)}
+                          />
+                        ) : (
+                          <Input
+                            id={`${blockKey}-${index}-${veld}`}
+                            value={inhoud}
+                            onChange={(event) => wijzig(event.target.value)}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {lijst ? (
+            waarde.items.length < lijst.max ? (
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                onClick={() =>
+                  setWaarde({ items: [...waarde.items, { ...lijst.sjabloon }] })
+                }
+              >
+                {hoofdletter(lijst.itemNaam)} toevoegen
+              </Button>
+            ) : (
+              <p className="text-sm text-muted">
+                Meer dan {lijst.max} passen hier niet; daarboven valt de opmaak
+                uit elkaar.
               </p>
-              <div className="space-y-3">
-                {Object.entries(item).map(([veld, inhoud]) => (
-                  <div key={veld}>
-                    <Label htmlFor={`${blockKey}-${index}-${veld}`}>
-                      {VELD_LABEL[veld] ?? veld}
-                    </Label>
-                    {inhoud.length > 90 ? (
-                      <Textarea
-                        id={`${blockKey}-${index}-${veld}`}
-                        rows={3}
-                        value={inhoud}
-                        onChange={(event) => {
-                          const nieuw = waarde.items.map((rij, i) =>
-                            i === index
-                              ? { ...rij, [veld]: event.target.value }
-                              : rij,
-                          );
-                          setWaarde({ items: nieuw });
-                        }}
-                      />
-                    ) : (
-                      <Input
-                        id={`${blockKey}-${index}-${veld}`}
-                        value={inhoud}
-                        onChange={(event) => {
-                          const nieuw = waarde.items.map((rij, i) =>
-                            i === index
-                              ? { ...rij, [veld]: event.target.value }
-                              : rij,
-                          );
-                          setWaarde({ items: nieuw });
-                        }}
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </li>
-          ))}
-        </ul>
+            )
+          ) : null}
+        </div>
       ) : null}
 
       {/* Afbeelding ---------------------------------------------------------- */}

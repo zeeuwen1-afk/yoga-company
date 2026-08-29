@@ -323,6 +323,22 @@ niet de structuur. Dat houdt de site consistent.
 Bevalt een concept toch niet, dan gooit **Concepten weggooien** ze weg. De
 website is dan onveranderd gebleven.
 
+### Lijsten uitbreiden
+
+Bij een blok dat uit meerdere onderdelen bestaat — de docenten op "Over ons",
+de drie ingangen op de startpagina, de ervaringen, de contactgegevens — staat
+onderaan een knop **… toevoegen**. Elk onderdeel heeft zelf een knop
+**Weghalen**; de laatste kun je niet weghalen, want dan is er niets meer om
+aan toe te voegen.
+
+Per blok geldt een maximum, want boven een bepaald aantal valt de opmaak uit
+elkaar: acht redenen, negen ervaringen, twaalf docenten. Zit je aan de grens,
+dan zegt de editor dat in plaats van de knop te verbergen.
+
+**Foto's in zo'n lijst** hebben een echte uploadknop, net als de sfeerbeelden.
+De beschrijving voor schermlezers hoef je er niet bij te typen: bij een docent
+is dat de naam die ernaast staat.
+
 ### Een blok van de pagina halen
 
 Bij sommige blokken staat de knop **Van de pagina halen**. Daarmee verdwijnt het

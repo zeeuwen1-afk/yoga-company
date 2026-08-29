@@ -361,6 +361,28 @@ export function HomeInhoud({
         </Sectie>
       ) : null}
 
+      {pagina.tekst("bedrijf_titel") ? (
+        <Sectie achtergrond="creme" lijnBoven>
+          <div className="flex flex-wrap items-center justify-between gap-8 rounded-[var(--radius-card)] border border-line bg-white p-8 sm:p-10">
+            <div className="max-w-xl">
+              <p className="label-klein">Voor werkgevers</p>
+              <h2 className="mt-3 text-2xl sm:text-3xl">
+                {pagina.tekst("bedrijf_titel")}
+              </h2>
+              <p className="mt-3 text-[0.975rem] text-muted">
+                {pagina.tekst("bedrijf_tekst")}
+              </p>
+            </div>
+            <Link
+              href="/bedrijfsyoga"
+              className="inline-flex h-12 shrink-0 items-center rounded-lg border border-line-strong px-7 font-semibold text-green-dark transition-colors hover:bg-hover"
+            >
+              {pagina.tekst("bedrijf_knop")}
+            </Link>
+          </div>
+        </Sectie>
+      ) : null}
+
       <Inlogdeuren pagina={pagina} />
 
       <Sectie achtergrond="zand" lijnBoven>
