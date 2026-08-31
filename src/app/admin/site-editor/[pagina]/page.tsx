@@ -58,6 +58,7 @@ export default async function PaginaBewerkenPage({
               concept={blok.concept}
               verbergbaar={blok.verbergbaar}
               zichtbaarNaPubliceren={blok.zichtbaarNaPubliceren}
+              lijst={blok.lijst}
             />
           ))}
         </Paneel>

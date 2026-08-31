@@ -323,6 +323,60 @@ niet de structuur. Dat houdt de site consistent.
 Bevalt een concept toch niet, dan gooit **Concepten weggooien** ze weg. De
 website is dan onveranderd gebleven.
 
+### De pagina's voor organisaties
+
+Bedrijven, sportclubs en onderwijs zijn drie pagina's met dezelfde opbouw, en
+allemaal aanpasbaar in de site-editor: de kop, het verhaal, de kaarten met
+doelgroepen, de praktische regels en de tarieven. Elk onderdeel heeft een
+toevoegknop, dus een vorm of een doelgroep erbij kan zonder mij.
+
+Twee velden werken met **ja** of leeg, net als bij de tarieven:
+
+- **uitgelicht** bij een kaart — die krijgt dan een rand in abrikoos en het
+  label "Vaak de eerste stap" (bij doelgroepen) of "Meest gekozen" (bij een
+  vorm). Bedoeld voor één per blok.
+
+Laat je een heel blok leeg, dan verdwijnt het van de pagina in plaats van dat
+er een lege kop blijft staan. De aanvraag onderaan komt binnen bij
+**Beheer → Contactberichten**, samen met de andere berichten van mensen zonder
+account.
+
+### De tarieven op die pagina's
+
+De bedragen komen uit **Prijsopbouw voor organisaties, versie 1.0 (29 augustus 2026)**. Drie dingen zitten er bewust in en horen zo te blijven:
+
+- **Bedrijven zien alleen de prijs exclusief btw**, want die kunnen ze
+  terugvragen. **Scholen en clubs zien beide bedragen**, want die kunnen dat
+  niet — voor hen is de btw een echte kostenpost van 21%.
+- **De prijs hangt aan het bezoek, niet aan de les.** Drie klassen op één
+  ochtend is per les veel voordeliger dan één losse les. Verander je één van
+  de twee, verander dan ook de tekst erboven.
+- **Onder € 145 per sessie ga je niet.** Dat is de kostprijs van een sessie in
+  een reeks, inclusief reistijd en voorbereiding. De enige bedragen die daar
+  onder liggen zijn de dagdeelprijzen per les (€ 125 en € 115) — die mogen dat,
+  omdat je in dat dagdeel drie of vijf lessen geeft voor één keer reizen.
+
+Het blok **Wat dit fiscaal betekent** op de bedrijvenpagina is nagelopen tekst
+over de werkkostenregeling. Wijzig die niet zonder je adviseur, en zet er in
+geen geval "arbovoorziening" in: die vrijstelling geldt sinds 2022 niet meer
+voor dit soort voorzieningen, en veel concurrenten schrijven dat nog wel.
+
+### Lijsten uitbreiden
+
+Bij een blok dat uit meerdere onderdelen bestaat — de docenten op "Over ons",
+de drie ingangen op de startpagina, de ervaringen, de contactgegevens — staat
+onderaan een knop **… toevoegen**. Elk onderdeel heeft zelf een knop
+**Weghalen**; de laatste kun je niet weghalen, want dan is er niets meer om
+aan toe te voegen.
+
+Per blok geldt een maximum, want boven een bepaald aantal valt de opmaak uit
+elkaar: acht redenen, negen ervaringen, twaalf docenten. Zit je aan de grens,
+dan zegt de editor dat in plaats van de knop te verbergen.
+
+**Foto's in zo'n lijst** hebben een echte uploadknop, net als de sfeerbeelden.
+De beschrijving voor schermlezers hoef je er niet bij te typen: bij een docent
+is dat de naam die ernaast staat.
+
 ### Een blok van de pagina halen
 
 Bij sommige blokken staat de knop **Van de pagina halen**. Daarmee verdwijnt het

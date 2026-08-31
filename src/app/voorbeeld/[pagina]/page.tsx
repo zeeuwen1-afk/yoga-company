@@ -7,6 +7,8 @@ import { vindJuridischeTekst } from "@/content/juridisch";
 import { haalConceptPagina } from "@/features/cms";
 import { haalRooster, Rooster } from "@/features/bookings";
 import { HomeInhoud } from "@/features/cms/paginas/home-inhoud";
+import { OrganisatieInhoud } from "@/features/cms/paginas/organisatie-inhoud";
+import { PortfolioInhoud } from "@/features/cms/paginas/portfolio-inhoud";
 import {
   ContactInhoud,
   JuridischeInhoud,
@@ -76,6 +78,12 @@ export default async function VoorbeeldPagina({
               .slice(0, 4)}
           />
         );
+      case "portfolio":
+        return <PortfolioInhoud pagina={pagina} />;
+      case "bedrijfsyoga":
+      case "sportclubs":
+      case "onderwijs":
+        return <OrganisatieInhoud pagina={pagina} pageKey={inhoudKey} />;
       case "opleidingen":
         return (
           <OverzichtInhoud pagina={pagina}>

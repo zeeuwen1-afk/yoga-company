@@ -48,6 +48,11 @@ export function BlokFormulier({
       alt: "",
     };
 
+  const rijen = (naam: string) =>
+    Array.isArray(inhoud[naam])
+      ? (inhoud[naam] as Record<string, string>[])
+      : [];
+
   const reeks = (naam: string) =>
     Array.isArray(inhoud[naam])
       ? (inhoud[naam] as { url?: string; alt?: string }[])
@@ -226,62 +231,100 @@ export function BlokFormulier({
           ) : null}
 
           {veld.soort === "lijst" && veld.velden ? (
-            <ul className="space-y-3">
-              {(Array.isArray(inhoud[veld.naam])
-                ? (inhoud[veld.naam] as Record<string, string>[])
-                : []
-              ).map((item, index) => (
-                <li key={index} className="rounded-lg border border-line p-3">
-                  {veld.velden!.map((sub) => (
-                    <div key={sub.naam} className="mt-2 first:mt-0">
-                      <Label
-                        htmlFor={`${blokId}-${veld.naam}-${index}-${sub.naam}`}
+            <div className="space-y-3">
+              <ul className="space-y-3">
+                {(Array.isArray(inhoud[veld.naam])
+                  ? (inhoud[veld.naam] as Record<string, string>[])
+                  : []
+                ).map((item, index) => (
+                  <li key={index} className="rounded-lg border border-line p-3">
+                    {veld.velden!.map((sub) => (
+                      <div key={sub.naam} className="mt-2 first:mt-0">
+                        <Label
+                          htmlFor={`${blokId}-${veld.naam}-${index}-${sub.naam}`}
+                        >
+                          {sub.label}
+                        </Label>
+                        {sub.soort === "tekst" ? (
+                          <Textarea
+                            id={`${blokId}-${veld.naam}-${index}-${sub.naam}`}
+                            rows={2}
+                            value={item[sub.naam] ?? ""}
+                            onChange={(e) => {
+                              const lijst = [
+                                ...(inhoud[veld.naam] as Record<
+                                  string,
+                                  string
+                                >[]),
+                              ];
+                              lijst[index] = {
+                                ...item,
+                                [sub.naam]: e.target.value,
+                              };
+                              zet(veld.naam, lijst);
+                            }}
+                          />
+                        ) : (
+                          <Input
+                            id={`${blokId}-${veld.naam}-${index}-${sub.naam}`}
+                            value={item[sub.naam] ?? ""}
+                            onChange={(e) => {
+                              const lijst = [
+                                ...(inhoud[veld.naam] as Record<
+                                  string,
+                                  string
+                                >[]),
+                              ];
+                              lijst[index] = {
+                                ...item,
+                                [sub.naam]: e.target.value,
+                              };
+                              zet(veld.naam, lijst);
+                            }}
+                          />
+                        )}
+                      </div>
+                    ))}
+                    {veld.lijst && rijen(veld.naam).length > 1 ? (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="mt-2"
+                        onClick={() =>
+                          zet(
+                            veld.naam,
+                            rijen(veld.naam).filter((_, i) => i !== index),
+                          )
+                        }
                       >
-                        {sub.label}
-                      </Label>
-                      {sub.soort === "tekst" ? (
-                        <Textarea
-                          id={`${blokId}-${veld.naam}-${index}-${sub.naam}`}
-                          rows={2}
-                          value={item[sub.naam] ?? ""}
-                          onChange={(e) => {
-                            const lijst = [
-                              ...(inhoud[veld.naam] as Record<
-                                string,
-                                string
-                              >[]),
-                            ];
-                            lijst[index] = {
-                              ...item,
-                              [sub.naam]: e.target.value,
-                            };
-                            zet(veld.naam, lijst);
-                          }}
-                        />
-                      ) : (
-                        <Input
-                          id={`${blokId}-${veld.naam}-${index}-${sub.naam}`}
-                          value={item[sub.naam] ?? ""}
-                          onChange={(e) => {
-                            const lijst = [
-                              ...(inhoud[veld.naam] as Record<
-                                string,
-                                string
-                              >[]),
-                            ];
-                            lijst[index] = {
-                              ...item,
-                              [sub.naam]: e.target.value,
-                            };
-                            zet(veld.naam, lijst);
-                          }}
-                        />
-                      )}
-                    </div>
-                  ))}
-                </li>
-              ))}
-            </ul>
+                        Weghalen
+                      </Button>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+
+              {veld.lijst && rijen(veld.naam).length < veld.lijst.max ? (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  onClick={() =>
+                    zet(veld.naam, [
+                      ...rijen(veld.naam),
+                      Object.fromEntries(
+                        veld.velden!.map((sub) => [sub.naam, ""]),
+                      ),
+                    ])
+                  }
+                >
+                  {veld.lijst.itemNaam.charAt(0).toUpperCase() +
+                    veld.lijst.itemNaam.slice(1)}{" "}
+                  toevoegen
+                </Button>
+              ) : null}
+            </div>
           ) : null}
 
           {veld.hulp ? (

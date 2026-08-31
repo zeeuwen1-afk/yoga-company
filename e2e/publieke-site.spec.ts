@@ -365,24 +365,72 @@ test.describe("Docentenpagina's", () => {
   });
 });
 
-test.describe("Veiligheid en privacy", () => {
-  test("is bereikbaar via het hoofdmenu", async ({ page }) => {
+test.describe("Voor organisaties", () => {
+  test("de drie markten staan in de menubalk en op de startpagina", async ({
+    page,
+  }) => {
     await page.goto("/");
 
+    for (const [pad, kop] of [
+      ["/bedrijfsyoga", "Yoga op de werkvloer"],
+      ["/sportclubs", "De dag na de wedstrijd"],
+      ["/onderwijs", "Een lesuur waarin het stil wordt"],
+    ] as const) {
+      await expect(
+        page.getByRole("link", { name: kop }).first(),
+      ).toHaveAttribute("href", pad);
+    }
+  });
+
+  for (const [pad, kop] of [
+    ["/bedrijfsyoga", "Yoga op de werkvloer"],
+    ["/sportclubs", "De dag na de wedstrijd"],
+    ["/onderwijs", "Een lesuur waarin het stil wordt"],
+  ] as const) {
+    test(`${pad} toont de pagina met een aanvraagformulier`, async ({
+      page,
+    }) => {
+      await page.goto(pad);
+
+      await expect(
+        page.getByRole("heading", { name: kop, level: 1 }),
+      ).toBeVisible();
+
+      // Het formulier vraagt méér dan een contactformulier: zonder de omvang
+      // en de periode kan er geen prijs worden genoemd.
+      await expect(page.getByLabel("Organisatie en plaats")).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: "Verstuur de aanvraag" }),
+      ).toBeVisible();
+    });
+  }
+});
+
+test.describe("Veiligheid en privacy", () => {
+  test("is bereikbaar via de paginavoet", async ({ page }) => {
+    await page.goto("/");
+
+    // Stond in de menubalk; die was vol en dit is een pagina waar iemand
+    // bewust naartoe gaat. Nu staat hij bij de juridische pagina's onderaan.
     const link = page
-      .getByRole("navigation", { name: "Hoofdmenu" })
+      .getByRole("contentinfo")
       .getByRole("link", { name: "Veiligheid" });
 
-    // Op de telefoon zit het hoofdmenu achter de menuknop.
-    if (!(await link.isVisible())) {
-      await page.getByRole("button", { name: "Menu openen" }).click();
-    }
-
-    await page.getByRole("link", { name: "Veiligheid" }).first().click();
+    await link.click();
 
     await expect(
       page.getByRole("heading", { name: "Veiligheid en privacy", level: 1 }),
     ).toBeVisible();
+  });
+
+  test("staat niet meer in de menubalk", async ({ page }) => {
+    await page.goto("/");
+
+    await expect(
+      page
+        .getByRole("navigation", { name: "Hoofdmenu" })
+        .getByRole("link", { name: "Veiligheid" }),
+    ).toHaveCount(0);
   });
 
   /**

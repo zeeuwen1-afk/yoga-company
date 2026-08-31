@@ -26,6 +26,17 @@ export type BewerkbaarBlok = {
   heeftConcept: boolean;
   /** Mag dit blok van de pagina worden weggenomen? */
   verbergbaar: boolean;
+  /**
+   * Alleen bij een lijstblok: hoeveel items erin mogen, hoe één item heet, en
+   * met welke velden een nieuw item begint. Dat sjabloon komt uit de code en
+   * niet uit de bestaande items: haalt iemand ze allemaal weg, dan moet er nog
+   * steeds een nieuwe toegevoegd kunnen worden.
+   */
+  lijst: {
+    max: number;
+    itemNaam: string;
+    sjabloon: Record<string, string>;
+  } | null;
   /** Staat het blok nu online? */
   zichtbaar: boolean;
   /** Wat de schakelaar wordt na publiceren. */
@@ -46,6 +57,10 @@ const PAGINA_NAMEN: Record<string, { titel: string; pad: string }> = {
   opleidingen: { titel: "Opleidingen", pad: "/opleidingen" },
   trainingen: { titel: "Trainingen", pad: "/trainingen" },
   lessen: { titel: "Lessen", pad: "/lessen" },
+  bedrijfsyoga: { titel: "Bedrijfsyoga", pad: "/bedrijfsyoga" },
+  sportclubs: { titel: "Sportclubs", pad: "/sportclubs" },
+  onderwijs: { titel: "Onderwijs", pad: "/onderwijs" },
+  portfolio: { titel: "Portfolio", pad: "/portfolio" },
   "over-ons": { titel: "Over ons", pad: "/over-ons" },
   contact: { titel: "Contact", pad: "/contact" },
   footer: { titel: "Paginavoet", pad: "/" },
@@ -96,6 +111,8 @@ export async function haalEditorPaginas(): Promise<EditorPagina[]> {
     const blokken = definitiesVan(pageKey).map((definitie): BewerkbaarBlok => {
       const rij = opgeslagen.get(`${pageKey}:${definitie.block_key}`);
       const zichtbaar = rij?.zichtbaar ?? true;
+      const eersteItem =
+        "items" in definitie.value ? definitie.value.items[0] : undefined;
       const zichtbaarNaPubliceren = rij?.draft_zichtbaar ?? zichtbaar;
       return {
         pageKey,
@@ -109,6 +126,16 @@ export async function haalEditorPaginas(): Promise<EditorPagina[]> {
         heeftConcept:
           rij?.draft_value != null || zichtbaarNaPubliceren !== zichtbaar,
         verbergbaar: definitie.verbergbaar === true,
+        lijst:
+          definitie.lijst && eersteItem
+            ? {
+                max: definitie.lijst.max,
+                itemNaam: definitie.lijst.itemNaam,
+                sjabloon: Object.fromEntries(
+                  Object.keys(eersteItem).map((veld) => [veld, ""]),
+                ),
+              }
+            : null,
         zichtbaar,
         zichtbaarNaPubliceren,
       };

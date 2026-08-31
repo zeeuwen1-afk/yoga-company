@@ -30,6 +30,8 @@ export type BlokVeld = {
   hulp?: string;
   /** Alleen bij `lijst`: welke velden elk item heeft. */
   velden?: { naam: string; label: string; soort: "regel" | "tekst" }[];
+  /** Alleen bij `lijst`: hoeveel items erin mogen, en hoe één item heet. */
+  lijst?: { max: number; itemNaam: string };
 };
 
 export type Bloktype = {
@@ -183,6 +185,45 @@ export const BLOKTYPEN: Bloktype[] = [
     },
   },
   {
+    type: "portfolio",
+    naam: "Portfolio",
+    omschrijving:
+      "Je loopbaan op een rij: wat je hebt gedaan, geleerd en waar je goed in bent. Voor wie je wil inhuren of met je wil samenwerken.",
+    vast: false,
+    velden: [
+      { naam: "kop", label: "Kop boven het blok", soort: "regel" },
+      {
+        naam: "regels",
+        label: "De regels",
+        soort: "lijst",
+        lijst: { max: 14, itemNaam: "regel" },
+        velden: [
+          { naam: "periode", label: "Periode of jaartal", soort: "regel" },
+          { naam: "titel", label: "Wat je deed of volgde", soort: "regel" },
+          { naam: "waar", label: "Waar", soort: "regel" },
+          { naam: "tekst", label: "Toelichting", soort: "tekst" },
+        ],
+      },
+    ],
+    start: {
+      kop: "Wat ik doe en heb gedaan",
+      regels: [
+        {
+          periode: "2020 — heden",
+          titel: "Yogadocent",
+          waar: "Rinske Yoga Almere",
+          tekst: "Wekelijkse lessen Yin en Vinyasa.",
+        },
+        {
+          periode: "2019",
+          titel: "200-uurs opleiding",
+          waar: "[Bij wie]",
+          tekst: "",
+        },
+      ],
+    },
+  },
+  {
     type: "citaat",
     naam: "Ervaring van een cursist",
     omschrijving:
@@ -230,6 +271,7 @@ export const BLOKTYPEN: Bloktype[] = [
         naam: "vragen",
         label: "De vragen",
         soort: "lijst",
+        lijst: { max: 10, itemNaam: "vraag" },
         velden: [
           { naam: "vraag", label: "Vraag", soort: "regel" },
           { naam: "antwoord", label: "Antwoord", soort: "tekst" },

@@ -25,10 +25,20 @@ export function BeeldKiezer({
   url,
   alt,
   onWijzig,
+  id = "beeld",
+  toonAlt = true,
 }: {
   url: string;
   alt: string;
   onWijzig: (waarde: { url: string; alt: string }) => void;
+  /** Uniek per kiezer; er kunnen er meer op één scherm staan. */
+  id?: string;
+  /**
+   * Uit wanneer de beschrijving ergens anders vandaan komt. Bij een docent in
+   * een lijst is dat de naam ernaast: "Portret van Wietske" schrijft niemand
+   * twee keer.
+   */
+  toonAlt?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [bezig, setBezig] = useState(false);
@@ -115,20 +125,22 @@ export function BeeldKiezer({
 
       {fout ? <FormMessage variant="fout">{fout}</FormMessage> : null}
 
-      <div>
-        <Label htmlFor="beeld-alt">Beschrijving van de afbeelding</Label>
-        <Input
-          id="beeld-alt"
-          value={alt}
-          onChange={(event) => onWijzig({ url, alt: event.target.value })}
-          placeholder="Bijvoorbeeld: docente begeleidt een deelnemer in een yin-houding"
-          aria-invalid={url && !alt ? true : undefined}
-        />
-        <p className="mt-1.5 text-sm text-muted">
-          Wat is er te zien? Dit lezen mensen die de afbeelding niet kunnen
-          zien, en zoekmachines. Verplicht zodra er een afbeelding staat.
-        </p>
-      </div>
+      {toonAlt ? (
+        <div>
+          <Label htmlFor={`${id}-alt`}>Beschrijving van de afbeelding</Label>
+          <Input
+            id={`${id}-alt`}
+            value={alt}
+            onChange={(event) => onWijzig({ url, alt: event.target.value })}
+            placeholder="Bijvoorbeeld: docente begeleidt een deelnemer in een yin-houding"
+            aria-invalid={url && !alt ? true : undefined}
+          />
+          <p className="mt-1.5 text-sm text-muted">
+            Wat is er te zien? Dit lezen mensen die de afbeelding niet kunnen
+            zien, en zoekmachines. Verplicht zodra er een afbeelding staat.
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }
