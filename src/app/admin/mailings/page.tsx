@@ -44,7 +44,7 @@ export default async function MailingsPage() {
             <ul className="mt-2 list-disc space-y-1 pl-5 text-muted">
               {!mailIngericht() ? (
                 <li>
-                  De mailkoppeling (Resend) is nog niet ingericht — zie
+                  De mailkoppeling (Resend) is nog niet ingericht; zie
                   docs/beheer.md §8.
                 </li>
               ) : null}

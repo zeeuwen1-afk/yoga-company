@@ -186,7 +186,7 @@ export default async function DocentenPage() {
                       </td>
                       <td className="px-4 py-3 text-right tabular-nums">
                         {rij.bedragCenten === 0 ? (
-                          <span className="text-muted">—</span>
+                          <span className="text-muted">geen</span>
                         ) : (
                           <span className="text-error">
                             {euro(rij.bedragCenten)}

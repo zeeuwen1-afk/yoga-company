@@ -40,7 +40,7 @@ function AanvraagKnop({
       ].join(" ")}
     >
       Aanvragen
-      <span className="sr-only"> — {naam}</span>
+      <span className="sr-only">: {naam}</span>
     </Link>
   );
 }
@@ -64,7 +64,7 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
 
         {/* Op een breed scherm een tabel: de kolommen naast elkaar zijn juist
             waar het om gaat, want daarop vergelijk je. Op een telefoon zou die
-            tabel horizontaal moeten schuiven, en dan vergelijkt niemand meer —
+            tabel horizontaal moeten schuiven, en dan vergelijkt niemand meer;
             daar wordt het een lijst met dezelfde gegevens onder elkaar. */}
         <div className="mt-12 hidden overflow-hidden rounded-[var(--radius-card)] border border-line sm:block">
           <table className="w-full border-collapse text-left">

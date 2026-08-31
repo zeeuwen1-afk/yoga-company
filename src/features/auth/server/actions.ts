@@ -83,7 +83,7 @@ export async function registreren(
   return {
     status: "gelukt",
     bericht:
-      "Bijna klaar. We hebben je een e-mail gestuurd — bevestig daarin je adres om je account te activeren.",
+      "Bijna klaar. We hebben je een e-mail gestuurd; bevestig daarin je adres om je account te activeren.",
   };
 }
 

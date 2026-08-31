@@ -94,7 +94,7 @@ export async function maakPagina(
     profile_id: gebruiker.id,
     slug: parsed.data,
     seo_titel: profiel
-      ? `${profiel.first_name} ${profiel.last_name} — yogadocent`
+      ? `${profiel.first_name} ${profiel.last_name} · yogadocent`
       : null,
   });
 
@@ -130,7 +130,7 @@ export async function maakPagina(
   revalidatePath("/docenten/pagina");
   return {
     status: "gelukt",
-    bericht: `Je pagina staat klaar op /docent/${parsed.data}. Hij is nog niet zichtbaar — pas de teksten aan en publiceer.`,
+    bericht: `Je pagina staat klaar op /docent/${parsed.data}. Hij is nog niet zichtbaar; pas de teksten aan en publiceer.`,
   };
 }
 
@@ -226,7 +226,7 @@ export async function verplaatsBlok(
     return {
       status: "fout",
       bericht:
-        "De kop met je portret blijft bovenaan staan — daar staat je naam in.",
+        "De kop met je portret blijft bovenaan staan; daar staat je naam in.",
     };
   }
 
@@ -373,7 +373,7 @@ export async function verwijderBlok(
   if (blok?.type === "kop_portret") {
     return {
       status: "fout",
-      bericht: "De kop met je portret kan niet weg — daar staat je naam in.",
+      bericht: "De kop met je portret kan niet weg; daar staat je naam in.",
     };
   }
 
@@ -449,7 +449,7 @@ export async function uploadFoto(
   if (bestand.size > MAX_BYTES) {
     return {
       status: "fout",
-      bericht: `Deze foto is ${Math.round(bestand.size / 1024 / 1024)} MB. Houd het onder de 3 MB — verklein hem eerst.`,
+      bericht: `Deze foto is ${Math.round(bestand.size / 1024 / 1024)} MB. Houd het onder de 3 MB; verklein hem eerst.`,
     };
   }
 

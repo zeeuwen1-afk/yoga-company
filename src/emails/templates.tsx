@@ -56,7 +56,7 @@ export function InschrijfbevestigingMail({
       <Alinea gedempt>
         Een factuur of betaalbewijs nodig? Stuur ons een bericht, dan sturen we
         het je toe. Heb je vragen over de opleiding, dan kun je die stellen via
-        je eigen omgeving — daar lezen we mee.
+        je eigen omgeving; daar lezen we mee.
       </Alinea>
     </Mail>
   );

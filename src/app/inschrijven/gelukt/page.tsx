@@ -67,7 +67,7 @@ export default async function InschrijvingGeluktPage() {
             ) : (
               <>
                 <p className="mt-5 text-lg text-muted">
-                  Bedankt. Je betaling wordt verwerkt — bij iDEAL duurt dat soms
+                  Bedankt. Je betaling wordt verwerkt; bij iDEAL duurt dat soms
                   een paar seconden, soms iets langer.
                 </p>
                 <p className="mt-3 text-muted">

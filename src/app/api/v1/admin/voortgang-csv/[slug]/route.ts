@@ -55,7 +55,7 @@ export async function GET(
   const kop = [
     "Deelnemer",
     "E-mailadres",
-    ...matrix.kolommen.map((kolom) => `${kolom.moduleTitel} — ${kolom.titel}`),
+    ...matrix.kolommen.map((kolom) => `${kolom.moduleTitel} · ${kolom.titel}`),
     "Afgerond",
     "Totaal",
     "Laatst actief",

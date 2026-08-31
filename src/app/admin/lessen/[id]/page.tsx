@@ -67,8 +67,8 @@ export default async function AdminLesPage({
           <p className="mt-3 rounded-lg border border-error/40 bg-error/10 px-4 py-3 text-sm text-error">
             Deze les is afgelast
             {les.afgelastReden ? `: ${les.afgelastReden}` : "."} De deelnemers
-            zien dat in hun portaal, maar krijgen er geen bericht van — stuur ze
-            dat zelf even.
+            zien dat in hun portaal, maar krijgen er geen bericht van, dus stuur
+            ze dat zelf even.
           </p>
         ) : null}
       </div>
@@ -150,7 +150,7 @@ export default async function AdminLesPage({
           <ul className="mt-3 space-y-1 text-sm text-muted">
             {afgemeld.map((deelnemer) => (
               <li key={deelnemer.boekingId}>
-                {deelnemer.naam} —{" "}
+                {deelnemer.naam} ·{" "}
                 {BOEKING_LABEL[deelnemer.status].toLowerCase()}
               </li>
             ))}

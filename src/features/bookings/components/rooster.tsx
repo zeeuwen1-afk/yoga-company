@@ -17,7 +17,7 @@ function Beschikbaarheid({ les }: { les: Les }) {
     return <span className="text-error">Gaat niet door</span>;
   }
   if (les.vrijePlekken === 0) {
-    return <span className="text-muted">Vol — wachtlijst mogelijk</span>;
+    return <span className="text-muted">Vol, wachtlijst mogelijk</span>;
   }
   if (les.vrijePlekken <= 3) {
     return (
@@ -104,7 +104,7 @@ export function Rooster({
     return (
       <p className="text-muted">
         Er staan op dit moment geen lessen in het rooster. Neem gerust contact
-        met ons op — dan laten we weten wanneer we weer beginnen.
+        met ons op, dan laten we weten wanneer we weer beginnen.
       </p>
     );
   }

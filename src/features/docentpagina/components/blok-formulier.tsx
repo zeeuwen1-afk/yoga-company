@@ -76,8 +76,8 @@ export function BlokFormulier({
       {definitie.vast ? (
         <p className="rounded-lg border border-sand bg-cream px-4 py-3 text-sm">
           <strong>Deze inhoud komt uit de database.</strong> Je kunt hem
-          verplaatsen en verbergen, en de kop erboven aanpassen — maar niet
-          typen wat erin staat.{" "}
+          verplaatsen en verbergen, en de kop erboven aanpassen, maar niet typen
+          wat erin staat.{" "}
           {definitie.type === "wat_het_kost"
             ? "De prijzen zijn die van de studio."
             : "Je lessen verschijnen vanzelf, met het aantal vrije plekken erbij."}
@@ -125,7 +125,7 @@ export function BlokFormulier({
                 }
                 className="h-11 w-full rounded-lg border border-line-strong bg-background px-3"
               >
-                <option value="">— geen foto —</option>
+                <option value="">Geen foto</option>
                 {fotos.map((foto) => (
                   <option key={foto.url} value={foto.url}>
                     {foto.bestandsnaam}
@@ -184,7 +184,7 @@ export function BlokFormulier({
                     }
                     className="h-11 w-full rounded-lg border border-line-strong bg-background px-3"
                   >
-                    <option value="">— kies een foto —</option>
+                    <option value="">Kies een foto</option>
                     {fotos.map((keuze) => (
                       <option key={keuze.url} value={keuze.url}>
                         {keuze.bestandsnaam}

@@ -55,7 +55,7 @@ export function KaartUitgeven({
         >
           {producten.map((product) => (
             <option key={product.id} value={product.id}>
-              {product.naam} — €{" "}
+              {product.naam} · €{" "}
               {(product.prijs_centen / 100).toFixed(2).replace(".", ",")}
             </option>
           ))}
@@ -75,7 +75,7 @@ export function KaartUitgeven({
 
       <p className="text-sm text-muted">
         Je legt hier vast wat je hebt verkocht. Het geld staat al op je eigen
-        rekening — dit platform raakt het niet aan.
+        rekening; dit platform raakt het niet aan.
       </p>
     </form>
   );

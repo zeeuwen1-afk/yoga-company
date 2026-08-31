@@ -133,7 +133,7 @@ export function Mail({
                           color: KLEUR.gedempt,
                         }}
                       >
-                        YogaCompany — opleidingsinstituut voor yoga
+                        YogaCompany · opleidingsinstituut voor yoga
                       </td>
                     </tr>
                   </tbody>

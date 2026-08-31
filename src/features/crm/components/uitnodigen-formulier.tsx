@@ -74,8 +74,8 @@ export function UitnodigenFormulier() {
       </div>
 
       <p className="text-sm text-muted">
-        De rest — geboortedatum, ervaring, doelen, interesses en eventuele
-        gezondheidsgegevens — vul je aan op de klantenkaart, zodra je die
+        De rest, zoals geboortedatum, ervaring, doelen, interesses en eventuele
+        gezondheidsgegevens, vul je aan op de klantenkaart zodra je die
         informatie hebt.
       </p>
 

@@ -26,7 +26,7 @@ export default async function LessenPage() {
     <OverzichtInhoud pagina={pagina}>
       {/* Het rooster is de plek waar iemand besluit te komen; de prijzen horen
           daar dus naast te staan en niet achter een extra klik. Op een smal
-          scherm schuift het balkje onder het rooster — daar is naast elkaar
+          scherm schuift het balkje onder het rooster; daar is naast elkaar
           geen optie, en boven het rooster zou de prijs vóór de les komen. */}
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
         <Rooster lessen={lessen} />

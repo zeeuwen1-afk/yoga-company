@@ -233,7 +233,7 @@ export function Gespreksverslag({
         <strong>
           Naam, e-mailadres, telefoonnummer en woonplaats gaan niet mee
         </strong>{" "}
-        — de AI krijgt de inhoud zonder te weten wie het is. Jij bepaalt wat je
+        : de AI krijgt de inhoud zonder te weten wie het is. Jij bepaalt wat je
         ervan deelt; de klant ziet het verslag niet.
       </p>
 

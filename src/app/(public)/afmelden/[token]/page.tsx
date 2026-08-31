@@ -31,7 +31,7 @@ export default async function AfmeldenPage({
       <p className="mt-4 text-muted">
         Wil je geen nieuws en aankondigingen meer van YogaCompany ontvangen?
         Bevestig het hieronder. Mails over je inschrijving en je account blijf
-        je wel gewoon krijgen — die horen bij de opleiding die je volgt.
+        je wel gewoon krijgen; die horen bij de opleiding die je volgt.
       </p>
 
       <div className="mt-8">

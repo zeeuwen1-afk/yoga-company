@@ -59,7 +59,7 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
                 {formateerPrijs(cursus.prijsCenten)}
               </p>
               <p className="mt-1 text-sm text-muted">
-                Betalen in termijnen is mogelijk — vraag ernaar.
+                Betalen in termijnen is mogelijk; vraag ernaar.
               </p>
               <Link
                 href={`/inschrijven/${cursus.slug}`}
@@ -113,7 +113,7 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
                       <summary className="flex cursor-pointer items-baseline justify-between gap-4 p-5">
                         <span className="font-serif text-lg font-semibold text-green-dark">
                           {cursus.curriculum.length > 1
-                            ? `Module ${module.nummer} — `
+                            ? `Module ${module.nummer}: `
                             : null}
                           {module.titel}
                         </span>
@@ -190,7 +190,7 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
           <h2 className="text-3xl">Twijfel je of dit past?</h2>
           <p className="mt-4 text-lg text-muted">
             Stuur ons een bericht. We denken mee over wat aansluit bij waar je
-            nu staat — zonder dat je ergens aan vastzit.
+            nu staat, zonder dat je ergens aan vastzit.
           </p>
           <Link
             href="/contact"

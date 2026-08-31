@@ -215,7 +215,7 @@ function Rooster({
                   <p className="text-sm text-muted">
                     {les.vrijePlekken > 0
                       ? `${les.vrijePlekken} ${les.vrijePlekken === 1 ? "plek" : "plekken"} vrij`
-                      : "Vol — wachtlijst"}
+                      : "Vol, wachtlijst"}
                   </p>
                   <Link
                     href="/lessen"

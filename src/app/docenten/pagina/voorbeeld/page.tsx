@@ -50,7 +50,7 @@ export default async function VoorbeeldPage() {
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
           <p className="text-sm">
             <strong>Voorvertoning.</strong> Zo ziet je pagina eruit ná
-            publiceren — bezoekers zien dit nog niet.
+            publiceren; bezoekers zien dit nog niet.
           </p>
           <Link
             href="/docenten/pagina"

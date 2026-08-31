@@ -34,7 +34,7 @@ export function MailingWerkblad({
           {aantalOntvangers} {aantalOntvangers === 1 ? "klant" : "klanten"}
         </strong>{" "}
         die toestemming heeft gegeven. Wie geen toestemming gaf, krijgt hem niet
-        — daar is geen instelling voor.
+        ; daar is geen instelling voor.
       </p>
 
       <div>

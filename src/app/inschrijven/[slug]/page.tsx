@@ -95,7 +95,7 @@ export default async function InschrijvenPage({
                 <Link href="/contact" className="underline">
                   Neem contact op
                 </Link>{" "}
-                — dat regelen we in overleg.
+                ; dat regelen we in overleg.
               </>
             ) : (
               <>

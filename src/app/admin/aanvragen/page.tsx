@@ -106,7 +106,7 @@ export default async function AdminAanvragenPage() {
                 <li key={aanvraag.id} className="px-5 py-3">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <span className="text-sm">
-                      {SOORT_LABEL[aanvraag.kind]} — {aanvraag.klant.first_name}{" "}
+                      {SOORT_LABEL[aanvraag.kind]} · {aanvraag.klant.first_name}{" "}
                       {aanvraag.klant.last_name}
                     </span>
                     <span className="text-sm text-muted">

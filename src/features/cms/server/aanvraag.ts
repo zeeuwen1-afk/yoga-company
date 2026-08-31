@@ -124,7 +124,7 @@ export async function verstuurAanvraag(
     }),
     verstuurMail({
       aan: adminAdres(),
-      onderwerp: `Aanvraag ${soort} — ${parsed.data.organisatie}`,
+      onderwerp: `Aanvraag ${soort} · ${parsed.data.organisatie}`,
       template: ContactNotificatieMail({
         beheerUrl: `${basis}/admin/contactberichten`,
       }),

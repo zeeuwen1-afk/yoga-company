@@ -99,7 +99,7 @@ test.describe("Opleidingen", () => {
     // Vier modules in de accordeon.
     await expect(page.locator("details")).toHaveCount(4);
     await expect(
-      page.getByText("Module 4 — Herstel & revalidatie"),
+      page.getByText("Module 4: Herstel & revalidatie"),
     ).toBeVisible();
 
     // Praktische gegevens uit §19.

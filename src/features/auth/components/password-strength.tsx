@@ -81,7 +81,7 @@ export function PasswordStrength({ value }: { value: string }) {
           ? `Nog minstens ${MINIMALE_WACHTWOORDLENGTE - value.length} tekens nodig`
           : `Sterkte: ${niveau.label}`}
         {!teKort && result?.feedback.warning
-          ? ` — ${result.feedback.warning}`
+          ? `. ${result.feedback.warning}`
           : ""}
       </p>
     </div>

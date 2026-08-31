@@ -29,7 +29,7 @@ const SOORTEN = [
     waarde: "avg_export",
     label: "Mijn gegevens opvragen",
     uitleg:
-      "Je kunt ze ook meteen zelf downloaden onder Profiel — dat gaat sneller.",
+      "Je kunt ze ook meteen zelf downloaden onder Profiel; dat gaat sneller.",
   },
   {
     waarde: "avg_verwijdering",

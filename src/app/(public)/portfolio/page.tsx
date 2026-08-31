@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const naam = pagina.tekst("naam");
 
   return {
-    title: `${naam} — portfolio`,
+    title: `${naam} · portfolio`,
     description: `${pagina.tekst("rol")}. Werkervaring, opleidingen en specialisaties van ${naam}.`,
     alternates: { canonical: "/portfolio" },
   };

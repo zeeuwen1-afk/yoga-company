@@ -33,7 +33,7 @@ export default async function MijnPaginaPage() {
           <h1 className="text-3xl">Mijn pagina</h1>
           <p className="mt-2 text-muted">
             Een eigen plek op het adres van YogaCompany, die je zelf indeelt.
-            Kies eerst je webadres — dat komt op je visitekaartjes te staan, dus
+            Kies eerst je webadres; dat komt op je visitekaartjes te staan, dus
             kies er een die je over drie jaar nog wilt.
           </p>
         </div>
@@ -102,7 +102,7 @@ export default async function MijnPaginaPage() {
       {!magBewerken ? (
         <div className="rounded-[var(--radius-card)] border border-error/40 bg-error/10 px-5 py-4">
           <h2 className="font-semibold text-error">
-            Bewerken staat stil — je abonnement loopt niet
+            Bewerken staat stil, want je abonnement loopt niet
           </h2>
           <p className="mt-1.5 text-sm">
             Je pagina blijft nog even online, maar je kunt hem nu niet

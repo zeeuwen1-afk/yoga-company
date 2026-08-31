@@ -21,7 +21,7 @@ const colors = [
   {
     token: "--color-petrol",
     value: "#1F4D58",
-    use: "de hoofdachtergrond — uit het merkbeeld",
+    use: "de hoofdachtergrond, uit het merkbeeld",
   },
   {
     token: "--color-petrol-deep",
@@ -36,7 +36,7 @@ const colors = [
   {
     token: "--color-accent",
     value: "#EA976E",
-    use: "abrikoos — knoppen; niet als kleine tekst op licht",
+    use: "abrikoos: knoppen, niet als kleine tekst op licht",
   },
   {
     token: "--color-accent-light",
@@ -48,7 +48,7 @@ const colors = [
     value: "#9E4E2B",
     use: "links en tekst op een licht eiland (5,63:1)",
   },
-  { token: "--color-sand", value: "#DECCAA", use: "zand — banner, merkteken" },
+  { token: "--color-sand", value: "#DECCAA", use: "zand: banner en merkteken" },
   {
     token: "--color-sand-light",
     value: "#F3EBDC",
@@ -57,7 +57,7 @@ const colors = [
   {
     token: "--color-paper-warm",
     value: "#FCFAF6",
-    use: "warm wit — tekst op donker, lichte vlakken",
+    use: "warm wit: tekst op donker en lichte vlakken",
   },
   {
     token: "--color-muted",
@@ -131,7 +131,7 @@ export default function StyleguidePage() {
                   {color.token}
                 </code>
                 <span className="block text-sm text-muted">
-                  {color.value} — {color.use}
+                  {color.value} · {color.use}
                 </span>
               </span>
             </li>
@@ -141,12 +141,12 @@ export default function StyleguidePage() {
 
       <Section title="Typografie">
         <div className="space-y-4">
-          <h1 className="text-5xl">Kop 1 — Cormorant Garamond 600</h1>
-          <h2 className="text-3xl">Kop 2 — Cormorant Garamond 600</h2>
-          <h3 className="text-xl">Kop 3 — Cormorant Garamond 600</h3>
+          <h1 className="text-5xl">Kop 1 · Cormorant Garamond 600</h1>
+          <h2 className="text-3xl">Kop 2 · Cormorant Garamond 600</h2>
+          <h3 className="text-xl">Kop 3 · Cormorant Garamond 600</h3>
           <p className="max-w-2xl">
             Bodytekst in Jost, 16px met een ruime regelafstand van 1,6. Rustig,
-            warm en direct — we schrijven in de je-vorm en houden het kort. Elke
+            warm en direct: we schrijven in de je-vorm en houden het kort. Elke
             pagina heeft één duidelijke call-to-action.
           </p>
           <p className="max-w-2xl text-sm text-muted">

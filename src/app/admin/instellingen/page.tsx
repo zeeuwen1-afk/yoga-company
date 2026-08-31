@@ -120,7 +120,7 @@ export default async function InstellingenPage() {
               naam="Mollie"
               ingericht={betalenIngericht()}
               label={MOLLIE_LABEL[betaalModus() ?? "geen"]}
-              toelichting="Betalingen met iDEAL en creditcard. Koppelen doe je met één sleutel — zie docs/payments.md."
+              toelichting="Betalingen met iDEAL en creditcard. Koppelen doe je met één sleutel; zie docs/payments.md."
             />
             <Koppeling
               naam="Resend"

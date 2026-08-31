@@ -130,7 +130,7 @@ of aannemen. Benoem het als iets onduidelijk is.
 
 ## Aandachtspunten
 Praktische punten voor de begeleiding. Staat er gezondheidsinformatie in, neem
-die hier mee — feitelijk en zonder diagnose te stellen.
+die hier mee, feitelijk en zonder diagnose te stellen.
 
 ## Voorstel om te bespreken
 Twee tot drie concrete suggesties voor de volgende stap, elk met een reden.

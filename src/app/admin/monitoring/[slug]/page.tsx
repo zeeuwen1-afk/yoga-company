@@ -77,7 +77,7 @@ export default async function MonitoringPage({
                     >
                       <span
                         className="block max-w-24 truncate"
-                        title={`${kolom.moduleTitel} — ${kolom.titel}`}
+                        title={`${kolom.moduleTitel} · ${kolom.titel}`}
                       >
                         {kolom.titel}
                       </span>

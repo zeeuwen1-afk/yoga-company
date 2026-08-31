@@ -46,7 +46,7 @@ export function FotoUploaden() {
             className="h-auto py-2.5"
           />
           <p className="mt-1 text-xs text-muted">
-            jpg, png of webp — maximaal 3 MB.
+            jpg, png of webp, maximaal 3 MB.
           </p>
         </div>
 

@@ -113,7 +113,7 @@ export default async function KaartenPage() {
                   </p>
                   <p className="mt-0.5 text-muted">
                     {product?.kruisgebruik_toegestaan
-                      ? "Bij alle docenten die daar lesgeven — ook als je hem bij een andere docent kocht."
+                      ? "Bij alle docenten die daar lesgeven, ook als je hem bij een andere docent kocht."
                       : "Alleen bij de docent die deze kaart aan je verkocht."}
                   </p>
                 </div>
@@ -141,7 +141,7 @@ export default async function KaartenPage() {
         <h2 className="text-lg">Annuleren</h2>
         <p className="mt-2 text-sm text-muted">
           Meld je tot <strong className="text-ink">24 uur</strong> voor de les
-          af, dan komt je strip terug. Daarna blijft hij eraf — de docent stond
+          af, dan komt je strip terug. Daarna blijft hij eraf; de docent stond
           immers voor je klaar. Annuleren zelf kan tot vier uur van tevoren,
           zodat iemand op de wachtlijst je plek nog kan overnemen.
         </p>

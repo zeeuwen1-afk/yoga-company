@@ -29,7 +29,7 @@ const DOEL_INSTRUCTIE: Record<SocialDoel, string> = {
   inschrijvingen:
     "Doel: inschrijvingen. Nodig uit om zich aan te melden. Eén duidelijke " +
     "call-to-action aan het eind. Geen schaarste-trucs ('nog 2 plekken!', " +
-    "'laatste kans') — die passen niet bij de toon van YogaCompany.",
+    "'laatste kans'); die passen niet bij de toon van YogaCompany.",
   inspiratie:
     "Doel: inspiratie. Geef een gedachte, beeld of observatie mee die op " +
     "zichzelf staat. Geen aanbod, geen call-to-action.",
@@ -66,7 +66,7 @@ YogaCompany is een opleidingsinstituut, geen zorgverlener. Doe daarom nooit uits
 Wat wél kan: beschrijven wat je in een les of opleiding dóét, wat deelnemers leren, en hoe iets kan aanvoelen in de eerste persoon of als mogelijkheid ("veel deelnemers merken dat ze rustiger ademen", "je leert hoe je een les opbouwt"). Beschrijf de praktijk, beloof geen resultaat.
 
 # Vorm
-Elk bericht: 40 tot 90 woorden, plus hashtags. Hashtags in het Nederlands waar dat natuurlijk is, achteraan, gescheiden van de tekst. Geen links in de tekst — die zet de beheerder er zelf bij.
+Gebruik geen lange gedachtestreepjes; kies een komma, een puntkomma of een dubbele punt. Elk bericht: 40 tot 90 woorden, plus hashtags. Hashtags in het Nederlands waar dat natuurlijk is, achteraan, gescheiden van de tekst. Geen links in de tekst; die zet de beheerder er zelf bij.
 
 # Opdracht
 Schrijf drie varianten die duidelijk van elkaar verschillen: een andere invalshoek, opening en opbouw. Niet drie keer dezelfde tekst met andere woorden. Geef bij elke variant in één korte zin aan wat de invalshoek is, zodat de beheerder snel kan kiezen.`;

@@ -26,7 +26,7 @@ export async function generateMetadata({
   if (!pagina) return { title: "Pagina niet gevonden" };
 
   return {
-    title: pagina.seoTitel ?? `${pagina.naam} — yogadocent`,
+    title: pagina.seoTitel ?? `${pagina.naam} · yogadocent`,
     description:
       pagina.seoOmschrijving ??
       `Lessen, tarieven en achtergrond van ${pagina.naam} bij YogaCompany.`,

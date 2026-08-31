@@ -77,7 +77,7 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
         <div className="max-w-2xl">
           <h2 className="text-3xl">Benieuwd of het klikt?</h2>
           <p className="mt-4 text-lg text-muted">
-            De beste manier om erachter te komen is het gesprek. Stel je vraag —
+            De beste manier om erachter te komen is het gesprek. Stel je vraag;
             we reageren meestal binnen twee werkdagen.
           </p>
           <Link

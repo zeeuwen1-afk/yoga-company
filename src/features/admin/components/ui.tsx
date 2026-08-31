@@ -161,7 +161,7 @@ export function LegeLijst({ children }: { children: React.ReactNode }) {
 }
 
 export function datumKort(iso: string | null) {
-  if (!iso) return "—";
+  if (!iso) return "n.v.t.";
   return new Date(iso).toLocaleDateString("nl-NL", {
     day: "numeric",
     month: "short",
@@ -170,7 +170,7 @@ export function datumKort(iso: string | null) {
 }
 
 export function datumTijd(iso: string | null) {
-  if (!iso) return "—";
+  if (!iso) return "n.v.t.";
   return new Date(iso).toLocaleString("nl-NL", {
     day: "numeric",
     month: "short",

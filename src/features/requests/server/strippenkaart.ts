@@ -83,7 +83,7 @@ export async function vraagKaartAan(
     // als een aanmelding voor een opleiding, zodat de eigenaar één lijst heeft.
     // Wat het precies is, staat in de tekst eronder.
     kind: "inschrijving",
-    body: `Aanvraag via de website: ${tarief.naam} — ${tarief.prijs}`,
+    body: `Aanvraag via de website: ${tarief.naam} · ${tarief.prijs}`,
   });
 
   if (error) {

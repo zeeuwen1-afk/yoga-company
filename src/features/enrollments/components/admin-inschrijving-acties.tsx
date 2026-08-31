@@ -160,7 +160,7 @@ export function BetaallinkMaken({
           <Input
             id={`link-omschrijving-${enrollmentId}`}
             name="omschrijving"
-            defaultValue={`${cursusTitel} — termijn`}
+            defaultValue={`${cursusTitel} · termijn`}
             required
           />
         </div>

@@ -138,7 +138,7 @@ function MijnLessen({
               <p className="mt-2 text-sm text-muted">
                 {les.vrijePlekken > 0
                   ? `nog ${les.vrijePlekken} ${les.vrijePlekken === 1 ? "plek" : "plekken"}`
-                  : "vol — wachtlijst"}
+                  : "vol, wachtlijst"}
               </p>
               <Link
                 href="/lessen"

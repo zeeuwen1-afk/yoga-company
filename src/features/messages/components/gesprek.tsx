@@ -37,7 +37,7 @@ export function Gesprek({ berichten }: { berichten: Bericht[] }) {
     <div className="space-y-6">
       {berichten.length === 0 ? (
         <p className="text-muted">
-          Nog geen berichten. Stel gerust je vraag — we lezen mee en reageren
+          Nog geen berichten. Stel gerust je vraag; we lezen mee en reageren
           meestal binnen twee werkdagen.
         </p>
       ) : (

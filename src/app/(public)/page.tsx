@@ -10,7 +10,7 @@ import { haalRooster } from "@/features/bookings";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "YogaCompany — opleidingsinstituut voor yoga",
+  title: "YogaCompany · opleidingsinstituut voor yoga",
   description:
     "Yogalessen in kleine groepen in Almere, korte trainingen en de 200-uurs Yin Yoga Specialist Opleiding. Bekijk het rooster, de tarieven en het aanbod.",
   alternates: { canonical: "/" },

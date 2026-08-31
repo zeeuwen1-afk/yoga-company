@@ -103,7 +103,7 @@ export default async function AdminLessenPage() {
                   className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-3 text-sm transition-colors hover:bg-hover"
                 >
                   <span className="first-letter:uppercase">
-                    {formateerDag(les.begintOp)} — {les.titel}
+                    {formateerDag(les.begintOp)} · {les.titel}
                   </span>
                   <span className="text-muted">{les.geboekt} deelnemers</span>
                 </Link>

@@ -146,7 +146,7 @@ export function GegevensBewerken({
         />
         <p className="mt-1.5 text-sm text-muted">
           Onderwerpen, gescheiden door komma&apos;s. Gebruikt om mailings
-          gericht te versturen — alleen bij klanten die daar toestemming voor
+          gericht te versturen, alleen bij klanten die daar toestemming voor
           gaven.
         </p>
       </div>
@@ -176,7 +176,7 @@ export function NotitieFormulier({ profileId }: { profileId: string }) {
         name="body"
         rows={3}
         required
-        placeholder="Interne notitie — alleen zichtbaar voor beheerders."
+        placeholder="Interne notitie, alleen zichtbaar voor beheerders."
       />
 
       {resultaat.status === "fout" ? (
@@ -280,7 +280,7 @@ export function AccountSchakelaars({
         </div>
 
         <p className="text-sm text-muted">
-          De klant krijgt een e-mail en kiest zelf een nieuw wachtwoord — jij
+          De klant krijgt een e-mail en kiest zelf een nieuw wachtwoord; jij
           krijgt het nooit te zien, want het account is van de klant.
           Loskoppelen van de tweestapsverificatie is voor wie zijn telefoon
           kwijt is; bij de volgende keer inloggen stelt hij hem opnieuw in.
