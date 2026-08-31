@@ -102,9 +102,7 @@ const juridischeBlokken: BlokSeed[] = JURIDISCHE_TEKSTEN.flatMap((tekst) => [
     kind: "text" as const,
     omschrijving:
       "Waarschuwing dat de tekst nog juridisch getoetst moet worden. Leeg maken laat hem verdwijnen.",
-    value: {
-      text: "Deze tekst is een concept en moet nog juridisch worden getoetst.",
-    },
+    value: { text: "" },
   },
 ]);
 
@@ -144,14 +142,14 @@ const veiligheidBlokken: BlokSeed[] = [
       page_key: "veiligheid",
       block_key: `sectie_${index + 1}_vraag`,
       kind: "text" as const,
-      omschrijving: `Vraag ${index + 1} — de tekst op de uitklapper`,
+      omschrijving: `Vraag ${index + 1}: de tekst op de uitklapper`,
       value: { text: sectie.vraag },
     },
     {
       page_key: "veiligheid",
       block_key: `sectie_${index + 1}_antwoord`,
       kind: "richtext" as const,
-      omschrijving: `Antwoord ${index + 1} — wat er onder de uitklapper staat`,
+      omschrijving: `Antwoord ${index + 1}: wat er onder de uitklapper staat`,
       value: { html: sectie.antwoord },
     },
   ]),
@@ -335,7 +333,7 @@ export const BLOKKEN: BlokSeed[] = [
     page_key: "home",
     block_key: "hero_knop",
     kind: "text",
-    omschrijving: "Tekst op de eerste knop in de hero — leidt naar het rooster",
+    omschrijving: "Tekst op de eerste knop in de hero (leidt naar het rooster)",
     value: { text: "Bekijk het lesrooster" },
   },
   {
@@ -343,7 +341,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "hero_knop_twee",
     kind: "text",
     omschrijving:
-      "Tekst op de tweede knop in de hero — leidt naar de opleidingen",
+      "Tekst op de tweede knop in de hero (leidt naar de opleidingen)",
     value: { text: "Ontdek de opleidingen" },
   },
   {
@@ -382,7 +380,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Zin onder die kop",
     value: {
-      text: "Drie manieren om met ons te werken — elk met een eigen tempo, en een eigen prijs.",
+      text: "Drie manieren om met ons te werken, elk met een eigen tempo en een eigen prijs.",
     },
   },
   {
@@ -524,19 +522,19 @@ export const BLOKKEN: BlokSeed[] = [
         {
           citaat:
             "Voor het eerst een opleiding waar het tempo klopte met wat ik aankon.",
-          naam: "Deelnemer — naam volgt",
+          naam: "Deelnemer, naam volgt",
           rol: "Yin Yoga niveau 1 en 2",
         },
         {
           citaat:
             "De kleine groep maakte het verschil. Er was echt tijd voor mijn vragen.",
-          naam: "Deelnemer — naam volgt",
+          naam: "Deelnemer, naam volgt",
           rol: "200-uurs Yin Yoga Specialist",
         },
         {
           citaat:
             "Ik kwam binnen als deelnemer en ging weg met een manier van kijken.",
-          naam: "Deelnemer — naam volgt",
+          naam: "Deelnemer, naam volgt",
           rol: "Eerst Jij",
         },
       ],
@@ -720,7 +718,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "richtext",
     omschrijving: "Het verhaal: waarom yoga op het werk",
     value: {
-      html: "<p>Mensen die de hele dag in hun hoofd zitten, merken pas dat ze gespannen zijn als het al te veel is. Een uur per week op de mat verandert dat: even niet presteren, wél merken wat er in je lijf gebeurt.</p><p>We werken met wat er is — een vergaderzaal, een kantine, een hoek van het magazijn — en met mensen die nog nooit yoga hebben gedaan. Geen ingewikkelde houdingen, geen kleedkamer nodig.</p>",
+      html: "<p>Mensen die de hele dag in hun hoofd zitten, merken pas dat ze gespannen zijn als het al te veel is. Een uur per week op de mat verandert dat: even niet presteren, wél merken wat er in je lijf gebeurt.</p><p>We werken met wat er is: een vergaderzaal, een kantine, een hoek van het magazijn, en met mensen die nog nooit yoga hebben gedaan. Geen ingewikkelde houdingen, geen kleedkamer nodig.</p>",
     },
   },
   {
@@ -777,7 +775,7 @@ export const BLOKKEN: BlokSeed[] = [
           duur: "wekelijks, 60 minuten",
           tekst:
             "Een vast moment in de week, met dezelfde groep en dezelfde ruimte.",
-          prijs: "€ 1.400 — € 175 per sessie",
+          prijs: "€ 1.400 (€ 175 per sessie)",
           uitgelicht: "",
         },
         {
@@ -785,7 +783,7 @@ export const BLOKKEN: BlokSeed[] = [
           duur: "wekelijks, 60 minuten",
           tekst:
             "Lang genoeg om iets te merken. Inclusief een korte energiemeting in week 1 en week 12, anoniem gerapporteerd.",
-          prijs: "€ 1.980 — € 165 per sessie",
+          prijs: "€ 1.980 (€ 165 per sessie)",
           uitgelicht: "ja",
         },
         {
@@ -793,7 +791,7 @@ export const BLOKKEN: BlokSeed[] = [
           duur: "het hele jaar door",
           tekst:
             "Vaste dag, vaste groep, facturatie per maand of kwartaal. Opzegtermijn twee maanden.",
-          prijs: "€ 6.200 — € 155 per sessie",
+          prijs: "€ 6.200 (€ 155 per sessie)",
           uitgelicht: "",
         },
         {
@@ -912,7 +910,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Zin onder de kop",
     value: {
-      text: "Yoga in het voortgezet onderwijs, op het mbo en in het hoger onderwijs. In het eigen lokaal, zonder omkleden en zonder gymzaal — en zonder dat het zweverig wordt, want daar prikken ze binnen een minuut doorheen.",
+      text: "Yoga in het voortgezet onderwijs, op het mbo en in het hoger onderwijs. In het eigen lokaal, zonder omkleden en zonder gymzaal, en zonder dat het zweverig wordt, want daar prikken ze binnen een minuut doorheen.",
     },
   },
   {
@@ -960,7 +958,7 @@ export const BLOKKEN: BlokSeed[] = [
         {
           titel: "Onderbouw voortgezet onderwijs",
           tekst:
-            "Twaalf tot vijftien: veel prikkels, weinig taal om te zeggen wat er aan de hand is. We werken met houdingen die iets vrágen — daar zit de aandacht vanzelf — en eindigen met vijf minuten liggen. In het mentoruur of aansluitend op gym.",
+            "Twaalf tot vijftien: veel prikkels, weinig taal om te zeggen wat er aan de hand is. We werken met houdingen die iets vrágen, want daar zit de aandacht vanzelf, en eindigen met vijf minuten liggen. In het mentoruur of aansluitend op gym.",
           uitgelicht: "",
         },
         {
@@ -984,7 +982,7 @@ export const BLOKKEN: BlokSeed[] = [
         {
           titel: "Het docenten- en medewerkersteam",
           tekst:
-            "Een uur op een studiedag, of een blok van zes weken na schooltijd. Het kost geen lestijd, dus de beslissing is kleiner — en wie het zelf heeft gedaan, gunt het zijn klas ook.",
+            "Een uur op een studiedag, of een blok van zes weken na schooltijd. Het kost geen lestijd, dus de beslissing is kleiner. En wie het zelf heeft gedaan, gunt het zijn klas ook.",
           uitgelicht: "ja",
         },
       ],
@@ -1019,7 +1017,7 @@ export const BLOKKEN: BlokSeed[] = [
         {
           titel: "Kleding",
           tekst:
-            "Wat ze aanhebben. Schoenen uit. Niemand hoeft zich om te kleden — dat is precies de drempel waar de helft op afhaakt.",
+            "Wat ze aanhebben. Schoenen uit. Niemand hoeft zich om te kleden; dat is precies de drempel waar de helft op afhaakt.",
         },
         {
           titel: "Telefoons",
@@ -1034,7 +1032,7 @@ export const BLOKKEN: BlokSeed[] = [
         {
           titel: "Groepsgrootte",
           tekst:
-            "Eén klas, tot dertig. Grotere groepen splitsen we — anders zie ik niet wie er iets doet wat pijn gaat doen.",
+            "Eén klas, tot dertig. Grotere groepen splitsen we, anders zie ik niet wie er iets doet wat pijn gaat doen.",
         },
         {
           titel: "Een dagdeel",
@@ -1074,7 +1072,7 @@ export const BLOKKEN: BlokSeed[] = [
           naam: "Bezoek met één les",
           duur: "45 tot 60 minuten",
           tekst:
-            "Eén klas of groep. Alleen los te boeken als het niet anders kan — per les is dit de duurste vorm.",
+            "Eén klas of groep. Alleen los te boeken als het niet anders kan; per les is dit de duurste vorm.",
           prijs: "€ 165 excl. btw · € 199,65 incl.",
           uitgelicht: "",
         },
@@ -1153,7 +1151,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Tekst boven het aanvraagformulier",
     value: {
-      text: "Vertel om hoeveel klassen of groepen het gaat en in welke periode het zou moeten vallen — dan stuur ik binnen twee werkdagen een voorstel met een prijs erin.",
+      text: "Vertel om hoeveel klassen of groepen het gaat en in welke periode het zou moeten vallen, dan stuur ik binnen twee werkdagen een voorstel met een prijs erin.",
     },
   },
 
@@ -1270,7 +1268,7 @@ export const BLOKKEN: BlokSeed[] = [
         {
           titel: "Jeugdteams",
           tekst:
-            "Korter en speelser. Werkt goed op een zaterdagochtend, met ouders die kijken — dat levert vaak weer aanmeldingen voor de studio op.",
+            "Korter en speelser. Werkt goed op een zaterdagochtend, met ouders die kijken; dat levert vaak weer aanmeldingen voor de studio op.",
         },
         {
           titel: "Individuele sporters",
@@ -1299,7 +1297,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Zin onder die kop",
     value: {
-      text: "Per sessie of per blok. Veel clubs betalen dit uit het budget voor blessurepreventie of vanuit een sponsor — vraag ernaar bij je bestuur.",
+      text: "Per sessie of per blok. Veel clubs betalen dit uit het budget voor blessurepreventie of vanuit een sponsor; vraag ernaar bij je bestuur.",
     },
   },
   {
@@ -1339,7 +1337,7 @@ export const BLOKKEN: BlokSeed[] = [
           naam: "Heel seizoen: 30 sessies",
           duur: "augustus tot mei",
           tekst:
-            "Vaste avond, vaste groep. € 145 per sessie — dat is onze ondergrens.",
+            "Vaste avond, vaste groep. € 145 per sessie; dat is onze ondergrens.",
           prijs: "€ 4.350 excl. btw · € 5.263,50 incl.",
           uitgelicht: "",
         },
@@ -1377,7 +1375,7 @@ export const BLOKKEN: BlokSeed[] = [
     verbergbaar: true,
     omschrijving: "De kleine letters onder de tarieven",
     value: {
-      text: "Bedragen staan er twee keer bij omdat de meeste clubs de btw niet kunnen terugvragen: eerst exclusief, dan inclusief 21%. Inbegrepen tot 20 deelnemers. Matten nemen we mee — op gras heb je ze niet eens nodig. Gratis binnen 20 kilometer van Almere, daarbuiten € 0,35 per gereden kilometer.",
+      text: "Bedragen staan er twee keer bij omdat de meeste clubs de btw niet kunnen terugvragen: eerst exclusief, dan inclusief 21%. Inbegrepen tot 20 deelnemers. Matten nemen we mee; op gras heb je ze niet eens nodig. Gratis binnen 20 kilometer van Almere, daarbuiten € 0,35 per gereden kilometer.",
     },
   },
   {
@@ -1394,7 +1392,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Tekst boven het aanvraagformulier",
     value: {
-      text: "Laat weten om welk team het gaat en op welke avond jullie trainen — dan stuur ik binnen twee werkdagen een voorstel.",
+      text: "Laat weten om welk team het gaat en op welke avond jullie trainen, dan stuur ik binnen twee werkdagen een voorstel.",
     },
   },
 
@@ -1457,13 +1455,13 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       items: [
         {
-          periode: "[jaartal] — heden",
+          periode: "[jaartal] tot heden",
           titel: "[Wat je doet]",
           waar: "[Waar]",
           tekst: "[Eén of twee zinnen over wat het inhoudt.]",
         },
         {
-          periode: "[jaartal] — [jaartal]",
+          periode: "[jaartal] tot [jaartal]",
           titel: "[Wat je deed]",
           waar: "[Waar]",
           tekst: "[Eén of twee zinnen.]",
@@ -1530,7 +1528,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Tekst van het afsluitende blok",
     value: {
-      text: "Voor lessen, een opleiding, yoga op de werkvloer of een samenwerking — laat het weten.",
+      text: "Voor lessen, een opleiding, yoga op de werkvloer of een samenwerking: laat het weten.",
     },
   },
 
@@ -1576,7 +1574,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Inleidende tekst boven het weekrooster",
     value: {
-      text: "Wekelijkse lessen in kleine groepen. Kijk wanneer het je uitkomt en boek je plek — met een account gaat dat in één klik.",
+      text: "Wekelijkse lessen in kleine groepen. Kijk wanneer het je uitkomt en boek je plek; met een account gaat dat in één klik.",
     },
   },
   {
@@ -1632,7 +1630,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "richtext",
     omschrijving: "Het verhaal en de filosofie",
     value: {
-      html: "<p>YogaCompany is een opleidingsinstituut voor yoga. We leiden op, we trainen, en we geven les — in die volgorde van nadruk.</p><p>Wat ons bindt is een manier van kijken: yoga is geen prestatie. Een houding die er goed uitziet zegt niets als het lichaam eronder gespannen blijft. We leren onze deelnemers kijken naar de mens tegenover hen, niet naar de vorm.</p><p>Daarom werken we in kleine groepen. Daarom duren onze opleidingen langer dan strikt nodig. En daarom kun je onze modules los volgen: niet iedereen heeft hetzelfde tempo, en dat hoeft ook niet.</p>",
+      html: "<p>YogaCompany is een opleidingsinstituut voor yoga. We leiden op, we trainen, en we geven les, in die volgorde van nadruk.</p><p>Wat ons bindt is een manier van kijken: yoga is geen prestatie. Een houding die er goed uitziet zegt niets als het lichaam eronder gespannen blijft. We leren onze deelnemers kijken naar de mens tegenover hen, niet naar de vorm.</p><p>Daarom werken we in kleine groepen. Daarom duren onze opleidingen langer dan strikt nodig. En daarom kun je onze modules los volgen: niet iedereen heeft hetzelfde tempo, en dat hoeft ook niet.</p>",
     },
   },
   {
@@ -1683,7 +1681,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Tekst boven het formulier",
     value: {
-      text: "Een vraag over een opleiding, of wil je even overleggen wat past? Stuur ons een bericht — we reageren meestal binnen twee werkdagen.",
+      text: "Een vraag over een opleiding, of wil je even overleggen wat past? Stuur ons een bericht; we reageren meestal binnen twee werkdagen.",
     },
   },
   {

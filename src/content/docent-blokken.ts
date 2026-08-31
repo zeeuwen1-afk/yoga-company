@@ -128,7 +128,7 @@ export const BLOKTYPEN: Bloktype[] = [
     type: "wat_het_kost",
     naam: "Wat het kost",
     omschrijving:
-      "De tarieven van de studio. Die liggen vast, dus je kunt ze hier niet aanpassen — wel verplaatsen of weglaten.",
+      "De tarieven van de studio. Die liggen vast, dus je kunt ze hier niet aanpassen; wel verplaatsen of weglaten.",
     vast: true,
     velden: [
       { naam: "kop", label: "Kop boven dit blok", soort: "regel" },
@@ -209,7 +209,7 @@ export const BLOKTYPEN: Bloktype[] = [
       kop: "Wat ik doe en heb gedaan",
       regels: [
         {
-          periode: "2020 — heden",
+          periode: "2020 tot heden",
           titel: "Yogadocent",
           waar: "Rinske Yoga Almere",
           tekst: "Wekelijkse lessen Yin en Vinyasa.",
@@ -247,7 +247,7 @@ export const BLOKTYPEN: Bloktype[] = [
     type: "video",
     naam: "Video",
     omschrijving:
-      "Een video van YouTube of Vimeo. Andere aanbieders weigert de browser — dat is een beveiligingsregel van de site.",
+      "Een video van YouTube of Vimeo. Andere aanbieders weigert de browser; dat is een beveiligingsregel van de site.",
     vast: false,
     velden: [
       { naam: "kop", label: "Kop", soort: "regel" },

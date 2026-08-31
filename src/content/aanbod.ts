@@ -196,7 +196,7 @@ export const OPLEIDING_KORTING_CENTEN =
 /** De vier losse modules, elk apart te volgen (BOUWPROMPT §19). */
 const losseModules: CursusSeed[] = yinCurriculum.map((module, index) => ({
   type: "opleiding" as const,
-  titel: `Yin Yoga niveau ${module.nummer} — ${module.titel}`,
+  titel: `Yin Yoga niveau ${module.nummer}: ${module.titel}`,
   slug: [
     "yin-niveau-1-basis",
     "yin-niveau-2-zenuwstelsel-meridiaanleer",
@@ -263,9 +263,9 @@ export const AANBOD: CursusSeed[] = [
     titel: "200-uurs Yin Yoga Specialist Opleiding",
     slug: "200-uurs-yin-yoga-specialist",
     samenvatting:
-      "Vier modules van 50 uur — van de basis van Yin Yoga naar specialist in herstel en revalidatie. Per module een certificaat Yin Yoga niveau 1 t/m 4; na alle vier de modules het diploma Yin Yoga Specialist.",
+      "Vier modules van 50 uur, van de basis van Yin Yoga naar specialist in herstel en revalidatie. Per module een certificaat Yin Yoga niveau 1 t/m 4; na alle vier de modules het diploma Yin Yoga Specialist.",
     beschrijving:
-      "De 200-uurs Yin Yoga Specialist Opleiding brengt je van de fundamenten van Yin Yoga naar het punt waarop je de vorm kunt inzetten bij herstel en revalidatie.\n\nDe opleiding bestaat uit vier modules van elk 50 uur. Je volgt ze achter elkaar of verspreid over een langere periode — de modules zijn ook los te volgen. Elke module sluit je af met een certificaat. Rond je alle vier af, dan ontvang je het diploma Yin Yoga Specialist.\n\nWe werken in kleine groepen van maximaal twaalf deelnemers. Dat is een bewuste keuze: je krijgt persoonlijke begeleiding en er is ruimte om te oefenen met echte mensen en echte lichamen.",
+      "De 200-uurs Yin Yoga Specialist Opleiding brengt je van de fundamenten van Yin Yoga naar het punt waarop je de vorm kunt inzetten bij herstel en revalidatie.\n\nDe opleiding bestaat uit vier modules van elk 50 uur. Je volgt ze achter elkaar of verspreid over een langere periode; de modules zijn ook los te volgen. Elke module sluit je af met een certificaat. Rond je alle vier af, dan ontvang je het diploma Yin Yoga Specialist.\n\nWe werken in kleine groepen van maximaal twaalf deelnemers. Dat is een bewuste keuze: je krijgt persoonlijke begeleiding en er is ruimte om te oefenen met echte mensen en echte lichamen.",
     voorWie:
       "Yogadocenten die zich willen specialiseren, professionals in zorg en beweging die Yin Yoga in hun werk willen inzetten, en mensen die zich vanuit persoonlijke interesse grondig willen verdiepen.",
     toelatingseisen:
@@ -275,7 +275,7 @@ export const AANBOD: CursusSeed[] = [
     locatie: MODULE_LOCATIE,
     maxDeelnemers: 12,
     certificaat:
-      "Certificaat Yin Yoga niveau 1 t/m 4 per module; diploma Yin Yoga Specialist na alle vier de modules — modules zijn ook los te volgen",
+      "Certificaat Yin Yoga niveau 1 t/m 4 per module; diploma Yin Yoga Specialist na alle vier de modules. Modules zijn ook los te volgen",
     prijsCenten: OPLEIDING_PRIJS_CENTEN,
     digitaleContent: false,
     sort: 1,
@@ -283,10 +283,10 @@ export const AANBOD: CursusSeed[] = [
   ...losseModules,
   {
     type: "training",
-    titel: "Eerst Jij — 8-weeks online herstelprogramma",
+    titel: "Eerst Jij: 8-weeks online herstelprogramma",
     slug: "eerst-jij",
     samenvatting:
-      "Acht weken online, in je eigen tempo, met begeleiding. Voor wie leeg is en weer wil opbouwen — stap voor stap, zonder te forceren.",
+      "Acht weken online, in je eigen tempo, met begeleiding. Voor wie leeg is en weer wil opbouwen: stap voor stap, zonder te forceren.",
     beschrijving:
       "Eerst Jij is een programma van acht weken voor mensen die op zijn. Uitgeput, oververmoeid, of hersteld verklaard maar nog lang niet de oude.\n\nElke week krijg je een korte video, een yogales die past bij waar je op dat moment staat, en een schrijfopdracht. Je doet het online, in je eigen tempo, thuis. In de begeleide variant kun je je vragen kwijt en kijken we samen mee.\n\nHet programma gaat langzaam. Dat is geen tekortkoming maar het uitgangspunt: herstel laat zich niet opjagen.",
     voorWie:

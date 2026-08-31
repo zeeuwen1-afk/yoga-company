@@ -38,14 +38,15 @@ test.describe("Publieke site blijft ongewijzigd", () => {
   test("de startpagina toont de gepubliceerde inhoud", async ({ page }) => {
     await page.goto("/");
 
-    // Deze tekst staat als gepubliceerde waarde in het CMS; zou de publieke
-    // pagina per ongeluk concepten lezen, dan zou dat hier opvallen.
-    await expect(
-      page.getByRole("heading", {
-        name: "Van je eerste les tot je eigen lespraktijk.",
-        level: 1,
-      }),
-    ).toBeVisible();
+    // De kop komt uit het CMS en mag door de eigenaar gewijzigd worden; de
+    // letterlijke tekst toetsen zou deze test elke bewerking laten omvallen.
+    // Wat hier telt is dat de pagina de gepubliceerde waarde toont en niet het
+    // concept: een blok met een openstaand concept hoort de oude tekst te
+    // laten zien tot er gepubliceerd wordt.
+    const kop = page.getByRole("heading", { level: 1 });
+    await expect(kop).toHaveCount(1);
+    await expect(kop).not.toBeEmpty();
+    await expect(page.getByText("CONCEPT", { exact: false })).toHaveCount(0);
   });
 
   test("de securityheader staat toe dat de editor de pagina in een iframe toont", async ({

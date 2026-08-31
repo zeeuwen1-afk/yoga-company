@@ -33,12 +33,12 @@ export type Tarief = {
 export const TARIEVEN_TITEL = "Tarieven";
 
 export const TARIEVEN_OMSCHRIJVING =
-  "Lessen Rinske Yoga Almere — losse lessen, strippenkaarten en abonnementen voor de yogalessen van YogaCompany.";
+  "Lessen Rinske Yoga Almere: losse lessen, strippenkaarten en abonnementen voor de yogalessen van YogaCompany.";
 
 export const TARIEVEN_LOCATIE = "Lessen Rinske Yoga, Almere";
 
 export const TARIEVEN_INLEIDING =
-  "Alle kaarten naast elkaar. Hoe meer lessen op je kaart, hoe voordeliger je per keer uit bent — dat staat in de derde kolom, zodat je het niet zelf hoeft uit te rekenen.";
+  "Alle kaarten naast elkaar. Hoe meer lessen op je kaart, hoe voordeliger je per keer uit bent; dat staat in de derde kolom, zodat je het niet zelf hoeft uit te rekenen.";
 
 export const TARIEVEN: Tarief[] = [
   {
@@ -46,7 +46,7 @@ export const TARIEVEN: Tarief[] = [
     toelichting: "3 lessen, om kennis te maken",
     prijs: "€ 9,00",
     per_les: "€ 3,00",
-    geldig: "—",
+    geldig: "n.v.t.",
     uitgelicht: "",
     rail: "",
   },
@@ -55,7 +55,7 @@ export const TARIEVEN: Tarief[] = [
     toelichting: "Eén les, zonder verplichting",
     prijs: "€ 17,00",
     per_les: "€ 17,00",
-    geldig: "—",
+    geldig: "n.v.t.",
     uitgelicht: "",
     rail: "ja",
   },
@@ -116,7 +116,7 @@ export const TARIEVEN: Tarief[] = [
 ];
 
 export const TARIEVEN_VOORWAARDEN = `
-<p>Reserveer je plek vooraf; een kaart geeft toegang tot alle lessen in het weekrooster. Tot <strong>24 uur</strong> voor de les annuleren is kosteloos — daarna kost het een strip.</p>
+<p>Reserveer je plek vooraf; een kaart geeft toegang tot alle lessen in het weekrooster. Tot <strong>24 uur</strong> voor de les annuleren is kosteloos; daarna kost het een strip.</p>
 <p>Lukt het een keer echt niet, laat het dan weten. We kijken er niet moeilijk over.</p>
 `;
 

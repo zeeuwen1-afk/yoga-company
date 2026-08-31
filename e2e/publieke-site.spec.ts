@@ -182,15 +182,19 @@ test.describe("Juridische pagina's", () => {
     ["/algemene-voorwaarden", "Algemene voorwaarden"],
     ["/cookies", "Cookies"],
   ]) {
-    test(`${pad} rendert met de conceptwaarschuwing`, async ({ page }) => {
+    test(`${pad} rendert zonder conceptwaarschuwing`, async ({ page }) => {
       await page.goto(pad!);
 
       await expect(
         page.getByRole("heading", { name: kop!, level: 1 }),
       ).toBeVisible();
+
+      // De waarschuwing is een blok in de site-editor; leegmaken laat hem
+      // verdwijnen. Hij hoort weg te zijn zodra de tekst is nagekeken, en
+      // deze test bewaakt dat hij niet per ongeluk terugkomt.
       await expect(
         page.getByText("moet nog juridisch worden getoetst"),
-      ).toBeVisible();
+      ).toHaveCount(0);
     });
   }
 

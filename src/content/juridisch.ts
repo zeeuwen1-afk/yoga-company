@@ -26,7 +26,7 @@ const PRIVACY = `
 <h2>2. Welke gegevens we verwerken</h2>
 <p>We verwerken zo min mogelijk gegevens. Concreet gaat het om:</p>
 <ul>
-<li><strong>Bij een account:</strong> je voor- en achternaam, e-mailadres en — als je dat zelf invult — je telefoonnummer.</li>
+<li><strong>Bij een account:</strong> je voor- en achternaam, e-mailadres en, als je dat zelf invult, je telefoonnummer.</li>
 <li><strong>Bij een inschrijving:</strong> welke opleiding je volgt, de betaalstatus en het bedrag. Betaalgegevens zelf komen nooit bij ons binnen; die verwerkt Mollie.</li>
 <li><strong>Bij digitale content:</strong> waar je in een video of les gebleven bent, zodat je verder kunt waar je stopte.</li>
 <li><strong>Bij berichten:</strong> de inhoud van wat je ons via je eigen omgeving of het contactformulier stuurt.</li>
@@ -34,7 +34,7 @@ const PRIVACY = `
 </ul>
 
 <h2>3. Waarom we ze verwerken</h2>
-<p>Om je opleiding te kunnen leveren en je vragen te beantwoorden (uitvoering van de overeenkomst), om aan onze administratieve en fiscale verplichtingen te voldoen (wettelijke plicht), en — alleen als je daar toestemming voor gaf — om je af en toe iets te mailen over ons aanbod.</p>
+<p>Om je opleiding te kunnen leveren en je vragen te beantwoorden (uitvoering van de overeenkomst), om aan onze administratieve en fiscale verplichtingen te voldoen (wettelijke plicht), en, alleen als je daar toestemming voor gaf, om je af en toe iets te mailen over ons aanbod.</p>
 
 <h2>4. Hoe lang we ze bewaren</h2>
 <ul>
@@ -46,12 +46,12 @@ const PRIVACY = `
 <h2>5. Met wie we ze delen</h2>
 <p>We verkopen je gegevens niet. We werken met de volgende dienstverleners, die uitsluitend in onze opdracht handelen en waarmee we een verwerkersovereenkomst hebben:</p>
 <ul>
-<li><strong>Supabase</strong> — database, inloggen en bestandsopslag (servers in Frankfurt, EU)</li>
-<li><strong>Vercel</strong> — hosting van de website (regio Frankfurt, EU)</li>
-<li><strong>Mollie</strong> — betalingen (Amsterdam, EU)</li>
-<li><strong>Resend</strong> — verzenden van e-mail</li>
-<li><strong>Anthropic</strong> — hulp bij het opstellen van berichten voor sociale media, en bij het maken van een gespreksverslag voor je begeleiding. Voor dat verslag gaan je naam, e-mailadres, telefoonnummer en woonplaats <strong>niet</strong> mee; wel je leeftijd, je doelen, je voortgang en de aantekeningen die wij bij je hebben gemaakt. Heb je toestemming gegeven voor het vastleggen van gezondheidsinformatie, dan gaat die alleen mee als dat voor dat verslag nodig is</li>
-<li><strong>Meta</strong> — alleen wanneer wij zelf iets plaatsen op Facebook of Instagram</li>
+<li><strong>Supabase</strong>: database, inloggen en bestandsopslag (servers in Frankfurt, EU)</li>
+<li><strong>Vercel</strong>: hosting van de website (regio Frankfurt, EU)</li>
+<li><strong>Mollie</strong>: betalingen (Amsterdam, EU)</li>
+<li><strong>Resend</strong>: verzenden van e-mail</li>
+<li><strong>Anthropic</strong>: hulp bij het opstellen van berichten voor sociale media, en bij het maken van een gespreksverslag voor je begeleiding. Voor dat verslag gaan je naam, e-mailadres, telefoonnummer en woonplaats <strong>niet</strong> mee; wel je leeftijd, je doelen, je voortgang en de aantekeningen die wij bij je hebben gemaakt. Heb je toestemming gegeven voor het vastleggen van gezondheidsinformatie, dan gaat die alleen mee als dat voor dat verslag nodig is</li>
+<li><strong>Meta</strong>: alleen wanneer wij zelf iets plaatsen op Facebook of Instagram</li>
 </ul>
 
 <h2>6. Waar je gegevens staan</h2>
@@ -79,7 +79,7 @@ const VOORWAARDEN = `
 <p>Je schrijft je in via de website. De inschrijving is definitief zodra we je betaling hebben ontvangen en je van ons een bevestiging per e-mail hebt gekregen. Plaatsing gebeurt op volgorde van betaling; onze groepen zijn klein, dus vol is vol.</p>
 
 <h2>3. Prijzen en betalen</h2>
-<p>Alle genoemde prijzen zijn in euro's. Betalen kan met iDEAL of creditcard. Betalen in termijnen is in overleg mogelijk — neem daarvoor contact met ons op vóór je inschrijving.</p>
+<p>Alle genoemde prijzen zijn in euro's. Betalen kan met iDEAL of creditcard. Betalen in termijnen is in overleg mogelijk; neem daarvoor contact met ons op vóór je inschrijving.</p>
 
 <h2>4. Bedenktijd</h2>
 <p>Schrijf je je als consument online in, dan heb je veertien dagen bedenktijd waarin je zonder opgaaf van reden kunt annuleren. Begint de opleiding binnen die veertien dagen en heb je gevraagd om eerder te starten, dan vervalt de bedenktijd zodra je toegang hebt gekregen tot het lesmateriaal.</p>
@@ -102,7 +102,7 @@ const VOORWAARDEN = `
 <p>Je ontvangt een certificaat als je de module hebt afgerond: aanwezig bij de lesdagen en de eindopdracht voldoende afgesloten. Rond je alle vier de modules van de Yin Yoga Specialist Opleiding af, dan ontvang je het diploma.</p>
 
 <h2>9. Wat wij van je vragen</h2>
-<p>Yoga is geen medische behandeling. Heb je klachten, een blessure of ben je zwanger, laat het ons dan vóór aanvang weten en overleg zo nodig met je arts. Je blijft zelf verantwoordelijk voor wat je tijdens een les wel en niet doet — luister naar je lichaam en forceer niets.</p>
+<p>Yoga is geen medische behandeling. Heb je klachten, een blessure of ben je zwanger, laat het ons dan vóór aanvang weten en overleg zo nodig met je arts. Je blijft zelf verantwoordelijk voor wat je tijdens een les wel en niet doet: luister naar je lichaam en forceer niets.</p>
 
 <h2>10. Aansprakelijkheid</h2>
 <p>We doen ons werk zorgvuldig. Onze aansprakelijkheid is beperkt tot het bedrag dat je voor de betreffende opleiding hebt betaald, behalve bij opzet of grove nalatigheid van onze kant.</p>

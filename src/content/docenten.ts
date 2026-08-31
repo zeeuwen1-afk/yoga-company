@@ -26,14 +26,14 @@ export const DOCENTEN_UITLEG = `
 <p>Komt jouw klant met die kaart bij een collega, dan wordt dat geregistreerd en betaal jij die collega per gegeven les. Komt zíjn klant bij jou, dan werkt het andersom. Aan het eind van de maand sluit je af en staan de facturen klaar.</p>
 
 <h2>Wat het kost aan een collega</h2>
-<p>Je betaalt de werkelijke waarde van één les van díé kaart, exclusief btw. Bij een 10-strippenkaart is dat <strong>€ 13,30</strong> — precies wat jij er zelf van overhield nadat je de btw had afgedragen. Je levert er dus niets op in, en je verdient er ook niets aan.</p>
+<p>Je betaalt de werkelijke waarde van één les van díé kaart, exclusief btw. Bij een 10-strippenkaart is dat <strong>€ 13,30</strong>: precies wat jij er zelf van overhield nadat je de btw had afgedragen. Je levert er dus niets op in, en je verdient er ook niets aan.</p>
 <p>Op een kennismakingskaart geldt dit niet: die is alleen bij jou geldig. Anders zou je de kennismaking van een collega betalen.</p>
 
 <h2>Het geld loopt niet via ons</h2>
 <p>Wij ontvangen niets en betalen niets door. Jij factureert je collega rechtstreeks, en hij jou. Wij houden bij wat er is gebeurd, rekenen het uit en zetten de factuur klaar met jouw gegevens en jouw nummerreeks.</p>
 
 <h2>Wat je ziet, en wat niet</h2>
-<p>Je ziet de kaarten die jij hebt verkocht en elke afboeking daarop — ook wanneer die bij een collega plaatsvond, want daar factureer je op. Van je eigen lessen zie je wie er komt.</p>
+<p>Je ziet de kaarten die jij hebt verkocht en elke afboeking daarop, ook wanneer die bij een collega plaatsvond, want daar factureer je op. Van je eigen lessen zie je wie er komt.</p>
 <p>Je ziet nooit de kaarten, klanten of afrekeningen van een collega waar je zelf niet in zit. Dat is geen instelling in een scherm maar een regel in de database.</p>
 `;
 
@@ -43,7 +43,7 @@ export const DOCENTEN_VOORWAARDEN = `
 <ul>
 <li>Je geeft les bij een aangesloten studio en huurt daar zelf je plek in het rooster.</li>
 <li>Je bent ingeschreven bij de Kamer van Koophandel en factureert met btw.</li>
-<li>Je vult je factuurgegevens in de portal in — naam, adres, KvK, btw-nummer en de nummerreeks die je zelf gebruikt.</li>
+<li>Je vult je factuurgegevens in de portal in: naam, adres, KvK, btw-nummer en de nummerreeks die je zelf gebruikt.</li>
 <li>Je houdt je aan de prijzen van de studio. Die staan vast; daar valt niet mee te schuiven.</li>
 <li>Je neemt een abonnement op de docentenlaag. Wat dat kost hoor je bij de aansluiting.</li>
 </ul>

@@ -9,12 +9,12 @@ test.describe("Fundament", () => {
   }) => {
     await page.goto("/");
 
-    await expect(
-      page.getByRole("heading", {
-        name: "Van je eerste les tot je eigen lespraktijk.",
-        level: 1,
-      }),
-    ).toBeVisible();
+    // Niet de letterlijke kop: die staat in de site-editor en de eigenaar mag
+    // hem wijzigen zonder dat er een test omvalt. Wat wél vastligt is dát er
+    // precies één H1 is, en dat hij niet leeg is.
+    const kop = page.getByRole("heading", { level: 1 });
+    await expect(kop).toHaveCount(1);
+    await expect(kop).not.toBeEmpty();
 
     await expect(page.getByRole("contentinfo")).toContainText("YogaCompany");
     await expect(page.locator("html")).toHaveAttribute("lang", "nl");
