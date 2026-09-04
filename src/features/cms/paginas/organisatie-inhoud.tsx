@@ -49,7 +49,7 @@ export function OrganisatieInhoud({
 
   return (
     <>
-      <Sectie achtergrond="creme" className="!pb-10">
+      <Sectie sectie="opening" achtergrond="creme" className="!pb-10">
         <div className="max-w-2xl">
           {pagina.tekst("label") ? (
             <p className="label-klein">{pagina.tekst("label")}</p>
@@ -90,7 +90,11 @@ export function OrganisatieInhoud({
       ) : null}
 
       {kaarten.length > 0 ? (
-        <Sectie achtergrond={verhaal ? "creme" : "wit"} lijnBoven>
+        <Sectie
+          sectie="doelgroepen"
+          achtergrond={verhaal ? "creme" : "wit"}
+          lijnBoven
+        >
           <SectieKop titel={pagina.tekst("doelgroepen_titel")} />
           <ul className="mt-10 grid gap-6 md:grid-cols-2">
             {kaarten.map((kaart, index) => (
@@ -115,7 +119,7 @@ export function OrganisatieInhoud({
       ) : null}
 
       {regels.length > 0 ? (
-        <Sectie achtergrond="zand" lijnBoven>
+        <Sectie sectie="praktisch" achtergrond="zand" lijnBoven>
           <SectieKop titel={pagina.tekst("praktisch_titel")} />
           <dl className="mt-8">
             {regels.map((regel, index) => (
@@ -132,7 +136,7 @@ export function OrganisatieInhoud({
       ) : null}
 
       {vormen.length > 0 ? (
-        <Sectie lijnBoven>
+        <Sectie sectie="vormen" lijnBoven>
           <SectieKop
             titel={pagina.tekst("vormen_titel")}
             inleiding={pagina.tekst("vormen_inleiding")}
@@ -186,7 +190,7 @@ export function OrganisatieInhoud({
         </Sectie>
       ) : null}
 
-      <Sectie achtergrond="creme" lijnBoven>
+      <Sectie sectie="cta" achtergrond="creme" lijnBoven>
         <div id="aanvraag" className="grid gap-10 lg:grid-cols-2">
           <div className="max-w-xl">
             <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>

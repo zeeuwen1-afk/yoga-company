@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { Aanwijzen } from "@/features/cms/components/aanwijzen";
 import { vindJuridischeTekst } from "@/content/juridisch";
 import { haalConceptPagina } from "@/features/cms";
 import { haalRooster, Rooster } from "@/features/bookings";
@@ -112,6 +113,9 @@ export default async function VoorbeeldPagina({
 
   return (
     <div className="flex min-h-screen flex-col">
+      {/* Vangt klikken op en stuurt de sectie naar het bewerkscherm ernaast.
+          Staat deze pagina los in een tabblad, dan doet het niets. */}
+      <Aanwijzen />
       <SiteHeader />
       <main className="flex-1">{await inhoud()}</main>
       <SiteFooter pagina={voetPagina} />

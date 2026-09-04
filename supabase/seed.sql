@@ -1009,18 +1009,6 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'kaarten_titel', 'text', '{"text":"Nog geen kaart?"}'::jsonb)
-on conflict (page_key, block_key) do update set
-  kind = excluded.kind,
-  value = excluded.value;
-
-insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'kaarten_inleiding', 'text', '{"text":"Je kaart staat meteen in je eigen omgeving en je saldo loopt vanzelf mee."}'::jsonb)
-on conflict (page_key, block_key) do update set
-  kind = excluded.kind,
-  value = excluded.value;
-
-insert into content_blocks (page_key, block_key, kind, value)
 values ('home', 'waarom_titel', 'text', '{"text":"Waarom YogaCompany"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,

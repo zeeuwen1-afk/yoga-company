@@ -42,7 +42,7 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
 
   return (
     <>
-      <Sectie>
+      <Sectie sectie="opening">
         <div className="max-w-2xl">
           <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
           <div className="mt-5">
@@ -55,7 +55,7 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
       </Sectie>
 
       {lesplekken.length > 0 ? (
-        <Sectie achtergrond="zand" lijnBoven>
+        <Sectie sectie="lesplekken" achtergrond="zand" lijnBoven>
           <div className="max-w-2xl">
             <h2 className="text-3xl">{pagina.tekst("lesplekken_titel")}</h2>
             <div className="mt-4">
@@ -113,14 +113,14 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
       ) : null}
 
       {workshops.length > 0 ? (
-        <Sectie lijnBoven>
+        <Sectie sectie="workshops" lijnBoven>
           <h2 className="text-3xl">{pagina.tekst("workshops_titel")}</h2>
           <AanbodLijst regels={workshops} />
         </Sectie>
       ) : null}
 
       {prive.length > 0 ? (
-        <Sectie achtergrond="zand" lijnBoven>
+        <Sectie sectie="prive" achtergrond="zand" lijnBoven>
           <div className="max-w-2xl">
             <h2 className="text-3xl">{pagina.tekst("prive_titel")}</h2>
             <div className="mt-4">
@@ -142,7 +142,7 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
       ) : null}
 
       {pagina.tekst("organisaties_titel") ? (
-        <Sectie lijnBoven>
+        <Sectie sectie="organisaties" lijnBoven>
           <div className="max-w-2xl">
             <h2 className="text-3xl">{pagina.tekst("organisaties_titel")}</h2>
             <div className="mt-4">
@@ -168,7 +168,7 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
       ) : null}
 
       {pagina.html("voorwaarden") ? (
-        <Sectie lijnBoven>
+        <Sectie sectie="voorwaarden" lijnBoven>
           <div className="max-w-2xl rounded-[var(--radius-card)] border border-sand bg-sand-light p-5">
             <Richtext
               html={pagina.html("voorwaarden")}

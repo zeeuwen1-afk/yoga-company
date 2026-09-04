@@ -54,7 +54,7 @@ function Banner({ pagina }: { pagina: Pagina }) {
     BANNERKLEUR.zand;
 
   return (
-    <div className={kleur}>
+    <div data-sectie="banner" className={kleur}>
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-5 gap-y-1 px-4 py-3 text-center sm:px-6">
         <p className="text-[0.95rem]">{tekst}</p>
         {knop && link ? (
@@ -77,7 +77,10 @@ function Hero({ pagina }: { pagina: Pagina }) {
   const knopTwee = pagina.tekst("hero_knop_twee");
 
   return (
-    <section className="relative isolate overflow-hidden bg-petrol-deep">
+    <section
+      data-sectie="hero"
+      className="relative isolate overflow-hidden bg-petrol-deep"
+    >
       {achtergrond ? (
         <>
           <Image
@@ -139,7 +142,7 @@ function Deuren({ pagina }: { pagina: Pagina }) {
   if (deuren.length === 0) return null;
 
   return (
-    <Sectie>
+    <Sectie sectie="deuren">
       <SectieKop
         titel={pagina.tekst("deuren_titel")}
         inleiding={pagina.tekst("deuren_inleiding")}
@@ -185,7 +188,7 @@ function Rooster({ pagina, lessen }: { pagina: Pagina; lessen: Les[] }) {
   if (lessen.length === 0) return null;
 
   return (
-    <Sectie achtergrond="creme" lijnBoven>
+    <Sectie sectie="rooster" achtergrond="creme" lijnBoven>
       <div className="grid gap-10 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <SectieKop
@@ -247,7 +250,7 @@ function Organisaties({ pagina }: { pagina: Pagina }) {
   if (ingangen.length === 0) return null;
 
   return (
-    <Sectie achtergrond="creme" lijnBoven>
+    <Sectie sectie="organisaties" achtergrond="creme" lijnBoven>
       <SectieKop
         titel={pagina.tekst("organisaties_titel")}
         inleiding={pagina.tekst("organisaties_inleiding")}
@@ -285,7 +288,10 @@ function Inlogdeuren({ pagina }: { pagina: Pagina }) {
   if (deuren.length === 0) return null;
 
   return (
-    <section className="border-t border-line bg-petrol-deep px-4 py-16 sm:px-6 sm:py-20">
+    <section
+      data-sectie="inlog"
+      className="border-t border-line bg-petrol-deep px-4 py-16 sm:px-6 sm:py-20"
+    >
       <div className="mx-auto max-w-6xl">
         <SectieKop
           titel={pagina.tekst("inlog_titel")}
@@ -339,7 +345,7 @@ export function HomeInhoud({
       <Rooster pagina={pagina} lessen={lessen} />
 
       {redenen.length > 0 ? (
-        <Sectie>
+        <Sectie sectie="waarom">
           <SectieKop titel={pagina.tekst("waarom_titel")} />
           <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
             {redenen.map((reden) => (
@@ -354,7 +360,7 @@ export function HomeInhoud({
         </Sectie>
       ) : null}
 
-      <Sectie achtergrond="creme" lijnBoven>
+      <Sectie sectie="aanbod" achtergrond="creme" lijnBoven>
         <SectieKop
           titel={pagina.tekst("aanbod_titel")}
           inleiding={pagina.tekst("aanbod_inleiding")}
@@ -371,7 +377,7 @@ export function HomeInhoud({
       </Sectie>
 
       {ervaringen.length > 0 ? (
-        <Sectie>
+        <Sectie sectie="testimonials">
           <SectieKop titel="Wat deelnemers zeggen" />
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
             {ervaringen.map((ervaring, index) => (
@@ -395,7 +401,7 @@ export function HomeInhoud({
 
       <Inlogdeuren pagina={pagina} />
 
-      <Sectie achtergrond="zand" lijnBoven>
+      <Sectie sectie="cta" achtergrond="zand" lijnBoven>
         <div className="max-w-2xl">
           <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
           <div className="mt-4">

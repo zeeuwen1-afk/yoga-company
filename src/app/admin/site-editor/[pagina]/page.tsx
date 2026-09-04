@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Info } from "lucide-react";
 
 import { AdminKop, Paneel } from "@/features/admin/components/ui";
-import { BlokBewerker } from "@/features/cms/components/blok-bewerker";
+import { BlokkenPaneel } from "@/features/cms/components/blokken-paneel";
 import { PubliceerBalk } from "@/features/cms/components/publiceer-balk";
 import { ELDERS_BEHEERD } from "@/features/cms/elders-beheerd";
 import { haalEditorPagina } from "@/features/cms/server/editor";
@@ -70,21 +70,7 @@ export default async function PaginaBewerkenPage({
 
       <div className="grid gap-6 xl:grid-cols-2">
         <Paneel titel="Inhoud">
-          {pagina.blokken.map((blok) => (
-            <BlokBewerker
-              key={blok.blockKey}
-              pageKey={blok.pageKey}
-              blockKey={blok.blockKey}
-              kind={blok.kind}
-              omschrijving={blok.omschrijving}
-              gepubliceerd={blok.gepubliceerd}
-              concept={blok.concept}
-              verbergbaar={blok.verbergbaar}
-              zichtbaarNaPubliceren={blok.zichtbaarNaPubliceren}
-              lijst={blok.lijst}
-              standaardLink={blok.standaardLink}
-            />
-          ))}
+          <BlokkenPaneel blokken={pagina.blokken} />
         </Paneel>
 
         <div className="xl:sticky xl:top-24 xl:self-start">
@@ -98,8 +84,11 @@ export default async function PaginaBewerkenPage({
               />
             </div>
             <p className="border-t border-line px-5 py-3 text-sm text-muted">
-              Zo wordt de pagina na publiceren. Sla een wijziging op om de
-              voorvertoning te verversen.
+              <strong className="font-semibold text-ink">
+                Klik hierin op wat je wilt veranderen
+              </strong>{" "}
+              en de bijbehorende velden gaan links open. Zo wordt de pagina na
+              publiceren; sla een wijziging op om de voorvertoning te verversen.
             </p>
           </Paneel>
         </div>

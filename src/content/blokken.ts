@@ -545,22 +545,6 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving: "Waar die knop heen gaat",
     value: { text: "/lessen" },
   },
-  {
-    page_key: "home",
-    block_key: "kaarten_titel",
-    kind: "text",
-    omschrijving: "Kop van het blok met strippenkaarten",
-    value: { text: "Nog geen kaart?" },
-  },
-  {
-    page_key: "home",
-    block_key: "kaarten_inleiding",
-    kind: "text",
-    omschrijving: "Zin in het blok met strippenkaarten",
-    value: {
-      text: "Je kaart staat meteen in je eigen omgeving en je saldo loopt vanzelf mee.",
-    },
-  },
 
   // Waarom, het aanbod, en het bewijs.
   {

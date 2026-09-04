@@ -24,7 +24,7 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
 
   return (
     <>
-      <Sectie achtergrond="creme">
+      <Sectie sectie="opening" achtergrond="creme">
         <div className="max-w-2xl">
           <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
           <Richtext html={pagina.html("verhaal")} className="mt-8 text-lg" />
@@ -76,7 +76,7 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
       ) : null}
 
       {pagina.tekst("cta_titel") ? (
-        <Sectie achtergrond="zand" lijnBoven>
+        <Sectie sectie="cta" achtergrond="zand" lijnBoven>
           <div className="max-w-2xl">
             <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
             <div className="mt-4">
@@ -102,7 +102,7 @@ export function ContactInhoud({ pagina }: { pagina: Pagina }) {
   const gegevens = pagina.lijst<Gegeven>("gegevens");
 
   return (
-    <Sectie>
+    <Sectie sectie="opening">
       <div className="grid gap-12 lg:grid-cols-[minmax(0,32rem)_1fr]">
         <div>
           <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
@@ -142,7 +142,7 @@ export function JuridischeInhoud({ pagina }: { pagina: Pagina }) {
   const waarschuwing = pagina.tekst("concept_waarschuwing");
 
   return (
-    <Sectie>
+    <Sectie sectie="opening">
       <div className="max-w-2xl">
         <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
         <div className="mt-5">
@@ -172,7 +172,7 @@ export function JuridischeInhoud({ pagina }: { pagina: Pagina }) {
 
 export function VeiligheidInhoud({ pagina }: { pagina: Pagina }) {
   return (
-    <Sectie>
+    <Sectie sectie="opening">
       <div className="max-w-2xl">
         <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
         <div className="mt-5">
@@ -229,7 +229,7 @@ export function OverzichtInhoud({
   const beeld = pagina.beeld("beeld");
 
   return (
-    <Sectie>
+    <Sectie sectie="opening">
       <SectieKop
         titel={pagina.tekst("titel")}
         inleiding={pagina.tekst("inleiding")}

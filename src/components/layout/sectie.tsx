@@ -11,12 +11,19 @@ import { cn } from "@/lib/utils";
  */
 export function Sectie({
   id,
+  sectie,
   achtergrond = "wit",
   lijnBoven = false,
   className,
   children,
 }: {
   id?: string;
+  /**
+   * Bij welke groep blokken hoort deze sectie? Alleen een naamkaartje: in de
+   * voorvertoning van de site-editor kun je erop klikken om naar de bijbehorende
+   * velden te springen. Op de gewone site doet het niets.
+   */
+  sectie?: string;
   achtergrond?: "wit" | "creme" | "zand";
   lijnBoven?: boolean;
   className?: string;
@@ -25,6 +32,7 @@ export function Sectie({
   return (
     <section
       id={id}
+      data-sectie={sectie}
       // Zonder deze ruimte verdwijnt de kop van een aangelinkte sectie achter
       // de menubalk, die blijft staan bij het scrollen.
       className={cn(

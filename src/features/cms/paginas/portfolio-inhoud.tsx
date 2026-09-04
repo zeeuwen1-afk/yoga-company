@@ -29,7 +29,7 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
 
   return (
     <>
-      <Sectie achtergrond="creme">
+      <Sectie sectie="opening" achtergrond="creme">
         <div className="grid items-start gap-10 lg:grid-cols-[1fr_18rem]">
           <div>
             <p className="label-klein">Portfolio</p>
@@ -54,7 +54,7 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
       </Sectie>
 
       {ervaring.length > 0 ? (
-        <Sectie lijnBoven>
+        <Sectie sectie="ervaring" lijnBoven>
           <SectieKop titel={pagina.tekst("ervaring_titel")} />
           <ol className="mt-10 space-y-8">
             {ervaring.map((regel, index) => (
@@ -83,7 +83,7 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
       ) : null}
 
       {opleidingen.length > 0 ? (
-        <Sectie achtergrond="creme" lijnBoven>
+        <Sectie sectie="opleiding" achtergrond="creme" lijnBoven>
           <SectieKop titel={pagina.tekst("opleiding_titel")} />
           <ul className="mt-10 space-y-4">
             {opleidingen.map((regel, index) => (
@@ -105,7 +105,7 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
       ) : null}
 
       {specialisaties.length > 0 ? (
-        <Sectie lijnBoven>
+        <Sectie sectie="specialisaties" lijnBoven>
           <SectieKop titel={pagina.tekst("specialisaties_titel")} />
           <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
             {specialisaties.map((regel, index) => (
@@ -121,7 +121,7 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
       ) : null}
 
       {pagina.tekst("cta_titel") ? (
-        <Sectie achtergrond="zand" lijnBoven>
+        <Sectie sectie="cta" achtergrond="zand" lijnBoven>
           <div className="max-w-2xl">
             <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
             <div className="mt-4">

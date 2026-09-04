@@ -162,13 +162,35 @@ test.describe("Opleidingen", () => {
 });
 
 test.describe("Trainingen", () => {
-  test("toont Eerst Jij en Hormoonyoga", async ({ page }) => {
+  /**
+   * Welke trainingen er staan bepaalt de beheerder: aanbod kan op verborgen
+   * worden gezet zonder dat er iets stuk is. Deze test noemde er twee bij naam
+   * en viel om zodra er eentje uit de etalage ging.
+   *
+   * Wat wél altijd moet gelden: er staat aanbod, en elk aanbod heeft een naam,
+   * een bedrag en een link naar zijn eigen pagina. Een kaart zonder prijs of
+   * zonder link is een fout die een bezoeker raakt.
+   */
+  test("toont het zichtbare aanbod met een prijs en een link", async ({
+    page,
+  }) => {
     await page.goto("/trainingen");
 
-    await expect(page.getByText("Eerst Jij")).toBeVisible();
-    await expect(page.getByText("Hormoonyoga-training")).toBeVisible();
-    await expect(page.getByText("€ 797")).toBeVisible();
-    await expect(page.getByText("€ 295")).toBeVisible();
+    const kaarten = page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("link", { name: /./ }) })
+      .filter({ hasText: /€/ });
+
+    const aantal = await kaarten.count();
+    expect(aantal).toBeGreaterThan(0);
+
+    for (let i = 0; i < aantal; i++) {
+      await expect(kaarten.nth(i)).toContainText(/€\s?[\d.]+/);
+      await expect(kaarten.nth(i).getByRole("link").first()).toHaveAttribute(
+        "href",
+        /\/trainingen\//,
+      );
+    }
   });
 });
 
@@ -498,7 +520,9 @@ test.describe("SEO", () => {
 
     const xml = await antwoord.text();
     expect(xml).toContain("/opleidingen/200-uurs-yin-yoga-specialist");
-    expect(xml).toContain("/trainingen/eerst-jij");
+    // Bewust geen losse training bij naam: aanbod dat op verborgen staat hoort
+    // juist níét in de sitemap, en dat is een keuze van de beheerder.
+    expect(xml).toMatch(/\/trainingen(\/|<)/);
     expect(xml).toContain("/privacyverklaring");
     expect(xml).toContain("/veiligheid");
     expect(xml).toContain("/lessen/tarieven");
