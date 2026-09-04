@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import { Alineas } from "@/components/ui/alineas";
+import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import type { Pagina } from "../server/queries";
 
@@ -130,12 +130,12 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
                 className="text-lg text-muted"
               />
             </div>
-            <Link
-              href="/contact"
-              className="mt-8 inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
-            >
-              Neem contact op
-            </Link>
+            <CmsKnop
+              tekst={pagina.tekst("cta_knop")}
+              link={pagina.tekst("cta_link")}
+              terugval="/contact"
+              className="mt-8"
+            />
           </div>
         </Sectie>
       ) : null}

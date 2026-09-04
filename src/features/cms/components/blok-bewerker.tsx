@@ -9,7 +9,9 @@ import { Input, Label, Textarea } from "@/components/ui/input";
 import { RichtextEditor } from "@/components/ui/richtext-editor";
 import type { Json } from "@/lib/supabase/types";
 
+import { isLinkBlok, isLinkVeld } from "../link-blok";
 import { BeeldKiezer } from "./beeld-kiezer";
+import { LinkVeld } from "./link-veld";
 import { bewaarConcept, zetZichtbaarheid } from "../server/editor-acties";
 
 /**
@@ -95,6 +97,7 @@ export function BlokBewerker({
   verbergbaar = false,
   zichtbaarNaPubliceren = true,
   lijst = null,
+  standaardLink = null,
 }: {
   pageKey: string;
   blockKey: string;
@@ -112,6 +115,8 @@ export function BlokBewerker({
     itemNaam: string;
     sjabloon: Record<string, string>;
   } | null;
+  /** Alleen bij een linkveld: waar de knop heen gaat als het veld leeg blijft. */
+  standaardLink?: string | null;
 }) {
   const beginwaarde = alsWaarde(concept ?? gepubliceerd);
   const [waarde, setWaarde] = useState<Waarde>(beginwaarde);
@@ -205,7 +210,14 @@ export function BlokBewerker({
           <Label htmlFor={`blok-${blockKey}`} className="sr-only">
             {omschrijving}
           </Label>
-          {meerdereRegels(blockKey, waarde.text) ? (
+          {isLinkBlok(blockKey) ? (
+            <LinkVeld
+              id={`blok-${blockKey}`}
+              waarde={waarde.text}
+              terugval={standaardLink ?? "/"}
+              onWijzig={(nieuw) => setWaarde({ text: nieuw })}
+            />
+          ) : meerdereRegels(blockKey, waarde.text) ? (
             <Textarea
               id={`blok-${blockKey}`}
               rows={waarde.text.length > 400 ? 10 : 4}
@@ -286,6 +298,22 @@ export function BlokBewerker({
                             alt={item.naam ?? item.titel ?? ""}
                             toonAlt={false}
                             onWijzig={({ url }) => wijzig(url)}
+                          />
+                        </div>
+                      );
+                    }
+
+                    if (isLinkVeld(veld)) {
+                      return (
+                        <div key={veld}>
+                          <Label htmlFor={`${blockKey}-${index}-${veld}`}>
+                            {VELD_LABEL[veld] ?? veld}
+                          </Label>
+                          <LinkVeld
+                            id={`${blockKey}-${index}-${veld}`}
+                            waarde={inhoud}
+                            terugval="/"
+                            onWijzig={wijzig}
                           />
                         </div>
                       );

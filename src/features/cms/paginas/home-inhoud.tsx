@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Alineas } from "@/components/ui/alineas";
+import { CmsKnop, CmsTekstLink } from "@/components/ui/cms-knop";
 import { Sectie, SectieKop } from "@/components/layout/sectie";
 import { Card, CardContent } from "@/components/ui/card";
 import { formateerTijdvak, type Les } from "@/features/bookings";
@@ -111,20 +112,18 @@ function Hero({ pagina }: { pagina: Pagina }) {
             />
           </div>
           <div className="mt-9 flex flex-wrap gap-3">
-            <Link
-              href="/lessen"
-              className="inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
-            >
-              {pagina.tekst("hero_knop")}
-            </Link>
-            {knopTwee ? (
-              <Link
-                href="/opleidingen"
-                className="inline-flex h-12 items-center rounded-lg border border-line-strong px-7 font-semibold text-cream transition-colors hover:bg-hover"
-              >
-                {knopTwee}
-              </Link>
-            ) : null}
+            <CmsKnop
+              tekst={pagina.tekst("hero_knop")}
+              link={pagina.tekst("hero_link")}
+              terugval="/lessen"
+            />
+            <CmsKnop
+              tekst={knopTwee}
+              link={pagina.tekst("hero_link_twee")}
+              terugval="/opleidingen"
+              variant="omlijnd"
+              className="border-line-strong text-cream"
+            />
           </div>
           {kenmerken ? (
             <p className="mt-8 text-sm text-muted">{kenmerken}</p>
@@ -224,12 +223,12 @@ function Rooster({ pagina, lessen }: { pagina: Pagina; lessen: Les[] }) {
             ))}
           </ul>
 
-          <Link
-            href="/lessen"
-            className="mt-6 inline-flex font-semibold text-green underline"
-          >
-            Bekijk het volledige weekrooster
-          </Link>
+          <CmsTekstLink
+            tekst={pagina.tekst("rooster_knop")}
+            link={pagina.tekst("rooster_link")}
+            terugval="/lessen"
+            className="mt-6"
+          />
         </div>
       </div>
     </Sectie>
@@ -363,12 +362,12 @@ export function HomeInhoud({
         <div className="mt-10">
           <CursusRooster cursussen={opleidingen.slice(0, 3)} />
         </div>
-        <Link
-          href="/opleidingen"
-          className="mt-8 inline-flex font-semibold text-green underline"
-        >
-          Bekijk het volledige aanbod
-        </Link>
+        <CmsTekstLink
+          tekst={pagina.tekst("aanbod_knop")}
+          link={pagina.tekst("aanbod_link")}
+          terugval="/opleidingen"
+          className="mt-8"
+        />
       </Sectie>
 
       {ervaringen.length > 0 ? (
@@ -405,12 +404,12 @@ export function HomeInhoud({
               className="text-lg text-muted"
             />
           </div>
-          <Link
-            href="/contact"
-            className="mt-8 inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
-          >
-            Neem contact op
-          </Link>
+          <CmsKnop
+            tekst={pagina.tekst("cta_knop")}
+            link={pagina.tekst("cta_link")}
+            terugval="/contact"
+            className="mt-8"
+          />
         </div>
       </Sectie>
     </>

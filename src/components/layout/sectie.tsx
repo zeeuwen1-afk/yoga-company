@@ -1,13 +1,22 @@
 import { Alineas } from "@/components/ui/alineas";
 import { cn } from "@/lib/utils";
 
-/** Paginabrede sectie met vaste marges en een keuze uit twee achtergronden. */
+/**
+ * Paginabrede sectie met vaste marges en een keuze uit twee achtergronden.
+ *
+ * Met een `id` is de sectie aan te linken vanuit een knop: `/lessen#rooster`
+ * springt naar de sectie met dat id. De namen staan in `SECTIES` hieronder,
+ * zodat de site-editor kan laten zien wat er te kiezen valt; verzin er dus geen
+ * losse bij zonder ze daar te noemen.
+ */
 export function Sectie({
+  id,
   achtergrond = "wit",
   lijnBoven = false,
   className,
   children,
 }: {
+  id?: string;
   achtergrond?: "wit" | "creme" | "zand";
   lijnBoven?: boolean;
   className?: string;
@@ -15,7 +24,11 @@ export function Sectie({
 }) {
   return (
     <section
+      id={id}
+      // Zonder deze ruimte verdwijnt de kop van een aangelinkte sectie achter
+      // de menubalk, die blijft staan bij het scrollen.
       className={cn(
+        id && "scroll-mt-24",
         "px-4 py-16 sm:px-6 sm:py-20",
         achtergrond === "creme" && "bg-cream",
         achtergrond === "zand" && "bg-sand-light",

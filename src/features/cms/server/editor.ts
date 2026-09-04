@@ -1,6 +1,7 @@
 import "server-only";
 
 import { BLOKKEN, type BlokSeed } from "@/content/blokken";
+import { isLinkBlok } from "../link-blok";
 import { createClient } from "@/lib/supabase/server";
 import type { BlockKind, Json } from "@/lib/supabase/types";
 
@@ -37,6 +38,13 @@ export type BewerkbaarBlok = {
     itemNaam: string;
     sjabloon: Record<string, string>;
   } | null;
+  /**
+   * Alleen bij een linkveld: waar de knop heen gaat zolang het veld leeg is.
+   * Dat is het adres uit de startinhoud, want dat is ook wat de pagina als
+   * terugval gebruikt. De editor kan zo tonen wat er gebeurt bij een leeg veld
+   * in plaats van dat de beheerder het moet raden.
+   */
+  standaardLink: string | null;
   /** Staat het blok nu online? */
   zichtbaar: boolean;
   /** Wat de schakelaar wordt na publiceren. */
@@ -135,6 +143,10 @@ export async function haalEditorPaginas(): Promise<EditorPagina[]> {
                   Object.keys(eersteItem).map((veld) => [veld, ""]),
                 ),
               }
+            : null,
+        standaardLink:
+          isLinkBlok(definitie.block_key) && "text" in definitie.value
+            ? definitie.value.text
             : null,
         zichtbaar,
         zichtbaarNaPubliceren,

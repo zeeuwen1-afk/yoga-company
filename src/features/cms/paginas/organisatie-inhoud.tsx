@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { Alineas } from "@/components/ui/alineas";
+import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import { AanvraagFormulier } from "../components/aanvraag-formulier";
 import type { Pagina } from "../server/queries";
@@ -60,14 +61,12 @@ export function OrganisatieInhoud({
               className="text-lg text-muted"
             />
           </div>
-          {pagina.tekst("knop") ? (
-            <a
-              href="#aanvraag"
-              className="mt-8 inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
-            >
-              {pagina.tekst("knop")}
-            </a>
-          ) : null}
+          <CmsKnop
+            tekst={pagina.tekst("knop")}
+            link={pagina.tekst("knop_link")}
+            terugval="#aanvraag"
+            className="mt-8"
+          />
         </div>
       </Sectie>
 

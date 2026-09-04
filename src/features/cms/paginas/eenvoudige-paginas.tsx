@@ -1,8 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 
 import { Alineas } from "@/components/ui/alineas";
+import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import { VEILIGHEID_SECTIES } from "@/content/veiligheid";
 import { ContactFormulier } from "../components/contact-formulier";
@@ -75,21 +75,25 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
         </Sectie>
       ) : null}
 
-      <Sectie achtergrond="zand" lijnBoven>
-        <div className="max-w-2xl">
-          <h2 className="text-3xl">Benieuwd of het klikt?</h2>
-          <p className="mt-4 text-lg text-muted">
-            De beste manier om erachter te komen is het gesprek. Stel je vraag;
-            we reageren meestal binnen twee werkdagen.
-          </p>
-          <Link
-            href="/contact"
-            className="mt-8 inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
-          >
-            Neem contact op
-          </Link>
-        </div>
-      </Sectie>
+      {pagina.tekst("cta_titel") ? (
+        <Sectie achtergrond="zand" lijnBoven>
+          <div className="max-w-2xl">
+            <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
+            <div className="mt-4">
+              <Alineas
+                tekst={pagina.tekst("cta_tekst")}
+                className="text-lg text-muted"
+              />
+            </div>
+            <CmsKnop
+              tekst={pagina.tekst("cta_knop")}
+              link={pagina.tekst("cta_link")}
+              terugval="/contact"
+              className="mt-8"
+            />
+          </div>
+        </Sectie>
+      ) : null}
     </>
   );
 }
@@ -245,7 +249,12 @@ export function OverzichtInhoud({
         />
       ) : null}
 
-      <div className="mt-12">{children}</div>
+      {/* Het anker waar een knop naartoe kan springen: op /lessen is dit het
+          weekrooster, op /opleidingen en /trainingen het aanbod. Staat als
+          `/lessen#rooster` in de lijst met bestemmingen. */}
+      <div id="rooster" className="mt-12 scroll-mt-24">
+        {children}
+      </div>
     </Sectie>
   );
 }

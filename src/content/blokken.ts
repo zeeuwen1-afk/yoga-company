@@ -414,11 +414,25 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "home",
+    block_key: "hero_link",
+    kind: "text" as const,
+    omschrijving: "Waar de eerste knop in de hero heen gaat",
+    value: { text: "/lessen" },
+  },
+  {
+    page_key: "home",
     block_key: "hero_knop_twee",
     kind: "text",
     omschrijving:
       "Tekst op de tweede knop in de hero (leidt naar de opleidingen)",
     value: { text: "Ontdek de opleidingen" },
+  },
+  {
+    page_key: "home",
+    block_key: "hero_link_twee",
+    kind: "text" as const,
+    omschrijving: "Waar de tweede knop in de hero heen gaat",
+    value: { text: "/opleidingen" },
   },
   {
     page_key: "home",
@@ -519,6 +533,20 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "home",
+    block_key: "rooster_knop",
+    kind: "text" as const,
+    omschrijving: "Tekst op de knop onder de eerstvolgende lessen",
+    value: { text: "Bekijk het volledige weekrooster" },
+  },
+  {
+    page_key: "home",
+    block_key: "rooster_link",
+    kind: "text" as const,
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/lessen" },
+  },
+  {
+    page_key: "home",
     block_key: "kaarten_titel",
     kind: "text",
     omschrijving: "Kop van het blok met strippenkaarten",
@@ -585,6 +613,20 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       text: "De volledige opleiding, één losse module, of een korte training. Je schrijft je online in.",
     },
+  },
+  {
+    page_key: "home",
+    block_key: "aanbod_knop",
+    kind: "text" as const,
+    omschrijving: "Tekst op de knop onder het aanbod",
+    value: { text: "Bekijk het volledige aanbod" },
+  },
+  {
+    page_key: "home",
+    block_key: "aanbod_link",
+    kind: "text" as const,
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/opleidingen" },
   },
   {
     page_key: "home",
@@ -742,6 +784,20 @@ export const BLOKKEN: BlokSeed[] = [
       text: "Laat het ons weten. We denken graag mee, zonder dat je ergens aan vastzit.",
     },
   },
+  {
+    page_key: "home",
+    block_key: "cta_knop",
+    kind: "text" as const,
+    omschrijving: "Tekst op de knop onder deze oproep",
+    value: { text: "Neem contact op" },
+  },
+  {
+    page_key: "home",
+    block_key: "cta_link",
+    kind: "text" as const,
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/contact" },
+  },
 
   // ---------------------------------------------------------------------------
   // Bedrijfsyoga
@@ -779,6 +835,14 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Tekst op de knop naar het aanvraagformulier",
     value: { text: "Vraag een proefles aan" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "knop_link",
+    kind: "text" as const,
+    omschrijving:
+      "Waar die knop heen gaat. #aanvraag springt naar het formulier onderaan deze pagina",
+    value: { text: "#aanvraag" },
   },
   {
     page_key: "bedrijfsyoga",
@@ -995,6 +1059,14 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Tekst op de knop naar het aanvraagformulier",
     value: { text: "Vraag een proefles aan" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "knop_link",
+    kind: "text" as const,
+    omschrijving:
+      "Waar die knop heen gaat. #aanvraag springt naar het formulier onderaan deze pagina",
+    value: { text: "#aanvraag" },
   },
   {
     page_key: "onderwijs",
@@ -1263,6 +1335,14 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Tekst op de knop naar het aanvraagformulier",
     value: { text: "Vraag een proefsessie aan" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "knop_link",
+    kind: "text" as const,
+    omschrijving:
+      "Waar die knop heen gaat. #aanvraag springt naar het formulier onderaan deze pagina",
+    value: { text: "#aanvraag" },
   },
   {
     page_key: "sportclubs",
@@ -1607,6 +1687,20 @@ export const BLOKKEN: BlokSeed[] = [
       text: "Voor lessen, een opleiding, yoga op de werkvloer of een samenwerking: laat het weten.",
     },
   },
+  {
+    page_key: "portfolio",
+    block_key: "cta_knop",
+    kind: "text" as const,
+    omschrijving: "Tekst op de knop onder deze oproep",
+    value: { text: "Neem contact op" },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "cta_link",
+    kind: "text" as const,
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/contact" },
+  },
 
   // ---------------------------------------------------------------------------
   // Overzichtspagina's
@@ -1716,6 +1810,36 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving: "Sfeerbeeld boven het verhaal",
     verbergbaar: true,
     value: { url: "", alt: "" },
+  },
+  {
+    page_key: "over-ons",
+    block_key: "cta_titel",
+    kind: "text" as const,
+    omschrijving: "Kop van de oproep onderaan de pagina",
+    value: { text: "Benieuwd of het klikt?" },
+  },
+  {
+    page_key: "over-ons",
+    block_key: "cta_tekst",
+    kind: "text" as const,
+    omschrijving: "Tekst bij de oproep onderaan de pagina",
+    value: {
+      text: "De beste manier om erachter te komen is het gesprek. Stel je vraag; we reageren meestal binnen twee werkdagen.",
+    },
+  },
+  {
+    page_key: "over-ons",
+    block_key: "cta_knop",
+    kind: "text" as const,
+    omschrijving: "Tekst op de knop onder deze oproep",
+    value: { text: "Neem contact op" },
+  },
+  {
+    page_key: "over-ons",
+    block_key: "cta_link",
+    kind: "text" as const,
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/contact" },
   },
   {
     page_key: "over-ons",
