@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Aanwijzen } from "@/features/cms/components/aanwijzen";
+import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { vindJuridischeTekst } from "@/content/juridisch";
 import { haalConceptPagina } from "@/features/cms";
 import { haalRooster, Rooster } from "@/features/bookings";
@@ -117,7 +118,12 @@ export default async function VoorbeeldPagina({
           Staat deze pagina los in een tabblad, dan doet het niets. */}
       <Aanwijzen />
       <SiteHeader />
-      <main className="flex-1">{await inhoud()}</main>
+      <main className="flex-1">
+        {await inhoud()}
+        {/* In de voorvertoning tellen ook de blokken mee die nog niet zijn
+            gepubliceerd; dat is juist wat je hier wilt zien. */}
+        <VrijeZone pageKey={inhoudKey} concept />
+      </main>
       <SiteFooter pagina={voetPagina} />
     </div>
   );

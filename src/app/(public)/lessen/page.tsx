@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalPagina } from "@/features/cms";
 import { OverzichtInhoud } from "@/features/cms/paginas/eenvoudige-paginas";
 import { haalRooster, Rooster } from "@/features/bookings";
@@ -21,12 +22,15 @@ export default async function LessenPage() {
   ]);
 
   return (
-    <OverzichtInhoud pagina={pagina}>
-      {/* Er stond een balkje met strippenkaarten naast het rooster. Die kaarten
-          worden niet meer aangeboden: de lesprijs zit in het abonnement van de
-          school waar wordt lesgegeven. Het rooster krijgt de ruimte die daardoor
-          vrijkomt. */}
-      <Rooster lessen={lessen} />
-    </OverzichtInhoud>
+    <>
+      <OverzichtInhoud pagina={pagina}>
+        {/* Er stond een balkje met strippenkaarten naast het rooster. Die kaarten
+            worden niet meer aangeboden: de lesprijs zit in het abonnement van de
+            school waar wordt lesgegeven. Het rooster krijgt de ruimte die daardoor
+            vrijkomt. */}
+        <Rooster lessen={lessen} />
+      </OverzichtInhoud>
+      <VrijeZone pageKey="lessen" />
+    </>
   );
 }

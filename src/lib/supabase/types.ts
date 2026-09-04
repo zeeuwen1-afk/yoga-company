@@ -418,6 +418,23 @@ export type DocentBlok = {
   created_at: string;
 };
 
+export type PaginaBlok = {
+  id: string;
+  /** De pagina waar dit blok onder komt; de pagina's staan in code. */
+  page_key: string;
+  type: string;
+  /** Leeg betekent: bestaat alleen als concept, publiek nooit zichtbaar. */
+  volgorde: number | null;
+  zichtbaar: boolean;
+  inhoud: Json;
+  concept_inhoud: Json | null;
+  concept_volgorde: number | null;
+  concept_zichtbaar: boolean | null;
+  concept_verwijderd: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
 export type DocentMedia = {
   id: string;
   profile_id: string;
@@ -769,6 +786,7 @@ export type Database = {
         DocentMedia,
         [FK<"docent_media_profile_id_fkey", "profile_id", "profiles">]
       >;
+      pagina_blokken: Table<PaginaBlok, []>;
     };
     Views: {
       content_blocks_public: {

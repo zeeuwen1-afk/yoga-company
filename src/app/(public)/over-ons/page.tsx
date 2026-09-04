@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalPagina } from "@/features/cms";
 import { OverOnsInhoud } from "@/features/cms/paginas/eenvoudige-paginas";
 
@@ -14,5 +15,10 @@ export const metadata: Metadata = {
 
 export default async function OverOnsPage() {
   const pagina = await haalPagina("over-ons");
-  return <OverOnsInhoud pagina={pagina} />;
+  return (
+    <>
+      <OverOnsInhoud pagina={pagina} />
+      <VrijeZone pageKey="over-ons" />
+    </>
+  );
 }

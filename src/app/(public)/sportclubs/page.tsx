@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalPagina } from "@/features/cms";
 import { OrganisatieInhoud } from "@/features/cms/paginas/organisatie-inhoud";
 
@@ -14,5 +15,10 @@ export const metadata: Metadata = {
 
 export default async function SportclubsPage() {
   const pagina = await haalPagina("sportclubs");
-  return <OrganisatieInhoud pagina={pagina} pageKey="sportclubs" />;
+  return (
+    <>
+      <OrganisatieInhoud pagina={pagina} pageKey="sportclubs" />
+      <VrijeZone pageKey="sportclubs" />
+    </>
+  );
 }

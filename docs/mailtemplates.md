@@ -33,12 +33,16 @@ hieronder komt daarvandaan.
 <h2>Nieuw wachtwoord instellen</h2>
 <p>Je hebt een nieuw wachtwoord aangevraagd voor YogaCompany.</p>
 <p>
-  <a href="{{ .SiteURL }}/auth/bevestigen?token_hash={{ .TokenHash }}&type=recovery&volgende=/wachtwoord-herstellen">
+  <a
+    href="{{ .SiteURL }}/auth/bevestigen?token_hash={{ .TokenHash }}&type=recovery&volgende=/wachtwoord-herstellen"
+  >
     Kies een nieuw wachtwoord
   </a>
 </p>
-<p>Deze link is een uur geldig. Heb je dit niet aangevraagd, dan hoef je niets
-te doen en verandert er niets aan je account.</p>
+<p>
+  Deze link is een uur geldig. Heb je dit niet aangevraagd, dan hoef je niets te
+  doen en verandert er niets aan je account.
+</p>
 ```
 
 ## Confirm sign up
@@ -47,7 +51,9 @@ te doen en verandert er niets aan je account.</p>
 <h2>Bevestig je e-mailadres</h2>
 <p>Welkom bij YogaCompany. Bevestig je adres om je account te activeren.</p>
 <p>
-  <a href="{{ .SiteURL }}/auth/bevestigen?token_hash={{ .TokenHash }}&type=signup">
+  <a
+    href="{{ .SiteURL }}/auth/bevestigen?token_hash={{ .TokenHash }}&type=signup"
+  >
     E-mailadres bevestigen
   </a>
 </p>
@@ -59,10 +65,14 @@ Voor accounts die vanuit het beheer worden aangemaakt.
 
 ```html
 <h2>Je bent uitgenodigd</h2>
-<p>Er is een account voor je aangemaakt bij YogaCompany. Kies hieronder je
-wachtwoord.</p>
 <p>
-  <a href="{{ .SiteURL }}/auth/bevestigen?token_hash={{ .TokenHash }}&type=invite&volgende=/wachtwoord-herstellen">
+  Er is een account voor je aangemaakt bij YogaCompany. Kies hieronder je
+  wachtwoord.
+</p>
+<p>
+  <a
+    href="{{ .SiteURL }}/auth/bevestigen?token_hash={{ .TokenHash }}&type=invite&volgende=/wachtwoord-herstellen"
+  >
     Wachtwoord instellen
   </a>
 </p>
@@ -94,7 +104,7 @@ Verander dat niet terug zonder de herstelmail op een tweede apparaat te testen.
 
 Kom je toch op het inlogscherm, kijk dan achteraan de URL:
 
-| Melding | Betekenis |
-| --- | --- |
-| `?fout=link_ongeldig` | geen token in de link: template nog niet aangepast |
+| Melding               | Betekenis                                            |
+| --------------------- | ---------------------------------------------------- |
+| `?fout=link_ongeldig` | geen token in de link: template nog niet aangepast   |
 | `?fout=link_verlopen` | token afgekeurd: link al gebruikt, verlopen, of PKCE |

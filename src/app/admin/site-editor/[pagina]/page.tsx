@@ -7,7 +7,10 @@ import { AdminKop, Paneel } from "@/features/admin/components/ui";
 import { BlokkenPaneel } from "@/features/cms/components/blokken-paneel";
 import { PubliceerBalk } from "@/features/cms/components/publiceer-balk";
 import { ELDERS_BEHEERD } from "@/features/cms/elders-beheerd";
+import { heeftVrijeBlokken } from "@/content/vrije-blokken";
+import { VrijeBlokkenPaneel } from "@/features/cms/components/vrije-blokken-paneel";
 import { haalEditorPagina } from "@/features/cms/server/editor";
+import { haalVrijeBlokkenVoorEditor } from "@/features/cms/server/vrije-blokken";
 
 export const metadata: Metadata = {
   title: "Pagina bewerken",
@@ -34,6 +37,7 @@ export default async function PaginaBewerkenPage({
   if (!pagina) notFound();
 
   const elders = ELDERS_BEHEERD[pageKey];
+  const vrijeBlokken = await haalVrijeBlokkenVoorEditor(pageKey);
 
   return (
     <>
@@ -69,9 +73,17 @@ export default async function PaginaBewerkenPage({
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
-        <Paneel titel="Inhoud">
-          <BlokkenPaneel blokken={pagina.blokken} />
-        </Paneel>
+        <div className="space-y-6">
+          <Paneel titel="Inhoud">
+            <BlokkenPaneel blokken={pagina.blokken} />
+          </Paneel>
+
+          {heeftVrijeBlokken(pageKey) ? (
+            <Paneel titel="Eigen blokken onderaan">
+              <VrijeBlokkenPaneel pageKey={pageKey} blokken={vrijeBlokken} />
+            </Paneel>
+          ) : null}
+        </div>
 
         <div className="xl:sticky xl:top-24 xl:self-start">
           <Paneel titel="Voorvertoning">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalPagina } from "@/features/cms";
 import { PortfolioInhoud } from "@/features/cms/paginas/portfolio-inhoud";
 
@@ -18,5 +19,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function PortfolioPage() {
   const pagina = await haalPagina("portfolio");
-  return <PortfolioInhoud pagina={pagina} />;
+  return (
+    <>
+      <PortfolioInhoud pagina={pagina} />
+      <VrijeZone pageKey="portfolio" />
+    </>
+  );
 }

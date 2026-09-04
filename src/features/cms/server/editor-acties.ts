@@ -10,6 +10,7 @@ import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
 import type { Json } from "@/lib/supabase/types";
 
 import { paginaNaam } from "./editor";
+import { publiceerVrijeBlokken } from "./vrije-blokken";
 
 /**
  * Bewerken en publiceren van site-inhoud (BOUWPROMPT §14).
@@ -224,7 +225,12 @@ export async function publiceerPagina(pageKey: string) {
     .eq("page_key", pageKey)
     .or("draft_value.not.is.null,draft_zichtbaar.not.is.null");
 
-  if (!concepten || concepten.length === 0) {
+  // De vrije blokken onder de pagina publiceren mee. Twee publiceerknoppen
+  // voor één pagina is er een te veel: die tweede vergeet iedereen precies
+  // één keer, en dan staat de helft van je wijziging online.
+  const vrijeBlokken = await publiceerVrijeBlokken(supabase, pageKey);
+
+  if ((!concepten || concepten.length === 0) && vrijeBlokken === 0) {
     return {
       status: "fout" as const,
       bericht: "Er staan geen wijzigingen klaar om te publiceren.",
@@ -234,7 +240,7 @@ export async function publiceerPagina(pageKey: string) {
   // Per blok: concept naar gepubliceerd, en het concept opruimen. Dat geldt
   // voor de inhoud én voor de schakelaar — een blok kan alleen verborgen zijn,
   // alleen gewijzigd, of allebei.
-  for (const concept of concepten) {
+  for (const concept of concepten ?? []) {
     const { error } = await supabase
       .from("content_blocks")
       .update({
@@ -261,17 +267,20 @@ export async function publiceerPagina(pageKey: string) {
     entiteit: "content_blocks",
     entiteitId: pageKey,
     meta: {
-      aantalBlokken: concepten.length,
-      blokken: concepten.map((concept) => concept.block_key),
+      aantalBlokken: (concepten?.length ?? 0) + vrijeBlokken,
+      blokken: (concepten ?? []).map((concept) => concept.block_key),
+      vrijeBlokken,
     },
   });
 
   verversPagina(pageKey);
 
+  const totaal = (concepten?.length ?? 0) + vrijeBlokken;
+
   return {
     status: "gelukt" as const,
-    bericht: `${concepten.length} ${
-      concepten.length === 1 ? "wijziging staat" : "wijzigingen staan"
+    bericht: `${totaal} ${
+      totaal === 1 ? "wijziging staat" : "wijzigingen staan"
     } nu op de website.`,
   };
 }

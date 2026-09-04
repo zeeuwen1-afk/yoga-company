@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalPagina } from "@/features/cms";
 import { HomeInhoud } from "@/features/cms/paginas/home-inhoud";
 import { haalAanbod } from "@/features/courses";
@@ -27,12 +28,15 @@ export default async function HomePage() {
   ]);
 
   return (
-    <HomeInhoud
-      pagina={pagina}
-      opleidingen={opleidingen}
-      lessen={lessen
-        .filter((les) => !les.afgelastOp)
-        .slice(0, LESSEN_OP_DE_STARTPAGINA)}
-    />
+    <>
+      <HomeInhoud
+        pagina={pagina}
+        opleidingen={opleidingen}
+        lessen={lessen
+          .filter((les) => !les.afgelastOp)
+          .slice(0, LESSEN_OP_DE_STARTPAGINA)}
+      />
+      <VrijeZone pageKey="home" />
+    </>
   );
 }

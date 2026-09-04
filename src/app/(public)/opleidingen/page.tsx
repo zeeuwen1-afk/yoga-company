@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalPagina } from "@/features/cms";
 import { OverzichtInhoud } from "@/features/cms/paginas/eenvoudige-paginas";
 import { CursusRooster, haalAanbod } from "@/features/courses";
@@ -20,8 +21,11 @@ export default async function OpleidingenPage() {
   ]);
 
   return (
-    <OverzichtInhoud pagina={pagina}>
-      <CursusRooster cursussen={opleidingen} />
-    </OverzichtInhoud>
+    <>
+      <OverzichtInhoud pagina={pagina}>
+        <CursusRooster cursussen={opleidingen} />
+      </OverzichtInhoud>
+      <VrijeZone pageKey="opleidingen" />
+    </>
   );
 }
