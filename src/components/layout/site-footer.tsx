@@ -24,6 +24,7 @@ const navigatie = [
 ];
 
 type Gegeven = { label: string; waarde: string };
+type Partner = { naam: string; logo: string; website: string };
 
 /**
  * De paginavoet leest zijn inhoud normaal zelf op. De site-editor geeft hem
@@ -34,6 +35,11 @@ export async function SiteFooter({
 }: { pagina?: Pagina } = {}) {
   const pagina = gegeven ?? (await haalPagina("footer"));
   const gegevens = pagina.lijst<Gegeven>("bedrijfsgegevens");
+  // Half ingevulde regels tellen niet mee: een partner zonder naam én zonder
+  // logo is niets om te tonen, en zou anders als lege doos in de voet staan.
+  const partners = pagina
+    .lijst<Partner>("partners")
+    .filter((partner) => partner.naam?.trim() || partner.logo?.trim());
 
   return (
     // §2: het nachtgroen draagt de paginavoet; daarop staat de lichte variant
@@ -97,11 +103,76 @@ export async function SiteFooter({
         </div>
       </div>
 
+      {/* Partners staan bewust onderaan en klein. Wie ze zoekt vindt ze op elke
+          pagina; wie ze niet zoekt wordt er niet mee lastiggevallen. Vertrouwen
+          bouw je met aanwezigheid, niet met formaat. */}
+      {partners.length > 0 ? (
+        <div className="border-t border-petrol-line">
+          <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+            {pagina.tekst("partners_titel") ? (
+              <h2 className="text-sm tracking-[0.12em] text-muted uppercase">
+                {pagina.tekst("partners_titel")}
+              </h2>
+            ) : null}
+            <ul className="mt-4 flex flex-wrap items-center gap-3">
+              {partners.map((partner, index) => (
+                <li key={`${partner.naam}-${index}`}>
+                  <PartnerMerk partner={partner} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : null}
+
       <div className="border-t border-petrol-line">
         <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-muted sm:px-6">
           © {new Date().getFullYear()} YogaCompany. Alle rechten voorbehouden.
         </p>
       </div>
     </footer>
+  );
+}
+
+/**
+ * Eén partner: het logo als dat er is, anders de naam. Met een adres wordt het
+ * een link, zonder adres blijft het gewoon staan.
+ *
+ * Een logo is een merk van iemand anders. Het staat er dus precies zoals de
+ * partner het aanlevert: geen kleurfilter, geen bijsnijden, alleen kleiner.
+ */
+function PartnerMerk({ partner }: { partner: Partner }) {
+  const merk = partner.logo?.trim() ? (
+    <Image
+      src={partner.logo}
+      alt={partner.naam || "Partner"}
+      width={320}
+      height={160}
+      className="h-8 w-auto object-contain"
+    />
+  ) : (
+    <span className="text-sm text-cream">{partner.naam}</span>
+  );
+
+  const omhulsel =
+    "flex h-14 items-center rounded-lg border border-petrol-line px-4 transition-colors hover:border-sand-light";
+
+  if (!partner.website?.trim()) {
+    return <span className={omhulsel}>{merk}</span>;
+  }
+
+  return (
+    <a
+      href={partner.website}
+      className={omhulsel}
+      // Een partner is een andere site. Openen in een nieuw tabblad houdt de
+      // bezoeker op yogacompany.eu; rel voorkomt dat die site iets met dit
+      // tabblad kan.
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {merk}
+      <span className="sr-only">{`Naar de website van ${partner.naam || "deze partner"}`}</span>
+    </a>
   );
 }

@@ -34,7 +34,7 @@ function alsWaarde(json: Json | null): Waarde {
 }
 
 /** Welke velden in een lijst een foto zijn, en dus een uploadknop krijgen. */
-const IS_FOTOVELD = /^(foto|beeld|portret|afbeelding)$/;
+const IS_FOTOVELD = /^(foto|beeld|portret|afbeelding|logo)$/;
 
 /**
  * Krijgt dit veld een tekstvak of één regel?
@@ -81,6 +81,8 @@ const VELD_LABEL: Record<string, string> = {
   rail: "In het zijbalkje bij het rooster? (ja of leeg)",
   knop: "Tekst op de knop",
   href: "Waar de knop heen gaat, bijvoorbeeld /lessen",
+  logo: "Logo",
+  website: "Webadres, bijvoorbeeld https://…",
 };
 
 export function BlokBewerker({

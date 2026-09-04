@@ -1716,6 +1716,26 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "footer",
+    block_key: "partners_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Kopje boven de partners in de paginavoet",
+    value: { text: "Samenwerkingen en partners" },
+  },
+  {
+    page_key: "footer",
+    block_key: "partners",
+    lijst: { max: 12, itemNaam: "partner" },
+    kind: "richtext",
+    verbergbaar: true,
+    omschrijving:
+      "Partners en samenwerkingen onder aan elke pagina. Per partner: naam, logo en het webadres. Zonder logo toont hij de naam als tekst; zonder webadres wordt het geen link. Laat de lijst leeg en het hele blok blijft weg.",
+    value: {
+      items: [{ naam: "", logo: "", website: "" }],
+    },
+  },
+  {
+    page_key: "footer",
     block_key: "bedrijfsgegevens",
     lijst: { max: 6, itemNaam: "gegeven" },
     kind: "richtext",
