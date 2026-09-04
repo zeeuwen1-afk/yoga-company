@@ -34,6 +34,8 @@ export type AuditActie =
   | "aanbod_aangemaakt"
   | "aanbod_bijgewerkt"
   | "aanbod_gedeactiveerd"
+  | "aanbod_verwijderd"
+  | "les_verwijderd"
   | "content_toegevoegd"
   | "content_verwijderd"
   | "bestand_geupload"

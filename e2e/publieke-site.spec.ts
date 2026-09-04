@@ -20,28 +20,43 @@ test.describe("Landingspagina", () => {
     ).toHaveAttribute("href", "/inloggen?vervolg=/docenten");
   });
 
-  test("toont de drie ingangen en het waarom-blok", async ({ page }) => {
+  /**
+   * De koppen van de drie ingangen zijn bewerkbaar in de site-editor. Deze
+   * test controleerde ze eerst op tekst, en viel om zodra de eigenaar zijn
+   * eigen woorden koos — terwijl er niets stuk was. Wat wél vastligt is de
+   * structuur: drie ingangen, elk met een label, een kop en een link.
+   */
+  /**
+   * Alles op deze pagina is bewerkbaar: de koppen van de ingangen, hun labels,
+   * de knopteksten. Deze test controleerde die op woord, en viel om zodra de
+   * eigenaar zijn eigen tekst koos terwijl er niets stuk was.
+   *
+   * Wat blijft gelden, wat er ook wordt ingetypt: elke ingang draagt een kop en
+   * een werkende link. Een ingang zonder link is een doodlopende kaart, en dat
+   * is wél een fout.
+   */
+  test("elke ingang heeft een kop en een werkende link", async ({ page }) => {
     await page.goto("/");
 
-    // Elke deur draagt zijn categorie als label en een belofte als kop. Dat
-    // label staat ook in het hoofdmenu, dus zoek hem binnen de deur zelf —
-    // anders vindt de test op een telefoon het verborgen menu-item.
-    for (const [kop, label] of [
-      ["Elke week op de mat", "Yogalessen"],
-      ["Verdiep je in één onderwerp", "Trainingen"],
-      ["Leer het vak", "Opleidingen"],
-    ] as const) {
-      const deur = page.getByRole("listitem").filter({ hasText: kop });
-      await expect(
-        deur.getByRole("heading", { name: kop, level: 3 }),
-      ).toBeVisible();
-      await expect(deur.getByText(label, { exact: true })).toBeVisible();
-    }
+    // Een ingang is een lijstitem waarvan de kop zélf de link draagt; dat is
+    // wat een kaart klikbaar maakt. Andere lijstitems met een kop, zoals de
+    // punten in het waarom-blok, hebben die link niet en zijn ook geen ingang.
+    const ingangen = page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 3 }) })
+      .filter({ has: page.getByRole("link") });
 
-    await expect(
-      page.getByRole("heading", { name: "Waarom YogaCompany", level: 2 }),
-    ).toBeVisible();
-    await expect(page.getByText("Maximaal twaalf deelnemers")).toBeVisible();
+    const aantal = await ingangen.count();
+    expect(aantal).toBeGreaterThanOrEqual(3);
+
+    for (let i = 0; i < aantal; i++) {
+      const ingang = ingangen.nth(i);
+      await expect(ingang.getByRole("heading", { level: 3 })).toBeVisible();
+      await expect(ingang.getByRole("link").first()).toHaveAttribute(
+        "href",
+        /\S/,
+      );
+    }
   });
 
   test("toont opleidingen met prijs", async ({ page }) => {
@@ -398,19 +413,14 @@ test.describe("Voor organisaties", () => {
     }
   });
 
-  for (const [pad, kop] of [
-    ["/bedrijfsyoga", "Yoga op de werkvloer"],
-    ["/sportclubs", "De dag na de wedstrijd"],
-    ["/onderwijs", "Een lesuur waarin het stil wordt"],
-  ] as const) {
+  for (const pad of ["/bedrijfsyoga", "/sportclubs", "/onderwijs"] as const) {
     test(`${pad} toont de pagina met een aanvraagformulier`, async ({
       page,
     }) => {
       await page.goto(pad);
 
-      await expect(
-        page.getByRole("heading", { name: kop, level: 1 }),
-      ).toBeVisible();
+      // De kop is bewerkbaar en mag dus veranderen; dát er een kop staat niet.
+      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
       // Het formulier vraagt méér dan een contactformulier: zonder de omvang
       // en de periode kan er geen prijs worden genoemd.

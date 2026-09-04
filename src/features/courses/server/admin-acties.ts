@@ -218,3 +218,94 @@ export async function zetCursusActief(cursusId: string, actief: boolean) {
       : "Dit aanbod is van de website gehaald. Bestaande inschrijvingen blijven gewoon werken.",
   };
 }
+
+/**
+ * Aanbod verwijderen.
+ *
+ * Verbergen was tot nu toe de enige manier om iets van de site te halen, en
+ * dat is voor een opleiding die ooit heeft gedraaid ook de juiste: aan een
+ * inschrijving hangt een betaling, een factuur en een bewaarplicht. Maar voor
+ * iets dat per ongeluk is aangemaakt of nooit is doorgegaan, is verbergen geen
+ * antwoord: dat blijft eeuwig in de lijst staan.
+ *
+ * Wat hier gebeurt is dus niet "verwijder alles", maar "verwijder wat weg mag":
+ *
+ *  - Zijn er inschrijvingen, dan gaat het niet door. De database weigert dat
+ *    zelf ook (de sleutel staat op NO ACTION), maar een uitleg is beter dan
+ *    een databasefout.
+ *  - Staat er lesmateriaal in, dan gaat het ook niet door. Dat zou door de
+ *    cascade meeverdwijnen, en werk dat iemand heeft geüpload hoort niet stil
+ *    weg te vallen achter een knop die "verwijderen" heet.
+ *
+ * In beide gevallen is verbergen het alternatief, en dat staat in de melding.
+ */
+export async function verwijderCursus(cursusId: string) {
+  const context = await vereisAdmin();
+  if (!context) return GEEN_RECHTEN;
+
+  const { supabase, adminId } = context;
+
+  const { data: cursus } = await supabase
+    .from("courses")
+    .select("slug, title, type")
+    .eq("id", cursusId)
+    .maybeSingle();
+
+  if (!cursus) {
+    return {
+      status: "fout" as const,
+      bericht: "Dit aanbod bestaat niet meer.",
+    };
+  }
+
+  const { count: inschrijvingen } = await supabase
+    .from("enrollments")
+    .select("id", { count: "exact", head: true })
+    .eq("course_id", cursusId);
+
+  if (inschrijvingen && inschrijvingen > 0) {
+    return {
+      status: "fout" as const,
+      bericht: `Er ${inschrijvingen === 1 ? "is 1 inschrijving" : `zijn ${inschrijvingen} inschrijvingen`} op dit aanbod. Verwijderen zou die geschiedenis wissen. Zet het op verborgen; dan verdwijnt het van de website en blijft de administratie kloppen.`,
+    };
+  }
+
+  const { count: modules } = await supabase
+    .from("course_modules")
+    .select("id", { count: "exact", head: true })
+    .eq("course_id", cursusId);
+
+  if (modules && modules > 0) {
+    return {
+      status: "fout" as const,
+      bericht:
+        "Er staat lesmateriaal in dit aanbod. Verwijder dat eerst bij Lesmateriaal, zodat je zelf ziet wat er weggaat.",
+    };
+  }
+
+  const { error } = await supabase.from("courses").delete().eq("id", cursusId);
+
+  if (error) {
+    return {
+      status: "fout" as const,
+      bericht:
+        "Dit aanbod kon niet worden verwijderd. Zet het op verborgen als je het van de website wilt halen.",
+    };
+  }
+
+  await schrijfAudit(supabase, {
+    actorId: adminId,
+    actie: "aanbod_verwijderd",
+    entiteit: "courses",
+    entiteitId: cursusId,
+    meta: { titel: cursus.title, type: cursus.type },
+  });
+
+  ververs(cursus.slug);
+  revalidatePath("/admin/aanbod");
+
+  return {
+    status: "gelukt" as const,
+    bericht: `${cursus.title} is verwijderd.`,
+  };
+}

@@ -14,6 +14,7 @@ import {
   LesAfgelastenFormulier,
 } from "@/features/bookings/components/deelnemer-acties";
 import { LesFormulier } from "@/features/bookings/components/les-formulier";
+import { LesVerwijderen } from "@/features/bookings/components/les-verwijderen";
 import {
   haalBeheerLes,
   haalDeelnemers,
@@ -182,6 +183,22 @@ export default async function AdminLesPage({
           </CardContent>
         </Card>
       ) : null}
+
+      {/* Verwijderen staat na afgelasten, want afgelasten is bijna altijd wat
+          je bedoelt zodra er iemand op afkomt. Deze is voor de les die per
+          ongeluk is aangemaakt: daar een streep door zetten is onzin. */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Les verwijderen</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="mb-4 max-w-prose text-sm text-muted">
+            Helemaal uit het rooster halen, alsof hij er nooit heeft gestaan.
+            Bedoeld voor een les die per ongeluk is aangemaakt.
+          </p>
+          <LesVerwijderen lesId={les.id} titel={les.titel} />
+        </CardContent>
+      </Card>
     </div>
   );
 }

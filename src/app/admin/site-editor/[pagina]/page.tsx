@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Info } from "lucide-react";
 
 import { AdminKop, Paneel } from "@/features/admin/components/ui";
 import { BlokBewerker } from "@/features/cms/components/blok-bewerker";
 import { PubliceerBalk } from "@/features/cms/components/publiceer-balk";
+import { ELDERS_BEHEERD } from "@/features/cms/elders-beheerd";
 import { haalEditorPagina } from "@/features/cms/server/editor";
 
 export const metadata: Metadata = {
@@ -30,6 +33,8 @@ export default async function PaginaBewerkenPage({
 
   if (!pagina) notFound();
 
+  const elders = ELDERS_BEHEERD[pageKey];
+
   return (
     <>
       <AdminKop
@@ -37,6 +42,24 @@ export default async function PaginaBewerkenPage({
         titel={pagina.titel}
         toelichting="Wijzigingen worden als concept bewaard tot je publiceert."
       />
+
+      {elders ? (
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-[var(--radius-card)] border border-sand bg-sand-light p-5">
+          <p className="max-w-prose text-sm">
+            <Info
+              className="mr-1.5 inline size-4 align-text-bottom"
+              aria-hidden
+            />
+            {elders.wat}
+          </p>
+          <Link
+            href={elders.href}
+            className="inline-flex h-11 shrink-0 items-center rounded-lg border border-line bg-background px-5 font-semibold transition-colors hover:bg-hover"
+          >
+            {elders.knop}
+          </Link>
+        </div>
+      ) : null}
 
       <div className="mb-6 rounded-[var(--radius-card)] border border-line bg-white p-5">
         <PubliceerBalk

@@ -185,6 +185,86 @@ export async function gelastLesAf(
   };
 }
 
+/**
+ * Een les uit het rooster verwijderen.
+ *
+ * Afgelasten en verwijderen zijn twee verschillende dingen, en het verschil
+ * zit in of er iemand op afkomt. Heeft iemand geboekt, dan is afgelasten het
+ * juiste: de les blijft zichtbaar met de reden erbij, en de deelnemer ziet wat
+ * er met zijn boeking is gebeurd. Verwijderen zou de les stilletjes laten
+ * verdwijnen uit het overzicht van iemand die zich er wél op had verheugd.
+ *
+ * Voor een les die per ongeluk is aangemaakt of nooit heeft plaatsgevonden is
+ * afgelasten juist onzin: dan blijft er een streep door een les staan die er
+ * nooit was. Die mag weg.
+ *
+ * De grens is dus: geen boekingen en geen afgeschreven strippen, dan weg.
+ * Anders afgelasten, met uitleg waarom.
+ */
+export async function verwijderLes(lesId: string): Promise<BeheerResultaat> {
+  const { supabase, gebruiker } = await beheerder();
+  if (!gebruiker) {
+    return {
+      status: "fout",
+      bericht: "Je sessie is verlopen. Log opnieuw in.",
+    };
+  }
+
+  const { data: les } = await supabase
+    .from("class_sessions")
+    .select("title, starts_at")
+    .eq("id", lesId)
+    .maybeSingle();
+
+  if (!les) {
+    return { status: "fout", bericht: "Deze les bestaat niet meer." };
+  }
+
+  const { count: boekingen } = await supabase
+    .from("bookings")
+    .select("id", { count: "exact", head: true })
+    .eq("class_session_id", lesId);
+
+  if (boekingen && boekingen > 0) {
+    return {
+      status: "fout",
+      bericht: `Er ${boekingen === 1 ? "heeft zich 1 deelnemer" : `hebben zich ${boekingen} deelnemers`} op deze les ingeschreven. Gelast hem af in plaats van hem te verwijderen; dan zien zij wat er is gebeurd.`,
+    };
+  }
+
+  const { error } = await supabase
+    .from("class_sessions")
+    .delete()
+    .eq("id", lesId);
+
+  if (error) {
+    // De database weigert het als er een strip op is afgeschreven. Dat is een
+    // administratie die moet kloppen, dus die weigering is terecht.
+    return {
+      status: "fout",
+      bericht:
+        "Deze les kon niet worden verwijderd, waarschijnlijk omdat er een strip op is afgeschreven. Gelast hem af.",
+    };
+  }
+
+  await schrijfAudit(supabase, {
+    actorId: gebruiker.id,
+    actie: "les_verwijderd",
+    entiteit: "class_sessions",
+    entiteitId: lesId,
+    meta: { titel: les.title, begint: les.starts_at },
+  });
+
+  revalidatePath("/admin/lessen");
+  revalidatePath("/lessen");
+  revalidatePath("/");
+
+  return {
+    status: "gelukt",
+    bericht: `${les.title} is uit het rooster gehaald.`,
+  };
+}
+
 const aanwezigheidSchema = z.object({
   boekingId: z.string().uuid(),
   lesId: z.string().uuid(),

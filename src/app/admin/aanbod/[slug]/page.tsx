@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { AdminKop, Paneel } from "@/features/admin/components/ui";
+import { AanbodVerwijderen } from "@/features/courses/components/aanbod-verwijderen";
 import { CursusFormulier } from "@/features/courses/components/cursus-formulier";
 import { haalCursus } from "@/features/courses";
 import { createClient } from "@/lib/supabase/server";
@@ -67,6 +68,20 @@ export default async function AanbodBewerkenPage({
             cursusId={rij.id}
             isActief={rij.is_active}
           />
+        </div>
+      </Paneel>
+
+      {/* Onderaan en apart, want dit is geen bewerking maar een eindpunt.
+          Verbergen staat bewust als eerste genoemd: dat is in de meeste
+          gevallen wat iemand eigenlijk bedoelt. */}
+      <Paneel titel="Verwijderen">
+        <div className="space-y-3 p-5">
+          <p className="text-sm text-muted">
+            Wil je dit alleen van de website halen, haal dan het vinkje
+            &ldquo;Zichtbaar op de website&rdquo; hierboven weg. Dan blijft de
+            administratie kloppen en kun je het later weer aanzetten.
+          </p>
+          <AanbodVerwijderen cursusId={rij.id} titel={cursus.titel} />
         </div>
       </Paneel>
     </>

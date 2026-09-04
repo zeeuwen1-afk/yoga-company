@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 
+import { ZichtbaarheidKnop } from "@/features/courses/components/zichtbaarheid-knop";
 import { AdminKop, LegeLijst, Paneel } from "@/features/admin/components/ui";
 import { createClient } from "@/lib/supabase/server";
 import { formateerPrijs } from "@/features/courses";
@@ -65,15 +66,10 @@ export default async function AanbodPage() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    {cursus.is_active ? (
-                      <span className="rounded-full bg-success/10 px-3 py-1 text-xs font-semibold text-success">
-                        Online
-                      </span>
-                    ) : (
-                      <span className="rounded-full bg-sand-light px-3 py-1 text-xs font-semibold text-muted">
-                        Verborgen
-                      </span>
-                    )}
+                    <ZichtbaarheidKnop
+                      cursusId={cursus.id}
+                      actief={cursus.is_active}
+                    />
                     <Link
                       href={`/admin/aanbod/${cursus.slug}/content`}
                       className="text-sm font-semibold text-green underline"
