@@ -1,6 +1,7 @@
 import "server-only";
 
 import { BLOKKEN, blokkenVanPagina, type BlokWaarde } from "@/content/blokken";
+import { focusStijl } from "@/lib/beeldfocus";
 import { createPublicClient } from "@/lib/supabase/public";
 
 /**
@@ -20,7 +21,7 @@ export type Pagina = {
   /** Een lijst met gestructureerde items (testimonials, docenten, …). */
   lijst<T extends Record<string, string>>(blockKey: string): T[];
   /** Een afbeelding, of null wanneer er nog geen beeld is gekozen. */
-  beeld(blockKey: string): { url: string; alt: string } | null;
+  beeld(blockKey: string): { url: string; alt: string; focus: string } | null;
 };
 
 function maakPagina(waarden: Map<string, BlokWaarde>): Pagina {
@@ -40,7 +41,13 @@ function maakPagina(waarden: Map<string, BlokWaarde>): Pagina {
     beeld(blockKey) {
       const waarde = waarden.get(blockKey);
       if (!waarde || !("url" in waarde) || !waarde.url) return null;
-      return { url: waarde.url, alt: waarde.alt };
+      // `focusStijl` geeft altijd een geldige waarde terug, ook bij een blok
+      // dat nog van vóór deze functie komt of dat handmatig is bewerkt.
+      return {
+        url: waarde.url,
+        alt: waarde.alt,
+        focus: focusStijl(waarde.focus),
+      };
     },
   };
 }

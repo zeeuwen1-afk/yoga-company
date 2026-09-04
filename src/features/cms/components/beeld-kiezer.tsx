@@ -4,9 +4,11 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { ImageIcon, Upload } from "lucide-react";
 
+import { FocusKiezer } from "@/components/ui/focus-kiezer";
 import { FormMessage } from "@/components/ui/form-message";
 import { Input, Label } from "@/components/ui/input";
 import { verkleinAfbeelding } from "@/lib/afbeelding";
+import { MIDDEN } from "@/lib/beeldfocus";
 import { createClient } from "@/lib/supabase/client";
 
 /**
@@ -30,13 +32,17 @@ const MAX_BYTES = 25 * 1024 * 1024;
 export function BeeldKiezer({
   url,
   alt,
+  focus,
   onWijzig,
   id = "beeld",
   toonAlt = true,
+  toonFocus = false,
 }: {
   url: string;
   alt: string;
-  onWijzig: (waarde: { url: string; alt: string }) => void;
+  /** Welk deel van de foto in beeld moet blijven; leeg is het midden. */
+  focus?: string;
+  onWijzig: (waarde: { url: string; alt: string; focus?: string }) => void;
   /** Uniek per kiezer; er kunnen er meer op één scherm staan. */
   id?: string;
   /**
@@ -45,6 +51,12 @@ export function BeeldKiezer({
    * twee keer.
    */
   toonAlt?: boolean;
+  /**
+   * Uit bij een foto in een lijst: die staat in een klein, rond kader waar
+   * bijsnijden vanuit het midden altijd goed uitpakt, en de opslagvorm van een
+   * lijstitem heeft er geen plek voor.
+   */
+  toonFocus?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [bezig, setBezig] = useState(false);
@@ -89,12 +101,19 @@ export function BeeldKiezer({
 
     const { data } = supabase.storage.from("public-media").getPublicUrl(pad);
     setBezig(false);
-    onWijzig({ url: data.publicUrl, alt });
+    onWijzig({ url: data.publicUrl, alt, focus: MIDDEN });
   }
 
   return (
     <div className="space-y-4">
-      {url ? (
+      {url && toonFocus ? (
+        <FocusKiezer
+          url={url}
+          alt={alt}
+          focus={focus}
+          onWijzig={(nieuw) => onWijzig({ url, alt, focus: nieuw })}
+        />
+      ) : url ? (
         // Via next/image, zodat hier een voorbeeld van een paar tientallen
         // kilobytes binnenkomt en niet het originele bestand van megabytes.
         // `contain` en niet `cover`: in een beheerscherm wil je zien wat er op
@@ -148,7 +167,9 @@ export function BeeldKiezer({
           <Input
             id={`${id}-alt`}
             value={alt}
-            onChange={(event) => onWijzig({ url, alt: event.target.value })}
+            onChange={(event) =>
+              onWijzig({ url, alt: event.target.value, focus })
+            }
             placeholder="Bijvoorbeeld: docente begeleidt een deelnemer in een yin-houding"
             aria-invalid={url && !alt ? true : undefined}
           />

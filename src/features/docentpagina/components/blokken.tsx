@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { focusStijl } from "@/lib/beeldfocus";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 
@@ -34,8 +35,17 @@ function tekst(inhoud: Record<string, unknown>, veld: string): string {
 }
 
 function beeld(inhoud: Record<string, unknown>, veld: string) {
-  const waarde = inhoud[veld] as { url?: string; alt?: string } | undefined;
-  return waarde?.url ? { url: waarde.url, alt: waarde.alt ?? "" } : null;
+  const waarde = inhoud[veld] as
+    { url?: string; alt?: string; focus?: string } | undefined;
+  return waarde?.url
+    ? {
+        url: waarde.url,
+        alt: waarde.alt ?? "",
+        // Welk deel in beeld blijft als het kader een andere verhouding heeft
+        // dan de foto. Geen waarde betekent het midden, zoals het altijd was.
+        focus: focusStijl(waarde.focus),
+      }
+    : null;
 }
 
 function KopPortret({ inhoud }: { inhoud: Record<string, unknown> }) {
@@ -86,6 +96,7 @@ function KopPortret({ inhoud }: { inhoud: Record<string, unknown> }) {
             width={720}
             height={860}
             priority
+            style={{ objectPosition: portret.focus }}
             className="aspect-[4/5] w-full rounded-[var(--radius-card)] border border-line object-cover"
           />
         ) : (
@@ -204,6 +215,7 @@ function OverMij({ inhoud }: { inhoud: Record<string, unknown> }) {
             alt={foto.alt}
             width={560}
             height={560}
+            style={{ objectPosition: foto.focus }}
             className="aspect-square w-full rounded-[var(--radius-card)] border border-line object-cover"
           />
         ) : null}
@@ -239,6 +251,7 @@ function Beeldblok({ inhoud }: { inhoud: Record<string, unknown> }) {
           alt={foto.alt}
           width={1600}
           height={700}
+          style={{ objectPosition: foto.focus }}
           className="aspect-[16/7] w-full rounded-[var(--radius-card)] border border-line object-cover"
         />
         {tekst(inhoud, "bijschrift") ? (

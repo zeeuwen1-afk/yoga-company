@@ -37,6 +37,7 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
             alt={beeld.alt}
             width={1600}
             height={700}
+            style={{ objectPosition: beeld.focus }}
             className="aspect-[16/7] w-full rounded-[var(--radius-card)] border border-line object-cover"
           />
         </Sectie>
@@ -223,6 +224,7 @@ export function OverzichtInhoud({
           alt={beeld.alt}
           width={1600}
           height={520}
+          style={{ objectPosition: beeld.focus }}
           className="mt-10 aspect-[16/5] w-full rounded-[var(--radius-card)] border border-line object-cover"
         />
       ) : null}

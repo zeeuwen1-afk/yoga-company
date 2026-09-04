@@ -72,6 +72,7 @@ export function OrganisatieInhoud({
             alt={beeld.alt}
             width={1600}
             height={700}
+            style={{ objectPosition: beeld.focus }}
             className="aspect-[16/7] w-full rounded-[var(--radius-card)] border border-line object-cover"
           />
         </Sectie>

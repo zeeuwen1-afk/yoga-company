@@ -8,6 +8,8 @@ import { Input, Label, Textarea } from "@/components/ui/input";
 import { RichtextEditor } from "@/components/ui/richtext-editor";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { MAX_FOTOS_IN_REEKS, type Bloktype } from "@/content/docent-blokken";
+import { FocusKiezer } from "@/components/ui/focus-kiezer";
+import { MIDDEN } from "@/lib/beeldfocus";
 import { bewaarBlok, type PaginaResultaat } from "../server/acties";
 
 const BEGIN: PaginaResultaat = { status: "idle" };
@@ -43,7 +45,8 @@ export function BlokFormulier({
     typeof inhoud[naam] === "string" ? (inhoud[naam] as string) : "";
 
   const beeld = (naam: string) =>
-    (inhoud[naam] as { url?: string; alt?: string } | undefined) ?? {
+    (inhoud[naam] as
+      { url?: string; alt?: string; focus?: string } | undefined) ?? {
       url: "",
       alt: "",
     };
@@ -118,9 +121,12 @@ export function BlokFormulier({
                 id={`${blokId}-${veld.naam}`}
                 value={beeld(veld.naam).url ?? ""}
                 onChange={(e) =>
+                  // Een andere foto begint weer in het midden: de uitsnede van
+                  // de vorige zegt niets over deze.
                   zet(veld.naam, {
                     url: e.target.value,
                     alt: beeld(veld.naam).alt ?? "",
+                    focus: MIDDEN,
                   })
                 }
                 className="h-11 w-full rounded-lg border border-line-strong bg-background px-3"
@@ -140,6 +146,7 @@ export function BlokFormulier({
                   zet(veld.naam, {
                     url: beeld(veld.naam).url ?? "",
                     alt: e.target.value,
+                    focus: beeld(veld.naam).focus,
                   })
                 }
               />
@@ -147,6 +154,20 @@ export function BlokFormulier({
                 De omschrijving wordt voorgelezen aan wie de foto niet ziet, en
                 verschijnt als de foto niet laadt.
               </p>
+              {beeld(veld.naam).url ? (
+                <FocusKiezer
+                  url={beeld(veld.naam).url ?? ""}
+                  alt={beeld(veld.naam).alt ?? ""}
+                  focus={beeld(veld.naam).focus}
+                  onWijzig={(nieuw) =>
+                    zet(veld.naam, {
+                      url: beeld(veld.naam).url ?? "",
+                      alt: beeld(veld.naam).alt ?? "",
+                      focus: nieuw,
+                    })
+                  }
+                />
+              ) : null}
             </div>
           ) : null}
 

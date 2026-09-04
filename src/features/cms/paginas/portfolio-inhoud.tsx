@@ -45,6 +45,7 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
               alt={foto.alt}
               width={560}
               height={700}
+              style={{ objectPosition: foto.focus }}
               className="aspect-[4/5] w-full rounded-[var(--radius-card)] border border-line object-cover"
             />
           ) : null}

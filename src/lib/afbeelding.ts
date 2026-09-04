@@ -138,7 +138,10 @@ async function naarBlob(canvas: HTMLCanvasElement): Promise<Blob | null> {
   return blobVan(canvas, "image/jpeg");
 }
 
-function blobVan(canvas: HTMLCanvasElement, type: string): Promise<Blob | null> {
+function blobVan(
+  canvas: HTMLCanvasElement,
+  type: string,
+): Promise<Blob | null> {
   return new Promise((klaar) => {
     canvas.toBlob((blob) => klaar(blob), type, KWALITEIT);
   });

@@ -85,6 +85,7 @@ function Hero({ pagina }: { pagina: Pagina }) {
             fill
             priority
             sizes="100vw"
+            style={{ objectPosition: achtergrond.focus }}
             className="object-cover"
           />
           {/* Houdt de kop leesbaar, wélke foto de beheerder ook kiest. */}
