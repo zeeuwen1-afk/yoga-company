@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Alineas } from "@/components/ui/alineas";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import type { Pagina } from "../server/queries";
 
@@ -123,9 +124,12 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
         <Sectie achtergrond="zand" lijnBoven>
           <div className="max-w-2xl">
             <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
-            <p className="mt-4 text-lg text-muted">
-              {pagina.tekst("cta_tekst")}
-            </p>
+            <div className="mt-4">
+              <Alineas
+                tekst={pagina.tekst("cta_tekst")}
+                className="text-lg text-muted"
+              />
+            </div>
             <Link
               href="/contact"
               className="mt-8 inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"

@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { Alineas } from "@/components/ui/alineas";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import { AanvraagFormulier } from "../components/aanvraag-formulier";
 import type { Pagina } from "../server/queries";
@@ -53,7 +54,12 @@ export function OrganisatieInhoud({
             <p className="label-klein">{pagina.tekst("label")}</p>
           ) : null}
           <h1 className="mt-3 text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
-          <p className="mt-6 text-lg text-muted">{pagina.tekst("inleiding")}</p>
+          <div className="mt-6">
+            <Alineas
+              tekst={pagina.tekst("inleiding")}
+              className="text-lg text-muted"
+            />
+          </div>
           {pagina.tekst("knop") ? (
             <a
               href="#aanvraag"

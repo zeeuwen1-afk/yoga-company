@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 
+import { Alineas } from "@/components/ui/alineas";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import { VEILIGHEID_SECTIES } from "@/content/veiligheid";
 import { ContactFormulier } from "../components/contact-formulier";
@@ -101,7 +102,12 @@ export function ContactInhoud({ pagina }: { pagina: Pagina }) {
       <div className="grid gap-12 lg:grid-cols-[minmax(0,32rem)_1fr]">
         <div>
           <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
-          <p className="mt-5 text-lg text-muted">{pagina.tekst("inleiding")}</p>
+          <div className="mt-5">
+            <Alineas
+              tekst={pagina.tekst("inleiding")}
+              className="text-lg text-muted"
+            />
+          </div>
 
           <div className="mt-10">
             <ContactFormulier />
@@ -135,7 +141,12 @@ export function JuridischeInhoud({ pagina }: { pagina: Pagina }) {
     <Sectie>
       <div className="max-w-2xl">
         <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
-        <p className="mt-5 text-lg text-muted">{pagina.tekst("inleiding")}</p>
+        <div className="mt-5">
+          <Alineas
+            tekst={pagina.tekst("inleiding")}
+            className="text-lg text-muted"
+          />
+        </div>
 
         {waarschuwing ? (
           <p
@@ -160,7 +171,12 @@ export function VeiligheidInhoud({ pagina }: { pagina: Pagina }) {
     <Sectie>
       <div className="max-w-2xl">
         <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
-        <p className="mt-5 text-lg text-muted">{pagina.tekst("inleiding")}</p>
+        <div className="mt-5">
+          <Alineas
+            tekst={pagina.tekst("inleiding")}
+            className="text-lg text-muted"
+          />
+        </div>
 
         <Richtext
           html={pagina.html("kern")}

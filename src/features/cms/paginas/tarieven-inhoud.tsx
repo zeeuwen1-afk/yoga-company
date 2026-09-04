@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Alineas } from "@/components/ui/alineas";
 import { Richtext, Sectie } from "@/components/layout/sectie";
 import { aangezet, type Tarief } from "@/content/tarieven";
 import type { Pagina } from "../server/queries";
@@ -58,9 +59,12 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
           </p>
         ) : null}
         <h1 className="mt-3 text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
-        <p className="mt-5 max-w-2xl text-lg text-muted">
-          {pagina.tekst("inleiding")}
-        </p>
+        <div className="mt-5 max-w-2xl">
+          <Alineas
+            tekst={pagina.tekst("inleiding")}
+            className="text-lg text-muted"
+          />
+        </div>
 
         {/* Op een breed scherm een tabel: de kolommen naast elkaar zijn juist
             waar het om gaat, want daarop vergelijk je. Op een telefoon zou die

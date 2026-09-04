@@ -36,6 +36,28 @@ function alsWaarde(json: Json | null): Waarde {
 /** Welke velden in een lijst een foto zijn, en dus een uploadknop krijgen. */
 const IS_FOTOVELD = /^(foto|beeld|portret|afbeelding)$/;
 
+/**
+ * Krijgt dit veld een tekstvak of één regel?
+ *
+ * De keuze hing eerst aan de lengte van wat er stond. Dat gaf twee problemen:
+ * in een korte tekst kon je geen witregel zetten, want in één regel kun je niet
+ * op enter drukken. En het veld wisselde van vorm terwijl je typte, precies op
+ * het moment dat je over de negentig tekens ging, waardoor je je cursor kwijt
+ * was.
+ *
+ * Nu bepaalt de aard van het blok het. Een kop, een knop of een kleur is één
+ * regel en blijft dat. Een inleiding of een lopende tekst krijgt een vak, ook
+ * als er nu nog maar één zin in staat, zodat je er alinea's van kunt maken.
+ */
+const IS_LOPENDE_TEKST =
+  /(^|_)(inleiding|subtitel|tekst|voetnoot|kern|omschrijving|verhaal|antwoord|citaat|bio)$/;
+
+function meerdereRegels(sleutel: string, tekst: string): boolean {
+  if (IS_LOPENDE_TEKST.test(sleutel)) return true;
+  // Onbekende sleutel: dan maar afgaan op wat er staat.
+  return tekst.includes("\n") || tekst.length > 90;
+}
+
 function hoofdletter(woord: string) {
   return woord.charAt(0).toUpperCase() + woord.slice(1);
 }
@@ -181,10 +203,10 @@ export function BlokBewerker({
           <Label htmlFor={`blok-${blockKey}`} className="sr-only">
             {omschrijving}
           </Label>
-          {waarde.text.length > 90 ? (
+          {meerdereRegels(blockKey, waarde.text) ? (
             <Textarea
               id={`blok-${blockKey}`}
-              rows={3}
+              rows={waarde.text.length > 400 ? 10 : 4}
               value={waarde.text}
               onChange={(event) => setWaarde({ text: event.target.value })}
             />
@@ -272,10 +294,10 @@ export function BlokBewerker({
                         <Label htmlFor={`${blockKey}-${index}-${veld}`}>
                           {VELD_LABEL[veld] ?? veld}
                         </Label>
-                        {inhoud.length > 90 ? (
+                        {meerdereRegels(veld, inhoud) ? (
                           <Textarea
                             id={`${blockKey}-${index}-${veld}`}
-                            rows={3}
+                            rows={inhoud.length > 400 ? 8 : 3}
                             value={inhoud}
                             onChange={(event) => wijzig(event.target.value)}
                           />

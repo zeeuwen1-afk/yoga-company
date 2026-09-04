@@ -1,3 +1,4 @@
+import { Alineas } from "@/components/ui/alineas";
 import { cn } from "@/lib/utils";
 
 /** Paginabrede sectie met vaste marges en een keuze uit twee achtergronden. */
@@ -41,7 +42,9 @@ export function SectieKop({
     <div className={cn("max-w-2xl", gecentreerd && "mx-auto text-center")}>
       <h2 className="text-3xl sm:text-4xl">{titel}</h2>
       {inleiding ? (
-        <p className="mt-4 text-lg text-muted">{inleiding}</p>
+        <div className="mt-4">
+          <Alineas tekst={inleiding} className="text-lg text-muted" />
+        </div>
       ) : null}
     </div>
   );

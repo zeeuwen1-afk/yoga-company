@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Alineas } from "@/components/ui/alineas";
 import { Sectie, SectieKop } from "@/components/layout/sectie";
 import { Card, CardContent } from "@/components/ui/card";
 import { formateerTijdvak, type Les } from "@/features/bookings";
@@ -104,9 +105,12 @@ function Hero({ pagina }: { pagina: Pagina }) {
           <h1 className="mt-7 text-4xl text-cream sm:text-5xl lg:text-6xl">
             {pagina.tekst("hero_titel")}
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted">
-            {pagina.tekst("hero_subtitel")}
-          </p>
+          <div className="mt-6 max-w-xl">
+            <Alineas
+              tekst={pagina.tekst("hero_subtitel")}
+              className="text-lg text-muted"
+            />
+          </div>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
               href="/lessen"
@@ -414,7 +418,12 @@ export function HomeInhoud({
       <Sectie achtergrond="zand" lijnBoven>
         <div className="max-w-2xl">
           <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
-          <p className="mt-4 text-lg text-muted">{pagina.tekst("cta_tekst")}</p>
+          <div className="mt-4">
+            <Alineas
+              tekst={pagina.tekst("cta_tekst")}
+              className="text-lg text-muted"
+            />
+          </div>
           <Link
             href="/contact"
             className="mt-8 inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
