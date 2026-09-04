@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 
 import { publicEnv } from "@/lib/env";
 import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createMailLinkClient } from "@/lib/supabase/server";
 
 import {
   inlogSchema,
@@ -60,7 +60,9 @@ export async function registreren(
     };
   }
 
-  const supabase = await createClient();
+  // Zie createMailLinkClient(): de bevestigingslink moet ook werken als de
+  // mail op een ander apparaat wordt geopend dan waar is geregistreerd.
+  const supabase = createMailLinkClient();
   const { error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
@@ -145,7 +147,7 @@ export async function wachtwoordVergeten(
   }
 
   if (!parsed.data.website) {
-    const supabase = await createClient();
+    const supabase = createMailLinkClient();
     await supabase.auth.resetPasswordForEmail(parsed.data.email, {
       redirectTo: `${publicEnv().NEXT_PUBLIC_SITE_URL}/auth/bevestigen?volgende=/wachtwoord-herstellen`,
     });
