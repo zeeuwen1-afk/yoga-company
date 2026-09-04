@@ -423,9 +423,16 @@ export async function publiceerPagina(
   };
 }
 
-/** Wat een foto maximaal mag wegen. De bucket zelf staat op 20 MB en dat is
- *  niet per map in te stellen, dus de grens staat hier én als check op
- *  `docent_media`. */
+/**
+ * Wat een foto maximaal mag wegen. De bucket zelf staat op 20 MB en dat is
+ * niet per map in te stellen, dus de grens staat hier én als check op
+ * `docent_media`.
+ *
+ * Sinds de browser de foto verkleint voordat hij wordt verstuurd (zie
+ * `@/lib/afbeelding`) komt hier in de praktijk een paar honderd kilobyte
+ * binnen. Deze grens is nog uitsluitend een achtervang voor het geval dat niet
+ * lukt, en blijft onder de `bodySizeLimit` in `next.config.ts`.
+ */
 const MAX_BYTES = 3 * 1024 * 1024;
 const TOEGESTAAN = ["image/jpeg", "image/png", "image/webp"];
 
@@ -449,7 +456,8 @@ export async function uploadFoto(
   if (bestand.size > MAX_BYTES) {
     return {
       status: "fout",
-      bericht: `Deze foto is ${Math.round(bestand.size / 1024 / 1024)} MB. Houd het onder de 3 MB; verklein hem eerst.`,
+      bericht:
+        "Deze foto is te groot om te verwerken. Maak er een gewone foto van, of kies een andere.",
     };
   }
 

@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { ImageIcon, Upload } from "lucide-react";
 
 import { FormMessage } from "@/components/ui/form-message";
 import { Input, Label } from "@/components/ui/input";
+import { verkleinAfbeelding } from "@/lib/afbeelding";
 import { createClient } from "@/lib/supabase/client";
 
 /**
@@ -17,9 +19,13 @@ import { createClient } from "@/lib/supabase/client";
  *    Opslaan kan pas als het veld is ingevuld.
  *  - **De upload gaat rechtstreeks naar de opslag.** Schrijven in
  *    `public-media` mag alleen een beheerder; dat dwingt het storagebeleid af.
+ *
+ * De foto wordt eerst in de browser verkleind (zie `@/lib/afbeelding`). De
+ * grens hieronder geldt dus voor wat er binnenkomt, niet voor wat er wordt
+ * opgeslagen: dat is na het verkleinen een paar honderd kilobyte.
  */
 
-const MAX_BYTES = 10 * 1024 * 1024;
+const MAX_BYTES = 25 * 1024 * 1024;
 
 export function BeeldKiezer({
   url,
@@ -52,13 +58,15 @@ export function BeeldKiezer({
       return;
     }
     if (bestand.size > MAX_BYTES) {
-      setFout("Deze afbeelding is groter dan 10 MB.");
+      setFout("Deze afbeelding is groter dan 25 MB. Kies een kleinere.");
       return;
     }
 
     setBezig(true);
 
-    const veiligeNaam = bestand.name
+    const { bestand: teUploaden } = await verkleinAfbeelding(bestand);
+
+    const veiligeNaam = teUploaden.name
       .toLowerCase()
       .replace(/[^a-z0-9.]+/g, "-")
       .replace(/^-|-$/g, "");
@@ -67,7 +75,11 @@ export function BeeldKiezer({
     const supabase = createClient();
     const { error } = await supabase.storage
       .from("public-media")
-      .upload(pad, bestand, { cacheControl: "31536000", upsert: false });
+      .upload(pad, teUploaden, {
+        contentType: teUploaden.type,
+        cacheControl: "31536000",
+        upsert: false,
+      });
 
     if (error) {
       setBezig(false);
@@ -83,14 +95,19 @@ export function BeeldKiezer({
   return (
     <div className="space-y-4">
       {url ? (
-        // Bewust een gewone img: de bron is een willekeurige opslag-URL die
-        // next/image niet vooraf kent, en dit is een beheerscherm.
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={url}
-          alt={alt || "Voorbeeld van de gekozen afbeelding"}
-          className="max-h-56 rounded-lg border border-line object-cover"
-        />
+        // Via next/image, zodat hier een voorbeeld van een paar tientallen
+        // kilobytes binnenkomt en niet het originele bestand van megabytes.
+        // `contain` en niet `cover`: in een beheerscherm wil je zien wat er op
+        // de foto staat, niet vast een uitsnede.
+        <div className="relative h-56 w-full max-w-md overflow-hidden rounded-lg border border-line bg-cream">
+          <Image
+            src={url}
+            alt={alt || "Voorbeeld van de gekozen afbeelding"}
+            fill
+            sizes="448px"
+            className="object-contain"
+          />
+        </div>
       ) : (
         <div className="flex h-32 items-center justify-center gap-2 rounded-lg border border-dashed border-line bg-cream text-sm text-muted">
           <ImageIcon className="size-5" aria-hidden />

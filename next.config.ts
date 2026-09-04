@@ -87,6 +87,17 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  experimental: {
+    serverActions: {
+      // Next weigert standaard alles boven 1 MB, nog vóór de serveractie zelf
+      // draait. Het uploaden van een docentfoto liep daar stil op stuk: de
+      // controle op 3 MB in `docentpagina/server/acties.ts` werd nooit bereikt,
+      // en de docent kreeg een onbegrijpelijke fout in plaats van uitleg.
+      // Deze waarde loopt gelijk op met die controle, zodat de grens die we
+      // uitleggen ook de grens is die geldt.
+      bodySizeLimit: "3mb",
+    },
+  },
   images: {
     remotePatterns: [
       // Beelden uit de bucket `public-media`, geplaatst via de site-editor.
