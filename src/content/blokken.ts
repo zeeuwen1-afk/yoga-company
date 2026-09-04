@@ -53,7 +53,13 @@ export type BlokWaarde =
   // `focus` bepaalt welk deel van de foto in beeld blijft als het kader een
   // andere verhouding heeft dan de foto. Ontbreekt hij, dan is dat het midden,
   // precies zoals het altijd was.
-  | { url: string; alt: string; focus?: string; layout?: string }
+  | {
+      url: string;
+      alt: string;
+      focus?: string;
+      layout?: string;
+      waas?: string;
+    }
   | { items: Record<string, string>[] };
 
 export type BlokSeed = {

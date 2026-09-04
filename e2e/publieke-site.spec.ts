@@ -80,7 +80,7 @@ test.describe("Opleidingen", () => {
     await page.goto("/opleidingen");
 
     await expect(
-      page.getByRole("heading", { name: "Opleidingen", level: 2 }),
+      page.getByRole("heading", { name: "Opleidingen", level: 1 }),
     ).toBeVisible();
 
     // De volledige opleiding plus de vier losse modules. Tellen op de links
@@ -164,17 +164,22 @@ test.describe("Opleidingen", () => {
 test.describe("Trainingen", () => {
   /**
    * Welke trainingen er staan bepaalt de beheerder: aanbod kan op verborgen
-   * worden gezet zonder dat er iets stuk is. Deze test noemde er twee bij naam
-   * en viel om zodra er eentje uit de etalage ging.
+   * worden gezet zonder dat er iets stuk is. Deze test noemde er eerst twee bij
+   * naam, en eiste daarna dat er er minstens één stond. Allebei fout: toen de
+   * eigenaar ze allebei uit de etalage haalde viel hij om terwijl de site deed
+   * wat er gevraagd was.
    *
-   * Wat wél altijd moet gelden: er staat aanbod, en elk aanbod heeft een naam,
-   * een bedrag en een link naar zijn eigen pagina. Een kaart zonder prijs of
-   * zonder link is een fout die een bezoeker raakt.
+   * Wat wél altijd geldt: de pagina staat er met een kop, en élke kaart die er
+   * staat heeft een bedrag en een link naar zijn eigen pagina. Een kaart zonder
+   * prijs of zonder link is een fout die een bezoeker raakt; een lege pagina is
+   * een keuze van de eigenaar.
    */
-  test("toont het zichtbare aanbod met een prijs en een link", async ({
+  test("elke training die er staat heeft een prijs en een link", async ({
     page,
   }) => {
     await page.goto("/trainingen");
+
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
     const kaarten = page
       .getByRole("listitem")
@@ -182,7 +187,6 @@ test.describe("Trainingen", () => {
       .filter({ hasText: /€/ });
 
     const aantal = await kaarten.count();
-    expect(aantal).toBeGreaterThan(0);
 
     for (let i = 0; i < aantal; i++) {
       await expect(kaarten.nth(i)).toContainText(/€\s?[\d.]+/);

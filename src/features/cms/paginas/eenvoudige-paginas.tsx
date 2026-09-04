@@ -2,7 +2,8 @@ import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 
 import { BeeldMetTekst } from "@/components/layout/beeld-met-tekst";
-import { isNaastElkaar } from "@/lib/beeldlayout";
+import { BeeldAchtergrond } from "@/components/layout/beeld-achtergrond";
+import { isAchtergrond, isNaastElkaar } from "@/lib/beeldlayout";
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
@@ -223,9 +224,11 @@ export function OverzichtInhoud({
 }) {
   const beeld = pagina.beeld("beeld");
   const naast = beeld !== null && isNaastElkaar(beeld.layout);
+  const opDeFoto = beeld !== null && isAchtergrond(beeld.layout);
 
   const kop = (
     <SectieKop
+      hoofdkop
       titel={pagina.tekst("titel")}
       inleiding={pagina.tekst("inleiding")}
     />
@@ -248,6 +251,27 @@ export function OverzichtInhoud({
       ].join(" ")}
     />
   ) : null;
+
+  // Tekst op de foto: kop en inleiding komen op het beeld te staan, en het
+  // rooster of het aanbod eronder in een gewone sectie.
+  if (opDeFoto && beeld) {
+    return (
+      <>
+        <BeeldAchtergrond beeld={beeld} sectie="opening">
+          <SectieKop
+            hoofdkop
+            titel={pagina.tekst("titel")}
+            inleiding={pagina.tekst("inleiding")}
+          />
+        </BeeldAchtergrond>
+        <Sectie>
+          <div id="rooster" className="scroll-mt-24">
+            {children}
+          </div>
+        </Sectie>
+      </>
+    );
+  }
 
   return (
     <Sectie sectie="opening">

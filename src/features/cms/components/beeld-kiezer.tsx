@@ -35,6 +35,7 @@ export function BeeldKiezer({
   alt,
   focus,
   layout,
+  waas,
   onWijzig,
   id = "beeld",
   toonAlt = true,
@@ -47,11 +48,14 @@ export function BeeldKiezer({
   focus?: string;
   /** Waar de foto staat ten opzichte van de tekst; leeg is de volle breedte. */
   layout?: string;
+  /** Hoe donker de waas ligt bij een achtergrondfoto. */
+  waas?: string;
   onWijzig: (waarde: {
     url: string;
     alt: string;
     focus?: string;
     layout?: string;
+    waas?: string;
   }) => void;
   /** Uniek per kiezer; er kunnen er meer op één scherm staan. */
   id?: string;
@@ -113,7 +117,7 @@ export function BeeldKiezer({
 
     const { data } = supabase.storage.from("public-media").getPublicUrl(pad);
     setBezig(false);
-    onWijzig({ url: data.publicUrl, alt, focus: MIDDEN, layout });
+    onWijzig({ url: data.publicUrl, alt, focus: MIDDEN, layout, waas });
   }
 
   return (
@@ -123,7 +127,9 @@ export function BeeldKiezer({
           url={url}
           alt={alt}
           focus={focus}
-          onWijzig={(nieuw) => onWijzig({ url, alt, focus: nieuw, layout })}
+          onWijzig={(nieuw) =>
+            onWijzig({ url, alt, focus: nieuw, layout, waas })
+          }
         />
       ) : url ? (
         // Via next/image, zodat hier een voorbeeld van een paar tientallen
@@ -180,7 +186,7 @@ export function BeeldKiezer({
             id={`${id}-alt`}
             value={alt}
             onChange={(event) =>
-              onWijzig({ url, alt: event.target.value, focus, layout })
+              onWijzig({ url, alt: event.target.value, focus, layout, waas })
             }
             placeholder="Bijvoorbeeld: docente begeleidt een deelnemer in een yin-houding"
             aria-invalid={url && !alt ? true : undefined}
@@ -195,7 +201,11 @@ export function BeeldKiezer({
       {url && toonLayout ? (
         <LayoutKiezer
           waarde={layout}
-          onWijzig={(nieuw) => onWijzig({ url, alt, focus, layout: nieuw })}
+          waas={waas}
+          onWijzig={(nieuw) =>
+            onWijzig({ url, alt, focus, layout: nieuw, waas })
+          }
+          onWaas={(nieuw) => onWijzig({ url, alt, focus, layout, waas: nieuw })}
         />
       ) : null}
     </div>

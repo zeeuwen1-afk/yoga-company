@@ -1,6 +1,13 @@
 import Image from "next/image";
 
-import { isNaastElkaar, type BeeldLayout } from "@/lib/beeldlayout";
+import {
+  isAchtergrond,
+  isNaastElkaar,
+  type BeeldLayout,
+  type Waas,
+} from "@/lib/beeldlayout";
+
+import { BeeldAchtergrond } from "./beeld-achtergrond";
 
 import { Richtext, Sectie } from "./sectie";
 
@@ -33,6 +40,7 @@ export function BeeldMetTekst({
     alt: string;
     focus: string;
     layout: BeeldLayout;
+    waas: Waas;
   } | null;
   /** De tekst ernaast, als html uit de richtext-editor. */
   html: string;
@@ -44,6 +52,16 @@ export function BeeldMetTekst({
 
   const layout = beeld?.layout ?? "breed";
   const naast = Boolean(beeld) && Boolean(html) && isNaastElkaar(layout);
+
+  // Tekst op de foto. Zonder tekst zou het een foto met een waas erover zijn,
+  // en dat is een donker vlak zonder reden; dan valt hij terug op volle breedte.
+  if (beeld && html && isAchtergrond(layout)) {
+    return (
+      <BeeldAchtergrond beeld={beeld} sectie={sectie}>
+        <Richtext html={html} className="max-w-2xl text-lg" />
+      </BeeldAchtergrond>
+    );
+  }
 
   const foto = beeld ? (
     <Image

@@ -49,19 +49,36 @@ export function Sectie({
   );
 }
 
-/** Kop van een sectie, met optionele inleiding eronder. */
+/**
+ * Kop van een sectie, met optionele inleiding eronder.
+ *
+ * Standaard een h2, want een sectie is meestal een onderdeel van een pagina.
+ * Draagt de sectie de pagina zelf, dan hoort het een h1 te zijn: elke pagina
+ * heeft er precies één nodig, en zonder die kop weet een zoekmachine noch een
+ * schermlezer waar de pagina over gaat. Op /trainingen, /opleidingen en /lessen
+ * ontbrak hij daardoor jarenlang.
+ */
 export function SectieKop({
   titel,
   inleiding,
   gecentreerd = false,
+  hoofdkop = false,
 }: {
   titel: string;
   inleiding?: string;
   gecentreerd?: boolean;
+  /** Draagt deze kop de hele pagina? Dan wordt het de h1. */
+  hoofdkop?: boolean;
 }) {
+  const Kop = hoofdkop ? "h1" : "h2";
+
   return (
     <div className={cn("max-w-2xl", gecentreerd && "mx-auto text-center")}>
-      <h2 className="text-3xl sm:text-4xl">{titel}</h2>
+      <Kop
+        className={hoofdkop ? "text-4xl sm:text-5xl" : "text-3xl sm:text-4xl"}
+      >
+        {titel}
+      </Kop>
       {inleiding ? (
         <div className="mt-4">
           <Alineas tekst={inleiding} className="text-lg text-muted" />

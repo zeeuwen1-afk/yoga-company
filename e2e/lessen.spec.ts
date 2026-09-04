@@ -7,7 +7,7 @@ test.describe("Lesrooster", () => {
     // De overzichtspagina's zetten hun kop als h2, net als /opleidingen en
     // /trainingen; die conventie volgen we hier.
     await expect(
-      page.getByRole("heading", { name: "Yogalessen", level: 2 }),
+      page.getByRole("heading", { name: "Yogalessen", level: 1 }),
     ).toBeVisible();
 
     // Staat er niets in het rooster, dan hoort daar een uitleg te staan in

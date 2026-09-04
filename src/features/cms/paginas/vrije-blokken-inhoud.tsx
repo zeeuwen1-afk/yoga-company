@@ -5,7 +5,7 @@ import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { focusStijl } from "@/lib/beeldfocus";
-import { leesLayout } from "@/lib/beeldlayout";
+import { leesLayout, leesWaas } from "@/lib/beeldlayout";
 
 import type { VrijBlok } from "../server/vrije-blokken";
 
@@ -43,7 +43,14 @@ function tekst(inhoud: Record<string, unknown>, veld: string): string {
 
 function beeld(inhoud: Record<string, unknown>, veld: string) {
   const waarde = inhoud[veld] as
-    { url?: string; alt?: string; focus?: string; layout?: string } | undefined;
+    | {
+        url?: string;
+        alt?: string;
+        focus?: string;
+        layout?: string;
+        waas?: string;
+      }
+    | undefined;
 
   if (!waarde?.url) return null;
 
@@ -52,6 +59,7 @@ function beeld(inhoud: Record<string, unknown>, veld: string) {
     alt: waarde.alt ?? "",
     focus: focusStijl(waarde.focus),
     layout: leesLayout(waarde.layout),
+    waas: leesWaas(waarde.waas),
   };
 }
 

@@ -206,6 +206,31 @@
   }
 }
 
+/* De waas over een foto die als achtergrond van een blok dient.
+ *
+ * Niet te verwarren met `hero-waas` hierboven: die loopt van donker links naar
+ * bijna doorzichtig rechts, omdat er rechts van de hero nooit tekst staat. In
+ * een gewoon blok loopt de tekst wél door tot rechts, en dan zou de helft van
+ * een zin op dat lichte deel onleesbaar worden. Deze is daarom overal even
+ * donker.
+ *
+ * De dekking is doorgerekend met crèmewit op petrol over een spierwitte foto,
+ * het slechtste geval dat er is:
+ *
+ *   75%  5,42 : 1   ruim boven de grens van 4,5 : 1
+ *   88%  7,86 : 1   voor een onrustige foto
+ *
+ * Verlaag deze waarden niet zonder opnieuw te rekenen; bij 65% zit je op
+ * 4,05 : 1 en dan is de kop op een lichte lucht niet meer te lezen.
+ * -------------------------------------------------------------------------- */
+@utility beeld-waas {
+  background: rgba(19, 59, 69, 0.75);
+}
+
+@utility beeld-waas-donkerder {
+  background: rgba(19, 59, 69, 0.88);
+}
+
 /* Labels in kleinkapitaal-stijl met ruime letterafstand. */
 @utility label-klein {
   font-size: 0.75rem;

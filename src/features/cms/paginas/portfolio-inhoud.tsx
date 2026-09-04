@@ -1,7 +1,8 @@
 import Image from "next/image";
 
 import { Alineas } from "@/components/ui/alineas";
-import { isNaastElkaar } from "@/lib/beeldlayout";
+import { BeeldAchtergrond } from "@/components/layout/beeld-achtergrond";
+import { isAchtergrond, isNaastElkaar } from "@/lib/beeldlayout";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import type { Pagina } from "../server/queries";
@@ -25,47 +26,60 @@ type Specialisatie = { titel: string; tekst: string };
 export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
   const foto = pagina.beeld("foto");
   const naastElkaar = foto === null || isNaastElkaar(foto.layout);
+  const opDeFoto = foto !== null && isAchtergrond(foto.layout);
+
+  const kop = (
+    <>
+      <p className="label-klein">Portfolio</p>
+      <h1 className="mt-3 text-4xl sm:text-5xl">{pagina.tekst("naam")}</h1>
+      <p className="mt-3 text-lg text-muted">{pagina.tekst("rol")}</p>
+      <Richtext html={pagina.html("intro")} className="mt-8 text-lg" />
+    </>
+  );
   const ervaring = pagina.lijst<Ervaring>("ervaring");
   const opleidingen = pagina.lijst<Opleiding>("opleidingen");
   const specialisaties = pagina.lijst<Specialisatie>("specialisaties");
 
   return (
     <>
-      <Sectie sectie="opening" achtergrond="creme">
-        <div
-          className={[
-            "grid items-start gap-10",
-            // Het portret staat standaard rechts naast de tekst. Kiest de
-            // beheerder "breed" of "onder", dan gaat hij eronder over de volle
-            // breedte; dat is de enige indeling waarin een liggende foto hier
-            // niet vreemd staat.
-            naastElkaar ? "lg:grid-cols-[1fr_18rem]" : "",
-          ].join(" ")}
-        >
-          <div className={foto?.layout === "links" ? "lg:order-2" : undefined}>
-            <p className="label-klein">Portfolio</p>
-            <h1 className="mt-3 text-4xl sm:text-5xl">
-              {pagina.tekst("naam")}
-            </h1>
-            <p className="mt-3 text-lg text-muted">{pagina.tekst("rol")}</p>
-            <Richtext html={pagina.html("intro")} className="mt-8 text-lg" />
-          </div>
+      {opDeFoto && foto ? (
+        <BeeldAchtergrond beeld={foto} sectie="opening">
+          {kop}
+        </BeeldAchtergrond>
+      ) : (
+        <Sectie sectie="opening" achtergrond="creme">
+          <div
+            className={[
+              "grid items-start gap-10",
+              // Het portret staat standaard rechts naast de tekst. Kiest de
+              // beheerder "breed" of "onder", dan gaat hij eronder over de volle
+              // breedte; dat is de enige indeling waarin een liggende foto hier
+              // niet vreemd staat.
+              naastElkaar ? "lg:grid-cols-[1fr_18rem]" : "",
+            ].join(" ")}
+          >
+            <div
+              className={foto?.layout === "links" ? "lg:order-2" : undefined}
+            >
+              {kop}
+            </div>
 
-          {foto ? (
-            <Image
-              src={foto.url}
-              alt={foto.alt}
-              width={naastElkaar ? 560 : 1600}
-              height={naastElkaar ? 700 : 700}
-              style={{ objectPosition: foto.focus }}
-              className={[
-                "w-full rounded-[var(--radius-card)] border border-line object-cover",
-                naastElkaar ? "aspect-[4/5]" : "aspect-[16/7]",
-              ].join(" ")}
-            />
-          ) : null}
-        </div>
-      </Sectie>
+            {foto ? (
+              <Image
+                src={foto.url}
+                alt={foto.alt}
+                width={naastElkaar ? 560 : 1600}
+                height={naastElkaar ? 700 : 700}
+                style={{ objectPosition: foto.focus }}
+                className={[
+                  "w-full rounded-[var(--radius-card)] border border-line object-cover",
+                  naastElkaar ? "aspect-[4/5]" : "aspect-[16/7]",
+                ].join(" ")}
+              />
+            ) : null}
+          </div>
+        </Sectie>
+      )}
 
       {ervaring.length > 0 ? (
         <Sectie sectie="ervaring" lijnBoven>
