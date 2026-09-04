@@ -1435,7 +1435,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('portfolio', 'foto', 'image', '{"url":"","alt":""}'::jsonb)
+values ('portfolio', 'foto', 'image', '{"url":"","alt":"","layout":"rechts"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

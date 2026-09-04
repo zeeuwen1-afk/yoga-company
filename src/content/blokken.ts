@@ -78,6 +78,14 @@ export type BlokSeed = {
    * keuze die iemand per ongeluk moet kunnen maken.
    */
   verbergbaar?: true;
+  /**
+   * Ligt de plek van dit beeld vast in de opmaak?
+   *
+   * De achtergrondfoto van de hero loopt over de volle breedte met een waas
+   * eroverheen; daar is niets naast te zetten. Zonder deze vlag zou de editor
+   * een keuze tonen die niets doet, en dat is erger dan geen keuze.
+   */
+  vastBeeld?: true;
 };
 
 /**
@@ -446,6 +454,7 @@ export const BLOKKEN: BlokSeed[] = [
   {
     page_key: "home",
     block_key: "hero_achtergrond",
+    vastBeeld: true,
     verbergbaar: true,
     kind: "image",
     omschrijving:
@@ -1567,7 +1576,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "image",
     verbergbaar: true,
     omschrijving: "Portretfoto",
-    value: { url: "", alt: "" },
+    value: { url: "", alt: "", layout: "rechts" },
   },
   {
     page_key: "portfolio",

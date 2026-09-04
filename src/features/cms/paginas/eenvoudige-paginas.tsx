@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 
 import { BeeldMetTekst } from "@/components/layout/beeld-met-tekst";
+import { isNaastElkaar } from "@/lib/beeldlayout";
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
@@ -221,27 +222,53 @@ export function OverzichtInhoud({
   children: React.ReactNode;
 }) {
   const beeld = pagina.beeld("beeld");
+  const naast = beeld !== null && isNaastElkaar(beeld.layout);
+
+  const kop = (
+    <SectieKop
+      titel={pagina.tekst("titel")}
+      inleiding={pagina.tekst("inleiding")}
+    />
+  );
+
+  // Een brede band, geen paginavullende foto: het beeld hoort de pagina te
+  // openen, niet te overstemmen. Kiest de beheerder links of rechts, dan komt
+  // hij naast de kop te staan in plaats van eronder. Blijft weg zolang er geen
+  // foto is gekozen, zodat de pagina niet met een gat begint.
+  const foto = beeld ? (
+    <Image
+      src={beeld.url}
+      alt={beeld.alt}
+      width={naast ? 900 : 1600}
+      height={naast ? 700 : 520}
+      style={{ objectPosition: beeld.focus }}
+      className={[
+        "w-full rounded-[var(--radius-card)] border border-line object-cover",
+        naast ? "aspect-[4/3]" : "mt-10 aspect-[16/5]",
+      ].join(" ")}
+    />
+  ) : null;
 
   return (
     <Sectie sectie="opening">
-      <SectieKop
-        titel={pagina.tekst("titel")}
-        inleiding={pagina.tekst("inleiding")}
-      />
-
-      {/* Een brede band, geen paginavullende foto: het beeld hoort de pagina
-          te openen, niet te overstemmen. Blijft weg zolang er geen foto is
-          gekozen, zodat de pagina niet met een gat begint. */}
-      {beeld ? (
-        <Image
-          src={beeld.url}
-          alt={beeld.alt}
-          width={1600}
-          height={520}
-          style={{ objectPosition: beeld.focus }}
-          className="mt-10 aspect-[16/5] w-full rounded-[var(--radius-card)] border border-line object-cover"
-        />
-      ) : null}
+      {naast ? (
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          {/* De foto blijft in de opbouw vóór de kop staan, ook bij "rechts":
+              zo staat hij op een telefoon altijd boven en leest een schermlezer
+              alles in dezelfde volgorde als iedereen. */}
+          <div
+            className={beeld?.layout === "rechts" ? "lg:order-2" : undefined}
+          >
+            {foto}
+          </div>
+          <div>{kop}</div>
+        </div>
+      ) : (
+        <>
+          {kop}
+          {foto}
+        </>
+      )}
 
       {/* Het anker waar een knop naartoe kan springen: op /lessen is dit het
           weekrooster, op /opleidingen en /trainingen het aanbod. Staat als

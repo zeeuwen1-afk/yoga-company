@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { Alineas } from "@/components/ui/alineas";
+import { isNaastElkaar } from "@/lib/beeldlayout";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import type { Pagina } from "../server/queries";
@@ -23,6 +24,7 @@ type Specialisatie = { titel: string; tekst: string };
 
 export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
   const foto = pagina.beeld("foto");
+  const naastElkaar = foto === null || isNaastElkaar(foto.layout);
   const ervaring = pagina.lijst<Ervaring>("ervaring");
   const opleidingen = pagina.lijst<Opleiding>("opleidingen");
   const specialisaties = pagina.lijst<Specialisatie>("specialisaties");
@@ -30,8 +32,17 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
   return (
     <>
       <Sectie sectie="opening" achtergrond="creme">
-        <div className="grid items-start gap-10 lg:grid-cols-[1fr_18rem]">
-          <div>
+        <div
+          className={[
+            "grid items-start gap-10",
+            // Het portret staat standaard rechts naast de tekst. Kiest de
+            // beheerder "breed" of "onder", dan gaat hij eronder over de volle
+            // breedte; dat is de enige indeling waarin een liggende foto hier
+            // niet vreemd staat.
+            naastElkaar ? "lg:grid-cols-[1fr_18rem]" : "",
+          ].join(" ")}
+        >
+          <div className={foto?.layout === "links" ? "lg:order-2" : undefined}>
             <p className="label-klein">Portfolio</p>
             <h1 className="mt-3 text-4xl sm:text-5xl">
               {pagina.tekst("naam")}
@@ -44,10 +55,13 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
             <Image
               src={foto.url}
               alt={foto.alt}
-              width={560}
-              height={700}
+              width={naastElkaar ? 560 : 1600}
+              height={naastElkaar ? 700 : 700}
               style={{ objectPosition: foto.focus }}
-              className="aspect-[4/5] w-full rounded-[var(--radius-card)] border border-line object-cover"
+              className={[
+                "w-full rounded-[var(--radius-card)] border border-line object-cover",
+                naastElkaar ? "aspect-[4/5]" : "aspect-[16/7]",
+              ].join(" ")}
             />
           ) : null}
         </div>

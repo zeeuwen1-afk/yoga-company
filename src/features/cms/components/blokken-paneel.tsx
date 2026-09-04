@@ -40,6 +40,7 @@ type Blok = {
   zichtbaar: boolean;
   zichtbaarNaPubliceren: boolean;
   standaardLink: string | null;
+  vastBeeld: boolean;
   lijst: {
     max: number;
     itemNaam: string;
@@ -303,6 +304,7 @@ export function BlokkenPaneel({ blokken }: { blokken: Blok[] }) {
                       zichtbaarNaPubliceren={blok.zichtbaarNaPubliceren}
                       lijst={blok.lijst}
                       standaardLink={blok.standaardLink}
+                      vastBeeld={blok.vastBeeld}
                     />
                   ))}
                 </div>

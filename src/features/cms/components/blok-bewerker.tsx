@@ -98,6 +98,7 @@ export function BlokBewerker({
   zichtbaarNaPubliceren = true,
   lijst = null,
   standaardLink = null,
+  vastBeeld = false,
 }: {
   pageKey: string;
   blockKey: string;
@@ -117,6 +118,8 @@ export function BlokBewerker({
   } | null;
   /** Alleen bij een linkveld: waar de knop heen gaat als het veld leeg blijft. */
   standaardLink?: string | null;
+  /** Bij een beeld waarvan de plek vastligt: geen layoutkeuze tonen. */
+  vastBeeld?: boolean;
 }) {
   const beginwaarde = alsWaarde(concept ?? gepubliceerd);
   const [waarde, setWaarde] = useState<Waarde>(beginwaarde);
@@ -376,7 +379,7 @@ export function BlokBewerker({
           focus={waarde.focus}
           layout={waarde.layout}
           toonFocus
-          toonLayout
+          toonLayout={!vastBeeld}
           onWijzig={(nieuw) => setWaarde(nieuw)}
         />
       ) : null}

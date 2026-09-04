@@ -27,6 +27,8 @@ export type BewerkbaarBlok = {
   heeftConcept: boolean;
   /** Mag dit blok van de pagina worden weggenomen? */
   verbergbaar: boolean;
+  /** Ligt de plek van dit beeld vast, zodat een layoutkeuze niets zou doen? */
+  vastBeeld: boolean;
   /**
    * Alleen bij een lijstblok: hoeveel items erin mogen, hoe één item heet, en
    * met welke velden een nieuw item begint. Dat sjabloon komt uit de code en
@@ -134,6 +136,7 @@ export async function haalEditorPaginas(): Promise<EditorPagina[]> {
         heeftConcept:
           rij?.draft_value != null || zichtbaarNaPubliceren !== zichtbaar,
         verbergbaar: definitie.verbergbaar === true,
+        vastBeeld: definitie.vastBeeld === true,
         lijst:
           definitie.lijst && eersteItem
             ? {
