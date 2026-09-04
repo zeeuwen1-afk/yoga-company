@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { ImageIcon, Upload } from "lucide-react";
 
 import { FocusKiezer } from "@/components/ui/focus-kiezer";
+import { LayoutKiezer } from "@/components/ui/layout-kiezer";
 import { FormMessage } from "@/components/ui/form-message";
 import { Input, Label } from "@/components/ui/input";
 import { verkleinAfbeelding } from "@/lib/afbeelding";
@@ -33,16 +34,25 @@ export function BeeldKiezer({
   url,
   alt,
   focus,
+  layout,
   onWijzig,
   id = "beeld",
   toonAlt = true,
   toonFocus = false,
+  toonLayout = false,
 }: {
   url: string;
   alt: string;
   /** Welk deel van de foto in beeld moet blijven; leeg is het midden. */
   focus?: string;
-  onWijzig: (waarde: { url: string; alt: string; focus?: string }) => void;
+  /** Waar de foto staat ten opzichte van de tekst; leeg is de volle breedte. */
+  layout?: string;
+  onWijzig: (waarde: {
+    url: string;
+    alt: string;
+    focus?: string;
+    layout?: string;
+  }) => void;
   /** Uniek per kiezer; er kunnen er meer op één scherm staan. */
   id?: string;
   /**
@@ -57,6 +67,8 @@ export function BeeldKiezer({
    * lijstitem heeft er geen plek voor.
    */
   toonFocus?: boolean;
+  /** Uit waar de plek van de foto in de opmaak vastligt, zoals in een lijst. */
+  toonLayout?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [bezig, setBezig] = useState(false);
@@ -101,7 +113,7 @@ export function BeeldKiezer({
 
     const { data } = supabase.storage.from("public-media").getPublicUrl(pad);
     setBezig(false);
-    onWijzig({ url: data.publicUrl, alt, focus: MIDDEN });
+    onWijzig({ url: data.publicUrl, alt, focus: MIDDEN, layout });
   }
 
   return (
@@ -111,7 +123,7 @@ export function BeeldKiezer({
           url={url}
           alt={alt}
           focus={focus}
-          onWijzig={(nieuw) => onWijzig({ url, alt, focus: nieuw })}
+          onWijzig={(nieuw) => onWijzig({ url, alt, focus: nieuw, layout })}
         />
       ) : url ? (
         // Via next/image, zodat hier een voorbeeld van een paar tientallen
@@ -168,7 +180,7 @@ export function BeeldKiezer({
             id={`${id}-alt`}
             value={alt}
             onChange={(event) =>
-              onWijzig({ url, alt: event.target.value, focus })
+              onWijzig({ url, alt: event.target.value, focus, layout })
             }
             placeholder="Bijvoorbeeld: docente begeleidt een deelnemer in een yin-houding"
             aria-invalid={url && !alt ? true : undefined}
@@ -178,6 +190,13 @@ export function BeeldKiezer({
             zien, en zoekmachines. Verplicht zodra er een afbeelding staat.
           </p>
         </div>
+      ) : null}
+
+      {url && toonLayout ? (
+        <LayoutKiezer
+          waarde={layout}
+          onWijzig={(nieuw) => onWijzig({ url, alt, focus, layout: nieuw })}
+        />
       ) : null}
     </div>
   );

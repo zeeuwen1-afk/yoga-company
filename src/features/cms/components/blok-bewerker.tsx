@@ -25,7 +25,7 @@ import { bewaarConcept, zetZichtbaarheid } from "../server/editor-acties";
 type Waarde =
   | { text: string }
   | { html: string }
-  | { url: string; alt: string; focus?: string }
+  | { url: string; alt: string; focus?: string; layout?: string }
   | { items: Record<string, string>[] };
 
 function alsWaarde(json: Json | null): Waarde {
@@ -374,7 +374,9 @@ export function BlokBewerker({
           url={waarde.url}
           alt={waarde.alt}
           focus={waarde.focus}
+          layout={waarde.layout}
           toonFocus
+          toonLayout
           onWijzig={(nieuw) => setWaarde(nieuw)}
         />
       ) : null}

@@ -2,6 +2,7 @@ import "server-only";
 
 import { BLOKKEN, blokkenVanPagina, type BlokWaarde } from "@/content/blokken";
 import { focusStijl } from "@/lib/beeldfocus";
+import { leesLayout, type BeeldLayout } from "@/lib/beeldlayout";
 import { createPublicClient } from "@/lib/supabase/public";
 
 /**
@@ -21,7 +22,12 @@ export type Pagina = {
   /** Een lijst met gestructureerde items (testimonials, docenten, …). */
   lijst<T extends Record<string, string>>(blockKey: string): T[];
   /** Een afbeelding, of null wanneer er nog geen beeld is gekozen. */
-  beeld(blockKey: string): { url: string; alt: string; focus: string } | null;
+  beeld(blockKey: string): {
+    url: string;
+    alt: string;
+    focus: string;
+    layout: BeeldLayout;
+  } | null;
 };
 
 function maakPagina(waarden: Map<string, BlokWaarde>): Pagina {
@@ -47,6 +53,7 @@ function maakPagina(waarden: Map<string, BlokWaarde>): Pagina {
         url: waarde.url,
         alt: waarde.alt,
         focus: focusStijl(waarde.focus),
+        layout: leesLayout(waarde.layout),
       };
     },
   };

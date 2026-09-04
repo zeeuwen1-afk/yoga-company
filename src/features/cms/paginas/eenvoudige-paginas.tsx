@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 
+import { BeeldMetTekst } from "@/components/layout/beeld-met-tekst";
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
@@ -27,22 +28,15 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
       <Sectie sectie="opening" achtergrond="creme">
         <div className="max-w-2xl">
           <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
-          <Richtext html={pagina.html("verhaal")} className="mt-8 text-lg" />
         </div>
       </Sectie>
 
-      {beeld ? (
-        <Sectie className="!pt-0">
-          <Image
-            src={beeld.url}
-            alt={beeld.alt}
-            width={1600}
-            height={700}
-            style={{ objectPosition: beeld.focus }}
-            className="aspect-[16/7] w-full rounded-[var(--radius-card)] border border-line object-cover"
-          />
-        </Sectie>
-      ) : null}
+      <BeeldMetTekst
+        sectie="verhaal"
+        beeld={beeld}
+        html={pagina.html("verhaal")}
+        achtergrond="creme"
+      />
 
       {docenten.length > 0 ? (
         <Sectie lijnBoven>

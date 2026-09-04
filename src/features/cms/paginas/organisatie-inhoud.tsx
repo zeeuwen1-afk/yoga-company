@@ -1,5 +1,5 @@
-import Image from "next/image";
 
+import { BeeldMetTekst } from "@/components/layout/beeld-met-tekst";
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
@@ -70,24 +70,13 @@ export function OrganisatieInhoud({
         </div>
       </Sectie>
 
-      {beeld ? (
-        <Sectie achtergrond="creme" className="!pt-0">
-          <Image
-            src={beeld.url}
-            alt={beeld.alt}
-            width={1600}
-            height={700}
-            style={{ objectPosition: beeld.focus }}
-            className="aspect-[16/7] w-full rounded-[var(--radius-card)] border border-line object-cover"
-          />
-        </Sectie>
-      ) : null}
-
-      {verhaal ? (
-        <Sectie lijnBoven>
-          <Richtext html={verhaal} className="max-w-2xl text-lg" />
-        </Sectie>
-      ) : null}
+      <BeeldMetTekst
+        sectie="verhaal"
+        beeld={beeld}
+        html={verhaal}
+        achtergrond="creme"
+        lijnBoven
+      />
 
       {kaarten.length > 0 ? (
         <Sectie

@@ -53,7 +53,7 @@ export type BlokWaarde =
   // `focus` bepaalt welk deel van de foto in beeld blijft als het kader een
   // andere verhouding heeft dan de foto. Ontbreekt hij, dan is dat het midden,
   // precies zoals het altijd was.
-  | { url: string; alt: string; focus?: string }
+  | { url: string; alt: string; focus?: string; layout?: string }
   | { items: Record<string, string>[] };
 
 export type BlokSeed = {
@@ -1793,7 +1793,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "image",
     omschrijving: "Sfeerbeeld boven het verhaal",
     verbergbaar: true,
-    value: { url: "", alt: "" },
+    value: { url: "", alt: "", layout: "onder" },
   },
   {
     page_key: "over-ons",
