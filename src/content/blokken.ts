@@ -18,13 +18,20 @@ import {
   DOCENTEN_VOORWAARDEN_TITEL,
 } from "./docenten.ts";
 import {
-  TARIEVEN,
+  LESPLEKKEN,
+  LESPLEKKEN_INLEIDING,
+  LESPLEKKEN_TITEL,
+  ORGANISATIES_TEKST,
+  ORGANISATIES_TITEL,
+  PRIVE,
+  PRIVE_INLEIDING,
+  PRIVE_TITEL,
+  PRIVE_VOETNOOT,
   TARIEVEN_INLEIDING,
-  TARIEVEN_LOCATIE,
-  TARIEVEN_RAIL_TITEL,
-  TARIEVEN_RAIL_VOET,
   TARIEVEN_TITEL,
   TARIEVEN_VOORWAARDEN,
+  WORKSHOPS,
+  WORKSHOPS_TITEL,
 } from "./tarieven.ts";
 
 /**
@@ -175,46 +182,112 @@ const tarievenBlokken: BlokSeed[] = [
   },
   {
     page_key: "tarieven",
-    block_key: "locatie",
-    kind: "text" as const,
-    omschrijving: "Regel boven de kop, met de plaats waar de lessen zijn",
-    value: { text: TARIEVEN_LOCATIE },
-  },
-  {
-    page_key: "tarieven",
     block_key: "inleiding",
     kind: "text" as const,
-    omschrijving: "Inleidende zin onder de kop",
+    omschrijving: "Inleidende tekst onder de kop",
     value: { text: TARIEVEN_INLEIDING },
+  },
+
+  // Waar Wietske lesgeeft. De school bepaalt de prijs, dus hier staat een link
+  // in plaats van een bedrag.
+  {
+    page_key: "tarieven",
+    block_key: "lesplekken_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de lessen bij yogascholen",
+    value: { text: LESPLEKKEN_TITEL },
   },
   {
     page_key: "tarieven",
-    block_key: "tarieven",
+    block_key: "lesplekken_inleiding",
+    kind: "text" as const,
+    omschrijving: "Uitleg dat aanmelden en betalen via de school loopt",
+    value: { text: LESPLEKKEN_INLEIDING },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "lesplekken",
+    lijst: { max: 8, itemNaam: "lesplek" },
     kind: "richtext" as const,
     omschrijving:
-      'De prijslijst. "In zijbalkje" op ja zet de regel ook naast het weekrooster (houd het op vier); "Uitgelicht" op ja geeft één regel de nadruk.',
-    value: { items: TARIEVEN as unknown as Record<string, string>[] },
+      "De lessen die je bij een yogaschool geeft. Per plek: welke les, bij welke school, wanneer, en het webadres van die school. Zet hier geen prijs neer: die bepaalt de school en die verandert zonder dat wij het weten. Laat de lijst leeg en de hele sectie blijft weg.",
+    value: { items: LESPLEKKEN as unknown as Record<string, string>[] },
   },
+
+  // Wat Wietske zelf verkoopt.
+  {
+    page_key: "tarieven",
+    block_key: "workshops_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de workshops",
+    value: { text: WORKSHOPS_TITEL },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "workshops",
+    lijst: { max: 8, itemNaam: "workshop" },
+    kind: "richtext" as const,
+    omschrijving:
+      "De workshops die je zelf geeft. Per workshop: naam, duur, prijs en een toelichting.",
+    value: { items: WORKSHOPS as unknown as Record<string, string>[] },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "prive_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven privéyoga",
+    value: { text: PRIVE_TITEL },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "prive_inleiding",
+    kind: "text" as const,
+    omschrijving:
+      "Uitleg bij privéyoga, waaronder het maximum van twee personen",
+    value: { text: PRIVE_INLEIDING },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "prive",
+    lijst: { max: 8, itemNaam: "tarief" },
+    kind: "richtext" as const,
+    omschrijving:
+      "De tarieven voor privéyoga. Per regel: naam, duur, prijs en een toelichting.",
+    value: { items: PRIVE as unknown as Record<string, string>[] },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "prive_voetnoot",
+    kind: "text" as const,
+    omschrijving: "Regel onder de privétarieven, bijvoorbeeld over reiskosten",
+    value: { text: PRIVE_VOETNOOT },
+  },
+
+  // Verwijzing naar de organisatiepagina's, waar de eigen tarieven al staan.
+  {
+    page_key: "tarieven",
+    block_key: "organisaties_titel",
+    kind: "text" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Kop van het blok dat naar bedrijven, sportclubs en onderwijs wijst",
+    value: { text: ORGANISATIES_TITEL },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "organisaties_tekst",
+    kind: "text" as const,
+    verbergbaar: true,
+    omschrijving: "Tekst bij de verwijzing naar de organisatiepagina's",
+    value: { text: ORGANISATIES_TEKST },
+  },
+
   {
     page_key: "tarieven",
     block_key: "voorwaarden",
     kind: "richtext" as const,
-    omschrijving: "De spelregels onder de tabel: reserveren en annuleren",
+    omschrijving: "De afspraken onderaan: bevestigen, afzeggen en ziekte",
     value: { html: TARIEVEN_VOORWAARDEN },
-  },
-  {
-    page_key: "tarieven",
-    block_key: "rail_titel",
-    kind: "text" as const,
-    omschrijving: "Kop van het zijbalkje naast het weekrooster",
-    value: { text: TARIEVEN_RAIL_TITEL },
-  },
-  {
-    page_key: "tarieven",
-    block_key: "rail_voet",
-    kind: "text" as const,
-    omschrijving: "Zinnetje onderaan het zijbalkje",
-    value: { text: TARIEVEN_RAIL_VOET },
   },
 ];
 

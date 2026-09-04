@@ -224,25 +224,31 @@ test.describe("Tarieven", () => {
   const zichtbaar = (page: import("@playwright/test").Page, tekst: string) =>
     page.getByText(tekst, { exact: false }).filter({ visible: true });
 
-  test("toont de prijslijst met de prijs per les", async ({ page }) => {
+  test("toont wat Wietske zelf aanbiedt, met een bedrag erbij", async ({
+    page,
+  }) => {
     await page.goto("/lessen/tarieven");
 
-    await expect(
-      page.getByRole("heading", { name: "Tarieven", level: 1 }),
-    ).toBeVisible();
-    await expect(page.getByText("Lessen Rinske Yoga, Almere")).toBeVisible();
+    // De kop komt uit de site-editor en mag veranderen; dát er een kop is niet.
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
-    await expect(zichtbaar(page, "10-strippenkaart").first()).toBeVisible();
-    await expect(zichtbaar(page, "€ 145,00").first()).toBeVisible();
-    // Het getal waarop mensen werkelijk vergelijken, en dat de voorbeeldsite
-    // niet toont.
-    await expect(zichtbaar(page, "€ 14,50").first()).toBeVisible();
+    await expect(zichtbaar(page, "Yin & ademhaling").first()).toBeVisible();
+    await expect(zichtbaar(page, "€ 75").first()).toBeVisible();
+    await expect(zichtbaar(page, "Duo, 2 personen").first()).toBeVisible();
   });
 
-  test("licht één kaart uit als meest gekozen", async ({ page }) => {
+  test("biedt geen strippenkaarten meer aan", async ({ page }) => {
+    // De software bestaat nog, maar de kaarten worden niet meer verkocht: de
+    // lesprijs zit in het abonnement van de school waar wordt lesgegeven.
+    // Blijft hier een kaart staan, dan verkoopt de site iets wat niet bestaat.
     await page.goto("/lessen/tarieven");
 
-    await expect(zichtbaar(page, "Meest gekozen").first()).toBeVisible();
+    await expect(page.getByText("strippenkaart", { exact: false })).toHaveCount(
+      0,
+    );
+    await expect(page.getByRole("link", { name: "Kaart kopen" })).toHaveCount(
+      0,
+    );
   });
 
   test("noemt de annuleringsregel op de pagina zelf", async ({ page }) => {
@@ -269,27 +275,33 @@ test.describe("Tarieven", () => {
     await expect(page).toHaveURL(/\/lessen\/tarieven$/);
   });
 
-  test("het zijbalkje staat naast het weekrooster", async ({ page }) => {
+  test("het rooster staat er zonder balkje met kaarten naast", async ({
+    page,
+  }) => {
     await page.goto("/lessen");
 
     await expect(
       page.getByRole("heading", { name: "Strippenkaarten" }),
-    ).toBeVisible();
-    await expect(page.getByRole("link", { name: "Kaart kopen" })).toBeVisible();
-    // Dezelfde prijs als op de tarievenpagina: één lijst voedt allebei.
-    await expect(zichtbaar(page, "€ 145,00").first()).toBeVisible();
+    ).toHaveCount(0);
+    await expect(page.getByRole("link", { name: "Kaart kopen" })).toHaveCount(
+      0,
+    );
   });
 
-  test("aanvragen vraagt eerst om inloggen", async ({ page }) => {
-    await page.goto("/lessen/tarieven/aanvragen?kaart=3");
-
-    await expect(page).toHaveURL(/\/inloggen\?vervolg=/);
-  });
-
-  test("een kaart die niet bestaat geeft een nette 404", async ({ page }) => {
-    const antwoord = await page.goto("/lessen/tarieven/aanvragen?kaart=99");
-
-    expect(antwoord?.status()).toBe(404);
+  /**
+   * Het aanvraagscherm van het strippenkaartsysteem blijft bestaan, maar er is
+   * niets meer om aan te vragen. Het hoort dan een 404 te geven en niet een
+   * leeg formulier of een klapper.
+   */
+  test("een kaart aanvragen kan niet zolang er niets wordt aangeboden", async ({
+    page,
+  }) => {
+    for (const kaart of [0, 3, 99]) {
+      const antwoord = await page.goto(
+        `/lessen/tarieven/aanvragen?kaart=${kaart}`,
+      );
+      expect(antwoord?.status()).toBe(404);
+    }
   });
 });
 

@@ -15,10 +15,10 @@
 
 export const DOCENTEN_TITEL = "Voor yogadocenten";
 
-export const DOCENTEN_LOCATIE = "Rinske Yoga Almere";
+export const DOCENTEN_LOCATIE = "Voor yogadocenten";
 
 export const DOCENTEN_INLEIDING =
-  "Geef je les bij Rinske Yoga in Almere? Dan kun je hier je eigen strippenkaarten verkopen, ze bij je collega's laten gelden, en aan het eind van de maand netjes met elkaar afrekenen.";
+  "Geef je les op een plek waar meer docenten werken? Dan kun je hier je eigen strippenkaarten verkopen, ze bij je collega's laten gelden, en aan het eind van de maand netjes met elkaar afrekenen.";
 
 export const DOCENTEN_UITLEG = `
 <h2>Hoe het werkt</h2>

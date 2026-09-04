@@ -1543,6 +1543,18 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('footer', 'partners_titel', 'text', '{"text":"Samenwerkingen en partners"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('footer', 'partners', 'richtext', '{"items":[{"naam":"","logo":"","website":""}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('footer', 'bedrijfsgegevens', 'richtext', '{"items":[{"label":"E-mail","waarde":"info@yogacompany.eu"},{"label":"KvK","waarde":"KvK-nummer volgt"}]}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
@@ -1711,43 +1723,85 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'titel', 'text', '{"text":"Tarieven"}'::jsonb)
+values ('tarieven', 'titel', 'text', '{"text":"Lessen, workshops en privéyoga"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'locatie', 'text', '{"text":"Lessen Rinske Yoga, Almere"}'::jsonb)
+values ('tarieven', 'inleiding', 'text', '{"text":"Wat het kost hangt ervan af waar je meedoet.\n\nBij een yogaschool loopt het via hun tarief: je meldt je daar aan en betaalt daar. Wat ik zelf aanbied staat eronder, met de prijs erbij."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'inleiding', 'text', '{"text":"Alle kaarten naast elkaar. Hoe meer lessen op je kaart, hoe voordeliger je per keer uit bent; dat staat in de derde kolom, zodat je het niet zelf hoeft uit te rekenen."}'::jsonb)
+values ('tarieven', 'lesplekken_titel', 'text', '{"text":"Waar ik lesgeef"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'tarieven', 'richtext', '{"items":[{"naam":"Snuffelkaart","toelichting":"3 lessen, om kennis te maken","prijs":"€ 9,00","per_les":"€ 3,00","geldig":"n.v.t.","uitgelicht":"","rail":""},{"naam":"Losse les","toelichting":"Eén les, zonder verplichting","prijs":"€ 17,00","per_les":"€ 17,00","geldig":"n.v.t.","uitgelicht":"","rail":"ja"},{"naam":"3-strippenkaart","toelichting":"3 lessen","prijs":"€ 47,50","per_les":"€ 15,83","geldig":"1 maand, uitloop tot 1½","uitgelicht":"","rail":"ja"},{"naam":"10-strippenkaart","toelichting":"10 lessen","prijs":"€ 145,00","per_les":"€ 14,50","geldig":"3 maanden, uitloop tot 4","uitgelicht":"ja","rail":"ja"},{"naam":"20-strippenkaart","toelichting":"20 lessen","prijs":"€ 280,00","per_les":"€ 14,00","geldig":"6 maanden, uitloop tot 7","uitgelicht":"","rail":"ja"},{"naam":"Maandabonnement","toelichting":"1× per week","prijs":"€ 58,50","per_les":"± € 13,50","geldig":"opzegtermijn 1 maand","uitgelicht":"","rail":""},{"naam":"Kwartaalabonnement","toelichting":"1× per week","prijs":"€ 169,00","per_les":"± € 13,00","geldig":"3 maanden","uitgelicht":"","rail":""},{"naam":"Halfjaarabonnement","toelichting":"1× per week","prijs":"€ 316,00","per_les":"± € 12,15","geldig":"6 maanden","uitgelicht":"","rail":""}]}'::jsonb)
+values ('tarieven', 'lesplekken_inleiding', 'text', '{"text":"Je meldt je aan bij de school zelf. Daar loopt ook de betaling: via hun abonnement, strippenkaart of losse les.\n\nYogaCompany brengt hiervoor niets in rekening."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'voorwaarden', 'richtext', '{"html":"\n<p>Reserveer je plek vooraf; een kaart geeft toegang tot alle lessen in het weekrooster. Tot <strong>24 uur</strong> voor de les annuleren is kosteloos; daarna kost het een strip.</p>\n<p>Lukt het een keer echt niet, laat het dan weten. We kijken er niet moeilijk over.</p>\n"}'::jsonb)
+values ('tarieven', 'lesplekken', 'richtext', '{"items":[{"les":"","school":"","wanneer":"","website":""}]}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'rail_titel', 'text', '{"text":"Strippenkaarten"}'::jsonb)
+values ('tarieven', 'workshops_titel', 'text', '{"text":"Workshops"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'rail_voet', 'text', '{"text":"Een kaart geldt voor alle lessen hiernaast."}'::jsonb)
+values ('tarieven', 'workshops', 'richtext', '{"items":[{"naam":"Yin & ademhaling","duur":"2 uur","prijs":"€ 35","toelichting":"Per persoon, in een kleine groep."},{"naam":"Verdieping: zenuwstelsel en herstel","duur":"3 uur","prijs":"€ 47,50","toelichting":"Per persoon. Ook geschikt als bijscholing voor docenten."},{"naam":"Workshop op locatie, besloten groep","duur":"2 uur","prijs":"vanaf € 275","toelichting":"Tot twaalf deelnemers, op aanvraag. Reiskosten in overleg."}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'prive_titel', 'text', '{"text":"Privéyoga"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'prive_inleiding', 'text', '{"text":"Alleen of met z''n tweeën, bij jou thuis of op een rustige plek.\n\nMaximaal twee personen, en dat is een keuze: bij privéyoga kijk ik mee en corrigeer ik waar het nodig is. Bij drie mensen kan dat niet meer, en dan is het een gewone les met minder deelnemers."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'prive', 'richtext', '{"items":[{"naam":"Privéles, 1 persoon","duur":"60 minuten","prijs":"€ 75","toelichting":""},{"naam":"Privéles, 1 persoon","duur":"90 minuten","prijs":"€ 105","toelichting":""},{"naam":"Duo, 2 personen","duur":"60 minuten","prijs":"€ 95","toelichting":"€ 47,50 per persoon."},{"naam":"Serie van 5 privélessen","duur":"5 × 60 minuten","prijs":"€ 340","toelichting":"€ 68 per les. Een half jaar geldig."}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'prive_voetnoot', 'text', '{"text":"Binnen Almere zijn reiskosten inbegrepen. Daarbuiten reken ik € 0,23 per kilometer, vooraf afgesproken."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'organisaties_titel', 'text', '{"text":"Voor bedrijven, sportclubs en onderwijs"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'organisaties_tekst', 'text', '{"text":"Voor organisaties gelden aparte tarieven, afgestemd op de groep en het aantal sessies.\n\nDie staan op de pagina''s zelf."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'voorwaarden', 'richtext', '{"html":"\n<h3>Afspraken</h3>\n<ul>\n  <li>Een privéles of workshop is definitief zodra je een bevestiging per e-mail hebt.</li>\n  <li>Afzeggen kan kosteloos tot 24 uur van tevoren. Daarna breng ik de sessie in rekening, omdat de tijd dan niet meer te vullen is.</li>\n  <li>Word ik ziek, dan verplaatsen we of je krijgt je geld terug. Jouw keuze.</li>\n  <li>Voor lessen bij een yogaschool gelden de voorwaarden van die school.</li>\n</ul>\n"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1759,13 +1813,13 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('voor-yogadocenten', 'locatie', 'text', '{"text":"Rinske Yoga Almere"}'::jsonb)
+values ('voor-yogadocenten', 'locatie', 'text', '{"text":"Voor yogadocenten"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('voor-yogadocenten', 'inleiding', 'text', '{"text":"Geef je les bij Rinske Yoga in Almere? Dan kun je hier je eigen strippenkaarten verkopen, ze bij je collega''s laten gelden, en aan het eind van de maand netjes met elkaar afrekenen."}'::jsonb)
+values ('voor-yogadocenten', 'inleiding', 'text', '{"text":"Geef je les op een plek waar meer docenten werken? Dan kun je hier je eigen strippenkaarten verkopen, ze bij je collega''s laten gelden, en aan het eind van de maand netjes met elkaar afrekenen."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

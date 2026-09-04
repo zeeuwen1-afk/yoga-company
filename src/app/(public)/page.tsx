@@ -20,9 +20,8 @@ export const metadata: Metadata = {
 const LESSEN_OP_DE_STARTPAGINA = 4;
 
 export default async function HomePage() {
-  const [pagina, tarievenPagina, opleidingen, lessen] = await Promise.all([
+  const [pagina, opleidingen, lessen] = await Promise.all([
     haalPagina("home"),
-    haalPagina("tarieven"),
     haalAanbod("opleiding"),
     haalRooster(7),
   ]);
@@ -30,7 +29,6 @@ export default async function HomePage() {
   return (
     <HomeInhoud
       pagina={pagina}
-      tarievenPagina={tarievenPagina}
       opleidingen={opleidingen}
       lessen={lessen
         .filter((les) => !les.afgelastOp)

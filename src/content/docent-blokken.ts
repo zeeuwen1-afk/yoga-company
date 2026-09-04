@@ -62,7 +62,7 @@ export const BLOKTYPEN: Bloktype[] = [
         naam: "bovenkop",
         label: "Kleine regel bovenaan",
         soort: "regel",
-        hulp: "Bijvoorbeeld: Yin & Restorative · Rinske Yoga Almere",
+        hulp: "Bijvoorbeeld: Yin & Restorative · Yogaschool De Bron",
       },
       { naam: "titel", label: "Grote kop", soort: "regel" },
       { naam: "zin", label: "Eén zin eronder", soort: "tekst" },
@@ -81,7 +81,7 @@ export const BLOKTYPEN: Bloktype[] = [
       },
     ],
     start: {
-      bovenkop: "Yogadocent · Rinske Yoga Almere",
+      bovenkop: "Yogadocent · Almere",
       titel: "Vul hier je kop in",
       zin: "Schrijf in één of twee zinnen wat iemand bij jou komt halen.",
       portret: { url: "", alt: "" },
@@ -211,7 +211,7 @@ export const BLOKTYPEN: Bloktype[] = [
         {
           periode: "2020 tot heden",
           titel: "Yogadocent",
-          waar: "Rinske Yoga Almere",
+          waar: "Yogaschool De Bron, Almere",
           tekst: "Wekelijkse lessen Yin en Vinyasa.",
         },
         {

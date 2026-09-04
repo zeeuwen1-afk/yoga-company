@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { formateerTijdvak, type Les } from "@/features/bookings";
 import { CursusRooster, type Cursus } from "@/features/courses";
 import type { Pagina } from "../server/queries";
-import { TarievenRail } from "./tarieven-inhoud";
 
 /**
  * De landingspagina van YogaCompany.
@@ -183,15 +182,7 @@ function Deuren({ pagina }: { pagina: Pagina }) {
  * "geen lessen gevonden" eronder verkoopt niets en roept alleen de vraag op of
  * de studio nog bestaat.
  */
-function Rooster({
-  pagina,
-  tarievenPagina,
-  lessen,
-}: {
-  pagina: Pagina;
-  tarievenPagina: Pagina;
-  lessen: Les[];
-}) {
+function Rooster({ pagina, lessen }: { pagina: Pagina; lessen: Les[] }) {
   if (lessen.length === 0) return null;
 
   return (
@@ -239,10 +230,6 @@ function Rooster({
           >
             Bekijk het volledige weekrooster
           </Link>
-        </div>
-
-        <div>
-          <TarievenRail pagina={tarievenPagina} />
         </div>
       </div>
     </Sectie>
@@ -335,12 +322,10 @@ function Inlogdeuren({ pagina }: { pagina: Pagina }) {
 
 export function HomeInhoud({
   pagina,
-  tarievenPagina,
   opleidingen,
   lessen,
 }: {
   pagina: Pagina;
-  tarievenPagina: Pagina;
   opleidingen: Cursus[];
   lessen: Les[];
 }) {
@@ -352,11 +337,7 @@ export function HomeInhoud({
       <Banner pagina={pagina} />
       <Hero pagina={pagina} />
       <Deuren pagina={pagina} />
-      <Rooster
-        pagina={pagina}
-        tarievenPagina={tarievenPagina}
-        lessen={lessen}
-      />
+      <Rooster pagina={pagina} lessen={lessen} />
 
       {redenen.length > 0 ? (
         <Sectie>

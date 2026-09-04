@@ -9,7 +9,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Voor yogadocenten",
   description:
-    "Geef je les bij Rinske Yoga Almere? Verkoop je eigen strippenkaarten, laat ze bij collega's gelden en reken maandelijks eerlijk met elkaar af.",
+    "Verkoop je eigen strippenkaarten, laat ze bij collega's gelden en reken maandelijks eerlijk met elkaar af.",
   alternates: { canonical: "/voor-yogadocenten" },
 };
 
