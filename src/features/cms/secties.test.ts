@@ -76,3 +76,29 @@ describe("groepeerInSecties", () => {
     expect(secties.map((s) => s.sleutel)).toEqual(["banner", "hero", "banner"]);
   });
 });
+
+describe("secties met dezelfde naam", () => {
+  it("voegt twee voorvoegsels met dezelfde naam samen", () => {
+    // Op het portfolio staan `opleiding_titel` en `opleidingen` naast elkaar.
+    // Twee verschillende voorvoegsels, één sectie, en dus één kop.
+    const secties = groepeerInSecties(
+      ["ervaring", "opleiding_titel", "opleidingen", "specialisaties"].map(
+        blok,
+      ),
+    );
+
+    expect(secties.map((s) => s.naam)).toEqual([
+      "Ervaring",
+      "Opleidingen en trainingen",
+      "Specialisaties",
+    ]);
+  });
+
+  it("voegt niet samen wat niet naast elkaar staat", () => {
+    const secties = groepeerInSecties(
+      ["opleiding_titel", "ervaring", "opleidingen"].map(blok),
+    );
+
+    expect(secties).toHaveLength(3);
+  });
+});

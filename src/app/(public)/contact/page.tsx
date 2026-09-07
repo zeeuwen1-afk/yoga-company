@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalPagina } from "@/features/cms";
 import { ContactInhoud } from "@/features/cms/paginas/eenvoudige-paginas";
 
@@ -14,5 +15,10 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   const pagina = await haalPagina("contact");
-  return <ContactInhoud pagina={pagina} />;
+  return (
+    <>
+      <ContactInhoud pagina={pagina} />
+      <VrijeZone pageKey="contact" />
+    </>
+  );
 }

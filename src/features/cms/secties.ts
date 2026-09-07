@@ -60,8 +60,10 @@ const SECTIENAMEN: Record<string, string> = {
   praktisch: "Praktisch",
   fiscaal: "Fiscaal",
   ervaring: "Ervaring",
-  opleiding: "Opleidingen",
-  opleidingen: "Opleidingen",
+  // `opleiding_titel` en `opleidingen` staan naast elkaar op het portfolio en
+  // vormen samen één sectie; twee keer dezelfde naam op een rij is verwarrend.
+  opleiding: "Opleidingen en trainingen",
+  opleidingen: "Opleidingen en trainingen",
   specialisaties: "Specialisaties",
   lesplekken: "Waar ik lesgeef",
   workshops: "Workshops",
@@ -74,6 +76,9 @@ const SECTIENAMEN: Record<string, string> = {
   over: "Over YogaCompany",
   kern: "De kern",
   uitleg: "Uitleg",
+  // De vraag-en-antwoordblokken op de veiligheidspagina heten sectie_1_vraag
+  // en verder; zonder naam zou de groep gewoon "Sectie" gaan heten.
+  sectie: "Vragen en antwoorden",
 };
 
 export type Sectie<T> = {
@@ -115,11 +120,16 @@ export function groepeerInSecties<T extends { blockKey: string }>(
 
     if (sleutel !== "opening") inOpening = false;
 
+    const naam = naamVan(sleutel);
     const laatste = secties[secties.length - 1];
-    if (laatste && laatste.sleutel === sleutel) {
+
+    // Op naam samenvoegen en niet alleen op sleutel: `opleiding_titel` en
+    // `opleidingen` zijn twee voorvoegsels voor één sectie op het portfolio, en
+    // twee keer dezelfde kop onder elkaar is verwarrender dan geen kop.
+    if (laatste && (laatste.sleutel === sleutel || laatste.naam === naam)) {
       laatste.blokken.push(blok);
     } else {
-      secties.push({ sleutel, naam: naamVan(sleutel), blokken: [blok] });
+      secties.push({ sleutel, naam, blokken: [blok] });
     }
   }
 

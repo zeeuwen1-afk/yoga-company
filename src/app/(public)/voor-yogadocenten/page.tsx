@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Richtext, Sectie } from "@/components/layout/sectie";
+import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalPagina } from "@/features/cms";
 
 export const revalidate = 300;
@@ -57,6 +58,8 @@ export default async function VoorYogadocentenPage() {
           />
         </div>
       </Sectie>
+
+      <VrijeZone pageKey="voor-yogadocenten" />
     </>
   );
 }

@@ -270,12 +270,23 @@ test.describe("Tarieven", () => {
   }) => {
     await page.goto("/lessen/tarieven");
 
-    // De kop komt uit de site-editor en mag veranderen; dát er een kop is niet.
+    // Alles op deze pagina komt uit de site-editor en mag veranderen: de kop,
+    // de namen van de workshops, de bedragen. Deze test noemde er twee bij naam
+    // en viel om zodra het echte aanbod erin ging staan.
+    //
+    // Wat wél altijd moet gelden: er staat een kop, en élke regel die iets
+    // aanbiedt noemt een naam én een bedrag. Een aanbod zonder prijs is een
+    // bezoeker die moet mailen om te weten wat het kost.
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
-    await expect(zichtbaar(page, "Yin & ademhaling").first()).toBeVisible();
-    await expect(zichtbaar(page, "€ 75").first()).toBeVisible();
-    await expect(zichtbaar(page, "Duo, 2 personen").first()).toBeVisible();
+    const regels = page.getByRole("listitem").filter({ hasText: /€/ });
+    const aantal = await regels.count();
+    expect(aantal).toBeGreaterThan(0);
+
+    for (let i = 0; i < aantal; i++) {
+      await expect(regels.nth(i).getByRole("heading")).toBeVisible();
+      await expect(regels.nth(i)).toContainText(/€\s?\d/);
+    }
   });
 
   test("biedt geen strippenkaarten meer aan", async ({ page }) => {

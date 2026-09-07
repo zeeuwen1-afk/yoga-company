@@ -91,9 +91,9 @@ export function bloktype(type: string): Bloktype | undefined {
 /**
  * Op welke pagina's mag je vrije blokken zetten?
  *
- * Bewust niet overal. De juridische pagina's en het contactformulier hebben een
- * vaste vorm waar niets onder hoort, en op een pagina die je zelden opent is
- * een lege bloklijst alleen maar ruis.
+ * Bewust niet overal: de juridische pagina's blijven erbuiten. Een
+ * privacyverklaring met een sfeerfoto leest niemand beter, en die pagina's zijn
+ * er om gelezen te worden.
  */
 export const PAGINAS_MET_VRIJE_BLOKKEN = [
   "home",
@@ -105,6 +105,10 @@ export const PAGINAS_MET_VRIJE_BLOKKEN = [
   "opleidingen",
   "trainingen",
   "lessen",
+  "tarieven",
+  "contact",
+  "veiligheid",
+  "voor-yogadocenten",
 ] as const;
 
 export function heeftVrijeBlokken(pageKey: string): boolean {
