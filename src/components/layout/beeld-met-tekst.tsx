@@ -3,7 +3,9 @@ import Image from "next/image";
 import {
   isAchtergrond,
   isNaastElkaar,
+  maatKlasse,
   type BeeldLayout,
+  type Maat,
   type Waas,
 } from "@/lib/beeldlayout";
 
@@ -41,6 +43,7 @@ export function BeeldMetTekst({
     focus: string;
     layout: BeeldLayout;
     waas: Waas;
+    maat: Maat;
   } | null;
   /** De tekst ernaast, als html uit de richtext-editor. */
   html: string;
@@ -73,6 +76,9 @@ export function BeeldMetTekst({
       className={[
         "w-full rounded-[var(--radius-card)] border border-line object-cover",
         naast ? "aspect-[4/5]" : "aspect-[16/7]",
+        // De maat telt alleen als de foto over de breedte staat; naast de tekst
+        // bepaalt de kolom hoe breed hij is.
+        naast ? "" : maatKlasse(beeld?.maat ?? "normaal"),
       ].join(" ")}
     />
   ) : null;

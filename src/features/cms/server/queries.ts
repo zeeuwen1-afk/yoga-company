@@ -4,8 +4,10 @@ import { BLOKKEN, blokkenVanPagina, type BlokWaarde } from "@/content/blokken";
 import { focusStijl } from "@/lib/beeldfocus";
 import {
   leesLayout,
+  leesMaat,
   leesWaas,
   type BeeldLayout,
+  type Maat,
   type Waas,
 } from "@/lib/beeldlayout";
 import { createPublicClient } from "@/lib/supabase/public";
@@ -33,6 +35,7 @@ export type Pagina = {
     focus: string;
     layout: BeeldLayout;
     waas: Waas;
+    maat: Maat;
   } | null;
 };
 
@@ -61,6 +64,7 @@ function maakPagina(waarden: Map<string, BlokWaarde>): Pagina {
         focus: focusStijl(waarde.focus),
         layout: leesLayout(waarde.layout),
         waas: leesWaas(waarde.waas),
+        maat: leesMaat(waarde.maat),
       };
     },
   };

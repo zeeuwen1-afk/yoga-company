@@ -85,3 +85,50 @@ export function leesWaas(waarde: string | undefined | null): Waas {
 export function isAchtergrond(layout: BeeldLayout): boolean {
   return layout === "achtergrond";
 }
+
+/**
+ * Hoe breed de foto op de pagina staat.
+ *
+ * Los van de indeling: die bepaalt wáár hij staat, dit hoe groot. Vier maten en
+ * geen schuifje in pixels, want een foto die de beheerder op 437 pixels zet
+ * staat op elk ander scherm weer anders.
+ *
+ * Op een smal scherm staat een foto altijd over de volle breedte, wat hier ook
+ * is gekozen. Kleiner dan dat wordt een postzegel waar niemand iets aan heeft.
+ *
+ * Bij "achtergrond" en bij een foto naast de tekst doet de maat niets: daar
+ * bepaalt de sectie de breedte.
+ */
+export const MATEN = ["klein", "normaal", "groot", "vol"] as const;
+
+export type Maat = (typeof MATEN)[number];
+
+export const MAAT_LABEL: Record<Maat, string> = {
+  klein: "Klein",
+  normaal: "Normaal",
+  groot: "Groot",
+  vol: "Volle breedte",
+};
+
+export function leesMaat(waarde: string | undefined | null): Maat {
+  const opgeschoond = waarde?.trim().toLowerCase() ?? "";
+  return (MATEN as readonly string[]).includes(opgeschoond)
+    ? (opgeschoond as Maat)
+    : "normaal";
+}
+
+/**
+ * De breedte als opmaakregel. Altijd gecentreerd, want een foto die smaller is
+ * dan de tekst en links blijft plakken ziet eruit als een fout.
+ */
+export function maatKlasse(maat: Maat): string {
+  if (maat === "klein") return "mx-auto max-w-md";
+  if (maat === "normaal") return "mx-auto max-w-2xl";
+  if (maat === "groot") return "mx-auto max-w-4xl";
+  return "";
+}
+
+/** Heeft de maat effect bij deze indeling? */
+export function maatTelt(layout: BeeldLayout): boolean {
+  return layout === "breed" || layout === "onder";
+}

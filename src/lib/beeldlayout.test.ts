@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 import {
   WAASSTANDEN,
   isAchtergrond,
+  leesMaat,
+  maatTelt,
   isNaastElkaar,
   leesLayout,
   leesWaas,
@@ -80,5 +82,34 @@ describe("de waas kan nooit lichter worden gezet", () => {
    */
   it("kent precies twee standen", () => {
     expect(WAASSTANDEN).toEqual(["normaal", "donkerder"]);
+  });
+});
+
+describe("leesMaat", () => {
+  it("herkent de vier maten", () => {
+    expect(leesMaat("klein")).toBe("klein");
+    expect(leesMaat("normaal")).toBe("normaal");
+    expect(leesMaat("groot")).toBe("groot");
+    expect(leesMaat("vol")).toBe("vol");
+  });
+
+  it("valt terug op normaal", () => {
+    // Elke foto die er al staat heeft geen maat en moet blijven staan zoals hij
+    // staat; "normaal" is de breedte die alles nu heeft.
+    expect(leesMaat(undefined)).toBe("normaal");
+    expect(leesMaat("")).toBe("normaal");
+    expect(leesMaat("437px")).toBe("normaal");
+  });
+});
+
+describe("maatTelt", () => {
+  it("geldt alleen waar de foto de breedte zelf bepaalt", () => {
+    // Naast de tekst bepaalt de kolom de breedte, en als achtergrond de sectie.
+    // Een maatkeuze zou daar een knop zonder gevolg zijn.
+    expect(maatTelt("breed")).toBe(true);
+    expect(maatTelt("onder")).toBe(true);
+    expect(maatTelt("links")).toBe(false);
+    expect(maatTelt("rechts")).toBe(false);
+    expect(maatTelt("achtergrond")).toBe(false);
   });
 });

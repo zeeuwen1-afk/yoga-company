@@ -31,6 +31,7 @@ type Waarde =
       focus?: string;
       layout?: string;
       waas?: string;
+      maat?: string;
     }
   | { items: Record<string, string>[] };
 
@@ -385,6 +386,7 @@ export function BlokBewerker({
           focus={waarde.focus}
           layout={waarde.layout}
           waas={waarde.waas}
+          maat={waarde.maat}
           toonFocus
           toonLayout={!vastBeeld}
           onWijzig={(nieuw) => setWaarde(nieuw)}

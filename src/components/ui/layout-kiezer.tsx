@@ -3,6 +3,10 @@
 import {
   LAYOUTS,
   LAYOUT_LABEL,
+  MATEN,
+  MAAT_LABEL,
+  maatTelt,
+  leesMaat,
   WAASSTANDEN,
   WAAS_LABEL,
   isAchtergrond,
@@ -20,16 +24,21 @@ import {
 export function LayoutKiezer({
   waarde,
   waas,
+  maat,
   onWijzig,
   onWaas,
+  onMaat,
 }: {
   waarde: string | undefined;
   waas: string | undefined;
+  maat: string | undefined;
   onWijzig: (layout: string) => void;
   onWaas: (waas: string) => void;
+  onMaat: (maat: string) => void;
 }) {
   const gekozen = leesLayout(waarde);
   const huidigeWaas = leesWaas(waas);
+  const huidigeMaat = leesMaat(maat);
 
   return (
     <fieldset>
@@ -65,6 +74,41 @@ export function LayoutKiezer({
           </label>
         ))}
       </div>
+
+      {/* Alleen waar de maat iets doet. Naast de tekst of als achtergrond
+          bepaalt de sectie de breedte, en dan is dit een knop zonder gevolg. */}
+      {maatTelt(gekozen) ? (
+        <div className="mt-4">
+          <p className="text-sm font-semibold">Hoe breed staat de foto?</p>
+          <p className="mt-1 mb-2 text-sm text-muted">
+            Op een telefoon staat hij altijd over de volle breedte; smaller
+            wordt daar een postzegel.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {MATEN.map((optie) => (
+              <label
+                key={optie}
+                className={[
+                  "cursor-pointer rounded-lg border px-3 py-1.5 text-sm transition-colors",
+                  huidigeMaat === optie
+                    ? "bg-accent-wash border-accent font-semibold"
+                    : "border-line hover:bg-hover",
+                ].join(" ")}
+              >
+                <input
+                  type="radio"
+                  name="beeld-maat"
+                  value={optie}
+                  checked={huidigeMaat === optie}
+                  onChange={() => onMaat(optie)}
+                  className="sr-only"
+                />
+                {MAAT_LABEL[optie]}
+              </label>
+            ))}
+          </div>
+        </div>
+      ) : null}
 
       {/* Alleen bij een achtergrond: bij de andere vier ligt de tekst niet op
           de foto, en dan gaat deze vraag nergens over. */}

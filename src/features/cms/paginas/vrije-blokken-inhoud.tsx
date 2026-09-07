@@ -5,7 +5,7 @@ import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { focusStijl } from "@/lib/beeldfocus";
-import { leesLayout, leesWaas } from "@/lib/beeldlayout";
+import { leesLayout, leesMaat, leesWaas, maatKlasse } from "@/lib/beeldlayout";
 
 import type { VrijBlok } from "../server/vrije-blokken";
 
@@ -49,6 +49,7 @@ function beeld(inhoud: Record<string, unknown>, veld: string) {
         focus?: string;
         layout?: string;
         waas?: string;
+        maat?: string;
       }
     | undefined;
 
@@ -60,6 +61,7 @@ function beeld(inhoud: Record<string, unknown>, veld: string) {
     focus: focusStijl(waarde.focus),
     layout: leesLayout(waarde.layout),
     waas: leesWaas(waarde.waas),
+    maat: leesMaat(waarde.maat),
   };
 }
 
@@ -121,10 +123,18 @@ function VrijBlokWeergave({
             width={1600}
             height={700}
             style={{ objectPosition: foto.focus }}
-            className="aspect-[16/7] w-full rounded-[var(--radius-card)] border border-line object-cover"
+            className={[
+              "aspect-[16/7] w-full rounded-[var(--radius-card)] border border-line object-cover",
+              maatKlasse(foto.maat),
+            ].join(" ")}
           />
           {tekst(inhoud, "bijschrift") ? (
-            <p className="mt-3 text-sm text-muted">
+            <p
+              className={[
+                "mt-3 text-sm text-muted",
+                maatKlasse(foto.maat),
+              ].join(" ")}
+            >
               {tekst(inhoud, "bijschrift")}
             </p>
           ) : null}

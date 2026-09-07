@@ -59,6 +59,7 @@ export type BlokWaarde =
       focus?: string;
       layout?: string;
       waas?: string;
+      maat?: string;
     }
   | { items: Record<string, string>[] };
 
