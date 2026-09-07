@@ -39,6 +39,15 @@ export default async function PaginaBewerkenPage({
   const elders = ELDERS_BEHEERD[pageKey];
   const vrijeBlokken = await haalVrijeBlokkenVoorEditor(pageKey);
 
+  // Blokken die aan een sectie hangen horen bij die sectie in het scherm; de
+  // rest blijft in de zone onderaan.
+  const perSectie: Record<string, typeof vrijeBlokken> = {};
+  for (const blok of vrijeBlokken) {
+    if (!blok.sectie) continue;
+    (perSectie[blok.sectie] ??= []).push(blok);
+  }
+  const onderaan = vrijeBlokken.filter((blok) => !blok.sectie);
+
   return (
     <>
       <AdminKop
@@ -75,12 +84,15 @@ export default async function PaginaBewerkenPage({
       <div className="grid gap-6 xl:grid-cols-2">
         <div className="space-y-6">
           <Paneel titel="Inhoud">
-            <BlokkenPaneel blokken={pagina.blokken} />
+            <BlokkenPaneel
+              blokken={pagina.blokken}
+              vrijePerSectie={perSectie}
+            />
           </Paneel>
 
           {heeftVrijeBlokken(pageKey) ? (
             <Paneel titel="Eigen blokken onderaan">
-              <VrijeBlokkenPaneel pageKey={pageKey} blokken={vrijeBlokken} />
+              <VrijeBlokkenPaneel pageKey={pageKey} blokken={onderaan} />
             </Paneel>
           ) : null}
         </div>

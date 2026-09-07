@@ -6,6 +6,7 @@ import { isAchtergrond, isNaastElkaar } from "@/lib/beeldlayout";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import type { Pagina } from "../server/queries";
+import { VrijeZone } from "./vrije-zone";
 
 /**
  * Het portfolio van wie het bedrijf draagt.
@@ -47,125 +48,142 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
           {kop}
         </BeeldAchtergrond>
       ) : (
-        <Sectie sectie="opening" achtergrond="creme">
-          <div
-            className={[
-              "grid items-start gap-10",
-              // Het portret staat standaard rechts naast de tekst. Kiest de
-              // beheerder "breed" of "onder", dan gaat hij eronder over de volle
-              // breedte; dat is de enige indeling waarin een liggende foto hier
-              // niet vreemd staat.
-              naastElkaar ? "lg:grid-cols-[1fr_18rem]" : "",
-            ].join(" ")}
-          >
+        <>
+          <Sectie sectie="opening" achtergrond="creme">
             <div
-              className={foto?.layout === "links" ? "lg:order-2" : undefined}
+              className={[
+                "grid items-start gap-10",
+                // Het portret staat standaard rechts naast de tekst. Kiest de
+                // beheerder "breed" of "onder", dan gaat hij eronder over de volle
+                // breedte; dat is de enige indeling waarin een liggende foto hier
+                // niet vreemd staat.
+                naastElkaar ? "lg:grid-cols-[1fr_18rem]" : "",
+              ].join(" ")}
             >
-              {kop}
-            </div>
+              <div
+                className={foto?.layout === "links" ? "lg:order-2" : undefined}
+              >
+                {kop}
+              </div>
 
-            {foto ? (
-              <Image
-                src={foto.url}
-                alt={foto.alt}
-                width={naastElkaar ? 560 : 1600}
-                height={naastElkaar ? 700 : 700}
-                style={{ objectPosition: foto.focus }}
-                className={[
-                  "w-full rounded-[var(--radius-card)] border border-line object-cover",
-                  naastElkaar ? "aspect-[4/5]" : "aspect-[16/7]",
-                ].join(" ")}
-              />
-            ) : null}
-          </div>
-        </Sectie>
+              {foto ? (
+                <Image
+                  src={foto.url}
+                  alt={foto.alt}
+                  width={naastElkaar ? 560 : 1600}
+                  height={naastElkaar ? 700 : 700}
+                  style={{ objectPosition: foto.focus }}
+                  className={[
+                    "w-full rounded-[var(--radius-card)] border border-line object-cover",
+                    naastElkaar ? "aspect-[4/5]" : "aspect-[16/7]",
+                  ].join(" ")}
+                />
+              ) : null}
+            </div>
+          </Sectie>
+          <VrijeZone pageKey={"portfolio"} sectie="opening" />
+        </>
       )}
 
       {ervaring.length > 0 ? (
-        <Sectie sectie="ervaring" lijnBoven>
-          <SectieKop titel={pagina.tekst("ervaring_titel")} />
-          <ol className="mt-10 space-y-8">
-            {ervaring.map((regel, index) => (
-              <li
-                key={index}
-                className="grid gap-2 border-t border-line pt-5 sm:grid-cols-[12rem_minmax(0,1fr)] sm:gap-8"
-              >
-                <p className="text-sm text-muted tabular-nums">
-                  {regel.periode}
-                </p>
-                <div>
-                  <h3 className="text-lg">{regel.titel}</h3>
-                  {regel.waar ? (
-                    <p className="mt-0.5 text-sm text-sand">{regel.waar}</p>
-                  ) : null}
-                  {regel.tekst ? (
-                    <p className="mt-2 text-[0.975rem] text-muted">
-                      {regel.tekst}
-                    </p>
-                  ) : null}
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Sectie>
+        <>
+          <Sectie sectie="ervaring" lijnBoven>
+            <SectieKop titel={pagina.tekst("ervaring_titel")} />
+            <ol className="mt-10 space-y-8">
+              {ervaring.map((regel, index) => (
+                <li
+                  key={index}
+                  className="grid gap-2 border-t border-line pt-5 sm:grid-cols-[12rem_minmax(0,1fr)] sm:gap-8"
+                >
+                  <p className="text-sm text-muted tabular-nums">
+                    {regel.periode}
+                  </p>
+                  <div>
+                    <h3 className="text-lg">{regel.titel}</h3>
+                    {regel.waar ? (
+                      <p className="mt-0.5 text-sm text-sand">{regel.waar}</p>
+                    ) : null}
+                    {regel.tekst ? (
+                      <p className="mt-2 text-[0.975rem] text-muted">
+                        {regel.tekst}
+                      </p>
+                    ) : null}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Sectie>
+          <VrijeZone pageKey={"portfolio"} sectie="ervaring" />
+        </>
       ) : null}
 
       {opleidingen.length > 0 ? (
-        <Sectie sectie="opleiding" achtergrond="creme" lijnBoven>
-          <SectieKop titel={pagina.tekst("opleiding_titel")} />
-          <ul className="mt-10 space-y-4">
-            {opleidingen.map((regel, index) => (
-              <li
-                key={index}
-                className="grid gap-1 border-b border-line pb-4 last:border-b-0 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-8"
-              >
-                <p className="text-sm text-muted tabular-nums">{regel.jaar}</p>
-                <div>
-                  <p className="font-semibold">{regel.titel}</p>
-                  {regel.instituut ? (
-                    <p className="text-sm text-muted">{regel.instituut}</p>
-                  ) : null}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </Sectie>
+        <>
+          <Sectie sectie="opleiding" achtergrond="creme" lijnBoven>
+            <SectieKop titel={pagina.tekst("opleiding_titel")} />
+            <ul className="mt-10 space-y-4">
+              {opleidingen.map((regel, index) => (
+                <li
+                  key={index}
+                  className="grid gap-1 border-b border-line pb-4 last:border-b-0 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-8"
+                >
+                  <p className="text-sm text-muted tabular-nums">
+                    {regel.jaar}
+                  </p>
+                  <div>
+                    <p className="font-semibold">{regel.titel}</p>
+                    {regel.instituut ? (
+                      <p className="text-sm text-muted">{regel.instituut}</p>
+                    ) : null}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Sectie>
+          <VrijeZone pageKey={"portfolio"} sectie="opleiding" />
+        </>
       ) : null}
 
       {specialisaties.length > 0 ? (
-        <Sectie sectie="specialisaties" lijnBoven>
-          <SectieKop titel={pagina.tekst("specialisaties_titel")} />
-          <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
-            {specialisaties.map((regel, index) => (
-              <li key={index} className="border-t border-line pt-5">
-                <h3 className="text-lg">{regel.titel}</h3>
-                <p className="mt-1.5 text-[0.975rem] text-muted">
-                  {regel.tekst}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </Sectie>
+        <>
+          <Sectie sectie="specialisaties" lijnBoven>
+            <SectieKop titel={pagina.tekst("specialisaties_titel")} />
+            <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+              {specialisaties.map((regel, index) => (
+                <li key={index} className="border-t border-line pt-5">
+                  <h3 className="text-lg">{regel.titel}</h3>
+                  <p className="mt-1.5 text-[0.975rem] text-muted">
+                    {regel.tekst}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </Sectie>
+          <VrijeZone pageKey={"portfolio"} sectie="specialisaties" />
+        </>
       ) : null}
 
       {pagina.tekst("cta_titel") ? (
-        <Sectie sectie="cta" achtergrond="zand" lijnBoven>
-          <div className="max-w-2xl">
-            <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
-            <div className="mt-4">
-              <Alineas
-                tekst={pagina.tekst("cta_tekst")}
-                className="text-lg text-muted"
+        <>
+          <Sectie sectie="cta" achtergrond="zand" lijnBoven>
+            <div className="max-w-2xl">
+              <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
+              <div className="mt-4">
+                <Alineas
+                  tekst={pagina.tekst("cta_tekst")}
+                  className="text-lg text-muted"
+                />
+              </div>
+              <CmsKnop
+                tekst={pagina.tekst("cta_knop")}
+                link={pagina.tekst("cta_link")}
+                terugval="/contact"
+                className="mt-8"
               />
             </div>
-            <CmsKnop
-              tekst={pagina.tekst("cta_knop")}
-              link={pagina.tekst("cta_link")}
-              terugval="/contact"
-              className="mt-8"
-            />
-          </div>
-        </Sectie>
+          </Sectie>
+          <VrijeZone pageKey={"portfolio"} sectie="cta" />
+        </>
       ) : null}
     </>
   );

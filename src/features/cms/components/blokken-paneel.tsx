@@ -5,8 +5,11 @@ import { ChevronDown, ChevronRight, EyeOff, Search, X } from "lucide-react";
 
 import type { Json } from "@/lib/supabase/types";
 
+import { heeftVrijeBlokken } from "@/content/vrije-blokken";
+
 import { groepeerInSecties } from "../secties";
 import { BlokBewerker } from "./blok-bewerker";
+import { SectieFotos } from "./sectie-fotos";
 
 /**
  * De blokken van een pagina, gegroepeerd in secties.
@@ -50,6 +53,16 @@ type Blok = {
 
 type Filter = "alles" | "wijzigingen" | "verborgen" | "beeld";
 
+type VrijBlokInSectie = {
+  id: string;
+  type: string;
+  inhoud: Record<string, unknown>;
+  conceptInhoud: Record<string, unknown> | null;
+  zichtbaar: boolean;
+  conceptVerwijderd: boolean;
+  heeftConcept: boolean;
+};
+
 /** Alle tekst in een blok, zodat het zoekveld ook op inhoud kan zoeken. */
 function doorzoekbaar(blok: Blok): string {
   const stukken = [blok.omschrijving, blok.blockKey];
@@ -65,7 +78,17 @@ function doorzoekbaar(blok: Blok): string {
   return stukken.join(" ").toLowerCase();
 }
 
-export function BlokkenPaneel({ blokken }: { blokken: Blok[] }) {
+export function BlokkenPaneel({
+  blokken,
+  vrijePerSectie = {},
+}: {
+  blokken: Blok[];
+  /**
+   * De eigen blokken die onder een sectie hangen, op sectiesleutel. Zo weet elke
+   * sectie hoeveel er al staan en kan hij er een toevoegen.
+   */
+  vrijePerSectie?: Record<string, VrijBlokInSectie[]>;
+}) {
   const [zoek, setZoek] = useState("");
   const [filter, setFilter] = useState<Filter>("alles");
   const [open, setOpen] = useState<Set<string>>(new Set());
@@ -73,6 +96,7 @@ export function BlokkenPaneel({ blokken }: { blokken: Blok[] }) {
   const verwijzingen = useRef(new Map<string, HTMLDivElement | null>());
 
   const secties = useMemo(() => groepeerInSecties(blokken), [blokken]);
+  const paginaSleutel = blokken[0]?.pageKey ?? "";
 
   const term = zoek.trim().toLowerCase();
   const zoekt = term.length > 0;
@@ -307,6 +331,18 @@ export function BlokkenPaneel({ blokken }: { blokken: Blok[] }) {
                       vastBeeld={blok.vastBeeld}
                     />
                   ))}
+
+                  {/* Alleen bij de volledige lijst: tijdens zoeken zie je een
+                      deel van een sectie, en dan is "voeg hier iets toe" een
+                      knop die over een halve sectie gaat. */}
+                  {!zoekt && !filtert && heeftVrijeBlokken(paginaSleutel) ? (
+                    <SectieFotos
+                      pageKey={paginaSleutel}
+                      sectie={sectie.sleutel}
+                      sectieNaam={sectie.naam}
+                      blokken={vrijePerSectie[sectie.sleutel] ?? []}
+                    />
+                  ) : null}
                 </div>
               ) : null}
             </div>

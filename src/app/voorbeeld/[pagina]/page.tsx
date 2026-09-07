@@ -87,19 +87,19 @@ export default async function VoorbeeldPagina({
         return <OrganisatieInhoud pagina={pagina} pageKey={inhoudKey} />;
       case "opleidingen":
         return (
-          <OverzichtInhoud pagina={pagina}>
+          <OverzichtInhoud pagina={pagina} pageKey="opleidingen">
             <CursusRooster cursussen={await haalAanbod("opleiding")} />
           </OverzichtInhoud>
         );
       case "trainingen":
         return (
-          <OverzichtInhoud pagina={pagina}>
+          <OverzichtInhoud pagina={pagina} pageKey="trainingen">
             <CursusRooster cursussen={await haalAanbod("training")} />
           </OverzichtInhoud>
         );
       case "lessen":
         return (
-          <OverzichtInhoud pagina={pagina}>
+          <OverzichtInhoud pagina={pagina} pageKey="lessen">
             <Rooster lessen={await haalRooster()} />
           </OverzichtInhoud>
         );

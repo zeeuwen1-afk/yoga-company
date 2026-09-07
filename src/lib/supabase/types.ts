@@ -422,6 +422,8 @@ export type PaginaBlok = {
   id: string;
   /** De pagina waar dit blok onder komt; de pagina's staan in code. */
   page_key: string;
+  /** Onder welke sectie; leeg is onderaan de pagina. */
+  sectie: string | null;
   type: string;
   /** Leeg betekent: bestaat alleen als concept, publiek nooit zichtbaar. */
   volgorde: number | null;

@@ -59,6 +59,8 @@ function ververs(pageKey: string) {
 export async function voegVrijBlokToe(
   pageKey: string,
   type: string,
+  /** Onder welke sectie hij komt. Leeg is onderaan de pagina. */
+  sectie?: string,
 ): Promise<VrijBlokResultaat> {
   const context = await vereisAdmin();
   if (!context) return GEEN_RECHTEN;
@@ -90,6 +92,7 @@ export async function voegVrijBlokToe(
     // Geen volgorde: daarmee is hij nog niet gepubliceerd. Hij krijgt zijn
     // plaats zodra er wordt gepubliceerd.
     volgorde: null,
+    sectie: sectie ?? null,
     inhoud: {},
   });
 
@@ -167,13 +170,19 @@ export async function verplaatsVrijBlok(
 
   const { data: rijen } = await supabase
     .from("pagina_blokken")
-    .select("id, volgorde, concept_volgorde, concept_verwijderd, created_at")
+    .select(
+      "id, sectie, volgorde, concept_volgorde, concept_verwijderd, created_at",
+    )
     .eq("page_key", pageKey);
 
   if (!rijen) return { status: "fout", bericht: "Er ging iets mis." };
 
+  // Verplaatsen gebeurt binnen de eigen sectie. Een blok onder "Voor wie" hoort
+  // niet ineens onder "Praktisch" te belanden omdat je op een pijltje drukte.
+  const eigenSectie = rijen.find((rij) => rij.id === blokId)?.sectie ?? null;
+
   const geordend = rijen
-    .filter((rij) => !rij.concept_verwijderd)
+    .filter((rij) => !rij.concept_verwijderd && rij.sectie === eigenSectie)
     .sort((a, b) => {
       const va = a.concept_volgorde ?? a.volgorde;
       const vb = b.concept_volgorde ?? b.volgorde;

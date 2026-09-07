@@ -43,7 +43,6 @@ export function VrijeBlokkenPaneel({
   const [melding, setMelding] = useState<VrijBlokResultaat>({ status: "idle" });
   const [bezig, startOvergang] = useTransition();
 
-  const zichtbaar = blokken.filter((blok) => !blok.conceptVerwijderd);
   const vol = blokken.length >= MAX_VRIJE_BLOKKEN;
 
   function voegToe(type: string) {
@@ -69,7 +68,7 @@ export function VrijeBlokkenPaneel({
         </p>
       ) : null}
 
-      {zichtbaar.length === 0 && blokken.length === 0 ? (
+      {blokken.length === 0 ? (
         <p className="rounded-lg border border-dashed border-line p-6 text-center text-muted">
           Nog niets. Voeg een blok toe als je onder deze pagina iets
           extra&rsquo;s wilt zetten.

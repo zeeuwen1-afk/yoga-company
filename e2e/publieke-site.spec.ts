@@ -256,15 +256,6 @@ test.describe("Juridische pagina's", () => {
 });
 
 test.describe("Tarieven", () => {
-  /**
-   * De prijslijst staat twee keer in de pagina: als tabel voor een breed
-   * scherm en als lijst voor een telefoon, waarvan er steeds één zichtbaar is.
-   * De tests filteren daarom op zichtbaarheid — anders zou dezelfde test op
-   * desktop slagen en op mobiel omvallen, of andersom.
-   */
-  const zichtbaar = (page: import("@playwright/test").Page, tekst: string) =>
-    page.getByText(tekst, { exact: false }).filter({ visible: true });
-
   test("toont wat Wietske zelf aanbiedt, met een bedrag erbij", async ({
     page,
   }) => {

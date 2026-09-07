@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { formateerTijdvak, type Les } from "@/features/bookings";
 import { CursusRooster, type Cursus } from "@/features/courses";
 import type { Pagina } from "../server/queries";
+import { VrijeZone } from "./vrije-zone";
 
 /**
  * De landingspagina van YogaCompany.
@@ -66,6 +67,7 @@ function Banner({ pagina }: { pagina: Pagina }) {
           </Link>
         ) : null}
       </div>
+      <VrijeZone pageKey="home" sectie="banner" />
     </div>
   );
 }
@@ -77,63 +79,66 @@ function Hero({ pagina }: { pagina: Pagina }) {
   const knopTwee = pagina.tekst("hero_knop_twee");
 
   return (
-    <section
-      data-sectie="hero"
-      className="relative isolate overflow-hidden bg-petrol-deep"
-    >
-      {achtergrond ? (
-        <>
-          <Image
-            src={achtergrond.url}
-            alt={achtergrond.alt}
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectPosition: achtergrond.focus }}
-            className="object-cover"
-          />
-          {/* Houdt de kop leesbaar, wélke foto de beheerder ook kiest. */}
-          <div className="absolute inset-0 hero-waas" aria-hidden />
-        </>
-      ) : null}
+    <>
+      <section
+        data-sectie="hero"
+        className="relative isolate overflow-hidden bg-petrol-deep"
+      >
+        {achtergrond ? (
+          <>
+            <Image
+              src={achtergrond.url}
+              alt={achtergrond.alt}
+              fill
+              priority
+              sizes="100vw"
+              style={{ objectPosition: achtergrond.focus }}
+              className="object-cover"
+            />
+            {/* Houdt de kop leesbaar, wélke foto de beheerder ook kiest. */}
+            <div className="absolute inset-0 hero-waas" aria-hidden />
+          </>
+        ) : null}
 
-      <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:py-36">
-        <div className="max-w-2xl">
-          {bovenkop ? (
-            <p className="text-xs font-medium tracking-[0.16em] text-accent-light uppercase">
-              {bovenkop}
-            </p>
-          ) : null}
-          <div className="mt-5 h-0.5 w-16 bg-accent" aria-hidden />
-          <h1 className="mt-7 text-4xl text-cream sm:text-5xl lg:text-6xl">
-            {pagina.tekst("hero_titel")}
-          </h1>
-          <div className="mt-6 max-w-xl">
-            <Alineas
-              tekst={pagina.tekst("hero_subtitel")}
-              className="text-lg text-muted"
-            />
+        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:py-36">
+          <div className="max-w-2xl">
+            {bovenkop ? (
+              <p className="text-xs font-medium tracking-[0.16em] text-accent-light uppercase">
+                {bovenkop}
+              </p>
+            ) : null}
+            <div className="mt-5 h-0.5 w-16 bg-accent" aria-hidden />
+            <h1 className="mt-7 text-4xl text-cream sm:text-5xl lg:text-6xl">
+              {pagina.tekst("hero_titel")}
+            </h1>
+            <div className="mt-6 max-w-xl">
+              <Alineas
+                tekst={pagina.tekst("hero_subtitel")}
+                className="text-lg text-muted"
+              />
+            </div>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <CmsKnop
+                tekst={pagina.tekst("hero_knop")}
+                link={pagina.tekst("hero_link")}
+                terugval="/lessen"
+              />
+              <CmsKnop
+                tekst={knopTwee}
+                link={pagina.tekst("hero_link_twee")}
+                terugval="/opleidingen"
+                variant="omlijnd"
+                className="border-line-strong text-cream"
+              />
+            </div>
+            {kenmerken ? (
+              <p className="mt-8 text-sm text-muted">{kenmerken}</p>
+            ) : null}
           </div>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <CmsKnop
-              tekst={pagina.tekst("hero_knop")}
-              link={pagina.tekst("hero_link")}
-              terugval="/lessen"
-            />
-            <CmsKnop
-              tekst={knopTwee}
-              link={pagina.tekst("hero_link_twee")}
-              terugval="/opleidingen"
-              variant="omlijnd"
-              className="border-line-strong text-cream"
-            />
-          </div>
-          {kenmerken ? (
-            <p className="mt-8 text-sm text-muted">{kenmerken}</p>
-          ) : null}
         </div>
-      </div>
-    </section>
+      </section>
+      <VrijeZone pageKey="home" sectie="hero" />
+    </>
   );
 }
 
@@ -142,38 +147,41 @@ function Deuren({ pagina }: { pagina: Pagina }) {
   if (deuren.length === 0) return null;
 
   return (
-    <Sectie sectie="deuren">
-      <SectieKop
-        titel={pagina.tekst("deuren_titel")}
-        inleiding={pagina.tekst("deuren_inleiding")}
-      />
-      <ul className="mt-10 grid gap-6 md:grid-cols-3">
-        {deuren.map((deur) => (
-          <li key={deur.titel} className="relative flex">
-            <Card className="flex flex-1 flex-col transition-colors hover:border-accent/60">
-              <CardContent className="flex flex-1 flex-col gap-3 p-7">
-                <p className="label-klein text-accent-light">{deur.label}</p>
-                <h3 className="text-2xl">
-                  <Link href={deur.href}>
-                    <span className="absolute inset-0" aria-hidden />
-                    {deur.titel}
-                  </Link>
-                </h3>
-                <p className="flex-1 text-[0.975rem] text-muted">
-                  {deur.tekst}
-                </p>
-                {deur.prijs ? (
-                  <p className="text-[0.975rem] text-sand">{deur.prijs}</p>
-                ) : null}
-                <p className="font-semibold text-accent-light">
-                  {deur.knop} &rarr;
-                </p>
-              </CardContent>
-            </Card>
-          </li>
-        ))}
-      </ul>
-    </Sectie>
+    <>
+      <Sectie sectie="deuren">
+        <SectieKop
+          titel={pagina.tekst("deuren_titel")}
+          inleiding={pagina.tekst("deuren_inleiding")}
+        />
+        <ul className="mt-10 grid gap-6 md:grid-cols-3">
+          {deuren.map((deur) => (
+            <li key={deur.titel} className="relative flex">
+              <Card className="flex flex-1 flex-col transition-colors hover:border-accent/60">
+                <CardContent className="flex flex-1 flex-col gap-3 p-7">
+                  <p className="label-klein text-accent-light">{deur.label}</p>
+                  <h3 className="text-2xl">
+                    <Link href={deur.href}>
+                      <span className="absolute inset-0" aria-hidden />
+                      {deur.titel}
+                    </Link>
+                  </h3>
+                  <p className="flex-1 text-[0.975rem] text-muted">
+                    {deur.tekst}
+                  </p>
+                  {deur.prijs ? (
+                    <p className="text-[0.975rem] text-sand">{deur.prijs}</p>
+                  ) : null}
+                  <p className="font-semibold text-accent-light">
+                    {deur.knop} &rarr;
+                  </p>
+                </CardContent>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </Sectie>
+      <VrijeZone pageKey={"home"} sectie="deuren" />
+    </>
   );
 }
 
@@ -188,53 +196,56 @@ function Rooster({ pagina, lessen }: { pagina: Pagina; lessen: Les[] }) {
   if (lessen.length === 0) return null;
 
   return (
-    <Sectie sectie="rooster" achtergrond="creme" lijnBoven>
-      <div className="grid gap-10 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <SectieKop
-            titel={pagina.tekst("rooster_titel")}
-            inleiding={pagina.tekst("rooster_inleiding")}
-          />
+    <>
+      <Sectie sectie="rooster" achtergrond="creme" lijnBoven>
+        <div className="grid gap-10 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <SectieKop
+              titel={pagina.tekst("rooster_titel")}
+              inleiding={pagina.tekst("rooster_inleiding")}
+            />
 
-          <ul className="mt-8 overflow-hidden rounded-[var(--radius-card)] border border-line bg-white">
-            {lessen.map((les) => (
-              <li
-                key={les.id}
-                className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-line p-5 last:border-b-0"
-              >
-                <div className="min-w-0">
-                  <p className="label-klein">
-                    {formateerTijdvak(les.begintOp, les.duurMinuten)}
-                  </p>
-                  <h3 className="mt-1 text-xl">{les.titel}</h3>
-                  <p className="mt-0.5 text-sm text-muted">{les.locatie}</p>
-                </div>
-                <div className="flex shrink-0 items-center gap-4">
-                  <p className="text-sm text-muted">
-                    {les.vrijePlekken > 0
-                      ? `${les.vrijePlekken} ${les.vrijePlekken === 1 ? "plek" : "plekken"} vrij`
-                      : "Vol, wachtlijst"}
-                  </p>
-                  <Link
-                    href="/lessen"
-                    className="inline-flex h-11 items-center rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
-                  >
-                    {les.vrijePlekken > 0 ? "Boek" : "Wachtlijst"}
-                  </Link>
-                </div>
-              </li>
-            ))}
-          </ul>
+            <ul className="mt-8 overflow-hidden rounded-[var(--radius-card)] border border-line bg-white">
+              {lessen.map((les) => (
+                <li
+                  key={les.id}
+                  className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-line p-5 last:border-b-0"
+                >
+                  <div className="min-w-0">
+                    <p className="label-klein">
+                      {formateerTijdvak(les.begintOp, les.duurMinuten)}
+                    </p>
+                    <h3 className="mt-1 text-xl">{les.titel}</h3>
+                    <p className="mt-0.5 text-sm text-muted">{les.locatie}</p>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-4">
+                    <p className="text-sm text-muted">
+                      {les.vrijePlekken > 0
+                        ? `${les.vrijePlekken} ${les.vrijePlekken === 1 ? "plek" : "plekken"} vrij`
+                        : "Vol, wachtlijst"}
+                    </p>
+                    <Link
+                      href="/lessen"
+                      className="inline-flex h-11 items-center rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+                    >
+                      {les.vrijePlekken > 0 ? "Boek" : "Wachtlijst"}
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
 
-          <CmsTekstLink
-            tekst={pagina.tekst("rooster_knop")}
-            link={pagina.tekst("rooster_link")}
-            terugval="/lessen"
-            className="mt-6"
-          />
+            <CmsTekstLink
+              tekst={pagina.tekst("rooster_knop")}
+              link={pagina.tekst("rooster_link")}
+              terugval="/lessen"
+              className="mt-6"
+            />
+          </div>
         </div>
-      </div>
-    </Sectie>
+      </Sectie>
+      <VrijeZone pageKey={"home"} sectie="rooster" />
+    </>
   );
 }
 
@@ -250,36 +261,41 @@ function Organisaties({ pagina }: { pagina: Pagina }) {
   if (ingangen.length === 0) return null;
 
   return (
-    <Sectie sectie="organisaties" achtergrond="creme" lijnBoven>
-      <SectieKop
-        titel={pagina.tekst("organisaties_titel")}
-        inleiding={pagina.tekst("organisaties_inleiding")}
-      />
-      <ul className="mt-10 grid gap-6 md:grid-cols-3">
-        {ingangen.map((ingang) => (
-          <li key={ingang.titel} className="relative flex">
-            <Card className="flex flex-1 flex-col transition-colors hover:border-accent/60">
-              <CardContent className="flex flex-1 flex-col gap-3 p-7">
-                <p className="label-klein">{ingang.label}</p>
-                <h3 className="text-2xl">
-                  <Link href={ingang.href}>
-                    <span className="absolute inset-0" aria-hidden />
-                    {ingang.titel}
-                  </Link>
-                </h3>
-                <p className="flex-1 text-[0.975rem] text-muted">
-                  {ingang.tekst}
-                </p>
-                {ingang.prijs ? (
-                  <p className="text-[0.975rem] text-green">{ingang.prijs}</p>
-                ) : null}
-                <p className="font-semibold text-green">{ingang.knop} &rarr;</p>
-              </CardContent>
-            </Card>
-          </li>
-        ))}
-      </ul>
-    </Sectie>
+    <>
+      <Sectie sectie="organisaties" achtergrond="creme" lijnBoven>
+        <SectieKop
+          titel={pagina.tekst("organisaties_titel")}
+          inleiding={pagina.tekst("organisaties_inleiding")}
+        />
+        <ul className="mt-10 grid gap-6 md:grid-cols-3">
+          {ingangen.map((ingang) => (
+            <li key={ingang.titel} className="relative flex">
+              <Card className="flex flex-1 flex-col transition-colors hover:border-accent/60">
+                <CardContent className="flex flex-1 flex-col gap-3 p-7">
+                  <p className="label-klein">{ingang.label}</p>
+                  <h3 className="text-2xl">
+                    <Link href={ingang.href}>
+                      <span className="absolute inset-0" aria-hidden />
+                      {ingang.titel}
+                    </Link>
+                  </h3>
+                  <p className="flex-1 text-[0.975rem] text-muted">
+                    {ingang.tekst}
+                  </p>
+                  {ingang.prijs ? (
+                    <p className="text-[0.975rem] text-green">{ingang.prijs}</p>
+                  ) : null}
+                  <p className="font-semibold text-green">
+                    {ingang.knop} &rarr;
+                  </p>
+                </CardContent>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </Sectie>
+      <VrijeZone pageKey={"home"} sectie="organisaties" />
+    </>
   );
 }
 
@@ -288,40 +304,43 @@ function Inlogdeuren({ pagina }: { pagina: Pagina }) {
   if (deuren.length === 0) return null;
 
   return (
-    <section
-      data-sectie="inlog"
-      className="border-t border-line bg-petrol-deep px-4 py-16 sm:px-6 sm:py-20"
-    >
-      <div className="mx-auto max-w-6xl">
-        <SectieKop
-          titel={pagina.tekst("inlog_titel")}
-          inleiding={pagina.tekst("inlog_inleiding")}
-        />
-        <ul className="mt-10 grid gap-6 md:grid-cols-2">
-          {deuren.map((deur, index) => (
-            <li key={deur.titel}>
-              <div className="flex h-full flex-col gap-3 rounded-[var(--radius-card)] border border-line bg-petrol p-8">
-                <p className="label-klein text-accent-light">{deur.label}</p>
-                <h3 className="text-2xl">{deur.titel}</h3>
-                <p className="flex-1 text-[0.975rem] text-muted">
-                  {deur.tekst}
-                </p>
-                <Link
-                  href={deur.href}
-                  className={
-                    index === 0
-                      ? "mt-2 inline-flex h-12 w-fit items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
-                      : "mt-2 inline-flex h-12 w-fit items-center rounded-lg border border-line-strong px-7 font-semibold text-cream transition-colors hover:bg-hover"
-                  }
-                >
-                  {deur.knop}
-                </Link>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+    <>
+      <section
+        data-sectie="inlog"
+        className="border-t border-line bg-petrol-deep px-4 py-16 sm:px-6 sm:py-20"
+      >
+        <div className="mx-auto max-w-6xl">
+          <SectieKop
+            titel={pagina.tekst("inlog_titel")}
+            inleiding={pagina.tekst("inlog_inleiding")}
+          />
+          <ul className="mt-10 grid gap-6 md:grid-cols-2">
+            {deuren.map((deur, index) => (
+              <li key={deur.titel}>
+                <div className="flex h-full flex-col gap-3 rounded-[var(--radius-card)] border border-line bg-petrol p-8">
+                  <p className="label-klein text-accent-light">{deur.label}</p>
+                  <h3 className="text-2xl">{deur.titel}</h3>
+                  <p className="flex-1 text-[0.975rem] text-muted">
+                    {deur.tekst}
+                  </p>
+                  <Link
+                    href={deur.href}
+                    className={
+                      index === 0
+                        ? "mt-2 inline-flex h-12 w-fit items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+                        : "mt-2 inline-flex h-12 w-fit items-center rounded-lg border border-line-strong px-7 font-semibold text-cream transition-colors hover:bg-hover"
+                    }
+                  >
+                    {deur.knop}
+                  </Link>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      <VrijeZone pageKey="home" sectie="inlog" />
+    </>
   );
 }
 
@@ -345,79 +364,91 @@ export function HomeInhoud({
       <Rooster pagina={pagina} lessen={lessen} />
 
       {redenen.length > 0 ? (
-        <Sectie sectie="waarom">
-          <SectieKop titel={pagina.tekst("waarom_titel")} />
-          <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
-            {redenen.map((reden) => (
-              <li key={reden.titel} className="border-t border-line pt-5">
-                <h3 className="text-lg">{reden.titel}</h3>
-                <p className="mt-1.5 text-[0.975rem] text-muted">
-                  {reden.tekst}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </Sectie>
+        <>
+          <Sectie sectie="waarom">
+            <SectieKop titel={pagina.tekst("waarom_titel")} />
+            <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+              {redenen.map((reden) => (
+                <li key={reden.titel} className="border-t border-line pt-5">
+                  <h3 className="text-lg">{reden.titel}</h3>
+                  <p className="mt-1.5 text-[0.975rem] text-muted">
+                    {reden.tekst}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </Sectie>
+          <VrijeZone pageKey={"home"} sectie="waarom" />
+        </>
       ) : null}
 
-      <Sectie sectie="aanbod" achtergrond="creme" lijnBoven>
-        <SectieKop
-          titel={pagina.tekst("aanbod_titel")}
-          inleiding={pagina.tekst("aanbod_inleiding")}
-        />
-        <div className="mt-10">
-          <CursusRooster cursussen={opleidingen.slice(0, 3)} />
-        </div>
-        <CmsTekstLink
-          tekst={pagina.tekst("aanbod_knop")}
-          link={pagina.tekst("aanbod_link")}
-          terugval="/opleidingen"
-          className="mt-8"
-        />
-      </Sectie>
+      <>
+        <Sectie sectie="aanbod" achtergrond="creme" lijnBoven>
+          <SectieKop
+            titel={pagina.tekst("aanbod_titel")}
+            inleiding={pagina.tekst("aanbod_inleiding")}
+          />
+          <div className="mt-10">
+            <CursusRooster cursussen={opleidingen.slice(0, 3)} />
+          </div>
+          <CmsTekstLink
+            tekst={pagina.tekst("aanbod_knop")}
+            link={pagina.tekst("aanbod_link")}
+            terugval="/opleidingen"
+            className="mt-8"
+          />
+        </Sectie>
+        <VrijeZone pageKey={"home"} sectie="aanbod" />
+      </>
 
       {ervaringen.length > 0 ? (
-        <Sectie sectie="testimonials">
-          <SectieKop titel="Wat deelnemers zeggen" />
-          <ul className="mt-10 grid gap-6 md:grid-cols-3">
-            {ervaringen.map((ervaring, index) => (
-              <li key={index}>
-                <figure className="h-full rounded-[var(--radius-card)] border-l-2 border-accent bg-petrol-card p-6">
-                  <blockquote className="font-serif text-lg text-cream">
-                    &ldquo;{ervaring.citaat}&rdquo;
-                  </blockquote>
-                  <figcaption className="mt-4 text-sm text-muted">
-                    {ervaring.naam}
-                    {ervaring.rol ? ` · ${ervaring.rol}` : null}
-                  </figcaption>
-                </figure>
-              </li>
-            ))}
-          </ul>
-        </Sectie>
+        <>
+          <Sectie sectie="testimonials">
+            <SectieKop titel="Wat deelnemers zeggen" />
+            <ul className="mt-10 grid gap-6 md:grid-cols-3">
+              {ervaringen.map((ervaring, index) => (
+                <li key={index}>
+                  <figure className="h-full rounded-[var(--radius-card)] border-l-2 border-accent bg-petrol-card p-6">
+                    <blockquote className="font-serif text-lg text-cream">
+                      &ldquo;{ervaring.citaat}&rdquo;
+                    </blockquote>
+                    <figcaption className="mt-4 text-sm text-muted">
+                      {ervaring.naam}
+                      {ervaring.rol ? ` · ${ervaring.rol}` : null}
+                    </figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
+          </Sectie>
+          <VrijeZone pageKey={"home"} sectie="testimonials" />
+        </>
       ) : null}
 
       <Organisaties pagina={pagina} />
 
       <Inlogdeuren pagina={pagina} />
 
-      <Sectie sectie="cta" achtergrond="zand" lijnBoven>
-        <div className="max-w-2xl">
-          <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
-          <div className="mt-4">
-            <Alineas
-              tekst={pagina.tekst("cta_tekst")}
-              className="text-lg text-muted"
+      <>
+        <Sectie sectie="cta" achtergrond="zand" lijnBoven>
+          <div className="max-w-2xl">
+            <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
+            <div className="mt-4">
+              <Alineas
+                tekst={pagina.tekst("cta_tekst")}
+                className="text-lg text-muted"
+              />
+            </div>
+            <CmsKnop
+              tekst={pagina.tekst("cta_knop")}
+              link={pagina.tekst("cta_link")}
+              terugval="/contact"
+              className="mt-8"
             />
           </div>
-          <CmsKnop
-            tekst={pagina.tekst("cta_knop")}
-            link={pagina.tekst("cta_link")}
-            terugval="/contact"
-            className="mt-8"
-          />
-        </div>
-      </Sectie>
+        </Sectie>
+        <VrijeZone pageKey={"home"} sectie="cta" />
+      </>
     </>
   );
 }

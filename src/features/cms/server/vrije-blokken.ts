@@ -17,6 +17,8 @@ export type VrijBlok = {
   id: string;
   type: string;
   inhoud: Record<string, unknown>;
+  /** Onder welke sectie dit blok staat; leeg is onderaan de pagina. */
+  sectie: string | null;
 };
 
 export type VrijBlokInEditor = VrijBlok & {
@@ -50,6 +52,7 @@ export async function haalVrijeBlokken(
         id: blok.id,
         type: blok.type,
         inhoud: blok.conceptInhoud ?? blok.inhoud,
+        sectie: blok.sectie,
       }));
   }
 
@@ -57,7 +60,7 @@ export async function haalVrijeBlokken(
     const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("pagina_blokken")
-      .select("id, type, inhoud")
+      .select("id, type, inhoud, sectie")
       .eq("page_key", pageKey)
       .order("volgorde");
 
@@ -67,6 +70,7 @@ export async function haalVrijeBlokken(
       id: rij.id,
       type: rij.type,
       inhoud: (rij.inhoud ?? {}) as Record<string, unknown>,
+      sectie: rij.sectie,
     }));
   } catch {
     // Een pagina hoort niet om te vallen omdat een extra blok niet op te halen
@@ -88,7 +92,7 @@ export async function haalVrijeBlokkenVoorEditor(
   const { data } = await supabase
     .from("pagina_blokken")
     .select(
-      `id, type, volgorde, zichtbaar, inhoud,
+      `id, type, sectie, volgorde, zichtbaar, inhoud,
        concept_inhoud, concept_volgorde, concept_zichtbaar, concept_verwijderd,
        created_at`,
     )
@@ -100,6 +104,7 @@ export async function haalVrijeBlokkenVoorEditor(
     .map((rij) => ({
       id: rij.id,
       type: rij.type,
+      sectie: rij.sectie,
       inhoud: (rij.inhoud ?? {}) as Record<string, unknown>,
       volgorde: rij.concept_volgorde ?? rij.volgorde,
       zichtbaar: rij.concept_zichtbaar ?? rij.zichtbaar,
@@ -148,7 +153,7 @@ export async function publiceerVrijeBlokken(
   const { data: rijen } = await supabase
     .from("pagina_blokken")
     .select(
-      "id, volgorde, zichtbaar, inhoud, concept_inhoud, concept_volgorde, concept_zichtbaar, concept_verwijderd, created_at",
+      "id, sectie, volgorde, zichtbaar, inhoud, concept_inhoud, concept_volgorde, concept_zichtbaar, concept_verwijderd, created_at",
     )
     .eq("page_key", pageKey);
 
@@ -173,8 +178,14 @@ export async function publiceerVrijeBlokken(
     gewijzigd += 1;
   }
 
-  for (const [positie, rij] of blijvers.entries()) {
-    const nieuweVolgorde = positie + 1;
+  // De volgorde telt per sectie: twee blokken onder verschillende secties zijn
+  // geen eerste en tweede van elkaar.
+  const tellerPerSectie = new Map<string, number>();
+
+  for (const rij of blijvers) {
+    const sleutel = rij.sectie ?? "";
+    const nieuweVolgorde = (tellerPerSectie.get(sleutel) ?? 0) + 1;
+    tellerPerSectie.set(sleutel, nieuweVolgorde);
     const hadIets =
       rij.concept_inhoud !== null ||
       rij.concept_volgorde !== null ||

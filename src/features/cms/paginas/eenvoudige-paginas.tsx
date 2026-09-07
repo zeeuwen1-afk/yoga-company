@@ -10,6 +10,7 @@ import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import { VEILIGHEID_SECTIES } from "@/content/veiligheid";
 import { ContactFormulier } from "../components/contact-formulier";
 import type { Pagina } from "../server/queries";
+import { VrijeZone } from "./vrije-zone";
 
 /**
  * De overige pagina's met bewerkbare inhoud (BOUWPROMPT §8).
@@ -27,11 +28,14 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
 
   return (
     <>
-      <Sectie sectie="opening" achtergrond="creme">
-        <div className="max-w-2xl">
-          <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
-        </div>
-      </Sectie>
+      <>
+        <Sectie sectie="opening" achtergrond="creme">
+          <div className="max-w-2xl">
+            <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
+          </div>
+        </Sectie>
+        <VrijeZone pageKey={"over-ons"} sectie="opening" />
+      </>
 
       <BeeldMetTekst
         sectie="verhaal"
@@ -72,23 +76,26 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
       ) : null}
 
       {pagina.tekst("cta_titel") ? (
-        <Sectie sectie="cta" achtergrond="zand" lijnBoven>
-          <div className="max-w-2xl">
-            <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
-            <div className="mt-4">
-              <Alineas
-                tekst={pagina.tekst("cta_tekst")}
-                className="text-lg text-muted"
+        <>
+          <Sectie sectie="cta" achtergrond="zand" lijnBoven>
+            <div className="max-w-2xl">
+              <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
+              <div className="mt-4">
+                <Alineas
+                  tekst={pagina.tekst("cta_tekst")}
+                  className="text-lg text-muted"
+                />
+              </div>
+              <CmsKnop
+                tekst={pagina.tekst("cta_knop")}
+                link={pagina.tekst("cta_link")}
+                terugval="/contact"
+                className="mt-8"
               />
             </div>
-            <CmsKnop
-              tekst={pagina.tekst("cta_knop")}
-              link={pagina.tekst("cta_link")}
-              terugval="/contact"
-              className="mt-8"
-            />
-          </div>
-        </Sectie>
+          </Sectie>
+          <VrijeZone pageKey={"over-ons"} sectie="cta" />
+        </>
       ) : null}
     </>
   );
@@ -98,39 +105,42 @@ export function ContactInhoud({ pagina }: { pagina: Pagina }) {
   const gegevens = pagina.lijst<Gegeven>("gegevens");
 
   return (
-    <Sectie sectie="opening">
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,32rem)_1fr]">
-        <div>
-          <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
-          <div className="mt-5">
-            <Alineas
-              tekst={pagina.tekst("inleiding")}
-              className="text-lg text-muted"
-            />
-          </div>
-
-          <div className="mt-10">
-            <ContactFormulier />
-          </div>
-        </div>
-
-        {gegevens.length > 0 ? (
-          <aside className="lg:pt-24">
-            <div className="rounded-[var(--radius-card)] border border-line bg-cream p-6">
-              <h2 className="text-xl">Rechtstreeks contact</h2>
-              <dl className="mt-4 space-y-3">
-                {gegevens.map((gegeven) => (
-                  <div key={gegeven.label}>
-                    <dt className="text-sm text-muted">{gegeven.label}</dt>
-                    <dd className="mt-0.5">{gegeven.waarde}</dd>
-                  </div>
-                ))}
-              </dl>
+    <>
+      <Sectie sectie="opening">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,32rem)_1fr]">
+          <div>
+            <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
+            <div className="mt-5">
+              <Alineas
+                tekst={pagina.tekst("inleiding")}
+                className="text-lg text-muted"
+              />
             </div>
-          </aside>
-        ) : null}
-      </div>
-    </Sectie>
+
+            <div className="mt-10">
+              <ContactFormulier />
+            </div>
+          </div>
+
+          {gegevens.length > 0 ? (
+            <aside className="lg:pt-24">
+              <div className="rounded-[var(--radius-card)] border border-line bg-cream p-6">
+                <h2 className="text-xl">Rechtstreeks contact</h2>
+                <dl className="mt-4 space-y-3">
+                  {gegevens.map((gegeven) => (
+                    <div key={gegeven.label}>
+                      <dt className="text-sm text-muted">{gegeven.label}</dt>
+                      <dd className="mt-0.5">{gegeven.waarde}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </aside>
+          ) : null}
+        </div>
+      </Sectie>
+      <VrijeZone pageKey={"contact"} sectie="opening" />
+    </>
   );
 }
 
@@ -168,58 +178,64 @@ export function JuridischeInhoud({ pagina }: { pagina: Pagina }) {
 
 export function VeiligheidInhoud({ pagina }: { pagina: Pagina }) {
   return (
-    <Sectie sectie="opening">
-      <div className="max-w-2xl">
-        <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
-        <div className="mt-5">
-          <Alineas
-            tekst={pagina.tekst("inleiding")}
-            className="text-lg text-muted"
+    <>
+      <Sectie sectie="opening">
+        <div className="max-w-2xl">
+          <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
+          <div className="mt-5">
+            <Alineas
+              tekst={pagina.tekst("inleiding")}
+              className="text-lg text-muted"
+            />
+          </div>
+
+          <Richtext
+            html={pagina.html("kern")}
+            className="mt-10 text-lg [&_li]:mt-2"
           />
-        </div>
 
-        <Richtext
-          html={pagina.html("kern")}
-          className="mt-10 text-lg [&_li]:mt-2"
-        />
-
-        {/* Uitklappers met <details>, niet met een schakelaar in JavaScript:
+          {/* Uitklappers met <details>, niet met een schakelaar in JavaScript:
             zo staan ze open in een afdruk, vindt de zoekfunctie van de browser
             ook de dichtgeklapte tekst, en werkt de pagina wanneer er onderweg
             iets met de scripts misgaat. Dat past bij een pagina die juist over
             betrouwbaarheid gaat. */}
-        <div className="mt-12 divide-y divide-line border-y border-line">
-          {VEILIGHEID_SECTIES.map((_, index) => {
-            const nummer = index + 1;
-            const vraag = pagina.tekst(`sectie_${nummer}_vraag`);
-            const antwoord = pagina.html(`sectie_${nummer}_antwoord`);
+          <div className="mt-12 divide-y divide-line border-y border-line">
+            {VEILIGHEID_SECTIES.map((_, index) => {
+              const nummer = index + 1;
+              const vraag = pagina.tekst(`sectie_${nummer}_vraag`);
+              const antwoord = pagina.html(`sectie_${nummer}_antwoord`);
 
-            if (!vraag) return null;
+              if (!vraag) return null;
 
-            return (
-              <details key={nummer} className="group py-1">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-left font-semibold text-ink marker:content-none hover:text-green [&::-webkit-details-marker]:hidden">
-                  {vraag}
-                  <ChevronDown
-                    aria-hidden
-                    className="size-5 shrink-0 text-green transition-transform group-open:rotate-180"
-                  />
-                </summary>
-                <Richtext html={antwoord} className="pb-6 text-muted" />
-              </details>
-            );
-          })}
+              return (
+                <details key={nummer} className="group py-1">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-left font-semibold text-ink marker:content-none hover:text-green [&::-webkit-details-marker]:hidden">
+                    {vraag}
+                    <ChevronDown
+                      aria-hidden
+                      className="size-5 shrink-0 text-green transition-transform group-open:rotate-180"
+                    />
+                  </summary>
+                  <Richtext html={antwoord} className="pb-6 text-muted" />
+                </details>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </Sectie>
+      </Sectie>
+      <VrijeZone pageKey={"veiligheid"} sectie="opening" />
+    </>
   );
 }
 
 export function OverzichtInhoud({
   pagina,
+  pageKey,
   children,
 }: {
   pagina: Pagina;
+  /** Nodig om de eigen blokken van déze pagina op te halen. */
+  pageKey: string;
   children: React.ReactNode;
 }) {
   const beeld = pagina.beeld("beeld");
@@ -274,32 +290,35 @@ export function OverzichtInhoud({
   }
 
   return (
-    <Sectie sectie="opening">
-      {naast ? (
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          {/* De foto blijft in de opbouw vóór de kop staan, ook bij "rechts":
+    <>
+      <Sectie sectie="opening">
+        {naast ? (
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            {/* De foto blijft in de opbouw vóór de kop staan, ook bij "rechts":
               zo staat hij op een telefoon altijd boven en leest een schermlezer
               alles in dezelfde volgorde als iedereen. */}
-          <div
-            className={beeld?.layout === "rechts" ? "lg:order-2" : undefined}
-          >
-            {foto}
+            <div
+              className={beeld?.layout === "rechts" ? "lg:order-2" : undefined}
+            >
+              {foto}
+            </div>
+            <div>{kop}</div>
           </div>
-          <div>{kop}</div>
-        </div>
-      ) : (
-        <>
-          {kop}
-          {foto}
-        </>
-      )}
+        ) : (
+          <>
+            {kop}
+            {foto}
+          </>
+        )}
 
-      {/* Het anker waar een knop naartoe kan springen: op /lessen is dit het
+        {/* Het anker waar een knop naartoe kan springen: op /lessen is dit het
           weekrooster, op /opleidingen en /trainingen het aanbod. Staat als
           `/lessen#rooster` in de lijst met bestemmingen. */}
-      <div id="rooster" className="mt-12 scroll-mt-24">
-        {children}
-      </div>
-    </Sectie>
+        <div id="rooster" className="mt-12 scroll-mt-24">
+          {children}
+        </div>
+      </Sectie>
+      <VrijeZone pageKey={pageKey} sectie="opening" />
+    </>
   );
 }

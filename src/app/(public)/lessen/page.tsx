@@ -23,7 +23,7 @@ export default async function LessenPage() {
 
   return (
     <>
-      <OverzichtInhoud pagina={pagina}>
+      <OverzichtInhoud pagina={pagina} pageKey="lessen">
         {/* Er stond een balkje met strippenkaarten naast het rooster. Die kaarten
             worden niet meer aangeboden: de lesprijs zit in het abonnement van de
             school waar wordt lesgegeven. Het rooster krijgt de ruimte die daardoor

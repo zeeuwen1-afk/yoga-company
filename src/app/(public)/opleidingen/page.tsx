@@ -22,7 +22,7 @@ export default async function OpleidingenPage() {
 
   return (
     <>
-      <OverzichtInhoud pagina={pagina}>
+      <OverzichtInhoud pagina={pagina} pageKey="opleidingen">
         <CursusRooster cursussen={opleidingen} />
       </OverzichtInhoud>
       <VrijeZone pageKey="opleidingen" />
