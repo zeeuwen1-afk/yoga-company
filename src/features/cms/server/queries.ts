@@ -1,6 +1,7 @@
 import "server-only";
 
 import { BLOKKEN, blokkenVanPagina, type BlokWaarde } from "@/content/blokken";
+import { cursusSlug } from "@/content/vrije-blokken";
 import { focusStijl } from "@/lib/beeldfocus";
 import {
   leesLayout,
@@ -163,5 +164,11 @@ export function bekendePaginas() {
 export function kanVoorvertonen(pageKey: string): boolean {
   // De paginavoet heeft geen eigen pagina; die wordt getoond in de context van
   // de startpagina.
-  return pageKey === "footer" || bekendePaginas().includes(pageKey);
+  if (pageKey === "footer") return true;
+  // De pagina van één opleiding of training. Of die cursus echt bestaat weet
+  // deze functie niet — dat staat in de database, en dit is een synchrone
+  // controle op de vorm. De route zelf geeft alsnog een 404 wanneer de slug
+  // nergens bij hoort.
+  if (cursusSlug(pageKey) !== null) return true;
+  return bekendePaginas().includes(pageKey);
 }

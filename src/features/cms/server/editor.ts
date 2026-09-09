@@ -1,6 +1,9 @@
 import "server-only";
 
 import { BLOKKEN, type BlokSeed } from "@/content/blokken";
+import { EIGEN_PAGINA } from "@/content/aanbod";
+import { cursusSleutel } from "@/content/vrije-blokken";
+import { haalAanbod } from "@/features/courses";
 import { isLinkBlok } from "../link-blok";
 import { createClient } from "@/lib/supabase/server";
 import type { BlockKind, Json } from "@/lib/supabase/types";
@@ -89,6 +92,12 @@ const PAGINA_NAMEN: Record<string, { titel: string; pad: string }> = {
     titel: "Voor yogadocenten",
     pad: "/voor-yogadocenten",
   },
+  // Eén set teksten voor alle opleidings- en trainingspagina's. Het pad wijst
+  // naar het overzicht; welke cursus je erbij pakt maakt niet uit.
+  cursus: {
+    titel: "Cursuspagina's · vaste teksten",
+    pad: "/opleidingen",
+  },
   yogaopleiding: {
     titel: "200-uurs Yogaopleiding",
     pad: "/opleidingen/200-uurs-yogaopleiding",
@@ -140,8 +149,9 @@ export async function haalEditorPaginas(): Promise<EditorPagina[]> {
   );
 
   const paginaKeys = [...new Set(BLOKKEN.map((blok) => blok.page_key))];
+  const vrijeConcepten = await telVrijeConceptenPerPagina(supabase);
 
-  return paginaKeys.map((pageKey) => {
+  const vast = paginaKeys.map((pageKey) => {
     const naam = paginaNaam(pageKey);
 
     const blokken = definitiesVan(pageKey).map((definitie): BewerkbaarBlok => {
@@ -187,9 +197,90 @@ export async function haalEditorPaginas(): Promise<EditorPagina[]> {
       titel: naam.titel,
       pad: naam.pad,
       blokken,
-      aantalConcepten: blokken.filter((blok) => blok.heeftConcept).length,
+      aantalConcepten:
+        blokken.filter((blok) => blok.heeftConcept).length +
+        (vrijeConcepten.get(pageKey) ?? 0),
     };
   });
+
+  return [...vast, ...(await cursusPaginas(vrijeConcepten))];
+}
+
+/**
+ * Hoeveel onpubliceerde eigen blokken er per pagina staan.
+ *
+ * Deze telden niet mee, en dat was geen schoonheidsfoutje: de publiceerbalk
+ * verdwijnt bij nul wijzigingen. Wie alleen een foto bij een sectie zette, zag
+ * dus nergens een knop om hem online te krijgen, en de wijziging bleef staan
+ * waar niemand hem zag.
+ *
+ * Eén query voor alle pagina's tegelijk: het overzicht toont ze allemaal, en
+ * drieëntwintig losse tellingen zouden dat scherm traag maken voor een getal.
+ */
+async function telVrijeConceptenPerPagina(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+): Promise<Map<string, number>> {
+  const telling = new Map<string, number>();
+
+  const { data } = await supabase
+    .from("pagina_blokken")
+    .select(
+      "page_key, volgorde, concept_inhoud, concept_volgorde, concept_zichtbaar, concept_verwijderd",
+    );
+
+  for (const rij of data ?? []) {
+    // Dezelfde regel als `haalVrijeBlokkenVoorEditor`: een blok zonder
+    // volgorde is nieuw en dus nog niet gepubliceerd.
+    const heeftConcept =
+      rij.concept_inhoud !== null ||
+      rij.concept_volgorde !== null ||
+      rij.concept_zichtbaar !== null ||
+      rij.concept_verwijderd ||
+      rij.volgorde === null;
+
+    if (!heeftConcept) continue;
+    telling.set(rij.page_key, (telling.get(rij.page_key) ?? 0) + 1);
+  }
+
+  return telling;
+}
+
+/**
+ * Elke opleiding en training als eigen pagina in de editor.
+ *
+ * Die pagina's hebben geen vaste blokken: hun titel, verhaal, prijs en
+ * curriculum komen uit het aanbod en worden bij Aanbod bewerkt, en de woorden
+ * eromheen staan één keer onder "Cursuspagina's · vaste teksten". Wat er nog
+ * niet was, is de ruimte om er per cursus iets eigens onder te zetten — een
+ * foto, een stuk tekst, een foto met de tekst eroverheen. Dat is precies wat de
+ * vrije zone doet, en die heeft een pagina in de editor nodig om aan te hangen.
+ *
+ * De 200-uurs Yogaopleiding staat er niet bij: die heeft een eigen pagina met
+ * eigen blokken, en zou hier een tweede ingang krijgen naar iets dat niet
+ * getoond wordt.
+ *
+ * Valt het aanbod niet op te halen, dan blijft de lijst leeg. De rest van de
+ * editor hoort niet om te vallen omdat één query mislukt.
+ */
+async function cursusPaginas(
+  vrijeConcepten: Map<string, number>,
+): Promise<EditorPagina[]> {
+  let cursussen: Awaited<ReturnType<typeof haalAanbod>>;
+  try {
+    cursussen = await haalAanbod();
+  } catch {
+    return [];
+  }
+
+  return cursussen
+    .filter((cursus) => !(cursus.slug in EIGEN_PAGINA))
+    .map((cursus) => ({
+      pageKey: cursusSleutel(cursus.slug),
+      titel: `${cursus.type === "opleiding" ? "Opleiding" : "Training"} · ${cursus.titel}`,
+      pad: `/${cursus.type === "opleiding" ? "opleidingen" : "trainingen"}/${cursus.slug}`,
+      blokken: [],
+      aantalConcepten: vrijeConcepten.get(cursusSleutel(cursus.slug)) ?? 0,
+    }));
 }
 
 export async function haalEditorPagina(

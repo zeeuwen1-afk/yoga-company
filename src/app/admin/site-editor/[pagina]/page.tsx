@@ -7,7 +7,7 @@ import { AdminKop, Paneel } from "@/features/admin/components/ui";
 import { BlokkenPaneel } from "@/features/cms/components/blokken-paneel";
 import { PubliceerBalk } from "@/features/cms/components/publiceer-balk";
 import { ELDERS_BEHEERD } from "@/features/cms/elders-beheerd";
-import { heeftVrijeBlokken } from "@/content/vrije-blokken";
+import { cursusSlug, heeftVrijeBlokken } from "@/content/vrije-blokken";
 import { VrijeBlokkenPaneel } from "@/features/cms/components/vrije-blokken-paneel";
 import { haalEditorPagina } from "@/features/cms/server/editor";
 import { haalVrijeBlokkenVoorEditor } from "@/features/cms/server/vrije-blokken";
@@ -48,6 +48,26 @@ export default async function PaginaBewerkenPage({
   }
   const onderaan = vrijeBlokken.filter((blok) => !blok.sectie);
 
+  // Een cursuspagina heeft geen vaste blokken: titel, verhaal, prijs en
+  // curriculum komen uit het aanbod, de woorden eromheen staan onder
+  // "Cursuspagina's · vaste teksten". Wat hier wél kan is er zelf iets bij
+  // zetten, en dan is de vraag wáár. Vandaar drie plekken in plaats van één
+  // zone onderaan; de pagina toont ze op precies deze punten.
+  const isCursus = cursusSlug(pageKey) !== null;
+  const plekken: { sleutel?: string; naam: string; plaats: string }[] = [
+    {
+      sleutel: "kop",
+      naam: "Onder de kop met de prijs",
+      plaats: "onder de kop met de prijs",
+    },
+    {
+      sleutel: "verhaal",
+      naam: "Onder het verhaal en het curriculum",
+      plaats: "onder het verhaal en het curriculum",
+    },
+    { naam: "Onderaan de pagina", plaats: "helemaal onderaan de pagina" },
+  ];
+
   return (
     <>
       <AdminKop
@@ -83,18 +103,58 @@ export default async function PaginaBewerkenPage({
 
       <div className="grid gap-6 xl:grid-cols-2">
         <div className="space-y-6">
-          <Paneel titel="Inhoud">
-            <BlokkenPaneel
-              blokken={pagina.blokken}
-              vrijePerSectie={perSectie}
-            />
-          </Paneel>
+          {isCursus ? (
+            <>
+              <div className="rounded-[var(--radius-card)] border border-line bg-white p-5 text-sm text-muted">
+                De titel, het verhaal, de prijs en het curriculum van deze
+                cursus pas je aan bij{" "}
+                <Link
+                  href="/admin/aanbod"
+                  className="font-semibold text-ink underline underline-offset-4"
+                >
+                  Aanbod
+                </Link>
+                . De vaste woorden eromheen — &ldquo;Voor wie&rdquo;,
+                &ldquo;Praktisch&rdquo;, de knoppen — staan onder{" "}
+                <Link
+                  href="/admin/site-editor/cursus"
+                  className="font-semibold text-ink underline underline-offset-4"
+                >
+                  Cursuspagina&rsquo;s · vaste teksten
+                </Link>{" "}
+                en gelden voor alle cursussen tegelijk. Hieronder zet je wat
+                alleen op déze pagina hoort.
+              </div>
 
-          {heeftVrijeBlokken(pageKey) ? (
-            <Paneel titel="Eigen blokken onderaan">
-              <VrijeBlokkenPaneel pageKey={pageKey} blokken={onderaan} />
-            </Paneel>
-          ) : null}
+              {plekken.map((plek) => (
+                <Paneel key={plek.naam} titel={plek.naam}>
+                  <VrijeBlokkenPaneel
+                    pageKey={pageKey}
+                    sectie={plek.sleutel}
+                    plaats={plek.plaats}
+                    blokken={
+                      plek.sleutel ? (perSectie[plek.sleutel] ?? []) : onderaan
+                    }
+                  />
+                </Paneel>
+              ))}
+            </>
+          ) : (
+            <>
+              <Paneel titel="Inhoud">
+                <BlokkenPaneel
+                  blokken={pagina.blokken}
+                  vrijePerSectie={perSectie}
+                />
+              </Paneel>
+
+              {heeftVrijeBlokken(pageKey) ? (
+                <Paneel titel="Eigen blokken onderaan">
+                  <VrijeBlokkenPaneel pageKey={pageKey} blokken={onderaan} />
+                </Paneel>
+              ) : null}
+            </>
+          )}
         </div>
 
         <div className="xl:sticky xl:top-24 xl:self-start">

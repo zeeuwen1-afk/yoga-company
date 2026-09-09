@@ -794,6 +794,189 @@ const yogaopleidingBlokken: BlokSeed[] = [
   ]),
 ];
 
+/**
+ * De vaste teksten van een cursuspagina.
+ *
+ * Elke opleiding en training heeft dezelfde opbouw: een kop met de prijs, het
+ * verhaal, het curriculum, een kolom met praktische gegevens en onderaan een
+ * uitnodiging om een vraag te stellen. De inhoud van die pagina komt uit het
+ * aanbod — titel, beschrijving, prijs, curriculum — maar de woorden eromheen
+ * stonden tot nu toe in de code. "Voor wie", "Praktisch", "Twijfel je of dit
+ * past?": veertien zinnen die de beheerder niet kon aanraken.
+ *
+ * Ze staan hier één keer en gelden voor alle cursuspagina's. Per pagina zou
+ * betekenen dat een wijziging aan het woord "Curriculum" op negen plekken moet,
+ * en dan staat er na een half jaar op drie pagina's iets anders.
+ *
+ * Wat wél per pagina verschilt — een foto, een extra stuk tekst — zet de
+ * beheerder in de eigen blokken van die ene cursus; zie `heeftVrijeBlokken`.
+ */
+const cursusBlokken: BlokSeed[] = [
+  {
+    page_key: "cursus",
+    block_key: "kop_kruimel_opleiding",
+    kind: "text",
+    omschrijving: "Terugverwijzing bovenaan een opleidingspagina",
+    value: { text: "Opleidingen" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "kop_kruimel_training",
+    kind: "text",
+    omschrijving: "Terugverwijzing bovenaan een trainingspagina",
+    value: { text: "Trainingen" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "kop_prijs_toelichting",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Zin onder de prijs in het kader rechtsboven",
+    value: { text: "Betalen in termijnen is mogelijk; vraag ernaar." },
+  },
+  {
+    page_key: "cursus",
+    block_key: "kop_inschrijf_knop",
+    kind: "text",
+    omschrijving:
+      "Tekst op de inschrijfknop. Waar hij heen gaat hangt van de cursus af en ligt vast.",
+    value: { text: "Inschrijven" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "kop_vraag_knop",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "Het zachte alternatief onder de inschrijfknop",
+    value: { text: "Eerst een vraag stellen" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "kop_vraag_link",
+    kind: "text",
+    omschrijving: "Waar dat alternatief heen gaat",
+    value: { text: "/contact" },
+  },
+
+  {
+    page_key: "cursus",
+    block_key: "verhaal_voorwie_titel",
+    kind: "text",
+    omschrijving: "Kop boven 'voor wie', midden op de pagina",
+    value: { text: "Voor wie" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "verhaal_toelating_titel",
+    kind: "text",
+    omschrijving: "Kop boven de toelatingseisen",
+    value: { text: "Toelatingseisen" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "verhaal_curriculum_titel",
+    kind: "text",
+    omschrijving: "Kop boven het uitklapbare curriculum",
+    value: { text: "Curriculum" },
+  },
+
+  {
+    page_key: "cursus",
+    block_key: "praktisch_titel",
+    kind: "text",
+    omschrijving: "Kop boven de kolom met praktische gegevens",
+    value: { text: "Praktisch" },
+  },
+  // De namen in die kolom. Losse blokken en geen lijst: de waarde achter elk
+  // label komt uit het aanbod, dus de regels zijn niet uitwisselbaar en er kan
+  // er ook geen bij. Een lijst zou een knop "regel toevoegen" tonen die niets
+  // kan opleveren.
+  {
+    page_key: "cursus",
+    block_key: "praktisch_omvang",
+    kind: "text",
+    omschrijving: "Naam van de regel met het totaal aantal uren",
+    value: { text: "Omvang" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "praktisch_studiebelasting",
+    kind: "text",
+    omschrijving: "Naam van de regel met de studiebelasting",
+    value: { text: "Studiebelasting" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "praktisch_locatie",
+    kind: "text",
+    omschrijving: "Naam van de regel met de locatie",
+    value: { text: "Locatie" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "praktisch_groepsgrootte",
+    kind: "text",
+    omschrijving: "Naam van de regel met het maximum aantal deelnemers",
+    value: { text: "Groepsgrootte" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "praktisch_certificaat",
+    kind: "text",
+    omschrijving: "Naam van de regel met de certificering",
+    value: { text: "Certificering" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "praktisch_lesdata",
+    kind: "text",
+    omschrijving: "Naam van de regel met de lesdata",
+    value: { text: "Lesdata" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "praktisch_lesdata_tekst",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving:
+      "Wat er achter Lesdata staat. Leeg laten = die regel verdwijnt.",
+    value: { text: "Neem contact op voor de eerstvolgende startdatum." },
+  },
+
+  {
+    page_key: "cursus",
+    block_key: "slot_titel",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving:
+      "Kop van het blok onderaan elke cursuspagina. Weghalen = het hele blok verdwijnt.",
+    value: { text: "Twijfel je of dit past?" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "slot_tekst",
+    kind: "text",
+    omschrijving: "De zin onder die kop",
+    value: {
+      text: "Stuur ons een bericht. We denken mee over wat aansluit bij waar je nu staat, zonder dat je ergens aan vastzit.",
+    },
+  },
+  {
+    page_key: "cursus",
+    block_key: "slot_knop",
+    kind: "text",
+    omschrijving: "Tekst op de knop onderaan",
+    value: { text: "Stel je vraag" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "slot_link",
+    kind: "text",
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/contact" },
+  },
+];
+
 export const BLOKKEN: BlokSeed[] = [
   // ---------------------------------------------------------------------------
   // Landingspagina
@@ -2392,6 +2575,7 @@ export const BLOKKEN: BlokSeed[] = [
   ...tarievenBlokken,
   ...docentenBlokken,
   ...yogaopleidingBlokken,
+  ...cursusBlokken,
 ];
 
 /** Alle blokken van één pagina, als kaart van block_key naar waarde. */

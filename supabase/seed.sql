@@ -2758,3 +2758,129 @@ values ('yogaopleiding-module-4', 'prijs_voet', 'text', '{"text":"Combineer met 
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'kop_kruimel_opleiding', 'text', '{"text":"Opleidingen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'kop_kruimel_training', 'text', '{"text":"Trainingen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'kop_prijs_toelichting', 'text', '{"text":"Betalen in termijnen is mogelijk; vraag ernaar."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'kop_inschrijf_knop', 'text', '{"text":"Inschrijven"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'kop_vraag_knop', 'text', '{"text":"Eerst een vraag stellen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'kop_vraag_link', 'text', '{"text":"/contact"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'verhaal_voorwie_titel', 'text', '{"text":"Voor wie"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'verhaal_toelating_titel', 'text', '{"text":"Toelatingseisen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'verhaal_curriculum_titel', 'text', '{"text":"Curriculum"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_titel', 'text', '{"text":"Praktisch"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_omvang', 'text', '{"text":"Omvang"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_studiebelasting', 'text', '{"text":"Studiebelasting"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_locatie', 'text', '{"text":"Locatie"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_groepsgrootte', 'text', '{"text":"Groepsgrootte"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_certificaat', 'text', '{"text":"Certificering"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_lesdata', 'text', '{"text":"Lesdata"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_lesdata_tekst', 'text', '{"text":"Neem contact op voor de eerstvolgende startdatum."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'slot_titel', 'text', '{"text":"Twijfel je of dit past?"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'slot_tekst', 'text', '{"text":"Stuur ons een bericht. We denken mee over wat aansluit bij waar je nu staat, zonder dat je ergens aan vastzit."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'slot_knop', 'text', '{"text":"Stel je vraag"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'slot_link', 'text', '{"text":"/contact"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;

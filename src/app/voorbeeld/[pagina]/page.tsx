@@ -21,7 +21,9 @@ import {
   VeiligheidInhoud,
   VoorYogadocentenInhoud,
 } from "@/features/cms/paginas/eenvoudige-paginas";
-import { CursusRooster, haalAanbod } from "@/features/courses";
+import { CursusRooster, haalAanbod, haalCursus } from "@/features/courses";
+import { CursusDetail } from "@/features/courses/components/cursus-detail";
+import { cursusSlug } from "@/content/vrije-blokken";
 
 export const metadata: Metadata = {
   title: "Voorvertoning",
@@ -50,16 +52,39 @@ export default async function VoorbeeldPagina({
 
   if (!kanVoorvertonen(pageKey)) notFound();
 
+  // Een cursuspagina heeft geen eigen blokken: zijn teksten staan onder
+  // `cursus` en gelden voor alle opleidingen en trainingen. De eigen blokken
+  // van déze cursus hangen wél aan de sleutel zelf.
+  const slug = cursusSlug(pageKey);
+
   // De paginavoet staat op elke pagina; bewerk je die, dan tonen we hem in de
   // context van de startpagina.
-  const inhoudKey = pageKey === "footer" ? "home" : pageKey;
+  const inhoudKey =
+    pageKey === "footer" ? "home" : slug !== null ? "cursus" : pageKey;
+  const vrijeKey = pageKey === "footer" ? "home" : pageKey;
 
   const [pagina, voetPagina] = await Promise.all([
     haalConceptPagina(inhoudKey),
     haalConceptPagina("footer"),
   ]);
 
+  // De vaste teksten bewerk je zonder een cursus in gedachten; dan tonen we ze
+  // op de eerste cursus die er is, want zonder pagina eromheen valt er niets
+  // te zien.
+  const cursus =
+    slug !== null
+      ? await haalCursus(slug)
+      : inhoudKey === "cursus"
+        ? ((await haalAanbod())[0] ?? null)
+        : null;
+
+  if (inhoudKey === "cursus" && !cursus) notFound();
+
   async function inhoud() {
+    if (cursus) {
+      return <CursusDetail cursus={cursus} pagina={pagina} concept />;
+    }
+
     switch (inhoudKey) {
       case "home":
         return (
@@ -145,8 +170,10 @@ export default async function VoorbeeldPagina({
       <main className="flex-1">
         {await inhoud()}
         {/* In de voorvertoning tellen ook de blokken mee die nog niet zijn
-            gepubliceerd; dat is juist wat je hier wilt zien. */}
-        <VrijeZone pageKey={inhoudKey} concept />
+            gepubliceerd; dat is juist wat je hier wilt zien. De cursuspagina
+            toont zijn eigen zone al; die hier nog eens tonen zou elk blok
+            dubbel op het scherm zetten. */}
+        {cursus ? null : <VrijeZone pageKey={vrijeKey} concept />}
       </main>
       <SiteFooter pagina={voetPagina} />
     </div>

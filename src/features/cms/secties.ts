@@ -92,6 +92,9 @@ const SECTIENAMEN: Record<string, string> = {
   prijzen: "Prijzen",
   inschrijven: "Zo schrijf je je in",
   disclaimer: "Kleine letters",
+  // De cursuspagina's: één set teksten voor alle opleidingen en trainingen.
+  kop: "Kop met prijs en knoppen",
+  slot: "Onderaan de pagina",
   // De vraag-en-antwoordblokken op de veiligheidspagina heten sectie_1_vraag
   // en verder; zonder naam zou de groep gewoon "Sectie" gaan heten.
   sectie: "Vragen en antwoorden",

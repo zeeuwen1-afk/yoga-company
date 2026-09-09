@@ -91,26 +91,48 @@ export function YogaopleidingInhoud({
           <Sectie id="modules" sectie="modules" achtergrond="zand" lijnBoven>
             <SectieKop titel={pagina.tekst("modules_titel")} />
             <ul className="mt-10 grid gap-6 md:grid-cols-2">
-              {modules.map((module, index) => (
-                <li key={index} className="relative flex">
-                  <article className="flex flex-1 flex-col rounded-[var(--radius-card)] border border-line bg-background p-6 transition-colors hover:border-accent/60">
-                    <p className="label-klein text-accent">
-                      {[module.nummer, module.uren].filter(Boolean).join(" · ")}
-                    </p>
-                    <h3 className="mt-2 text-2xl">
-                      <Link href={module.href || "#"}>
-                        <span className="absolute inset-0" aria-hidden />
-                        {module.titel}
-                      </Link>
-                    </h3>
-                    <p className="mt-3 flex-1 text-muted">{module.tekst}</p>
-                    <p className="mt-5 inline-flex items-center gap-1.5 font-semibold underline underline-offset-4">
-                      {module.knop || "Lees meer"}
-                      <ArrowRight className="size-4" aria-hidden />
-                    </p>
-                  </article>
-                </li>
-              ))}
+              {modules.map((module, index) => {
+                // Zonder adres wordt het geen kaart om op te klikken. Met
+                // `href="#"` was hij dat wél: de hele kaart reageerde, sprong
+                // naar de bovenkant van de pagina en liet de bezoeker achter
+                // met het idee dat de site kapot was. Een module waar nog geen
+                // pagina bij hoort is gewoon een stuk tekst.
+                const pad = module.href?.trim();
+
+                return (
+                  <li key={index} className="relative flex">
+                    <article
+                      className={[
+                        "flex flex-1 flex-col rounded-[var(--radius-card)] border border-line bg-background p-6",
+                        pad ? "transition-colors hover:border-accent/60" : "",
+                      ].join(" ")}
+                    >
+                      <p className="label-klein text-accent">
+                        {[module.nummer, module.uren]
+                          .filter(Boolean)
+                          .join(" · ")}
+                      </p>
+                      <h3 className="mt-2 text-2xl">
+                        {pad ? (
+                          <Link href={pad}>
+                            <span className="absolute inset-0" aria-hidden />
+                            {module.titel}
+                          </Link>
+                        ) : (
+                          module.titel
+                        )}
+                      </h3>
+                      <p className="mt-3 flex-1 text-muted">{module.tekst}</p>
+                      {pad ? (
+                        <p className="mt-5 inline-flex items-center gap-1.5 font-semibold underline underline-offset-4">
+                          {module.knop || "Lees meer"}
+                          <ArrowRight className="size-4" aria-hidden />
+                        </p>
+                      ) : null}
+                    </article>
+                  </li>
+                );
+              })}
             </ul>
           </Sectie>
           <VrijeZone pageKey="yogaopleiding" sectie="modules" />

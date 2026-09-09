@@ -27,8 +27,18 @@ import { VrijBlokBewerker } from "./vrij-blok-bewerker";
 export function VrijeBlokkenPaneel({
   pageKey,
   blokken,
+  sectie,
+  plaats,
 }: {
   pageKey: string;
+  /**
+   * Aan welke plek op de pagina deze blokken hangen. Leeg is onderaan; dat is
+   * wat elke vaste pagina doet. Een cursuspagina heeft geen vaste blokken om
+   * een sectie aan op te hangen, en krijgt daarom een paneel per plek.
+   */
+  sectie?: string;
+  /** Hoe die plek heet in de zin eronder. */
+  plaats?: string;
   blokken: {
     id: string;
     type: string;
@@ -47,7 +57,7 @@ export function VrijeBlokkenPaneel({
 
   function voegToe(type: string) {
     startOvergang(async () => {
-      setMelding(await voegVrijBlokToe(pageKey, type));
+      setMelding(await voegVrijBlokToe(pageKey, type, sectie));
       setKiezen(false);
     });
   }
@@ -55,8 +65,10 @@ export function VrijeBlokkenPaneel({
   return (
     <div className="space-y-3 p-4">
       <p className="text-sm text-muted">
-        Blokken die je zelf onder deze pagina zet, onder de vaste secties. Ze
-        gaan online zodra je de pagina publiceert.
+        {plaats
+          ? `Blokken die je zelf ${plaats} zet.`
+          : "Blokken die je zelf onder deze pagina zet, onder de vaste secties."}{" "}
+        Ze gaan online zodra je de pagina publiceert.
       </p>
 
       {melding.status === "fout" ? (
@@ -70,8 +82,8 @@ export function VrijeBlokkenPaneel({
 
       {blokken.length === 0 ? (
         <p className="rounded-lg border border-dashed border-line p-6 text-center text-muted">
-          Nog niets. Voeg een blok toe als je onder deze pagina iets
-          extra&rsquo;s wilt zetten.
+          Nog niets. Voeg een blok toe als je hier iets extra&rsquo;s wilt
+          zetten.
         </p>
       ) : null}
 

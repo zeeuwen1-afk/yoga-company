@@ -133,12 +133,6 @@ export async function haalVrijeBlokkenVoorEditor(
     .map(({ _gemaakt, ...blok }) => blok);
 }
 
-/** Hoeveel onpubliceerde wijzigingen staan er in de vrije zone? */
-export async function telVrijeConcepten(pageKey: string): Promise<number> {
-  const blokken = await haalVrijeBlokkenVoorEditor(pageKey);
-  return blokken.filter((blok) => blok.heeftConcept).length;
-}
-
 /**
  * De concepten van de vrije blokken publiceren.
  *

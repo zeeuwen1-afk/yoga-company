@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { haalPagina } from "@/features/cms";
 import { haalCursus, haalSlugs } from "@/features/courses";
 import { CursusDetail } from "@/features/courses/components/cursus-detail";
 import { CursusJsonLd } from "@/features/courses/components/cursus-jsonld";
@@ -57,7 +58,7 @@ export default async function OpleidingPage({
   return (
     <>
       <CursusJsonLd cursus={cursus} />
-      <CursusDetail cursus={cursus} />
+      <CursusDetail cursus={cursus} pagina={await haalPagina("cursus")} />
     </>
   );
 }

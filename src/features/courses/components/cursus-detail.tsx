@@ -1,6 +1,11 @@
 import Link from "next/link";
 
 import { Sectie } from "@/components/layout/sectie";
+import { CmsKnop } from "@/components/ui/cms-knop";
+import { cursusSleutel } from "@/content/vrije-blokken";
+import { VrijeZone, type Pagina } from "@/features/cms";
+import { veiligeLink } from "@/lib/knoplink";
+
 import { formateerPrijs } from "../prijs";
 import type { Cursus } from "../server/queries";
 
@@ -19,6 +24,8 @@ function Alineas({ tekst }: { tekst: string }) {
 }
 
 function Feit({ label, waarde }: { label: string; waarde: string }) {
+  if (!label.trim() || !waarde.trim()) return null;
+
   return (
     <div className="border-b border-line py-3 last:border-0">
       <dt className="text-sm text-muted">{label}</dt>
@@ -27,22 +34,60 @@ function Feit({ label, waarde }: { label: string; waarde: string }) {
   );
 }
 
-export function CursusDetail({ cursus }: { cursus: Cursus }) {
-  const overzichtPad =
-    cursus.type === "opleiding" ? "/opleidingen" : "/trainingen";
+/**
+ * De pagina van één opleiding of training.
+ *
+ * Wat er staat komt uit het aanbod: titel, verhaal, prijs, curriculum, de
+ * praktische gegevens. De woorden eromheen — "Voor wie", "Praktisch", "Twijfel
+ * je of dit past?" — stonden in de code en waren daarmee het enige stuk van de
+ * site dat de beheerder niet kon aanraken. Ze komen nu uit één set blokken
+ * onder de sleutel `cursus`, die op alle cursuspagina's tegelijk geldt. Per
+ * pagina zou betekenen dat het woord "Curriculum" op negen plekken bijgewerkt
+ * moet, en dan staat er na een half jaar op drie pagina's iets anders.
+ *
+ * Wat wél per cursus verschilt — een foto, een extra stuk tekst, een foto met
+ * de tekst eroverheen — staat in de eigen blokken van die ene cursus. Die
+ * hangen aan `cursus--<slug>` en zijn te vinden in de site-editor onder de
+ * naam van de opleiding of training zelf.
+ *
+ * Een label dat de beheerder leegmaakt laat de regel eromheen verdwijnen in
+ * plaats van een lege plek achter te laten; dat is hoe je hier iets weghaalt.
+ */
+export function CursusDetail({
+  cursus,
+  pagina,
+  concept = false,
+}: {
+  cursus: Cursus;
+  /** De vaste teksten; alle cursuspagina's delen ze. */
+  pagina: Pagina;
+  /** In de voorvertoning tellen ook de nog niet gepubliceerde blokken mee. */
+  concept?: boolean;
+}) {
+  const vrijeSleutel = cursusSleutel(cursus.slug);
+  const isOpleiding = cursus.type === "opleiding";
+  const overzichtPad = isOpleiding ? "/opleidingen" : "/trainingen";
+
+  const kruimel =
+    pagina.tekst(
+      isOpleiding ? "kop_kruimel_opleiding" : "kop_kruimel_training",
+    ) || (isOpleiding ? "Opleidingen" : "Trainingen");
+
   const totaalUren = cursus.curriculum.reduce(
     (totaal, module) => totaal + module.uren,
     0,
   );
 
+  const slotTitel = pagina.tekst("slot_titel");
+
   return (
     <>
       {/* Kop met prijs en inschrijfknop ------------------------------------- */}
-      <section className="border-b border-line bg-cream">
+      <section data-sectie="kop" className="border-b border-line bg-cream">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
           <nav aria-label="Kruimelpad" className="text-sm text-muted">
             <Link href={overzichtPad} className="underline hover:text-green">
-              {cursus.type === "opleiding" ? "Opleidingen" : "Trainingen"}
+              {kruimel}
             </Link>
           </nav>
 
@@ -58,42 +103,53 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
               <p className="font-serif text-3xl font-semibold text-green-dark">
                 {formateerPrijs(cursus.prijsCenten)}
               </p>
-              <p className="mt-1 text-sm text-muted">
-                Betalen in termijnen is mogelijk; vraag ernaar.
-              </p>
+              {pagina.tekst("kop_prijs_toelichting") ? (
+                <p className="mt-1 text-sm text-muted">
+                  {pagina.tekst("kop_prijs_toelichting")}
+                </p>
+              ) : null}
               <Link
                 href={`/inschrijven/${cursus.slug}`}
                 className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-lg bg-primary font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
               >
-                Inschrijven
+                {pagina.tekst("kop_inschrijf_knop") || "Inschrijven"}
               </Link>
-              <Link
-                href="/contact"
-                className="mt-3 inline-flex w-full justify-center text-sm text-muted underline hover:text-green"
-              >
-                Eerst een vraag stellen
-              </Link>
+              {pagina.tekst("kop_vraag_knop") ? (
+                <Link
+                  href={veiligeLink(pagina.tekst("kop_vraag_link"), "/contact")}
+                  className="mt-3 inline-flex w-full justify-center text-sm text-muted underline hover:text-green"
+                >
+                  {pagina.tekst("kop_vraag_knop")}
+                </Link>
+              ) : null}
             </div>
           </div>
         </div>
       </section>
 
-      <Sectie>
+      <VrijeZone pageKey={vrijeSleutel} sectie="kop" concept={concept} />
+
+      <Sectie sectie="verhaal">
         <div className="grid gap-12 lg:grid-cols-[1fr_20rem]">
           {/* Hoofdtekst --------------------------------------------------- */}
           <div className="max-w-2xl">
             <Alineas tekst={cursus.beschrijving} />
 
-            {cursus.voorWie ? (
+            {cursus.voorWie && pagina.tekst("verhaal_voorwie_titel") ? (
               <>
-                <h2 className="mt-12 text-2xl">Voor wie</h2>
+                <h2 className="mt-12 text-2xl">
+                  {pagina.tekst("verhaal_voorwie_titel")}
+                </h2>
                 <p className="mt-4">{cursus.voorWie}</p>
               </>
             ) : null}
 
-            {cursus.toelatingseisen ? (
+            {cursus.toelatingseisen &&
+            pagina.tekst("verhaal_toelating_titel") ? (
               <>
-                <h2 className="mt-12 text-2xl">Toelatingseisen</h2>
+                <h2 className="mt-12 text-2xl">
+                  {pagina.tekst("verhaal_toelating_titel")}
+                </h2>
                 <p className="mt-4">{cursus.toelatingseisen}</p>
               </>
             ) : null}
@@ -102,7 +158,11 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
 
             {cursus.curriculum.length > 0 ? (
               <>
-                <h2 className="mt-12 text-2xl">Curriculum</h2>
+                {pagina.tekst("verhaal_curriculum_titel") ? (
+                  <h2 className="mt-12 text-2xl">
+                    {pagina.tekst("verhaal_curriculum_titel")}
+                  </h2>
+                ) : null}
                 <div className="mt-5 space-y-3">
                   {cursus.curriculum.map((module) => (
                     <details
@@ -152,34 +212,42 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
           </div>
 
           {/* Praktische gegevens ------------------------------------------ */}
-          <aside className="lg:sticky lg:top-24 lg:self-start">
+          <aside
+            data-sectie="praktisch"
+            className="lg:sticky lg:top-24 lg:self-start"
+          >
             <div className="rounded-[var(--radius-card)] border border-line p-6">
-              <h2 className="text-xl">Praktisch</h2>
+              <h2 className="text-xl">{pagina.tekst("praktisch_titel")}</h2>
               <dl className="mt-4">
                 {totaalUren > 0 ? (
-                  <Feit label="Omvang" waarde={`${totaalUren} uur`} />
-                ) : null}
-                {cursus.studiebelasting ? (
                   <Feit
-                    label="Studiebelasting"
-                    waarde={cursus.studiebelasting}
+                    label={pagina.tekst("praktisch_omvang")}
+                    waarde={`${totaalUren} uur`}
                   />
-                ) : null}
-                {cursus.locatie ? (
-                  <Feit label="Locatie" waarde={cursus.locatie} />
-                ) : null}
-                {cursus.maxDeelnemers ? (
-                  <Feit
-                    label="Groepsgrootte"
-                    waarde={`maximaal ${cursus.maxDeelnemers} deelnemers`}
-                  />
-                ) : null}
-                {cursus.certificaat ? (
-                  <Feit label="Certificering" waarde={cursus.certificaat} />
                 ) : null}
                 <Feit
-                  label="Lesdata"
-                  waarde="Neem contact op voor de eerstvolgende startdatum."
+                  label={pagina.tekst("praktisch_studiebelasting")}
+                  waarde={cursus.studiebelasting ?? ""}
+                />
+                <Feit
+                  label={pagina.tekst("praktisch_locatie")}
+                  waarde={cursus.locatie ?? ""}
+                />
+                <Feit
+                  label={pagina.tekst("praktisch_groepsgrootte")}
+                  waarde={
+                    cursus.maxDeelnemers
+                      ? `maximaal ${cursus.maxDeelnemers} deelnemers`
+                      : ""
+                  }
+                />
+                <Feit
+                  label={pagina.tekst("praktisch_certificaat")}
+                  waarde={cursus.certificaat ?? ""}
+                />
+                <Feit
+                  label={pagina.tekst("praktisch_lesdata")}
+                  waarde={pagina.tekst("praktisch_lesdata_tekst")}
                 />
               </dl>
             </div>
@@ -187,21 +255,29 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
         </div>
       </Sectie>
 
-      <Sectie achtergrond="zand" lijnBoven>
-        <div className="max-w-2xl">
-          <h2 className="text-3xl">Twijfel je of dit past?</h2>
-          <p className="mt-4 text-lg text-muted">
-            Stuur ons een bericht. We denken mee over wat aansluit bij waar je
-            nu staat, zonder dat je ergens aan vastzit.
-          </p>
-          <Link
-            href="/contact"
-            className="mt-8 inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
-          >
-            Stel je vraag
-          </Link>
-        </div>
-      </Sectie>
+      <VrijeZone pageKey={vrijeSleutel} sectie="verhaal" concept={concept} />
+
+      {slotTitel ? (
+        <Sectie sectie="slot" achtergrond="zand" lijnBoven>
+          <div className="max-w-2xl">
+            <h2 className="text-3xl">{slotTitel}</h2>
+            {pagina.tekst("slot_tekst") ? (
+              <p className="mt-4 text-lg text-muted">
+                {pagina.tekst("slot_tekst")}
+              </p>
+            ) : null}
+            <CmsKnop
+              tekst={pagina.tekst("slot_knop")}
+              link={pagina.tekst("slot_link")}
+              terugval="/contact"
+              className="mt-8"
+            />
+          </div>
+        </Sectie>
+      ) : null}
+
+      {/* Wat de beheerder zelf onder deze ene cursus heeft gezet. */}
+      <VrijeZone pageKey={vrijeSleutel} concept={concept} />
     </>
   );
 }

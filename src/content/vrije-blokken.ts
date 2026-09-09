@@ -117,7 +117,33 @@ export const PAGINAS_MET_VRIJE_BLOKKEN = [
   "yogaopleiding-module-4",
 ] as const;
 
+/**
+ * De sleutel van de eigen zone onder één opleiding of training.
+ *
+ * Die pagina's staan niet in de lijst hierboven, want ze bestaan pas als er een
+ * cursus is aangemaakt: hun inhoud komt uit het aanbod en niet uit een vaste
+ * set blokken. Toch hoort er hetzelfde te kunnen als op elke andere pagina —
+ * een foto erbij, een stuk tekst, een foto met de tekst eroverheen.
+ *
+ * Vandaar een sleutel per cursus. Twee streepjes als scheiding en geen dubbele
+ * punt: `cursus:iets` wordt door een URL-parser als een eigen protocol gelezen,
+ * en dat is precies het soort verrassing dat je in een adres niet wilt.
+ */
+export const CURSUS_VOORVOEGSEL = "cursus--";
+
+export function cursusSleutel(slug: string): string {
+  return `${CURSUS_VOORVOEGSEL}${slug}`;
+}
+
+/** De slug uit zo'n sleutel, of null als het er geen is. */
+export function cursusSlug(pageKey: string): string | null {
+  if (!pageKey.startsWith(CURSUS_VOORVOEGSEL)) return null;
+  const slug = pageKey.slice(CURSUS_VOORVOEGSEL.length);
+  return slug === "" ? null : slug;
+}
+
 export function heeftVrijeBlokken(pageKey: string): boolean {
+  if (cursusSlug(pageKey) !== null) return true;
   return (PAGINAS_MET_VRIJE_BLOKKEN as readonly string[]).includes(pageKey);
 }
 

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { BLOKKEN } from "@/content/blokken";
+import { cursusSleutel } from "@/content/vrije-blokken";
 
 import { kanVoorvertonen } from "./server/queries";
 
@@ -33,10 +34,18 @@ describe("de voorvertoning kent elke bewerkbare pagina", () => {
     expect(kanVoorvertonen("footer")).toBe(true);
   });
 
+  it("kent de pagina van één cursus", () => {
+    // Die staat niet in BLOKKEN: hij bestaat pas als er een cursus is
+    // aangemaakt. De route controleert daarna zelf of de slug ergens bij hoort.
+    expect(kanVoorvertonen(cursusSleutel("hormoonyoga"))).toBe(true);
+  });
+
   it("weigert een sleutel die niet bestaat", () => {
     // Anders zou elk verzonnen adres een lege pagina opleveren in plaats van
     // een nette 404.
     expect(kanVoorvertonen("verzonnen-pagina")).toBe(false);
     expect(kanVoorvertonen("")).toBe(false);
+    // Het voorvoegsel zonder slug erachter hoort geen pagina te zijn.
+    expect(kanVoorvertonen("cursus--")).toBe(false);
   });
 });

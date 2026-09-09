@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { BLOKKEN } from "@/content/blokken";
+import { cursusSlug } from "@/content/vrije-blokken";
 import { schrijfAudit } from "@/features/audit";
 import { createClient } from "@/lib/supabase/server";
 import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
@@ -55,6 +56,22 @@ function verversPagina(pageKey: string) {
   revalidatePath(naam.pad);
   // De paginavoet staat op elke pagina, dus die verversen we in het geheel.
   if (pageKey === "footer") revalidatePath("/", "layout");
+
+  // De vaste teksten staan op élke opleidings- en trainingspagina; die zijn
+  // allemaal statisch gebouwd, dus één pad verversen zou de rest laten staan.
+  if (pageKey === "cursus") {
+    revalidatePath("/opleidingen/[slug]", "page");
+    revalidatePath("/trainingen/[slug]", "page");
+  }
+
+  // De eigen blokken van één cursus. Welke van de twee routes het is weet deze
+  // functie niet; een pad dat niet bestaat verversen kost niets.
+  const slug = cursusSlug(pageKey);
+  if (slug) {
+    revalidatePath(`/opleidingen/${slug}`);
+    revalidatePath(`/trainingen/${slug}`);
+  }
+
   revalidatePath(`/admin/site-editor/${pageKey}`);
 }
 
