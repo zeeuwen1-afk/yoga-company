@@ -98,6 +98,8 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
               </>
             ) : null}
 
+            <VerwantePaginas slug={cursus.slug} />
+
             {cursus.curriculum.length > 0 ? (
               <>
                 <h2 className="mt-12 text-2xl">Curriculum</h2>
@@ -201,5 +203,66 @@ export function CursusDetail({ cursus }: { cursus: Cursus }) {
         </div>
       </Sectie>
     </>
+  );
+}
+
+/**
+ * Verwijzingen naar pagina's die dezelfde stof beschrijven.
+ *
+ * Module 3 en 4 van de 200-uurs Yogaopleiding zijn dezelfde modules als niveau
+ * 1 en 2 van de Yin Yoga Specialist Opleiding. Die tekst hier nog een keer
+ * neerzetten zou betekenen dat hij op twee plekken moet worden bijgewerkt, en
+ * dan lopen ze na de eerste wijziging uit elkaar. Dus een link.
+ *
+ * Dit is structuur, geen inhoud: welke pagina's bij elkaar horen ligt vast in
+ * code, net als de opbouw van de rest van de site.
+ */
+const VERWANT: Record<
+  string,
+  {
+    titel: string;
+    regels: { href: string; label: string; toelichting: string }[];
+  }
+> = {
+  "200-uurs-yin-yoga-specialist": {
+    titel: "Ook onderdeel van de 200-uurs Yogaopleiding",
+    regels: [
+      {
+        href: "/opleidingen/200-uurs-yogaopleiding/module-3-yin-yoga-het-lichaam",
+        label: "Module 3 — Yin Yoga & het lichaam",
+        toelichting: "Dezelfde module als niveau 1 hierboven",
+      },
+      {
+        href: "/opleidingen/200-uurs-yogaopleiding/module-4-zenuwstelsel-meridianen",
+        label: "Module 4 — Zenuwstelsel & basis meridianen",
+        toelichting: "Dezelfde module als niveau 2 hierboven",
+      },
+    ],
+  },
+};
+
+function VerwantePaginas({ slug }: { slug: string }) {
+  const verwant = VERWANT[slug];
+  if (!verwant) return null;
+
+  return (
+    <div className="mt-12 rounded-[var(--radius-card)] border border-line bg-cream p-5">
+      <h2 className="text-lg">{verwant.titel}</h2>
+      <ul className="mt-3 space-y-2">
+        {verwant.regels.map((regel) => (
+          <li key={regel.href}>
+            <Link
+              href={regel.href}
+              className="font-semibold underline underline-offset-4 hover:no-underline"
+            >
+              {regel.label}
+            </Link>
+            <span className="block text-sm text-muted">
+              {regel.toelichting}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

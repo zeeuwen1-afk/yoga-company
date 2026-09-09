@@ -109,6 +109,12 @@ export const PAGINAS_MET_VRIJE_BLOKKEN = [
   "contact",
   "veiligheid",
   "voor-yogadocenten",
+  "yogaopleiding",
+  "yogaopleiding-gedeeld",
+  "yogaopleiding-module-1",
+  "yogaopleiding-module-2",
+  "yogaopleiding-module-3",
+  "yogaopleiding-module-4",
 ] as const;
 
 export function heeftVrijeBlokken(pageKey: string): boolean {

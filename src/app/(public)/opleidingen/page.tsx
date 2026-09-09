@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalPagina } from "@/features/cms";
 import { OverzichtInhoud } from "@/features/cms/paginas/eenvoudige-paginas";
-import { CursusRooster, haalAanbod } from "@/features/courses";
+import { haalAanbod } from "@/features/courses";
+import { Academie } from "@/features/courses/components/academie";
 
 export const revalidate = 300;
 
@@ -23,7 +24,7 @@ export default async function OpleidingenPage() {
   return (
     <>
       <OverzichtInhoud pagina={pagina} pageKey="opleidingen">
-        <CursusRooster cursussen={opleidingen} />
+        <Academie cursussen={opleidingen} />
       </OverzichtInhoud>
       <VrijeZone pageKey="opleidingen" />
     </>

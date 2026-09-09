@@ -26,7 +26,15 @@ export const BESTEMMINGEN: { groep: string; items: Bestemming[] }[] = [
   {
     groep: "Aanbod",
     items: [
-      { pad: "/opleidingen", label: "Opleidingen" },
+      { pad: "/opleidingen", label: "YogaCompany Academie" },
+      {
+        pad: "/opleidingen/200-uurs-yogaopleiding",
+        label: "200-uurs Yogaopleiding",
+      },
+      {
+        pad: "/opleidingen/200-uurs-yin-yoga-specialist",
+        label: "Yin Yoga Specialist Opleiding",
+      },
       { pad: "/trainingen", label: "Trainingen" },
       { pad: "/lessen", label: "Lessen" },
       { pad: "/lessen/tarieven", label: "Lessen, workshops en privéyoga" },

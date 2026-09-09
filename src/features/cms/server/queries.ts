@@ -22,6 +22,11 @@ import { createPublicClient } from "@/lib/supabase/public";
  */
 
 export type Pagina = {
+  /**
+   * De sleutel van deze pagina. Nodig om de eigen blokken van de beheerder op
+   * te halen zonder dat elke component hem apart doorgegeven krijgt.
+   */
+  pageKey: string;
   /** Platte tekst uit een blok. Leeg wanneer het blok niet bestaat. */
   tekst(blockKey: string): string;
   /** Richtext als HTML-string, bedoeld voor `dangerouslySetInnerHTML`. */
@@ -39,8 +44,9 @@ export type Pagina = {
   } | null;
 };
 
-function maakPagina(waarden: Map<string, BlokWaarde>): Pagina {
+function maakPagina(pageKey: string, waarden: Map<string, BlokWaarde>): Pagina {
   return {
+    pageKey,
     tekst(blockKey) {
       const waarde = waarden.get(blockKey);
       return waarde && "text" in waarde ? waarde.text : "";
@@ -96,7 +102,7 @@ export async function haalPagina(pageKey: string): Promise<Pagina> {
     // Database niet bereikbaar: de startinhoud blijft staan.
   }
 
-  return maakPagina(waarden);
+  return maakPagina(pageKey, waarden);
 }
 
 /**
@@ -134,7 +140,7 @@ export async function haalConceptPagina(pageKey: string): Promise<Pagina> {
     waarden.set(rij.block_key, waarde as unknown as BlokWaarde);
   }
 
-  return maakPagina(waarden);
+  return maakPagina(pageKey, waarden);
 }
 
 /** Alle pagina's waarvan blokken bestaan — voor de site-editor in Fase 6. */

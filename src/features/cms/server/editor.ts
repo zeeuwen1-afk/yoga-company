@@ -89,6 +89,32 @@ const PAGINA_NAMEN: Record<string, { titel: string; pad: string }> = {
     titel: "Voor yogadocenten",
     pad: "/voor-yogadocenten",
   },
+  yogaopleiding: {
+    titel: "200-uurs Yogaopleiding",
+    pad: "/opleidingen/200-uurs-yogaopleiding",
+  },
+  // Staat op alle vijf de opleidingspagina's. Het pad wijst naar de
+  // overzichtspagina, want daar zie je het effect van een wijziging het snelst.
+  "yogaopleiding-gedeeld": {
+    titel: "Yogaopleiding · prijzen en praktisch",
+    pad: "/opleidingen/200-uurs-yogaopleiding",
+  },
+  "yogaopleiding-module-1": {
+    titel: "Yogaopleiding · module 1 Hatha & Vinyasa",
+    pad: "/opleidingen/200-uurs-yogaopleiding/module-1-hatha-vinyasa",
+  },
+  "yogaopleiding-module-2": {
+    titel: "Yogaopleiding · module 2 Anatomie, Filosofie & Meditatie",
+    pad: "/opleidingen/200-uurs-yogaopleiding/module-2-anatomie-filosofie-meditatie",
+  },
+  "yogaopleiding-module-3": {
+    titel: "Yogaopleiding · module 3 Yin Yoga & het lichaam",
+    pad: "/opleidingen/200-uurs-yogaopleiding/module-3-yin-yoga-het-lichaam",
+  },
+  "yogaopleiding-module-4": {
+    titel: "Yogaopleiding · module 4 Zenuwstelsel & basis meridianen",
+    pad: "/opleidingen/200-uurs-yogaopleiding/module-4-zenuwstelsel-meridianen",
+  },
 };
 
 export function paginaNaam(pageKey: string) {

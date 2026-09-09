@@ -189,6 +189,8 @@ const MODULE_STUDIEBELASTING =
  * hier berekend, zodat hij nooit uit de pas kan lopen met de prijzen.
  */
 export const MODULE_PRIJS_CENTEN = 79500;
+/** De 200-uurs Yogaopleiding: per blok van 100 uur, en de hele opleiding. */
+export const BLOK_PRIJS_CENTEN = 149500;
 export const OPLEIDING_PRIJS_CENTEN = 279500;
 export const OPLEIDING_KORTING_CENTEN =
   MODULE_PRIJS_CENTEN * 4 - OPLEIDING_PRIJS_CENTEN;
@@ -257,6 +259,159 @@ const eerstJijLesmateriaal: ModuleSeed[] = Array.from(
   },
 );
 
+/**
+ * De 200-uurs Yogaopleiding: de producten waar de inschrijfknoppen heen wijzen.
+ *
+ * De pagina's zelf zijn CMS-pagina's onder /opleidingen/200-uurs-yogaopleiding;
+ * dit zijn alleen de dingen die je kunt kópen. Vandaar de korte beschrijvingen:
+ * wie hier komt heeft de pagina al gelezen.
+ *
+ * Module 3 en 4 staan hier bewust niet bij. Dat zijn dezelfde modules als
+ * niveau 1 en 2 van de Yin Yoga Specialist Opleiding, en die bestaan al. Twee
+ * producten voor één module zou de administratie laten liegen over wat er is
+ * verkocht, en de deelnemer twee keer hetzelfde certificaat opleveren.
+ */
+const yogaopleidingProducten: CursusSeed[] = [
+  {
+    type: "opleiding",
+    titel: "200-uurs Yogaopleiding",
+    slug: "200-uurs-yogaopleiding",
+    samenvatting:
+      "Vier modules van 50 uur: Hatha en Vinyasa, anatomie en filosofie, Yin Yoga en het zenuwstelsel. Inclusief praktijkexamen en het diploma Yogadocent 200 uur.",
+    beschrijving:
+      "De volledige 200-uurs Yogaopleiding: alle vier de modules, het praktijkexamen en de eindopdracht.\n\nJe studeert af als docent die zowel een krachtige Vinyasa-flow kan geven als een verstilde Yin-les kan begeleiden.\n\nDe volledige opleiding kost € 2.795 in plaats van 4 × € 795; je bespaart € 385.",
+    voorWie:
+      "Toegewijde beoefenaars die docent willen worden, en yogadocenten die hun basis willen verbreden met de stille kant van yoga.",
+    toelatingseisen:
+      "± 1 jaar regelmatige yoga-ervaring aanbevolen. Een eerdere docentenopleiding is niet nodig.",
+    studiebelasting: "200 uur, verdeeld over vier modules van 50 uur",
+    locatie: MODULE_LOCATIE,
+    maxDeelnemers: 14,
+    certificaat:
+      "Certificaat per module; diploma Yogadocent 200 uur na alle vier de modules en het praktijkexamen",
+    prijsCenten: OPLEIDING_PRIJS_CENTEN,
+    digitaleContent: false,
+    sort: 2,
+  },
+  {
+    type: "opleiding",
+    titel: "Module 1 — Hatha & Vinyasa",
+    slug: "yogaopleiding-module-1-hatha-vinyasa",
+    samenvatting:
+      "50 uur · de actieve basis van de 200-uurs Yogaopleiding. Houdingen en uitlijning, vloeiende sequenties en je eerste les.",
+    beschrijving:
+      "Module 1 van de 200-uurs Yogaopleiding, ook los te volgen.\n\nJe verdiept je eigen praktijk, leert de belangrijkste houdingen en uitlijningsprincipes van Hatha Yoga, bouwt vloeiende Vinyasa-sequenties en zet je eerste stappen als docent.\n\nJe ontvangt het certificaat Hatha & Vinyasa — 50 uur.",
+    voorWie:
+      "Iedereen met regelmatige yoga-ervaring, en docenten die hun actieve praktijk willen aanscherpen.",
+    toelatingseisen: "Een vooropleiding is niet nodig.",
+    studiebelasting: MODULE_STUDIEBELASTING,
+    locatie: MODULE_LOCATIE,
+    maxDeelnemers: 14,
+    certificaat: "Certificaat Hatha & Vinyasa — 50 uur",
+    prijsCenten: MODULE_PRIJS_CENTEN,
+    digitaleContent: false,
+    sort: 20,
+  },
+  {
+    type: "opleiding",
+    titel: "Module 2 — Anatomie, Filosofie & Meditatie",
+    slug: "yogaopleiding-module-2-anatomie-filosofie-meditatie",
+    samenvatting:
+      "50 uur · het fundament onder de praktijk. Anatomie om veilig les te geven, de filosofie van yoga en het begeleiden van meditatie en pranayama.",
+    beschrijving:
+      "Module 2 van de 200-uurs Yogaopleiding, ook los te volgen.\n\nHoe het lichaam werkt, waar yoga vandaan komt en hoe je de stille technieken zelf beoefent en begeleidt.\n\nJe ontvangt het certificaat Anatomie, Filosofie & Meditatie — 50 uur.",
+    voorWie:
+      "Iedereen met regelmatige yoga-ervaring, en docenten die hun anatomische en filosofische basis willen versterken.",
+    toelatingseisen: "Een vooropleiding is niet nodig.",
+    studiebelasting: MODULE_STUDIEBELASTING,
+    locatie: MODULE_LOCATIE,
+    maxDeelnemers: 14,
+    certificaat: "Certificaat Anatomie, Filosofie & Meditatie — 50 uur",
+    prijsCenten: MODULE_PRIJS_CENTEN,
+    digitaleContent: false,
+    sort: 21,
+  },
+  {
+    type: "opleiding",
+    titel: "Blok A — De actieve basis",
+    slug: "yogaopleiding-blok-a",
+    samenvatting:
+      "100 uur · module 1 en 2 samen. € 1.495 in plaats van € 1.590; je bespaart € 95.",
+    beschrijving:
+      "Blok A van de 200-uurs Yogaopleiding: module 1 (Hatha & Vinyasa) en module 2 (Anatomie, Filosofie & Meditatie) samen, 100 uur.\n\nJe ontvangt het certificaat van beide modules.",
+    voorWie:
+      "Wie de actieve basis in één keer wil doen, zonder zich meteen aan de volledige opleiding te binden.",
+    toelatingseisen: "Een vooropleiding is niet nodig.",
+    studiebelasting: "100 uur, verdeeld over twee modules van 50 uur",
+    locatie: MODULE_LOCATIE,
+    maxDeelnemers: 14,
+    certificaat: "Certificaat per module",
+    prijsCenten: BLOK_PRIJS_CENTEN,
+    digitaleContent: false,
+    sort: 22,
+  },
+  {
+    type: "opleiding",
+    titel: "Blok B — De stille verdieping",
+    slug: "yogaopleiding-blok-b",
+    samenvatting:
+      "100 uur · module 3 en 4 samen. € 1.495 in plaats van € 1.590; je bespaart € 95.",
+    beschrijving:
+      "Blok B van de 200-uurs Yogaopleiding: module 3 (Yin Yoga & het lichaam) en module 4 (Zenuwstelsel & basis meridianen) samen, 100 uur.\n\nDeze twee modules zijn identiek aan niveau 1 en 2 van de Yin Yoga Specialist Opleiding en tellen daarvoor mee.",
+    voorWie:
+      "Wie de stille kant van yoga in één keer wil doen, en docenten die Yin aan hun aanbod willen toevoegen.",
+    toelatingseisen:
+      "Na module 1 + 2, óf rechtstreeks voor ervaren beoefenaars en yogadocenten (na intake).",
+    studiebelasting: "100 uur, verdeeld over twee modules van 50 uur",
+    locatie: MODULE_LOCATIE,
+    maxDeelnemers: 14,
+    certificaat: "Certificaat per module",
+    prijsCenten: BLOK_PRIJS_CENTEN,
+    digitaleContent: false,
+    sort: 23,
+  },
+];
+
+/**
+ * De YogaCompany Academie: welke opleidingen er zijn, en welke losse modules en
+ * blokken daaronder vallen.
+ *
+ * Zonder deze indeling wordt het overzicht een lijst van tien losse kaarten
+ * waarin een module van 50 uur er net zo uitziet als een opleiding van 200 uur.
+ * De bezoeker moet in één blik zien wat de opleidingen zijn en wat de losse
+ * onderdelen ervan zijn.
+ *
+ * Wat hier niet in staat verschijnt gewoon onderaan als los aanbod, dus een
+ * nieuwe cursus raakt nooit zoek.
+ */
+export const ACADEMIE: { opleiding: string; onderdelen: string[] }[] = [
+  {
+    opleiding: "200-uurs-yogaopleiding",
+    onderdelen: [
+      "yogaopleiding-module-1-hatha-vinyasa",
+      "yogaopleiding-module-2-anatomie-filosofie-meditatie",
+      "yogaopleiding-blok-a",
+      "yin-niveau-1-basis",
+      "yin-niveau-2-zenuwstelsel-meridiaanleer",
+      "yogaopleiding-blok-b",
+    ],
+  },
+  {
+    opleiding: "200-uurs-yin-yoga-specialist",
+    onderdelen: [
+      "yin-niveau-1-basis",
+      "yin-niveau-2-zenuwstelsel-meridiaanleer",
+      "yin-niveau-3-chinese-geneeskunde",
+      "yin-niveau-4-herstel-revalidatie",
+    ],
+  },
+];
+
+/** Het pad naar de eigen pagina van een opleiding, als die er een heeft. */
+export const EIGEN_PAGINA: Record<string, string> = {
+  "200-uurs-yogaopleiding": "/opleidingen/200-uurs-yogaopleiding",
+};
+
 export const AANBOD: CursusSeed[] = [
   {
     type: "opleiding",
@@ -281,6 +436,7 @@ export const AANBOD: CursusSeed[] = [
     sort: 1,
   },
   ...losseModules,
+  ...yogaopleidingProducten,
   {
     type: "training",
     titel: "Eerst Jij: 8-weeks online herstelprogramma",

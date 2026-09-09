@@ -179,6 +179,167 @@ insert into courses (
   study_load_text, location, max_participants, certificate_text,
   price_cents, has_digital_content, is_active, sort
 ) values (
+  'opleiding', '200-uurs Yogaopleiding', '200-uurs-yogaopleiding',
+  'Vier modules van 50 uur: Hatha en Vinyasa, anatomie en filosofie, Yin Yoga en het zenuwstelsel. Inclusief praktijkexamen en het diploma Yogadocent 200 uur.', 'De volledige 200-uurs Yogaopleiding: alle vier de modules, het praktijkexamen en de eindopdracht.
+
+Je studeert af als docent die zowel een krachtige Vinyasa-flow kan geven als een verstilde Yin-les kan begeleiden.
+
+De volledige opleiding kost € 2.795 in plaats van 4 × € 795; je bespaart € 385.',
+  'Toegewijde beoefenaars die docent willen worden, en yogadocenten die hun basis willen verbreden met de stille kant van yoga.', '± 1 jaar regelmatige yoga-ervaring aanbevolen. Een eerdere docentenopleiding is niet nodig.',
+  null,
+  '200 uur, verdeeld over vier modules van 50 uur', 'Studio van YogaCompany (adres volgt)',
+  14, 'Certificaat per module; diploma Yogadocent 200 uur na alle vier de modules en het praktijkexamen',
+  279500, false, true, 2
+)
+on conflict (slug) do update set
+  type = excluded.type,
+  title = excluded.title,
+  summary = excluded.summary,
+  description = excluded.description,
+  audience = excluded.audience,
+  requirements = excluded.requirements,
+  curriculum = excluded.curriculum,
+  study_load_text = excluded.study_load_text,
+  location = excluded.location,
+  max_participants = excluded.max_participants,
+  certificate_text = excluded.certificate_text,
+  price_cents = excluded.price_cents,
+  has_digital_content = excluded.has_digital_content,
+  sort = excluded.sort;
+
+insert into courses (
+  type, title, slug, summary, description, audience, requirements, curriculum,
+  study_load_text, location, max_participants, certificate_text,
+  price_cents, has_digital_content, is_active, sort
+) values (
+  'opleiding', 'Module 1 — Hatha & Vinyasa', 'yogaopleiding-module-1-hatha-vinyasa',
+  '50 uur · de actieve basis van de 200-uurs Yogaopleiding. Houdingen en uitlijning, vloeiende sequenties en je eerste les.', 'Module 1 van de 200-uurs Yogaopleiding, ook los te volgen.
+
+Je verdiept je eigen praktijk, leert de belangrijkste houdingen en uitlijningsprincipes van Hatha Yoga, bouwt vloeiende Vinyasa-sequenties en zet je eerste stappen als docent.
+
+Je ontvangt het certificaat Hatha & Vinyasa — 50 uur.',
+  'Iedereen met regelmatige yoga-ervaring, en docenten die hun actieve praktijk willen aanscherpen.', 'Een vooropleiding is niet nodig.',
+  null,
+  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
+  14, 'Certificaat Hatha & Vinyasa — 50 uur',
+  79500, false, true, 20
+)
+on conflict (slug) do update set
+  type = excluded.type,
+  title = excluded.title,
+  summary = excluded.summary,
+  description = excluded.description,
+  audience = excluded.audience,
+  requirements = excluded.requirements,
+  curriculum = excluded.curriculum,
+  study_load_text = excluded.study_load_text,
+  location = excluded.location,
+  max_participants = excluded.max_participants,
+  certificate_text = excluded.certificate_text,
+  price_cents = excluded.price_cents,
+  has_digital_content = excluded.has_digital_content,
+  sort = excluded.sort;
+
+insert into courses (
+  type, title, slug, summary, description, audience, requirements, curriculum,
+  study_load_text, location, max_participants, certificate_text,
+  price_cents, has_digital_content, is_active, sort
+) values (
+  'opleiding', 'Module 2 — Anatomie, Filosofie & Meditatie', 'yogaopleiding-module-2-anatomie-filosofie-meditatie',
+  '50 uur · het fundament onder de praktijk. Anatomie om veilig les te geven, de filosofie van yoga en het begeleiden van meditatie en pranayama.', 'Module 2 van de 200-uurs Yogaopleiding, ook los te volgen.
+
+Hoe het lichaam werkt, waar yoga vandaan komt en hoe je de stille technieken zelf beoefent en begeleidt.
+
+Je ontvangt het certificaat Anatomie, Filosofie & Meditatie — 50 uur.',
+  'Iedereen met regelmatige yoga-ervaring, en docenten die hun anatomische en filosofische basis willen versterken.', 'Een vooropleiding is niet nodig.',
+  null,
+  'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
+  14, 'Certificaat Anatomie, Filosofie & Meditatie — 50 uur',
+  79500, false, true, 21
+)
+on conflict (slug) do update set
+  type = excluded.type,
+  title = excluded.title,
+  summary = excluded.summary,
+  description = excluded.description,
+  audience = excluded.audience,
+  requirements = excluded.requirements,
+  curriculum = excluded.curriculum,
+  study_load_text = excluded.study_load_text,
+  location = excluded.location,
+  max_participants = excluded.max_participants,
+  certificate_text = excluded.certificate_text,
+  price_cents = excluded.price_cents,
+  has_digital_content = excluded.has_digital_content,
+  sort = excluded.sort;
+
+insert into courses (
+  type, title, slug, summary, description, audience, requirements, curriculum,
+  study_load_text, location, max_participants, certificate_text,
+  price_cents, has_digital_content, is_active, sort
+) values (
+  'opleiding', 'Blok A — De actieve basis', 'yogaopleiding-blok-a',
+  '100 uur · module 1 en 2 samen. € 1.495 in plaats van € 1.590; je bespaart € 95.', 'Blok A van de 200-uurs Yogaopleiding: module 1 (Hatha & Vinyasa) en module 2 (Anatomie, Filosofie & Meditatie) samen, 100 uur.
+
+Je ontvangt het certificaat van beide modules.',
+  'Wie de actieve basis in één keer wil doen, zonder zich meteen aan de volledige opleiding te binden.', 'Een vooropleiding is niet nodig.',
+  null,
+  '100 uur, verdeeld over twee modules van 50 uur', 'Studio van YogaCompany (adres volgt)',
+  14, 'Certificaat per module',
+  149500, false, true, 22
+)
+on conflict (slug) do update set
+  type = excluded.type,
+  title = excluded.title,
+  summary = excluded.summary,
+  description = excluded.description,
+  audience = excluded.audience,
+  requirements = excluded.requirements,
+  curriculum = excluded.curriculum,
+  study_load_text = excluded.study_load_text,
+  location = excluded.location,
+  max_participants = excluded.max_participants,
+  certificate_text = excluded.certificate_text,
+  price_cents = excluded.price_cents,
+  has_digital_content = excluded.has_digital_content,
+  sort = excluded.sort;
+
+insert into courses (
+  type, title, slug, summary, description, audience, requirements, curriculum,
+  study_load_text, location, max_participants, certificate_text,
+  price_cents, has_digital_content, is_active, sort
+) values (
+  'opleiding', 'Blok B — De stille verdieping', 'yogaopleiding-blok-b',
+  '100 uur · module 3 en 4 samen. € 1.495 in plaats van € 1.590; je bespaart € 95.', 'Blok B van de 200-uurs Yogaopleiding: module 3 (Yin Yoga & het lichaam) en module 4 (Zenuwstelsel & basis meridianen) samen, 100 uur.
+
+Deze twee modules zijn identiek aan niveau 1 en 2 van de Yin Yoga Specialist Opleiding en tellen daarvoor mee.',
+  'Wie de stille kant van yoga in één keer wil doen, en docenten die Yin aan hun aanbod willen toevoegen.', 'Na module 1 + 2, óf rechtstreeks voor ervaren beoefenaars en yogadocenten (na intake).',
+  null,
+  '100 uur, verdeeld over twee modules van 50 uur', 'Studio van YogaCompany (adres volgt)',
+  14, 'Certificaat per module',
+  149500, false, true, 23
+)
+on conflict (slug) do update set
+  type = excluded.type,
+  title = excluded.title,
+  summary = excluded.summary,
+  description = excluded.description,
+  audience = excluded.audience,
+  requirements = excluded.requirements,
+  curriculum = excluded.curriculum,
+  study_load_text = excluded.study_load_text,
+  location = excluded.location,
+  max_participants = excluded.max_participants,
+  certificate_text = excluded.certificate_text,
+  price_cents = excluded.price_cents,
+  has_digital_content = excluded.has_digital_content,
+  sort = excluded.sort;
+
+insert into courses (
+  type, title, slug, summary, description, audience, requirements, curriculum,
+  study_load_text, location, max_participants, certificate_text,
+  price_cents, has_digital_content, is_active, sort
+) values (
   'training', 'Eerst Jij: 8-weeks online herstelprogramma', 'eerst-jij',
   'Acht weken online, in je eigen tempo, met begeleiding. Voor wie leeg is en weer wil opbouwen: stap voor stap, zonder te forceren.', 'Eerst Jij is een programma van acht weken voor mensen die op zijn. Uitgeput, oververmoeid, of hersteld verklaard maar nog lang niet de oude.
 
@@ -1507,7 +1668,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('opleidingen', 'titel', 'text', '{"text":"Opleidingen"}'::jsonb)
+values ('opleidingen', 'titel', 'text', '{"text":"YogaCompany Academie"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1928,6 +2089,648 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('voor-yogadocenten', 'voorwaarden', 'richtext', '{"html":"\n<ul>\n<li>Je geeft les bij een aangesloten studio en huurt daar zelf je plek in het rooster.</li>\n<li>Je bent ingeschreven bij de Kamer van Koophandel en factureert met btw.</li>\n<li>Je vult je factuurgegevens in de portal in: naam, adres, KvK, btw-nummer en de nummerreeks die je zelf gebruikt.</li>\n<li>Je houdt je aan de prijzen van de studio. Die staan vast; daar valt niet mee te schuiven.</li>\n<li>Je neemt een abonnement op de docentenlaag. Wat dat kost hoor je bij de aansluiting.</li>\n</ul>\n<p>Er komt een verwerkersovereenkomst bij: als een klant van jou bij een collega les volgt, deel je noodzakelijkerwijs zijn naam. Dat hoort op papier te staan, en het staat ook in de privacyverklaring.</p>\n"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'titel', 'text', '{"text":"200-uurs Yogaopleiding"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'subtitel', 'text', '{"text":"Eén opleiding, twee kanten van yoga: kracht én stilte."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'inleiding', 'text', '{"text":"Word yogadocent met een basis die verder gaat dan de flow. In deze opleiding leer je van het begin af aan zowel de dynamische kant van yoga — Hatha en Vinyasa — als de stille kant: Yin Yoga, het zenuwstelsel en de kunst van vertragen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'kenmerken', 'text', '{"text":"Bewegen. Begrijpen. Vertragen. Reguleren."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'knop', 'text', '{"text":"Bekijk de modules"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'knop_link', 'text', '{"text":"#modules"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'knop_twee', 'text', '{"text":"Schrijf je in"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'knop_twee_link', 'text', '{"text":"/inschrijven/200-uurs-yogaopleiding"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'beeld', 'image', '{"url":"","alt":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'introductie_titel', 'text', '{"text":"Over de opleiding"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'introductie_tekst', 'richtext', '{"html":"<p>De 200-uurs Yogaopleiding van YogaCompany is een complete basisopleiding tot yogadocent. De meeste basisopleidingen behandelen alleen de actieve stijlen. Hier studeer je af als docent die een krachtige Vinyasa-flow kan geven én een verstilde Yin-les kan begeleiden. Precies de combinatie waar studio''s en deelnemers steeds vaker om vragen.</p>\n<p>De opleiding bestaat uit vier modules van 50 uur, opgebouwd als een doorlopende leerlijn. Iedere module is ook los te volgen en wordt afgerond met een eigen certificaat.</p>\n<p><strong>Je ontwikkelt kennis en vaardigheden in:</strong></p>\n<ul>\n<li>Hatha Yoga en Vinyasa</li>\n<li>Ademhaling en pranayama</li>\n<li>Meditatie</li>\n<li>Anatomie en fysiologie</li>\n<li>Yogafilosofie en ethiek</li>\n<li>Yin Yoga en de functionele benadering van houdingen</li>\n<li>Het zenuwstelsel, stress en ontspanning</li>\n<li>Basisprincipes van Chinese Geneeskunde en de meridianen</li>\n<li>Sequencing, didactiek en lesgeven</li>\n</ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'modules_titel', 'text', '{"text":"De vier modules"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'modules', 'richtext', '{"items":[{"nummer":"Module 1","titel":"Bewegen · Hatha & Vinyasa","uren":"50 uur","tekst":"Het actieve fundament. Je verdiept je eigen praktijk, leert houdingen en uitlijning, bouwt vloeiende sequenties en geeft je eerste les.","knop":"Lees meer","href":"/opleidingen/200-uurs-yogaopleiding/module-1-hatha-vinyasa"},{"nummer":"Module 2","titel":"Begrijpen · Anatomie, Filosofie & Meditatie","uren":"50 uur","tekst":"De kennis onder de praktijk. Hoe het lichaam werkt, waar yoga vandaan komt en hoe je meditatie en pranayama zelf beoefent en begeleidt.","knop":"Lees meer","href":"/opleidingen/200-uurs-yogaopleiding/module-2-anatomie-filosofie-meditatie"},{"nummer":"Module 3","titel":"Vertragen · Yin Yoga & het lichaam","uren":"50 uur","tekst":"Van doen naar voelen. De filosofie en anatomie van Yin Yoga, de belangrijkste houdingen en het geven van een eigen Yin-les.","knop":"Lees meer","href":"/opleidingen/200-uurs-yogaopleiding/module-3-yin-yoga-het-lichaam"},{"nummer":"Module 4","titel":"Reguleren · Zenuwstelsel & basis meridianen","uren":"50 uur","tekst":"Alles komt samen. Het zenuwstelsel, stress en ontspanning, de basis van Chinese Geneeskunde en de 12 meridianen — en het praktijkexamen.","knop":"Lees meer","href":"/opleidingen/200-uurs-yogaopleiding/module-4-zenuwstelsel-meridianen"}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'manieren_titel', 'text', '{"text":"Drie manieren om te volgen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'manieren_tekst', 'richtext', '{"html":"<ul>\n<li><strong>Per module</strong> — iedere module van 50 uur is los te boeken en wordt afgesloten met een certificaat.</li>\n<li><strong>Per blok</strong> — Blok A (module 1 + 2, de actieve basis) en Blok B (module 3 + 4, de stille verdieping) zijn elk 100 uur en los van elkaar te volgen.</li>\n<li><strong>De volledige opleiding</strong> — wie alle vier de modules, het praktijkexamen en de eindopdracht afrondt, ontvangt het diploma Yogadocent 200 uur.</li>\n</ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'voorwie_titel', 'text', '{"text":"Voor wie"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'voorwie_tekst', 'richtext', '{"html":"<p>Voor toegewijde beoefenaars die docent willen worden (± 1 jaar regelmatige yoga-ervaring aanbevolen) en voor yogadocenten die hun basis willen verbreden met de stille kant van yoga. Een eerdere docentenopleiding is niet nodig.</p>\n<p>Twijfel je of je instapniveau past? Neem contact op — we denken graag mee.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'diploma_titel', 'text', '{"text":"Diploma & certificaten"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'diploma_tekst', 'richtext', '{"html":"<p>Je studeert af met het diploma <strong>Yogadocent 200 uur — YogaCompany</strong>. Per afgeronde module ontvang je een certificaat met de modulenaam en het aantal uren.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'doorstroom_titel', 'text', '{"text":"Na de opleiding: doorstroom naar Yin Yoga Specialist"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'doorstroom_tekst', 'richtext', '{"html":"<p>Met module 3 en 4 heb je de eerste helft van de Yin Yoga-leerlijn al in huis. Wie verder wil, volgt daarna de twee verdiepingsmodules — Chinese Geneeskunde, elementen &amp; orgaanklok en Yin Yoga voor herstel &amp; revalidatie — en behaalt het diploma Yin Yoga Specialist.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'doorstroom_knop', 'text', '{"text":"Meer over de Yin Yoga Specialist Opleiding"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding', 'doorstroom_link', 'text', '{"text":"/opleidingen/200-uurs-yin-yoga-specialist"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-gedeeld', 'prijzen_titel', 'text', '{"text":"Prijzen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-gedeeld', 'prijzen', 'richtext', '{"items":[{"variant":"Module 1 — Hatha & Vinyasa","inhoud":"50 uur · de actieve basis","prijs":"€ 795"},{"variant":"Module 2 — Anatomie, Filosofie & Meditatie","inhoud":"50 uur · het fundament","prijs":"€ 795"},{"variant":"Blok A — De actieve basis","inhoud":"100 uur · module 1 + 2","prijs":"€ 1.495"},{"variant":"Module 3 — Yin Yoga & het lichaam","inhoud":"50 uur · van doen naar voelen","prijs":"€ 795"},{"variant":"Module 4 — Zenuwstelsel & basis meridianen","inhoud":"50 uur · verdieping & integratie","prijs":"€ 795"},{"variant":"Blok B — De stille verdieping","inhoud":"100 uur · module 3 + 4","prijs":"€ 1.495"},{"variant":"Volledige opleiding","inhoud":"200 uur · incl. examen en diploma","prijs":"€ 2.795"}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-gedeeld', 'prijzen_voet', 'richtext', '{"html":"<ul>\n<li>Volledige opleiding: € 2.795 in plaats van 4 × € 795 — je bespaart € 385.</li>\n<li>Per blok: € 1.495 in plaats van € 1.590 — je bespaart € 95 per blok.</li>\n<li>Inclusief syllabus, toegang tot de online leeromgeving, beoordeling van opdrachten en het certificaat per module.</li>\n<li>Gespreid betalen is in overleg mogelijk.</li>\n</ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-gedeeld', 'praktisch_titel', 'text', '{"text":"Praktisch"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-gedeeld', 'praktisch_tekst', 'richtext', '{"html":"<ul>\n<li><strong>Locatie &amp; groep</strong> — fysiek, in een bewust kleine groep van maximaal 14 deelnemers.</li>\n<li><strong>Per module</strong> — 5 lesdagen op locatie (09:30–17:30) · 2 live online avondsessies · online leeromgeving met videolessen en opdrachten. Samen 50 begeleide opleidingsuren.</li>\n<li><strong>Ritme</strong> — 5 lesdagen verspreid over ± 6 weken, zodat er ruimte is voor eigen beoefening tussen de lesdagen (reken op ± 5 uur per module).</li>\n<li><strong>Lesmateriaal</strong> — per module een uitgebreide syllabus en toegang tot de online leeromgeving.</li>\n<li><strong>Data</strong> — de actuele lesdata vind je hieronder / op de inschrijfpagina. Praktische informatie en de locatie ontvang je bij inschrijving.</li>\n</ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-gedeeld', 'inschrijven_titel', 'text', '{"text":"Zo schrijf je je in"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-gedeeld', 'inschrijven_tekst', 'richtext', '{"html":"<ol>\n<li>Kies je module, je blok of de volledige opleiding en meld je aan.</li>\n<li>Je ontvangt een bevestiging met de lesdata, de locatie en praktische informatie.</li>\n<li>Na betaling is je plek definitief. Een week voor de start ontvang je de syllabus en toegang tot de online leeromgeving.</li>\n</ol>\n<p>Vragen over je instapniveau of de opbouw? Mail naar info@yogacompany.eu.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-gedeeld', 'disclaimer', 'text', '{"text":"Prijzen zijn vrijgesteld van btw dan wel inclusief btw, afhankelijk van de btw-status van het opleidingsaanbod. Het diploma Yogadocent 200 uur is een eigen diploma van YogaCompany. Aan deze informatie kunnen geen rechten worden ontleend."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'titel', 'text', '{"text":"Module 1 — Hatha & Vinyasa"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'label', 'text', '{"text":"Bewegen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'inleiding', 'text', '{"text":"50 uur · Blok A · de actieve basis · los te volgen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'beeld', 'image', '{"url":"","alt":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'verhaal', 'richtext', '{"html":"<p>Module 1 is het actieve fundament van de opleiding — en een complete training op zichzelf voor wie de dynamische stijlen echt wil begrijpen. Je verdiept je eigen praktijk, leert de belangrijkste houdingen en uitlijningsprincipes van Hatha Yoga, bouwt vloeiende Vinyasa-sequenties en zet je eerste stappen als docent.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'leert_titel', 'text', '{"text":"Wat je leert"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'leert_tekst', 'richtext', '{"html":"<ul>\n<li>Je beheerst de belangrijkste houdingsfamilies van Hatha Yoga en weet waarom uitlijning werkt zoals het werkt.</li>\n<li>Je verbindt adem en beweging tot een logische, vloeiende flow.</li>\n<li>Je bouwt een actieve les op van aankomen tot eindontspanning.</li>\n<li>Je geeft instructie met een heldere stem en een veilig oog voor de groep.</li>\n</ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'programma_titel', 'text', '{"text":"Programma"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'programma_tekst', 'richtext', '{"html":"<ol>\n<li><strong>Hatha Yoga — de houdingen.</strong> Staande houdingen en balans, zit- en liggende houdingen, voorwaartse en achterwaartse buigingen, twists en omkeringen op basisniveau. Per houdingsfamilie: uitlijning, functie, veelvoorkomende fouten, opbouw en afbouw, variaties en props.</li>\n<li><strong>Vinyasa — adem en beweging.</strong> Zonnegroet A en B, overgangen en transities, ritme en tempo, en het logisch opbouwen van een flow.</li>\n<li><strong>Ademhaling &amp; pranayama (basis).</strong> Adembewustzijn, ujjayi en de verhouding tussen adem en beweging: de adem als rode draad van de les.</li>\n<li><strong>Sequencing van een actieve les.</strong> De lesboog — aankomen, opwarmen, opbouwen, piek, afbouwen, eindontspanning. Thema''s, timing en aanpassen aan verschillende niveaus.</li>\n<li><strong>Didactiek &amp; stem.</strong> Heldere instructietaal, demonstreren en spiegelen, observeren, ruimtegebruik, veiligheid en het begeleiden van verschillende lichamen in één groep.</li>\n<li><strong>Practicum.</strong> Micro-teaching in kleine groepen: zelf lesgeven, feedback ontvangen en feedback geven.</li>\n</ol>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'lesdagen_titel', 'text', '{"text":"Lesdagen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'lesdagen_tekst', 'richtext', '{"html":"<p>Dag 1 fundament &amp; staande houdingen · Dag 2 Hatha verdiept (balans, buigingen, twists) &amp; ujjayi · Dag 3 Vinyasa &amp; transities · Dag 4 sequencing &amp; didactiek · Dag 5 practicum &amp; afronding.</p>\n<p>Avondsessies (live online): lesanalyse &amp; vragen · sequencing-clinic met feedback op je eerste lesplan.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'afloop_titel', 'text', '{"text":"Na module 1"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'afloop_tekst', 'richtext', '{"html":"<p>Je beoefent Hatha en Vinyasa met begrip van uitlijning en geeft zelfstandig een eenvoudige actieve les van 60 minuten. Je ontvangt het certificaat <em>Hatha &amp; Vinyasa — 50 uur</em>.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'toelating_titel', 'text', '{"text":"Voor wie & toelating"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'toelating_tekst', 'text', '{"text":"Open voor iedereen met regelmatige yoga-ervaring; een vooropleiding is niet nodig. Ook geschikt voor docenten die hun actieve praktijk willen aanscherpen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'prijs', 'text', '{"text":"€ 795"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'prijs_knop', 'text', '{"text":"Schrijf je in voor module 1"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'prijs_link', 'text', '{"text":"/inschrijven/yogaopleiding-module-1-hatha-vinyasa"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-1', 'prijs_voet', 'text', '{"text":"Combineer met module 2 als Blok A (100 uur) voor € 1.495."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'titel', 'text', '{"text":"Module 2 — Anatomie, Filosofie & Meditatie"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'label', 'text', '{"text":"Begrijpen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'inleiding', 'text', '{"text":"50 uur · Blok A · het fundament onder de praktijk · los te volgen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'beeld', 'image', '{"url":"","alt":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'verhaal', 'richtext', '{"html":"<p>Module 2 legt de kennis onder de praktijk: hoe het lichaam werkt, waar yoga vandaan komt en hoe je de stille technieken — meditatie en pranayama — zelf beoefent en begeleidt. Een module voor wie yoga niet alleen wil doen, maar ook wil begrijpen.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'leert_titel', 'text', '{"text":"Wat je leert"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'leert_tekst', 'richtext', '{"html":"<ul>\n<li>Je kent de anatomie die je nodig hebt om veilig les te geven en blessures te voorkomen.</li>\n<li>Je weet waar yoga vandaan komt en vertaalt de filosofie naar een toegankelijke, hedendaagse les.</li>\n<li>Je begeleidt een korte meditatie en zet ademtechnieken bewust in.</li>\n<li>Je kent je rol en verantwoordelijkheid als docent: integriteit, grenzen, aanraking en toestemming.</li>\n</ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'programma_titel', 'text', '{"text":"Programma"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'programma_tekst', 'richtext', '{"html":"<ol>\n<li><strong>Anatomie &amp; fysiologie.</strong> Skelet, gewrichten en spieren · fascia en bindweefsel · bewegingsleer en biomechanica · mobiliteit en stabiliteit · ademfysiologie · toegepaste anatomie per houdingsfamilie · blessurepreventie · anatomische verschillen tussen mensen.</li>\n<li><strong>Filosofie.</strong> Ontstaan en geschiedenis van yoga, Patanjali en het achtvoudige pad, de yama''s en niyama''s, en de vertaalslag van traditie naar de lespraktijk van nu.</li>\n<li><strong>Ethiek &amp; de docent als professional.</strong> Integriteit, grenzen, aanraking en toestemming, en de rol en verantwoordelijkheid van de yogadocent.</li>\n<li><strong>Meditatie.</strong> Aandacht en concentratie, bodyscan, zitmeditatie — eerst zelf ervaren, daarna leren begeleiden.</li>\n<li><strong>Pranayama (verdieping).</strong> Verdiepende ademtechnieken: werking, opbouw en wanneer je ze wel en niet inzet.</li>\n<li><strong>Integratie &amp; kennistoets.</strong> De theorie terug naar de mat, meditatie begeleiden in tweetallen en de afsluitende kennistoets anatomie &amp; filosofie.</li>\n</ol>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'lesdagen_titel', 'text', '{"text":"Lesdagen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'lesdagen_tekst', 'richtext', '{"html":"<p>Dag 1 anatomie I (skelet, gewrichten, spieren, bewegingsleer) · Dag 2 anatomie II (fascia, ademfysiologie, toegepaste anatomie) · Dag 3 filosofie &amp; ethiek · Dag 4 meditatie &amp; pranayama · Dag 5 integratie &amp; kennistoets.</p>\n<p>Avondsessies (live online): leeskring filosofie · anatomie-vragenuur &amp; toetsvoorbereiding.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'afloop_titel', 'text', '{"text":"Na module 2"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'afloop_tekst', 'richtext', '{"html":"<p>Je kent de anatomie die je nodig hebt om veilig les te geven, je verweeft filosofie op een toegankelijke manier in je les en je begeleidt een korte meditatie. Je ontvangt het certificaat <em>Anatomie, Filosofie &amp; Meditatie — 50 uur</em>.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'toelating_titel', 'text', '{"text":"Voor wie & toelating"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'toelating_tekst', 'text', '{"text":"Open voor iedereen met regelmatige yoga-ervaring; een vooropleiding is niet nodig. Waardevol voor docenten die hun anatomische en filosofische basis willen versterken."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'prijs', 'text', '{"text":"€ 795"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'prijs_knop', 'text', '{"text":"Schrijf je in voor module 2"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'prijs_link', 'text', '{"text":"/inschrijven/yogaopleiding-module-2-anatomie-filosofie-meditatie"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-2', 'prijs_voet', 'text', '{"text":"Combineer met module 1 als Blok A (100 uur) voor € 1.495."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'titel', 'text', '{"text":"Module 3 — Yin Yoga & het lichaam"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'label', 'text', '{"text":"Vertragen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'inleiding', 'text', '{"text":"50 uur · Blok B · van doen naar voelen · los te volgen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'beeld', 'image', '{"url":"","alt":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'verhaal', 'richtext', '{"html":"<p><em>Deze module is identiek aan module 1 van de Yin Yoga Specialist Opleiding.</em></p>\n<p>Module 3 opent de stille kant van yoga. Je leert wat Yin Yoga is, hoe het lichaam in Yin werkt en hoe houdingen veilig en functioneel worden ingezet. Waar de actieve stijlen vragen om doen, vraagt Yin om voelen — en dat is een vak apart.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'leert_titel', 'text', '{"text":"Wat je leert"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'leert_tekst', 'richtext', '{"html":"<ul>\n<li>Je begrijpt de filosofie en basisprincipes van Yin Yoga: tijd, stilte, sensatie en functionaliteit boven vorm.</li>\n<li>Je kent de anatomie achter Yin en ziet waarom dezelfde houding er bij iedereen anders uitziet.</li>\n<li>Je beheerst de belangrijkste Yin-houdingen en past ze aan met props aan ieder lichaam.</li>\n<li>Je structureert en begeleidt zelfstandig een eigen Yin-les.</li>\n</ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'programma_titel', 'text', '{"text":"Programma"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'programma_tekst', 'richtext', '{"html":"<ol>\n<li><strong>Filosofie van Yin Yoga.</strong> Ontstaan en ontwikkeling · Yin en Yang · taoïstische filosofie · de basisprincipes van Yin · tijd en stilte · sensatie en ontspanning · grenzen herkennen en respecteren · functionaliteit boven vorm.</li>\n<li><strong>Anatomie voor Yin Yoga.</strong> Botten, gewrichten en spieren · pezen en ligamenten · fascia en bindweefsel · bewegingsrichtingen · mobiliteit en stabiliteit · compressie en spanning · anatomische verschillen tussen mensen.</li>\n<li><strong>Yin-houdingen.</strong> De belangrijkste Yin-houdingen, waaronder Butterfly, Half Butterfly, Caterpillar, Dragon, Square, Shoelace, Swan, Sleeping Swan, Saddle, Sphinx, Seal, Melting Heart, Child''s Pose, Twists, Bananasana en Legs up the Wall. Per houding: anatomie, doel, sensatie, beperkingen, contra-indicaties, variaties en props.</li>\n<li><strong>Props &amp; aanpassingen.</strong> Bolster, blokken, dekens, riemen, kussens, muur en stoel — en het bouwen van ondersteunende variaties, zodat iedere houding voor ieder lichaam toegankelijk wordt.</li>\n<li><strong>Basis van lesgeven in Yin.</strong> Een Yin-les structureren · houdingen logisch opbouwen · timing · counterposes · thema''s ontwikkelen · eindontspanning · veilig begeleiden.</li>\n</ol>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'lesdagen_titel', 'text', '{"text":"Lesdagen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'lesdagen_tekst', 'richtext', '{"html":"<p>Dag 1 van doen naar voelen — filosofie &amp; principes van Yin · Dag 2 anatomie voor Yin &amp; de functionele benadering · Dag 3 houdingenlab I · Dag 4 houdingenlab II &amp; props · Dag 5 de Yin-les &amp; practicum.</p>\n<p>Avondsessies (live online): Yin-lesanalyse · props, aanpassingen &amp; casuïstiek.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'afloop_titel', 'text', '{"text":"Na module 3"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'afloop_tekst', 'richtext', '{"html":"<p>Je begrijpt de basis van Yin Yoga, kent de belangrijkste Yin-houdingen, kunt houdingen aanpassen aan verschillende lichamen en verzorgt zelfstandig een eenvoudige Yin-les. Je ontvangt het certificaat <em>Yin Yoga &amp; het lichaam — 50 uur</em>, dat tevens telt als module 1 van de Yin Yoga Specialist Opleiding.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'toelating_titel', 'text', '{"text":"Voor wie & toelating"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'toelating_tekst', 'text', '{"text":"Na module 1 + 2, óf rechtstreeks voor ervaren beoefenaars en yogadocenten (na intake). Bij uitstek geschikt voor docenten die Yin aan hun aanbod willen toevoegen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'prijs', 'text', '{"text":"€ 795"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'prijs_knop', 'text', '{"text":"Schrijf je in voor module 3"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'prijs_link', 'text', '{"text":"/inschrijven/yin-niveau-1-basis"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-3', 'prijs_voet', 'text', '{"text":"Combineer met module 4 als Blok B (100 uur) voor € 1.495."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'titel', 'text', '{"text":"Module 4 — Zenuwstelsel & basis meridianen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'label', 'text', '{"text":"Reguleren."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'inleiding', 'text', '{"text":"50 uur · Blok B · van fysiek naar neurologisch en energetisch · los te volgen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'beeld', 'image', '{"url":"","alt":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'verhaal', 'richtext', '{"html":"<p><em>Deze module is identiek aan module 2 van de Yin Yoga Specialist Opleiding.</em></p>\n<p>In module 4 komt alles samen: het zenuwstelsel, de basisprincipes van Chinese Geneeskunde en de 12 meridianen. Je leert waarom ontspannen soms moeilijk is, hoe je als docent regulatie in je les brengt en hoe lichaam, zenuwstelsel en energie in Yin met elkaar samenhangen. Voor de 200-uurs route is dit tevens de module van het praktijkexamen.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'leert_titel', 'text', '{"text":"Wat je leert"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'leert_tekst', 'richtext', '{"html":"<ul>\n<li>Je begrijpt het autonome zenuwstelsel, de vaguszenuw en de stress- en herstelrespons.</li>\n<li>Je herkent hoe stress, overbelasting en prikkelverwerking doorwerken in het lichaam — en in je les.</li>\n<li>Je zet adem, tempo, stilte, stem en keuzevrijheid bewust in om een veilige, regulerende lesomgeving te creëren.</li>\n<li>Je kent de basis van Chinese Geneeskunde en de 12 hoofdmeridianen, en welke Yin-houdingen daarbij horen.</li>\n<li>Je ontwerpt een practice vanuit lichaam, zenuwstelsel en meridianen.</li>\n</ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'programma_titel', 'text', '{"text":"Programma"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'programma_tekst', 'richtext', '{"html":"<ol>\n<li><strong>Het zenuwstelsel.</strong> Centraal en perifeer zenuwstelsel · autonoom zenuwstelsel · sympathisch en parasympathisch · de vaguszenuw · stressrespons en herstelrespons.</li>\n<li><strong>Stress &amp; ontspanning.</strong> Acute en langdurige stress · overbelasting · prikkelverwerking · fight, flight en freeze · rust en herstel · slaap · belastbaarheid.</li>\n<li><strong>Yoga &amp; het zenuwstelsel.</strong> Waarom ontspannen soms moeilijk is · veiligheid en ontspanning · ademhaling en regulatie · tempo en timing · stilte · stemgebruik · keuzevrijheid · een veilige lesomgeving creëren — in Yin én in de actieve les.</li>\n<li><strong>Introductie Chinese Geneeskunde.</strong> Qi · Yin en Yang · balans · energie · de basisprincipes van de Traditionele Chinese Geneeskunde.</li>\n<li><strong>Introductie meridianen.</strong> De 12 hoofdmeridianen: Long, Dikke Darm, Maag, Milt, Hart, Dunne Darm, Blaas, Nier, Pericard, Drievoudige Verwarmer, Galblaas en Lever. Waar loopt de meridiaan en welke Yin-houdingen horen erbij?</li>\n<li><strong>Integratie.</strong> Je ontwerpt een practice vanuit lichaam + zenuwstelsel + meridianen — ook toepasbaar in je actieve lessen.</li>\n<li><strong>Afronding.</strong> Volg je de volledige opleiding, dan sluit je af met het praktijkexamen: een integrale eindles van 75–90 minuten van actief naar Yin naar eindontspanning, met schriftelijke onderbouwing. Volg je module 4 los, dan rond je af met het ontwerpen en geven van een Yin-practice vanuit lichaam, zenuwstelsel en meridianen.</li>\n</ol>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'lesdagen_titel', 'text', '{"text":"Lesdagen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'lesdagen_tekst', 'richtext', '{"html":"<p>Dag 1 het zenuwstelsel · Dag 2 stress &amp; ontspanning · Dag 3 regulatie in de les · Dag 4 Chinese Geneeskunde &amp; de 12 meridianen · Dag 5 integratie, practicum &amp; praktijkexamen.</p>\n<p>Avondsessies (live online): zenuwstelsel &amp; regulatie vragenuur · intervisie eindopdracht &amp; examenvoorbereiding.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'afloop_titel', 'text', '{"text":"Na module 4"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'afloop_tekst', 'richtext', '{"html":"<p>Je begrijpt het zenuwstelsel en de relatie tussen stress en ontspanning, je kent de basis van Chinese Geneeskunde en de 12 hoofdmeridianen en je geeft een regulerende Yin-practice. Je ontvangt het certificaat <em>Zenuwstelsel &amp; basis meridianen — 50 uur</em>, dat tevens telt als module 2 van de Yin Yoga Specialist Opleiding. Wie de volledige 200-uurs route heeft doorlopen en het praktijkexamen behaalt, ontvangt het diploma Yogadocent 200 uur.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'toelating_titel', 'text', '{"text":"Voor wie & toelating"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'toelating_tekst', 'text', '{"text":"Na module 3, of met een vergelijkbare Yin-basis (na intake). Ook geschikt voor yogadocenten die het zenuwstelsel en de meridianen willen leren inzetten in hun lessen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'prijs', 'text', '{"text":"€ 795"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'prijs_knop', 'text', '{"text":"Schrijf je in voor module 4"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'prijs_link', 'text', '{"text":"/inschrijven/yin-niveau-2-zenuwstelsel-meridiaanleer"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-module-4', 'prijs_voet', 'text', '{"text":"Combineer met module 3 als Blok B (100 uur) voor € 1.495."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

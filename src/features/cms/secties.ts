@@ -76,6 +76,22 @@ const SECTIENAMEN: Record<string, string> = {
   over: "Over YogaCompany",
   kern: "De kern",
   uitleg: "Uitleg",
+  // De 200-uurs Yogaopleiding. Niet "over": dat voorvoegsel is al van de
+  // paginavoet, en twee secties met dezelfde sleutel zouden één naam delen.
+  introductie: "Over de opleiding",
+  modules: "De vier modules",
+  manieren: "Drie manieren om te volgen",
+  diploma: "Diploma en certificaten",
+  doorstroom: "Doorstroom naar Yin Yoga Specialist",
+  leert: "Wat je leert",
+  programma: "Programma",
+  lesdagen: "Lesdagen",
+  afloop: "Na deze module",
+  toelating: "Voor wie en toelating",
+  prijs: "Prijs en inschrijven",
+  prijzen: "Prijzen",
+  inschrijven: "Zo schrijf je je in",
+  disclaimer: "Kleine letters",
   // De vraag-en-antwoordblokken op de veiligheidspagina heten sectie_1_vraag
   // en verder; zonder naam zou de groep gewoon "Sectie" gaan heten.
   sectie: "Vragen en antwoorden",

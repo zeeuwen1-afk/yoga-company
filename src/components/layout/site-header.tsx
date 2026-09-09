@@ -15,7 +15,24 @@ type NavItem = {
 };
 
 const navigation: NavItem[] = [
-  { href: "/opleidingen", label: "Opleidingen" },
+  {
+    // De Academie is de paraplu boven het opleidingsaanbod. In de balk blijft
+    // "Opleidingen" staan: dat is het woord waar bezoekers op zoeken en het
+    // adres dat in Google staat.
+    href: "/opleidingen",
+    label: "Opleidingen",
+    sub: [
+      { href: "/opleidingen", label: "YogaCompany Academie" },
+      {
+        href: "/opleidingen/200-uurs-yogaopleiding",
+        label: "200-uurs Yogaopleiding",
+      },
+      {
+        href: "/opleidingen/200-uurs-yin-yoga-specialist",
+        label: "Yin Yoga Specialist",
+      },
+    ],
+  },
   { href: "/trainingen", label: "Trainingen" },
   {
     href: "/lessen",

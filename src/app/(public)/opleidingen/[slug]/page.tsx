@@ -9,7 +9,14 @@ export const revalidate = 300;
 
 export async function generateStaticParams() {
   const slugs = await haalSlugs("opleiding");
-  return slugs.map((slug) => ({ slug }));
+
+  // De 200-uurs Yogaopleiding heeft een eigen pagina onder dezelfde naam. Een
+  // vaste map wint van deze dynamische route, dus die variant zou nooit worden
+  // getoond; hem toch bouwen kost tijd en zet twee pagina's met hetzelfde adres
+  // in het overzicht van de build.
+  return slugs
+    .filter((slug) => slug !== "200-uurs-yogaopleiding")
+    .map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({

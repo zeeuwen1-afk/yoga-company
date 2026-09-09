@@ -33,6 +33,35 @@ import {
   WORKSHOPS,
   WORKSHOPS_TITEL,
 } from "./tarieven.ts";
+import {
+  GEDEELD_DISCLAIMER,
+  GEDEELD_INSCHRIJVEN,
+  GEDEELD_INSCHRIJVEN_TITEL,
+  GEDEELD_PRAKTISCH,
+  GEDEELD_PRAKTISCH_TITEL,
+  GEDEELD_PRIJZEN,
+  GEDEELD_PRIJZEN_TITEL,
+  GEDEELD_PRIJZEN_VOET,
+  MODULEPAGINAS,
+  OPLEIDING_DIPLOMA,
+  OPLEIDING_DIPLOMA_TITEL,
+  OPLEIDING_DOORSTROOM,
+  OPLEIDING_DOORSTROOM_KNOP,
+  OPLEIDING_DOORSTROOM_LINK,
+  OPLEIDING_DOORSTROOM_TITEL,
+  OPLEIDING_HERO,
+  OPLEIDING_KERNWOORDEN,
+  OPLEIDING_MANIEREN,
+  OPLEIDING_MANIEREN_TITEL,
+  OPLEIDING_MODULES,
+  OPLEIDING_MODULES_TITEL,
+  OPLEIDING_OVER,
+  OPLEIDING_OVER_TITEL,
+  OPLEIDING_TITEL,
+  OPLEIDING_VOORWIE,
+  OPLEIDING_VOORWIE_TITEL,
+  OPLEIDING_ZIN,
+} from "./yogaopleiding-200.ts";
 
 /**
  * De teksten en beelden van de publieke site (BOUWPROMPT §19).
@@ -350,6 +379,388 @@ const docentenBlokken: BlokSeed[] = [
     omschrijving: "Wat een docent nodig heeft om mee te doen",
     value: { html: DOCENTEN_VOORWAARDEN },
   },
+];
+
+/**
+ * De 200-uurs Yogaopleiding: één overzichtspagina, vier modulepagina's en één
+ * gedeelde set met prijzen, praktische informatie en de disclaimer.
+ *
+ * Die gedeelde set staat er bewust één keer, terwijl hij op alle vijf de
+ * pagina's wordt getoond. Vijf kopieën zouden betekenen dat een prijswijziging
+ * op vijf plekken moet gebeuren, en dan staat er een keer een verkeerd bedrag
+ * op een pagina die niemand meer nakijkt.
+ *
+ * De teksten komen uit `src/content/yogaopleiding-200.ts` en zijn letterlijk
+ * overgenomen uit de aangeleverde websiteteksten.
+ */
+const yogaopleidingBlokken: BlokSeed[] = [
+  // --- De overzichtspagina -------------------------------------------------
+  {
+    page_key: "yogaopleiding",
+    block_key: "titel",
+    kind: "text" as const,
+    omschrijving: "De grote kop bovenaan",
+    value: { text: OPLEIDING_TITEL },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "subtitel",
+    kind: "text" as const,
+    omschrijving: "De zin onder de kop",
+    value: { text: OPLEIDING_ZIN },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "inleiding",
+    kind: "text" as const,
+    omschrijving: "De inleidende alinea in de hero",
+    value: { text: OPLEIDING_HERO },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "kenmerken",
+    kind: "text" as const,
+    omschrijving: "De vier kernwoorden onder de inleiding",
+    value: { text: OPLEIDING_KERNWOORDEN },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "knop",
+    kind: "text" as const,
+    omschrijving: "Tekst op de eerste knop in de hero",
+    value: { text: "Bekijk de modules" },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "knop_link",
+    kind: "text" as const,
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "#modules" },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "knop_twee",
+    kind: "text" as const,
+    omschrijving: "Tekst op de tweede knop in de hero",
+    value: { text: "Schrijf je in" },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "knop_twee_link",
+    kind: "text" as const,
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/inschrijven/200-uurs-yogaopleiding" },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving: "Sfeerbeeld boven aan de pagina",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "introductie_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven het blok over de opleiding",
+    value: { text: OPLEIDING_OVER_TITEL },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "introductie_tekst",
+    kind: "richtext" as const,
+    omschrijving: "Wat de opleiding is en wat je erin ontwikkelt",
+    value: { html: OPLEIDING_OVER },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "modules_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de vier modules",
+    value: { text: OPLEIDING_MODULES_TITEL },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "modules",
+    lijst: { max: 6, itemNaam: "module" },
+    kind: "richtext" as const,
+    omschrijving:
+      "De vier modulekaarten. Per module: nummer, titel, uren, tekst, knoptekst en het adres van de modulepagina.",
+    value: { items: OPLEIDING_MODULES as unknown as Record<string, string>[] },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "manieren_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de drie manieren om te volgen",
+    value: { text: OPLEIDING_MANIEREN_TITEL },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "manieren_tekst",
+    kind: "richtext" as const,
+    omschrijving: "Per module, per blok of de volledige opleiding",
+    value: { html: OPLEIDING_MANIEREN },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "voorwie_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven het blok Voor wie",
+    value: { text: OPLEIDING_VOORWIE_TITEL },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "voorwie_tekst",
+    kind: "richtext" as const,
+    omschrijving: "Voor wie de opleiding bedoeld is",
+    value: { html: OPLEIDING_VOORWIE },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "diploma_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven het blok over diploma en certificaten",
+    value: { text: OPLEIDING_DIPLOMA_TITEL },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "diploma_tekst",
+    kind: "richtext" as const,
+    omschrijving: "Wat je krijgt bij afronding",
+    value: { html: OPLEIDING_DIPLOMA },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "doorstroom_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven het blok over de doorstroom",
+    value: { text: OPLEIDING_DOORSTROOM_TITEL },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "doorstroom_tekst",
+    kind: "richtext" as const,
+    omschrijving: "De doorstroom naar de Yin Yoga Specialist Opleiding",
+    value: { html: OPLEIDING_DOORSTROOM },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "doorstroom_knop",
+    kind: "text" as const,
+    omschrijving: "Tekst op de knop naar de Yin Yoga Specialist",
+    value: { text: OPLEIDING_DOORSTROOM_KNOP },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "doorstroom_link",
+    kind: "text" as const,
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: OPLEIDING_DOORSTROOM_LINK },
+  },
+
+  // --- De gedeelde blokken, op alle vijf de pagina's ------------------------
+  {
+    page_key: "yogaopleiding-gedeeld",
+    block_key: "prijzen_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de prijstabel",
+    value: { text: GEDEELD_PRIJZEN_TITEL },
+  },
+  {
+    page_key: "yogaopleiding-gedeeld",
+    block_key: "prijzen",
+    lijst: { max: 10, itemNaam: "prijsregel" },
+    kind: "richtext" as const,
+    omschrijving:
+      "De prijstabel. Per regel: variant, wat het inhoudt en het bedrag. Verschijnt op de overzichtspagina én op alle vier de modulepagina's.",
+    value: { items: GEDEELD_PRIJZEN as unknown as Record<string, string>[] },
+  },
+  {
+    page_key: "yogaopleiding-gedeeld",
+    block_key: "prijzen_voet",
+    kind: "richtext" as const,
+    omschrijving: "De voorwaarden onder de prijstabel",
+    value: { html: GEDEELD_PRIJZEN_VOET },
+  },
+  {
+    page_key: "yogaopleiding-gedeeld",
+    block_key: "praktisch_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de praktische informatie",
+    value: { text: GEDEELD_PRAKTISCH_TITEL },
+  },
+  {
+    page_key: "yogaopleiding-gedeeld",
+    block_key: "praktisch_tekst",
+    kind: "richtext" as const,
+    omschrijving: "Locatie, groep, ritme, lesmateriaal en data",
+    value: { html: GEDEELD_PRAKTISCH },
+  },
+  {
+    page_key: "yogaopleiding-gedeeld",
+    block_key: "inschrijven_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de inschrijfstappen",
+    value: { text: GEDEELD_INSCHRIJVEN_TITEL },
+  },
+  {
+    page_key: "yogaopleiding-gedeeld",
+    block_key: "inschrijven_tekst",
+    kind: "richtext" as const,
+    omschrijving: "De drie stappen en waar je terecht kunt met vragen",
+    value: { html: GEDEELD_INSCHRIJVEN },
+  },
+  {
+    page_key: "yogaopleiding-gedeeld",
+    block_key: "disclaimer",
+    kind: "text" as const,
+    omschrijving: "De kleine letters onderaan elke opleidingspagina",
+    value: { text: GEDEELD_DISCLAIMER },
+  },
+
+  // --- De vier modulepagina's ----------------------------------------------
+  ...MODULEPAGINAS.flatMap((module): BlokSeed[] => [
+    {
+      page_key: module.pageKey,
+      block_key: "titel",
+      kind: "text" as const,
+      omschrijving: "De grote kop bovenaan",
+      value: { text: module.titel },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "label",
+      kind: "text" as const,
+      omschrijving: "Het werkwoord dat deze module draagt",
+      value: { text: module.woord },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "inleiding",
+      kind: "text" as const,
+      omschrijving: "De regel met uren, blok en of de module los te volgen is",
+      value: { text: module.meta },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "beeld",
+      kind: "image" as const,
+      verbergbaar: true,
+      omschrijving: "Sfeerbeeld boven aan de pagina",
+      value: { url: "", alt: "" },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "verhaal",
+      kind: "richtext" as const,
+      omschrijving: "De inleiding op de module",
+      value: {
+        html: module.identiek
+          ? `<p><em>${module.identiek}</em></p>\n<p>${module.intro}</p>`
+          : `<p>${module.intro}</p>`,
+      },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "leert_titel",
+      kind: "text" as const,
+      omschrijving: "Kop boven wat je leert",
+      value: { text: "Wat je leert" },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "leert_tekst",
+      kind: "richtext" as const,
+      omschrijving: "Wat je na deze module kunt",
+      value: { html: module.watJeLeert },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "programma_titel",
+      kind: "text" as const,
+      omschrijving: "Kop boven het programma",
+      value: { text: "Programma" },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "programma_tekst",
+      kind: "richtext" as const,
+      omschrijving: "De onderdelen van deze module",
+      value: { html: module.programma },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "lesdagen_titel",
+      kind: "text" as const,
+      omschrijving: "Kop boven de lesdagen",
+      value: { text: "Lesdagen" },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "lesdagen_tekst",
+      kind: "richtext" as const,
+      omschrijving: "De vijf lesdagen en de avondsessies",
+      value: { html: module.lesdagen },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "afloop_titel",
+      kind: "text" as const,
+      omschrijving: "Kop boven wat je na de module hebt",
+      value: { text: `Na ${module.titel.split(" — ")[0]?.toLowerCase()}` },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "afloop_tekst",
+      kind: "richtext" as const,
+      omschrijving: "Wat je kunt en welk certificaat je krijgt",
+      value: { html: module.naAfloop },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "toelating_titel",
+      kind: "text" as const,
+      omschrijving: "Kop boven voor wie en toelating",
+      value: { text: "Voor wie & toelating" },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "toelating_tekst",
+      kind: "text" as const,
+      omschrijving: "Voor wie deze module bedoeld is",
+      value: { text: module.voorWie },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "prijs",
+      kind: "text" as const,
+      omschrijving: "Het bedrag voor deze losse module",
+      value: { text: module.prijs },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "prijs_knop",
+      kind: "text" as const,
+      omschrijving: "Tekst op de inschrijfknop",
+      value: { text: module.knop },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "prijs_link",
+      kind: "text" as const,
+      omschrijving: "Waar de inschrijfknop heen gaat",
+      value: { text: `/inschrijven/${module.product}` },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "prijs_voet",
+      kind: "text" as const,
+      omschrijving: "De combinatietip onder de prijs",
+      value: { text: module.combineer },
+    },
+  ]),
 ];
 
 export const BLOKKEN: BlokSeed[] = [
@@ -1710,7 +2121,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "titel",
     kind: "text",
     omschrijving: "Kop van de opleidingenpagina",
-    value: { text: "Opleidingen" },
+    value: { text: "YogaCompany Academie" },
   },
   {
     page_key: "opleidingen",
@@ -1949,6 +2360,7 @@ export const BLOKKEN: BlokSeed[] = [
   ...veiligheidBlokken,
   ...tarievenBlokken,
   ...docentenBlokken,
+  ...yogaopleidingBlokken,
 ];
 
 /** Alle blokken van één pagina, als kaart van block_key naar waarde. */

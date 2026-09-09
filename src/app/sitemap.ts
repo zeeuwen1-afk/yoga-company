@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { JURIDISCHE_TEKSTEN } from "@/content/juridisch";
+import { MODULEPAGINAS } from "@/content/yogaopleiding-200";
 import { haalAanbod } from "@/features/courses";
 import { haalDocentenlijst } from "@/features/docentpagina/server/queries";
 import { publicEnv } from "@/lib/env";
@@ -40,6 +41,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${basis}/onze-docenten`, changeFrequency: "weekly", priority: 0.7 },
   ];
 
+  // De vier modulepagina's zijn eigen pagina's, geen cursussen; zonder deze
+  // regels staan ze niet in de sitemap en vindt Google ze alleen via een link.
+  const modules: MetadataRoute.Sitemap = MODULEPAGINAS.map((module) => ({
+    url: `${basis}/opleidingen/200-uurs-yogaopleiding/${module.segment}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   const aanbod: MetadataRoute.Sitemap = cursussen.map((cursus) => ({
     url: `${basis}/${cursus.type === "opleiding" ? "opleidingen" : "trainingen"}/${cursus.slug}`,
     changeFrequency: "monthly",
@@ -63,5 +72,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   );
 
-  return [...vast, ...aanbod, ...juridisch, ...docenten];
+  return [...vast, ...aanbod, ...modules, ...juridisch, ...docenten];
 }
