@@ -132,7 +132,7 @@ export function YogaopleidingInhoud({
         </>
       ) : null}
 
-      <OpleidingGedeeld pagina={gedeeld} />
+      <OpleidingGedeeld pagina={gedeeld} onderwerp="200-uurs Yogaopleiding" />
 
       {pagina.html("voorwie_tekst") ? (
         <>

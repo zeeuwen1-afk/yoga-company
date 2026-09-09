@@ -1,4 +1,5 @@
 import { Richtext, Sectie } from "@/components/layout/sectie";
+import { AanmeldFormulier } from "../components/aanmeld-formulier";
 import { VrijeZone } from "./vrije-zone";
 import type { Pagina } from "../server/queries";
 
@@ -22,7 +23,17 @@ export type Prijsregel = {
   prijs: string;
 };
 
-export function OpleidingGedeeld({ pagina }: { pagina: Pagina }) {
+export function OpleidingGedeeld({
+  pagina,
+  onderwerp,
+  gekozenVariant,
+}: {
+  pagina: Pagina;
+  /** Van welke pagina een aanmelding komt; staat bovenaan het bericht. */
+  onderwerp: string;
+  /** Wat er in het formulier voorgeselecteerd staat. */
+  gekozenVariant?: string;
+}) {
   const prijzen = pagina
     .lijst<Prijsregel>("prijzen")
     .filter((regel) => regel.variant?.trim());
@@ -122,6 +133,15 @@ export function OpleidingGedeeld({ pagina }: { pagina: Pagina }) {
               <Richtext
                 html={pagina.html("inschrijven_tekst")}
                 className="mt-6 text-lg"
+              />
+            </div>
+
+            {/* Het anker waar elke [Schrijf je in]-knop naartoe springt. */}
+            <div id="aanmelden" className="mt-10 max-w-2xl scroll-mt-24">
+              <AanmeldFormulier
+                onderwerp={onderwerp}
+                varianten={prijzen.map((regel) => regel.variant)}
+                gekozen={gekozenVariant}
               />
             </div>
           </Sectie>

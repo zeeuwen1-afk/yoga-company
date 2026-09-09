@@ -63,33 +63,35 @@ test.describe("200-uurs Yogaopleiding", () => {
         page.locator(`main a[href="${BASIS}"]`).first(),
       ).toBeVisible();
 
-      // Een prijs en een knop die ergens heen gaat. Een modulepagina zonder
-      // inschrijfknop is een folder.
-      await expect(page.getByText("€ 795").first()).toBeVisible();
+      // Een prijs en een aanmeldknop. Een modulepagina zonder aanmeldknop is
+      // een folder.
       await expect(
-        page.locator('main a[href^="/inschrijven/"]').first(),
+        page.getByText("€ 795").filter({ visible: true }).first(),
+      ).toBeVisible();
+      await expect(
+        page.locator('main a[href="#aanmelden"]').first(),
       ).toBeVisible();
     });
   }
 
-  test("de inschrijfknoppen wijzen naar bestaande producten", async ({
-    page,
-    request,
-  }) => {
-    for (const segment of MODULES) {
-      await page.goto(`${BASIS}/${segment}`);
-      const href = await page
-        .locator('main a[href^="/inschrijven/"]')
-        .first()
-        .getAttribute("href");
+  test("elke pagina heeft een aanmeldformulier dat werkt", async ({ page }) => {
+    // Het formulier stuurt een bericht in plaats van naar het portaal te
+    // sturen. Dat vroeg eerst een account en daarna een betaling, en daar liep
+    // een bezoeker op vast.
+    for (const pad of [BASIS, ...MODULES.map((m) => `${BASIS}/${m}`)]) {
+      await page.goto(pad);
 
-      expect(href).toBeTruthy();
+      const formulier = page.locator("#aanmelden");
+      await expect(formulier, pad).toBeVisible();
 
-      // Inschrijven vraagt om een sessie en stuurt door naar inloggen. Een
-      // onbekend product geeft een 404, en dát is wat hier misgaat als iemand
-      // een slug hernoemt.
-      const antwoord = await request.get(href!, { maxRedirects: 0 });
-      expect(antwoord.status(), `${segment} → ${href}`).not.toBe(404);
+      // De vier velden die een aanmelding bruikbaar maken: waarvoor, wie, en
+      // hoe je diegene bereikt.
+      await expect(formulier.locator('[name="variant"]')).toHaveCount(1);
+      await expect(formulier.locator('[name="name"]')).toHaveCount(1);
+      await expect(formulier.locator('[name="email"]')).toHaveCount(1);
+      await expect(
+        formulier.getByRole("button", { name: /meld je aan/i }),
+      ).toBeVisible();
     }
   });
 

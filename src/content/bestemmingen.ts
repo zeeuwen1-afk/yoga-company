@@ -38,6 +38,8 @@ export const BESTEMMINGEN: { groep: string; items: Bestemming[] }[] = [
       { pad: "/trainingen", label: "Trainingen" },
       { pad: "/lessen", label: "Lessen" },
       { pad: "/lessen/tarieven", label: "Lessen, workshops en privéyoga" },
+      { pad: "/lessen/tarieven#workshops", label: "Workshops" },
+      { pad: "/lessen/tarieven#prive", label: "Privéyoga" },
       { pad: "/lessen#rooster", label: "Lessen · het weekrooster" },
     ],
   },

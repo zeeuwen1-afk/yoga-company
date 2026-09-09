@@ -303,21 +303,25 @@ test.describe("Tarieven", () => {
     await expect(page.getByText("24 uur")).toBeVisible();
   });
 
-  test("is bereikbaar via het menu onder Lessen", async ({ page }) => {
+  test("is bereikbaar via het menu onder Workshops", async ({ page }) => {
     await page.goto("/");
 
-    const lessen = page
+    // Het menu-item heette "Lessen" en heet nu "Workshops"; de tarieven staan
+    // er nog steeds onder. Deze test hing aan de naam en viel om bij het
+    // hernoemen, terwijl er niets stuk was.
+    const menu = page
       .getByRole("navigation", { name: "Hoofdmenu" })
-      .getByRole("link", { name: "Lessen" });
+      .getByRole("link", { name: "Workshops", exact: true })
+      .first();
 
-    if (await lessen.isVisible()) {
+    if (await menu.isVisible()) {
       // Op een breed scherm klapt het submenu open bij hover.
-      await lessen.hover();
+      await menu.hover();
     } else {
       await page.getByRole("button", { name: "Menu openen" }).click();
     }
 
-    await page.getByRole("link", { name: "Tarieven" }).first().click();
+    await page.getByRole("link", { name: "Alle tarieven" }).first().click();
     await expect(page).toHaveURL(/\/lessen\/tarieven$/);
   });
 

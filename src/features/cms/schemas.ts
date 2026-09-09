@@ -55,3 +55,34 @@ export const aanvraagSchema = contactSchema.extend({
 });
 
 export type AanvraagInvoer = z.infer<typeof aanvraagSchema>;
+
+/**
+ * Een aanmelding voor een opleiding, module of blok.
+ *
+ * Bewust niet dezelfde route als inschrijven in het portaal. Dat vraagt een
+ * account en een betaling, en dat is een drempel op het moment dat iemand net
+ * besloten heeft dat hij mee wil doen. Dit formulier stuurt een bericht; de
+ * betaling en de plek volgen in het antwoord.
+ *
+ * Het bericht is hier niet verplicht: wie zich aanmeldt voor een module heeft
+ * meestal niets toe te lichten, en een verplicht veld zou hem dwingen "graag"
+ * in te typen om verder te komen.
+ */
+export const aanmeldingSchema = contactSchema.omit({ body: true }).extend({
+  /** Welke module, blok of de volledige opleiding. */
+  variant: z
+    .string()
+    .trim()
+    .min(2, "Kies waarvoor je je aanmeldt")
+    .max(120, "Dit is wel erg lang"),
+  /** Van welke pagina de aanmelding kwam; komt bovenaan het bericht te staan. */
+  onderwerp: z.string().trim().min(1).max(60),
+  body: z
+    .string()
+    .trim()
+    .max(3000, "Houd het bericht onder de 3000 tekens")
+    .optional()
+    .or(z.literal("")),
+});
+
+export type AanmeldingInvoer = z.infer<typeof aanmeldingSchema>;

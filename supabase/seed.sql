@@ -2136,7 +2136,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('yogaopleiding', 'knop_twee_link', 'text', '{"text":"/inschrijven/200-uurs-yogaopleiding"}'::jsonb)
+values ('yogaopleiding', 'knop_twee_link', 'text', '{"text":"#aanmelden"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2382,7 +2382,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('yogaopleiding-module-1', 'prijs_link', 'text', '{"text":"/inschrijven/yogaopleiding-module-1-hatha-vinyasa"}'::jsonb)
+values ('yogaopleiding-module-1', 'prijs_link', 'text', '{"text":"#aanmelden"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2496,7 +2496,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('yogaopleiding-module-2', 'prijs_link', 'text', '{"text":"/inschrijven/yogaopleiding-module-2-anatomie-filosofie-meditatie"}'::jsonb)
+values ('yogaopleiding-module-2', 'prijs_link', 'text', '{"text":"#aanmelden"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2610,7 +2610,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('yogaopleiding-module-3', 'prijs_link', 'text', '{"text":"/inschrijven/yin-niveau-1-basis"}'::jsonb)
+values ('yogaopleiding-module-3', 'prijs_link', 'text', '{"text":"#aanmelden"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2724,7 +2724,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('yogaopleiding-module-4', 'prijs_link', 'text', '{"text":"/inschrijven/yin-niveau-2-zenuwstelsel-meridiaanleer"}'::jsonb)
+values ('yogaopleiding-module-4', 'prijs_link', 'text', '{"text":"#aanmelden"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

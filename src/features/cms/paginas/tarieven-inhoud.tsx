@@ -121,7 +121,7 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
 
       {workshops.length > 0 ? (
         <>
-          <Sectie sectie="workshops" lijnBoven>
+          <Sectie id="workshops" sectie="workshops" lijnBoven>
             <h2 className="text-3xl">{pagina.tekst("workshops_titel")}</h2>
             <AanbodLijst regels={workshops} />
           </Sectie>
@@ -131,7 +131,7 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
 
       {prive.length > 0 ? (
         <>
-          <Sectie sectie="prive" achtergrond="zand" lijnBoven>
+          <Sectie id="prive" sectie="prive" achtergrond="zand" lijnBoven>
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("prive_titel")}</h2>
               <div className="mt-4">

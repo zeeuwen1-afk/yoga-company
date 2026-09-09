@@ -130,7 +130,13 @@ export function ModuleInhoud({
         </>
       ) : null}
 
-      <OpleidingGedeeld pagina={gedeeld} />
+      <OpleidingGedeeld
+        pagina={gedeeld}
+        onderwerp={pagina.tekst("titel")}
+        // De variant uit de prijstabel die bij deze module hoort. Komt iemand
+        // van de modulepagina, dan staat die alvast goed in het formulier.
+        gekozenVariant={pagina.tekst("titel")}
+      />
     </>
   );
 }

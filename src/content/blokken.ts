@@ -449,7 +449,7 @@ const yogaopleidingBlokken: BlokSeed[] = [
     block_key: "knop_twee_link",
     kind: "text" as const,
     omschrijving: "Waar die knop heen gaat",
-    value: { text: "/inschrijven/200-uurs-yogaopleiding" },
+    value: { text: "#aanmelden" },
   },
   {
     page_key: "yogaopleiding",
@@ -751,7 +751,10 @@ const yogaopleidingBlokken: BlokSeed[] = [
       block_key: "prijs_link",
       kind: "text" as const,
       omschrijving: "Waar de inschrijfknop heen gaat",
-      value: { text: `/inschrijven/${module.product}` },
+      // Naar het aanmeldformulier op dezelfde pagina, niet naar het portaal.
+      // Dat vraagt eerst een account en daarna een betaling; wie net besloten
+      // heeft dat hij mee wil doen krijgt dan een inlogscherm te zien.
+      value: { text: "#aanmelden" },
     },
     {
       page_key: module.pageKey,

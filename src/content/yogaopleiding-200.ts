@@ -159,7 +159,13 @@ export type Modulepagina = {
   voorWie: string;
   prijs: string;
   knop: string;
-  /** De cursus-slug waar de inschrijfknop heen gaat. */
+  /**
+   * Het product in `aanbod.ts` dat bij deze module hoort.
+   *
+   * De inschrijfknop wijst naar het aanmeldformulier en niet hierheen: dat
+   * vraagt een account en een betaling, en dat is een drempel op het verkeerde
+   * moment. Deze koppeling blijft staan voor het moment dat betalen wél aanstaat.
+   */
   product: string;
   combineer: string;
   seoTitel: string;

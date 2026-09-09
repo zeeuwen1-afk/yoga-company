@@ -20,16 +20,23 @@ test.describe("Lesrooster", () => {
   test("staat in de navigatie van de site", async ({ page }) => {
     await page.goto("/");
 
-    const link = page
-      .getByRole("navigation", { name: "Hoofdmenu" })
-      .getByRole("link", { name: "Lessen" });
+    // De balk heet inmiddels "Workshops"; het weekrooster staat daaronder. Deze
+    // test hing aan de naam van het menu-item en viel om bij het hernoemen.
+    // Wat blijft gelden: het rooster is vanuit de hoofdnavigatie te bereiken.
+    const menu = page.getByRole("navigation", { name: "Hoofdmenu" });
+    const workshops = menu
+      .getByRole("link", { name: "Workshops", exact: true })
+      .first();
 
-    // Op de telefoon zit het hoofdmenu achter de menuknop.
-    if (!(await link.isVisible())) {
+    if (await workshops.isVisible()) {
+      // Op een breed scherm klapt het submenu open bij hover.
+      await workshops.hover();
+    } else {
+      // Op de telefoon zit het hoofdmenu achter de menuknop.
       await page.getByRole("button", { name: "Menu openen" }).click();
     }
 
-    await page.getByRole("link", { name: "Lessen" }).first().click();
+    await page.getByRole("link", { name: "Weekrooster" }).first().click();
     await expect(page).toHaveURL(/\/lessen$/);
   });
 

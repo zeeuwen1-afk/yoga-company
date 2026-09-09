@@ -16,13 +16,12 @@ type NavItem = {
 
 const navigation: NavItem[] = [
   {
-    // De Academie is de paraplu boven het opleidingsaanbod. In de balk blijft
-    // "Opleidingen" staan: dat is het woord waar bezoekers op zoeken en het
-    // adres dat in Google staat.
+    // De Academie is de paraplu boven het opleidingsaanbod. Het adres blijft
+    // /opleidingen: dat staat in Google en in bestaande links.
     href: "/opleidingen",
-    label: "Opleidingen",
+    label: "YogaCompany Academie",
     sub: [
-      { href: "/opleidingen", label: "YogaCompany Academie" },
+      { href: "/opleidingen", label: "Al het aanbod" },
       {
         href: "/opleidingen/200-uurs-yogaopleiding",
         label: "200-uurs Yogaopleiding",
@@ -35,11 +34,16 @@ const navigation: NavItem[] = [
   },
   { href: "/trainingen", label: "Trainingen" },
   {
-    href: "/lessen",
-    label: "Lessen",
+    // De workshops staan op de tarievenpagina, samen met de lessen en
+    // privéyoga. Het weekrooster staat bewust nog in dit menu: zonder die regel
+    // is het rooster vanuit de balk niet meer te bereiken.
+    href: "/lessen/tarieven#workshops",
+    label: "Workshops",
     sub: [
+      { href: "/lessen/tarieven#workshops", label: "Workshops" },
+      { href: "/lessen/tarieven#prive", label: "Privéyoga" },
       { href: "/lessen", label: "Weekrooster" },
-      { href: "/lessen/tarieven", label: "Tarieven" },
+      { href: "/lessen/tarieven", label: "Alle tarieven" },
     ],
   },
   {
