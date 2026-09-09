@@ -35,7 +35,6 @@ const navigation: NavItem[] = [
       { href: "/opleidingen#losse-modules", label: "Losse modules" },
     ],
   },
-  { href: "/trainingen", label: "Trainingen" },
   {
     // De workshops staan op de tarievenpagina, samen met de lessen en
     // privéyoga. Het weekrooster staat bewust nog in dit menu: zonder die regel
@@ -61,6 +60,10 @@ const navigation: NavItem[] = [
       { href: "/onderwijs", label: "Onderwijs" },
     ],
   },
+  // De drie items hierboven hebben een uitklapmenu en staan daarom bij elkaar.
+  // De losse pagina's volgen daarna: een pijltje tussen twee gewone items maakt
+  // de balk onrustig, omdat het oog het als een grens leest die er niet is.
+  { href: "/trainingen", label: "Trainingen" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },
   // "Veiligheid" stond hier ook; die staat nu in de paginavoet bij de
@@ -73,7 +76,10 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-background">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+      {/* Breder dan de inhoud van de pagina's (max-w-6xl): het logo staat
+          daardoor dichter bij de rand en de zes items in de balk krijgen de
+          ruimte die "YogaCompany Academie" nodig heeft. */}
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" className="flex items-center" aria-label="YogaCompany">
           {/* De compacte variant: merkteken en woordmerk, zonder de
               ondertitel. In een balk van veertig pixels hoog zou die op vier
@@ -90,9 +96,13 @@ export function SiteHeader() {
           />
         </Link>
 
+        {/* Pas vanaf een breed scherm, en niet meer vanaf een tablet. Zes items
+            waaronder "YogaCompany Academie" en "Voor organisaties" passen niet
+            op 768 pixels; daar zou de balk gaan knellen of omvallen. Tussen 768
+            en 1024 doet de menuknop het werk, en die was er al. */}
         <nav
           aria-label="Hoofdmenu"
-          className="hidden items-center gap-7 md:flex"
+          className="hidden items-center gap-6 lg:flex"
         >
           {navigation.map((item) =>
             item.sub ? (
@@ -157,7 +167,7 @@ export function SiteHeader() {
           aria-expanded={open}
           aria-controls="mobiel-menu"
           aria-label={open ? "Menu sluiten" : "Menu openen"}
-          className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-green-dark md:hidden"
+          className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-green-dark lg:hidden"
         >
           {open ? <X className="size-6" /> : <Menu className="size-6" />}
         </button>
@@ -166,7 +176,7 @@ export function SiteHeader() {
       <div
         id="mobiel-menu"
         hidden={!open}
-        className={cn("border-t border-line bg-cream md:hidden")}
+        className={cn("border-t border-line bg-cream lg:hidden")}
       >
         <nav aria-label="Mobiel menu" className="flex flex-col px-4 py-2">
           {navigation.map((item) => (
