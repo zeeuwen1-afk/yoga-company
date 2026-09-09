@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { AdminKop, Paneel } from "@/features/admin/components/ui";
 import { AanbodVerwijderen } from "@/features/courses/components/aanbod-verwijderen";
+import { CurriculumBewerker } from "@/features/courses/components/curriculum-bewerker";
 import { CursusFormulier } from "@/features/courses/components/cursus-formulier";
 import { haalCursus } from "@/features/courses";
 import { createClient } from "@/lib/supabase/server";
@@ -68,6 +69,15 @@ export default async function AanbodBewerkenPage({
             cursusId={rij.id}
             isActief={rij.is_active}
           />
+        </div>
+      </Paneel>
+
+      {/* Apart van het formulier hierboven: dat gaat over wat een cursus ís
+          en wordt in één keer verstuurd, dit is een lijst die je regel voor
+          regel opbouwt. */}
+      <Paneel titel="Curriculum">
+        <div className="p-5">
+          <CurriculumBewerker cursus={cursus} cursusId={rij.id} />
         </div>
       </Paneel>
 

@@ -187,9 +187,13 @@ export function CursusDetail({
                       <div className="border-t border-line p-5">
                         <p className="text-muted">{module.samenvatting}</p>
                         <ul className="mt-5 space-y-4">
-                          {module.blokken.map((blok) => (
-                            <li key={blok.titel}>
-                              <p className="font-semibold">{blok.titel}</p>
+                          {module.blokken.map((blok, plek) => (
+                            // Een opsomming zonder kopje erboven mag; dan blijft
+                            // de regel weg in plaats van dat er een lege staat.
+                            <li key={`${blok.titel}-${plek}`}>
+                              {blok.titel ? (
+                                <p className="font-semibold">{blok.titel}</p>
+                              ) : null}
                               <ul className="mt-1.5 space-y-1 text-[0.975rem] text-muted">
                                 {blok.onderdelen.map((onderdeel) => (
                                   <li

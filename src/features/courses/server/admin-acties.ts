@@ -6,6 +6,9 @@ import { z } from "zod";
 import { schrijfAudit } from "@/features/audit";
 import { createClient } from "@/lib/supabase/server";
 import { huidigeGebruiker } from "@/lib/supabase/gebruiker";
+import type { Json } from "@/lib/supabase/types";
+
+import { naarCurriculum } from "../curriculum";
 
 /**
  * Beheer van het aanbod (BOUWPROMPT §13).
@@ -180,6 +183,93 @@ export async function bewaarCursus(
 
   ververs(parsed.data.slug);
   return { status: "gelukt", bericht: "Het aanbod is aangemaakt." };
+}
+
+/**
+ * Het curriculum van één cursus opslaan.
+ *
+ * Apart van `bewaarCursus`, en niet als extra veld in dat formulier. Dat
+ * formulier gaat over wat een cursus ís — titel, prijs, zichtbaarheid — en
+ * wordt in één keer verstuurd; het curriculum is een lijst die je regel voor
+ * regel opbouwt. Ze samenvoegen zou betekenen dat je bij het aanpassen van één
+ * modulekop ook de prijs en het webadres opnieuw indient.
+ *
+ * De hele lijst gaat in één keer heen. Modules apart opslaan zou vragen om
+ * lezen-wijzigen-schrijven op één jsonb-kolom, en dan overschrijft de tweede
+ * opslag van twee schermen naast elkaar de eerste zonder dat iemand het merkt.
+ */
+const moduleSchema = z.object({
+  titel: z.string().trim().max(200),
+  uren: z.string().trim().max(5),
+  samenvatting: z.string().trim().max(1000),
+  onderdelen: z.string().max(5000),
+});
+
+const curriculumSchema = z.object({
+  id: z.uuid(),
+  modules: z.array(moduleSchema).max(20),
+});
+
+export async function bewaarCurriculum(
+  _vorige: AanbodResultaat,
+  formData: FormData,
+): Promise<AanbodResultaat> {
+  const context = await vereisAdmin();
+  if (!context) return GEEN_RECHTEN;
+
+  let ruw: unknown;
+  try {
+    ruw = {
+      id: formData.get("id"),
+      modules: JSON.parse(String(formData.get("modules") ?? "[]")),
+    };
+  } catch {
+    return { status: "fout", bericht: "De invoer kon niet worden gelezen." };
+  }
+
+  const parsed = curriculumSchema.safeParse(ruw);
+  if (!parsed.success) {
+    return {
+      status: "fout",
+      bericht: parsed.error.issues[0]?.message ?? "Controleer de invoer.",
+    };
+  }
+
+  const { supabase, adminId } = context;
+  const curriculum = naarCurriculum(parsed.data.modules);
+
+  const { data, error } = await supabase
+    .from("courses")
+    .update({ curriculum: curriculum as unknown as Json })
+    .eq("id", parsed.data.id)
+    .select("slug")
+    .maybeSingle();
+
+  if (error) {
+    return {
+      status: "fout",
+      bericht: "Het curriculum kon niet worden opgeslagen.",
+    };
+  }
+
+  await schrijfAudit(supabase, {
+    actorId: adminId,
+    actie: "aanbod_bijgewerkt",
+    entiteit: "courses",
+    entiteitId: parsed.data.id,
+    meta: { curriculum: curriculum.length },
+  });
+
+  ververs(data?.slug);
+  revalidatePath(`/admin/aanbod/${data?.slug ?? ""}`);
+
+  return {
+    status: "gelukt",
+    bericht:
+      curriculum.length === 0
+        ? "Het curriculum is leeggemaakt; die sectie staat nu niet meer op de pagina."
+        : `Het curriculum is opgeslagen: ${curriculum.length} ${curriculum.length === 1 ? "module" : "modules"}.`,
+  };
 }
 
 export async function zetCursusActief(cursusId: string, actief: boolean) {
