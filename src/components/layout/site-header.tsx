@@ -20,16 +20,19 @@ const navigation: NavItem[] = [
     // /opleidingen: dat staat in Google en in bestaande links.
     href: "/opleidingen",
     label: "YogaCompany Academie",
+    // Eerst de twee opleidingen van 200 uur, daarna wat je er los uit kunt
+    // volgen. Dat is ook de volgorde waarin iemand kiest: eerst welke route,
+    // dan of hij hem in stukken doet.
     sub: [
-      { href: "/opleidingen", label: "Al het aanbod" },
       {
         href: "/opleidingen/200-uurs-yogaopleiding",
         label: "200-uurs Yogaopleiding",
       },
       {
         href: "/opleidingen/200-uurs-yin-yoga-specialist",
-        label: "Yin Yoga Specialist",
+        label: "200-uurs Yin Yoga Specialist",
       },
+      { href: "/opleidingen#losse-modules", label: "Losse modules" },
     ],
   },
   { href: "/trainingen", label: "Trainingen" },

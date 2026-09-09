@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop, CmsTekstLink } from "@/components/ui/cms-knop";
+import { veiligeLink } from "@/lib/knoplink";
 import { Sectie, SectieKop } from "@/components/layout/sectie";
 import { Card, CardContent } from "@/components/ui/card";
 import { formateerTijdvak, type Les } from "@/features/bookings";
@@ -153,14 +154,17 @@ function Deuren({ pagina }: { pagina: Pagina }) {
           titel={pagina.tekst("deuren_titel")}
           inleiding={pagina.tekst("deuren_inleiding")}
         />
-        <ul className="mt-10 grid gap-6 md:grid-cols-3">
+        {/* Twee kolommen op een tablet, drie op een breed scherm. Met vijf
+            ingangen zou een vast raster van drie een rij van twee overlaten die
+            half leeg oogt; zo vult hij netjes op bij elk aantal. */}
+        <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {deuren.map((deur) => (
             <li key={deur.titel} className="relative flex">
               <Card className="flex flex-1 flex-col transition-colors hover:border-accent/60">
                 <CardContent className="flex flex-1 flex-col gap-3 p-7">
                   <p className="label-klein text-accent-light">{deur.label}</p>
                   <h3 className="text-2xl">
-                    <Link href={deur.href}>
+                    <Link href={veiligeLink(deur.href, "/")}>
                       <span className="absolute inset-0" aria-hidden />
                       {deur.titel}
                     </Link>
@@ -262,7 +266,12 @@ function Organisaties({ pagina }: { pagina: Pagina }) {
 
   return (
     <>
-      <Sectie sectie="organisaties" achtergrond="creme" lijnBoven>
+      <Sectie
+        id="voor-organisaties"
+        sectie="organisaties"
+        achtergrond="creme"
+        lijnBoven
+      >
         <SectieKop
           titel={pagina.tekst("organisaties_titel")}
           inleiding={pagina.tekst("organisaties_inleiding")}
@@ -324,7 +333,7 @@ function Inlogdeuren({ pagina }: { pagina: Pagina }) {
                     {deur.tekst}
                   </p>
                   <Link
-                    href={deur.href}
+                    href={veiligeLink(deur.href, "/")}
                     className={
                       index === 0
                         ? "mt-2 inline-flex h-12 w-fit items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"

@@ -593,3 +593,36 @@ test.describe("Beveiligingsheaders", () => {
     expect(headers["x-frame-options"]).toBe("SAMEORIGIN");
   });
 });
+
+test.describe("Ingangen op de startpagina", () => {
+  /**
+   * De tegels op de startpagina zijn de eerste keuze die een bezoeker maakt.
+   * Twee ervan wezen naar een adres dat niet bestond — /priveyoga en
+   * "trainingen en workshops" — en gaven een 404 zonder dat iets erover klaagde.
+   *
+   * De teksten en de volgorde komen uit de editor en mogen veranderen. Dat elke
+   * tegel ergens uitkomt is geen keuze maar een eis.
+   */
+  test("elke ingang komt ergens uit", async ({ page, request }) => {
+    await page.goto("/");
+
+    const tegels = page.locator("main a[href]").filter({ hasText: /./ });
+    const adressen = new Set<string>();
+
+    for (const href of await tegels.evaluateAll((links) =>
+      links.map((link) => link.getAttribute("href") ?? ""),
+    )) {
+      // Ankers op dezelfde pagina en externe links vallen hierbuiten.
+      if (!href.startsWith("/") || href.startsWith("//")) continue;
+      adressen.add(href.split("#")[0] ?? href);
+    }
+
+    expect(adressen.size).toBeGreaterThan(0);
+
+    for (const pad of adressen) {
+      if (!pad) continue;
+      const antwoord = await request.get(pad, { maxRedirects: 0 });
+      expect(antwoord.status(), `${pad} vanaf de startpagina`).not.toBe(404);
+    }
+  });
+});
