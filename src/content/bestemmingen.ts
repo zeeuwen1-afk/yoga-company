@@ -26,7 +26,7 @@ export const BESTEMMINGEN: { groep: string; items: Bestemming[] }[] = [
   {
     groep: "Aanbod",
     items: [
-      { pad: "/opleidingen", label: "YogaCompany Academie" },
+      { pad: "/opleidingen", label: "YogaCompany Academy" },
       {
         pad: "/opleidingen/200-uurs-yogaopleiding",
         label: "200-uurs Yogaopleiding",

@@ -5,5 +5,6 @@ export {
   haalPagina,
   haalConceptPagina,
   bekendePaginas,
+  kanVoorvertonen,
   type Pagina,
 } from "./server/queries";

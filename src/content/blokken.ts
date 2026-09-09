@@ -367,6 +367,34 @@ const docentenBlokken: BlokSeed[] = [
   },
   {
     page_key: "voor-yogadocenten",
+    block_key: "knop",
+    kind: "text" as const,
+    omschrijving: "Tekst op de eerste knop",
+    value: { text: "Naar de docentenportal" },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "knop_link",
+    kind: "text" as const,
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/docenten" },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "knop_twee",
+    kind: "text" as const,
+    omschrijving: "Tekst op de tweede knop",
+    value: { text: "Vraag een aansluiting aan" },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "knop_twee_link",
+    kind: "text" as const,
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/contact" },
+  },
+  {
+    page_key: "voor-yogadocenten",
     block_key: "voorwaarden_titel",
     kind: "text" as const,
     omschrijving: "Kop van het blok met de voorwaarden onderaan",
@@ -2124,7 +2152,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "titel",
     kind: "text",
     omschrijving: "Kop van de opleidingenpagina",
-    value: { text: "YogaCompany Academie" },
+    value: { text: "YogaCompany Academy" },
   },
   {
     page_key: "opleidingen",

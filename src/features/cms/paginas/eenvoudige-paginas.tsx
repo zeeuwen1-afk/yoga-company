@@ -322,3 +322,68 @@ export function OverzichtInhoud({
     </>
   );
 }
+
+/**
+ * De pagina voor yogadocenten.
+ *
+ * Stond als losse opmaak in de route zelf. Daardoor kon de voorvertoning hem
+ * niet tonen: die kan alleen componenten aanroepen, geen routes. Hier staat hij
+ * één keer, en beide plekken gebruiken hem.
+ */
+export function VoorYogadocentenInhoud({ pagina }: { pagina: Pagina }) {
+  return (
+    <>
+      <Sectie sectie="opening">
+        <div className="max-w-2xl">
+          {pagina.tekst("locatie") ? (
+            <p className="text-sm tracking-[0.14em] text-muted uppercase">
+              {pagina.tekst("locatie")}
+            </p>
+          ) : null}
+          <h1 className="mt-3 text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
+          <div className="mt-5">
+            <Alineas
+              tekst={pagina.tekst("inleiding")}
+              className="text-lg text-muted"
+            />
+          </div>
+
+          <Richtext
+            html={pagina.html("uitleg")}
+            className="mt-10 [&_h2]:mt-10 [&_h2]:text-2xl [&_ul]:space-y-1"
+          />
+
+          <div className="mt-10 flex flex-wrap gap-3">
+            <CmsKnop
+              tekst={pagina.tekst("knop")}
+              link={pagina.tekst("knop_link")}
+              terugval="/docenten"
+            />
+            <CmsKnop
+              tekst={pagina.tekst("knop_twee")}
+              link={pagina.tekst("knop_twee_link")}
+              terugval="/contact"
+              variant="omlijnd"
+            />
+          </div>
+        </div>
+      </Sectie>
+      <VrijeZone pageKey="voor-yogadocenten" sectie="opening" />
+
+      {pagina.html("voorwaarden") ? (
+        <>
+          <Sectie sectie="voorwaarden" achtergrond="zand" lijnBoven>
+            <div className="max-w-2xl">
+              <h2 className="text-3xl">{pagina.tekst("voorwaarden_titel")}</h2>
+              <Richtext
+                html={pagina.html("voorwaarden")}
+                className="mt-4 text-[0.975rem]"
+              />
+            </div>
+          </Sectie>
+          <VrijeZone pageKey="voor-yogadocenten" sectie="voorwaarden" />
+        </>
+      ) : null}
+    </>
+  );
+}

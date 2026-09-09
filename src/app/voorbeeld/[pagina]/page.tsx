@@ -5,17 +5,21 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Aanwijzen } from "@/features/cms/components/aanwijzen";
 import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
-import { vindJuridischeTekst } from "@/content/juridisch";
-import { haalConceptPagina } from "@/features/cms";
+import { haalConceptPagina, kanVoorvertonen } from "@/features/cms";
 import { haalRooster, Rooster } from "@/features/bookings";
 import { HomeInhoud } from "@/features/cms/paginas/home-inhoud";
 import { OrganisatieInhoud } from "@/features/cms/paginas/organisatie-inhoud";
 import { PortfolioInhoud } from "@/features/cms/paginas/portfolio-inhoud";
+import { TarievenInhoud } from "@/features/cms/paginas/tarieven-inhoud";
+import { YogaopleidingInhoud } from "@/features/cms/paginas/yogaopleiding-inhoud";
+import { ModuleInhoud } from "@/features/cms/paginas/module-inhoud";
 import {
   ContactInhoud,
   JuridischeInhoud,
   OverOnsInhoud,
   OverzichtInhoud,
+  VeiligheidInhoud,
+  VoorYogadocentenInhoud,
 } from "@/features/cms/paginas/eenvoudige-paginas";
 import { CursusRooster, haalAanbod } from "@/features/courses";
 
@@ -25,16 +29,6 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = "force-dynamic";
-
-const PAGINAS = [
-  "home",
-  "footer",
-  "opleidingen",
-  "trainingen",
-  "lessen",
-  "over-ons",
-  "contact",
-];
 
 /**
  * De publieke pagina met de concepten erin (BOUWPROMPT §14).
@@ -54,9 +48,7 @@ export default async function VoorbeeldPagina({
 }) {
   const { pagina: pageKey } = await params;
 
-  if (!PAGINAS.includes(pageKey) && !vindJuridischeTekst(pageKey)) {
-    notFound();
-  }
+  if (!kanVoorvertonen(pageKey)) notFound();
 
   // De paginavoet staat op elke pagina; bewerk je die, dan tonen we hem in de
   // context van de startpagina.
@@ -107,6 +99,38 @@ export default async function VoorbeeldPagina({
         return <OverOnsInhoud pagina={pagina} />;
       case "contact":
         return <ContactInhoud pagina={pagina} />;
+      case "tarieven":
+        return <TarievenInhoud pagina={pagina} />;
+      case "veiligheid":
+        return <VeiligheidInhoud pagina={pagina} />;
+      case "voor-yogadocenten":
+        return <VoorYogadocentenInhoud pagina={pagina} />;
+      case "yogaopleiding":
+        return (
+          <YogaopleidingInhoud
+            pagina={pagina}
+            gedeeld={await haalConceptPagina("yogaopleiding-gedeeld")}
+          />
+        );
+      // De gedeelde blokken hebben geen eigen pagina; je bewerkt ze en ziet ze
+      // in de context van de opleiding waar ze op staan.
+      case "yogaopleiding-gedeeld":
+        return (
+          <YogaopleidingInhoud
+            pagina={await haalConceptPagina("yogaopleiding")}
+            gedeeld={pagina}
+          />
+        );
+      case "yogaopleiding-module-1":
+      case "yogaopleiding-module-2":
+      case "yogaopleiding-module-3":
+      case "yogaopleiding-module-4":
+        return (
+          <ModuleInhoud
+            pagina={pagina}
+            gedeeld={await haalConceptPagina("yogaopleiding-gedeeld")}
+          />
+        );
       default:
         return <JuridischeInhoud pagina={pagina} />;
     }

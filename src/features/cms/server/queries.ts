@@ -147,3 +147,21 @@ export async function haalConceptPagina(pageKey: string): Promise<Pagina> {
 export function bekendePaginas() {
   return [...new Set(BLOKKEN.map((blok) => blok.page_key))];
 }
+
+/**
+ * Kan de voorvertoning deze pagina tonen?
+ *
+ * Stond als handmatige lijst van zeven sleutels in de voorvertoningsroute,
+ * terwijl er drieëntwintig pagina's zijn. Dertien gaven daardoor een 404 —
+ * inclusief pagina's waarvoor het juiste component wél bestond, maar dat nooit
+ * werd aangeroepen omdat de guard ervoor al afsloeg.
+ *
+ * Nu komt het antwoord uit de blokken zelf, dezelfde bron als de editor. Een
+ * nieuwe pagina werkt vanzelf, en de test hieronder bewaakt dat ze niet uit
+ * elkaar lopen.
+ */
+export function kanVoorvertonen(pageKey: string): boolean {
+  // De paginavoet heeft geen eigen pagina; die wordt getoond in de context van
+  // de startpagina.
+  return pageKey === "footer" || bekendePaginas().includes(pageKey);
+}

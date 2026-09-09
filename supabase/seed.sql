@@ -1668,7 +1668,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('opleidingen', 'titel', 'text', '{"text":"YogaCompany Academie"}'::jsonb)
+values ('opleidingen', 'titel', 'text', '{"text":"YogaCompany Academy"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2077,6 +2077,30 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('voor-yogadocenten', 'uitleg', 'richtext', '{"html":"\n<h2>Hoe het werkt</h2>\n<p>Je verkoopt je eigen kaarten en int dat geld zelf, op je eigen rekening. Je legt in de portal vast wat je hebt verkocht; vanaf dat moment kan je klant lessen boeken en telt zijn saldo af.</p>\n<p>Komt jouw klant met die kaart bij een collega, dan wordt dat geregistreerd en betaal jij die collega per gegeven les. Komt zíjn klant bij jou, dan werkt het andersom. Aan het eind van de maand sluit je af en staan de facturen klaar.</p>\n\n<h2>Wat het kost aan een collega</h2>\n<p>Je betaalt de werkelijke waarde van één les van díé kaart, exclusief btw. Bij een 10-strippenkaart is dat <strong>€ 13,30</strong>: precies wat jij er zelf van overhield nadat je de btw had afgedragen. Je levert er dus niets op in, en je verdient er ook niets aan.</p>\n<p>Op een kennismakingskaart geldt dit niet: die is alleen bij jou geldig. Anders zou je de kennismaking van een collega betalen.</p>\n\n<h2>Het geld loopt niet via ons</h2>\n<p>Wij ontvangen niets en betalen niets door. Jij factureert je collega rechtstreeks, en hij jou. Wij houden bij wat er is gebeurd, rekenen het uit en zetten de factuur klaar met jouw gegevens en jouw nummerreeks.</p>\n\n<h2>Wat je ziet, en wat niet</h2>\n<p>Je ziet de kaarten die jij hebt verkocht en elke afboeking daarop, ook wanneer die bij een collega plaatsvond, want daar factureer je op. Van je eigen lessen zie je wie er komt.</p>\n<p>Je ziet nooit de kaarten, klanten of afrekeningen van een collega waar je zelf niet in zit. Dat is geen instelling in een scherm maar een regel in de database.</p>\n"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'knop', 'text', '{"text":"Naar de docentenportal"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'knop_link', 'text', '{"text":"/docenten"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'knop_twee', 'text', '{"text":"Vraag een aansluiting aan"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'knop_twee_link', 'text', '{"text":"/contact"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

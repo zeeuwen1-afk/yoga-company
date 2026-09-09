@@ -19,7 +19,7 @@ const navigation: NavItem[] = [
     // De Academie is de paraplu boven het opleidingsaanbod. Het adres blijft
     // /opleidingen: dat staat in Google en in bestaande links.
     href: "/opleidingen",
-    label: "YogaCompany Academie",
+    label: "YogaCompany Academy",
     // Eerst de twee opleidingen van 200 uur, daarna wat je er los uit kunt
     // volgen. Dat is ook de volgorde waarin iemand kiest: eerst welke route,
     // dan of hij hem in stukken doet.
@@ -78,7 +78,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-line bg-background">
       {/* Breder dan de inhoud van de pagina's (max-w-6xl): het logo staat
           daardoor dichter bij de rand en de zes items in de balk krijgen de
-          ruimte die "YogaCompany Academie" nodig heeft. */}
+          ruimte die "YogaCompany Academy" nodig heeft. */}
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" className="flex items-center" aria-label="YogaCompany">
           {/* De compacte variant: merkteken en woordmerk, zonder de
@@ -97,7 +97,7 @@ export function SiteHeader() {
         </Link>
 
         {/* Pas vanaf een breed scherm, en niet meer vanaf een tablet. Zes items
-            waaronder "YogaCompany Academie" en "Voor organisaties" passen niet
+            waaronder "YogaCompany Academy" en "Voor organisaties" passen niet
             op 768 pixels; daar zou de balk gaan knellen of omvallen. Tussen 768
             en 1024 doet de menuknop het werk, en die was er al. */}
         <nav
