@@ -1716,7 +1716,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('opleidingen', 'niveaus_tekst', 'text', '{"text":"Elke module van 50 uur sluit je af met een certificaat van de Yoga Company Academy. Twee modules samen brengen je op Advanced, een volledige opleiding op Professional."}'::jsonb)
+values ('opleidingen', 'niveaus_tekst', 'text', '{"text":"Elke module van 50 uur sluit je af met een certificaat van de Yoga Company Academy. Twee modules tegelijk brengen je op Advanced, een volledige opleiding op Professional."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1728,7 +1728,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('opleidingen', 'niveaus_advanced', 'text', '{"text":"Twee modules samen, zoals Blok A of Blok B."}'::jsonb)
+values ('opleidingen', 'niveaus_advanced', 'text', '{"text":"Twee modules tegelijk, zoals Blok A of Blok B. Komt bovenop de twee modulecertificaten."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2376,7 +2376,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('yogaopleiding', 'manieren_tekst', 'richtext', '{"html":"<ul>\n<li><strong>Per module</strong> — iedere module van 50 uur is los te boeken en wordt afgesloten met een certificaat.</li>\n<li><strong>Per blok</strong> — Blok A (module 1 + 2, de actieve basis) en Blok B (module 3 + 4, de stille verdieping) zijn elk 100 uur en los van elkaar te volgen.</li>\n<li><strong>De volledige opleiding</strong> — wie alle vier de modules, het praktijkexamen en de eindopdracht afrondt, ontvangt het diploma Yogadocent 200 uur.</li>\n</ul>"}'::jsonb)
+values ('yogaopleiding', 'manieren_tekst', 'richtext', '{"html":"<ul>\n<li><strong>Per module</strong> — iedere module van 50 uur is los te boeken en wordt afgesloten met een certificaat.</li>\n<li><strong>Per blok</strong> — Blok A (module 1 + 2, de actieve basis) en Blok B (module 3 + 4, de stille verdieping) zijn elk 100 uur en los van elkaar te volgen. Een blok levert naast de twee modulecertificaten het Advanced-certificaat van 100 uur op.</li>\n<li><strong>De volledige opleiding</strong> — wie alle vier de modules, het praktijkexamen en de eindopdracht afrondt, ontvangt het diploma Yogadocent 200 uur.</li>\n</ul>"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2442,7 +2442,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('yogaopleiding-gedeeld', 'prijzen_voet', 'richtext', '{"html":"<ul>\n<li>Volledige opleiding: € 2.795 in plaats van 4 × € 795 — je bespaart € 385.</li>\n<li>Per blok: € 1.495 in plaats van € 1.590 — je bespaart € 95 per blok.</li>\n<li>Inclusief syllabus, toegang tot de online leeromgeving, beoordeling van opdrachten en het certificaat per module.</li>\n<li>Gespreid betalen is in overleg mogelijk.</li>\n</ul>"}'::jsonb)
+values ('yogaopleiding-gedeeld', 'prijzen_voet', 'richtext', '{"html":"<ul>\n<li>Volledige opleiding: € 2.795 in plaats van 4 × € 795 — je bespaart € 385.</li>\n<li>Per blok: € 1.495 in plaats van € 1.590 — je bespaart € 95 per blok.</li>\n<li>Inclusief syllabus, toegang tot de online leeromgeving, beoordeling van opdrachten en het certificaat per module. Bij een blok ontvang je daarbovenop het Advanced-certificaat van 100 uur.</li>\n<li>Gespreid betalen is in overleg mogelijk.</li>\n</ul>"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -3031,6 +3031,12 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('cursus', 'praktisch_certificaat_link', 'text', '{"text":"/opleidingen/academy"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_certificaat_voorwaarde', 'text', '{"text":"Je ontvangt het certificaat als je aanwezig was op de lesdagen en de eindopdracht voldoende hebt afgesloten. Volg je twee modules tegelijk, zoals Blok A of Blok B, dan ontvang je daarbovenop het Advanced-certificaat van 100 uur."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

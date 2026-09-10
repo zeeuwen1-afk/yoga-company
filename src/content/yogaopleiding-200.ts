@@ -112,7 +112,7 @@ export const OPLEIDING_MANIEREN_TITEL = "Drie manieren om te volgen";
 
 export const OPLEIDING_MANIEREN = `<ul>
 <li><strong>Per module</strong> — iedere module van 50 uur is los te boeken en wordt afgesloten met een certificaat.</li>
-<li><strong>Per blok</strong> — Blok A (module 1 + 2, de actieve basis) en Blok B (module 3 + 4, de stille verdieping) zijn elk 100 uur en los van elkaar te volgen.</li>
+<li><strong>Per blok</strong> — Blok A (module 1 + 2, de actieve basis) en Blok B (module 3 + 4, de stille verdieping) zijn elk 100 uur en los van elkaar te volgen. Een blok levert naast de twee modulecertificaten het Advanced-certificaat van 100 uur op.</li>
 <li><strong>De volledige opleiding</strong> — wie alle vier de modules, het praktijkexamen en de eindopdracht afrondt, ontvangt het diploma Yogadocent 200 uur.</li>
 </ul>`;
 
@@ -370,7 +370,7 @@ export const GEDEELD_PRIJZEN: Prijsregel[] = [
 export const GEDEELD_PRIJZEN_VOET = `<ul>
 <li>Volledige opleiding: € 2.795 in plaats van 4 × € 795 — je bespaart € 385.</li>
 <li>Per blok: € 1.495 in plaats van € 1.590 — je bespaart € 95 per blok.</li>
-<li>Inclusief syllabus, toegang tot de online leeromgeving, beoordeling van opdrachten en het certificaat per module.</li>
+<li>Inclusief syllabus, toegang tot de online leeromgeving, beoordeling van opdrachten en het certificaat per module. Bij een blok ontvang je daarbovenop het Advanced-certificaat van 100 uur.</li>
 <li>Gespreid betalen is in overleg mogelijk.</li>
 </ul>`;
 

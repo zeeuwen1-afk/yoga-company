@@ -943,6 +943,16 @@ const cursusBlokken: BlokSeed[] = [
   },
   {
     page_key: "cursus",
+    block_key: "praktisch_certificaat_voorwaarde",
+    kind: "text",
+    omschrijving:
+      "De voorwaarde voor het certificaat, onder de badge; leeg laten haalt de tekst weg",
+    value: {
+      text: "Je ontvangt het certificaat als je aanwezig was op de lesdagen en de eindopdracht voldoende hebt afgesloten. Volg je twee modules tegelijk, zoals Blok A of Blok B, dan ontvang je daarbovenop het Advanced-certificaat van 100 uur.",
+    },
+  },
+  {
+    page_key: "cursus",
     block_key: "praktisch_lesdata",
     kind: "text",
     omschrijving: "Naam van de regel met de lesdata",
@@ -2385,7 +2395,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Zin onder die kop",
     value: {
-      text: "Elke module van 50 uur sluit je af met een certificaat van de Yoga Company Academy. Twee modules samen brengen je op Advanced, een volledige opleiding op Professional.",
+      text: "Elke module van 50 uur sluit je af met een certificaat van de Yoga Company Academy. Twee modules tegelijk brengen je op Advanced, een volledige opleiding op Professional.",
     },
   },
   {
@@ -2400,7 +2410,9 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "niveaus_advanced",
     kind: "text",
     omschrijving: "Eén zin bij de Advanced-badge (100 uur)",
-    value: { text: "Twee modules samen, zoals Blok A of Blok B." },
+    value: {
+      text: "Twee modules tegelijk, zoals Blok A of Blok B. Komt bovenop de twee modulecertificaten.",
+    },
   },
   {
     page_key: "opleidingen",

@@ -249,6 +249,12 @@ export function CursusDetail({
                   </div>
                 </div>
               ) : null}
+              {cursus.certificaatNiveau &&
+              pagina.tekst("praktisch_certificaat_voorwaarde") ? (
+                <p className="mt-4 text-sm text-muted">
+                  {pagina.tekst("praktisch_certificaat_voorwaarde")}
+                </p>
+              ) : null}
               <dl className="mt-4">
                 {totaalUren > 0 ? (
                   <Feit
