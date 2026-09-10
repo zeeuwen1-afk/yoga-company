@@ -1,5 +1,6 @@
 "use server";
 
+import { NIVEAUS } from "@/content/niveaus";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -73,6 +74,7 @@ const cursusSchema = z.object({
   study_load_text: z.string().trim().max(300).optional().or(z.literal("")),
   location: z.string().trim().max(200).optional().or(z.literal("")),
   certificate_text: z.string().trim().max(500).optional().or(z.literal("")),
+  certificate_level: z.enum(NIVEAUS).optional().or(z.literal("")),
   max_participants: z.coerce
     .number()
     .int()
@@ -120,6 +122,7 @@ export async function bewaarCursus(
     study_load_text: parsed.data.study_load_text || null,
     location: parsed.data.location || null,
     certificate_text: parsed.data.certificate_text || null,
+    certificate_level: parsed.data.certificate_level || null,
     max_participants:
       typeof parsed.data.max_participants === "number"
         ? parsed.data.max_participants

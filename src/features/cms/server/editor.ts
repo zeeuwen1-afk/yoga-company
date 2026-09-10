@@ -67,7 +67,14 @@ export type EditorPagina = {
 /** De pagina's die via de editor te bewerken zijn, met een leesbare naam. */
 const PAGINA_NAMEN: Record<string, { titel: string; pad: string }> = {
   home: { titel: "Startpagina", pad: "/" },
-  opleidingen: { titel: "Opleidingen", pad: "/opleidingen" },
+  opleidingen: {
+    titel: "Yoga Company Academy · overzicht",
+    pad: "/opleidingen",
+  },
+  academy: {
+    titel: "Yoga Company Academy · uitleg en certificaten",
+    pad: "/opleidingen/academy",
+  },
   trainingen: { titel: "Trainingen", pad: "/trainingen" },
   lessen: { titel: "Lessen", pad: "/lessen" },
   bedrijfsyoga: { titel: "Bedrijfsyoga", pad: "/bedrijfsyoga" },

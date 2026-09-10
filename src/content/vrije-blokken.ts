@@ -103,6 +103,7 @@ export const PAGINAS_MET_VRIJE_BLOKKEN = [
   "over-ons",
   "portfolio",
   "opleidingen",
+  "academy",
   "trainingen",
   "lessen",
   "tarieven",

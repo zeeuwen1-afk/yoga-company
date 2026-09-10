@@ -2357,6 +2357,209 @@ export const BLOKKEN: BlokSeed[] = [
     },
   },
   {
+    page_key: "opleidingen",
+    block_key: "niveaus_titel",
+    kind: "text",
+    omschrijving:
+      "Kop boven de drie niveaus van de Academy; leeg laten haalt de hele sectie weg",
+    value: { text: "Drie niveaus, drie certificaten" },
+  },
+  {
+    page_key: "opleidingen",
+    block_key: "niveaus_tekst",
+    kind: "text",
+    omschrijving: "Zin onder die kop",
+    value: {
+      text: "Elke module van 50 uur sluit je af met een certificaat van de Yoga Company Academy. Twee modules samen brengen je op Advanced, een volledige opleiding op Professional.",
+    },
+  },
+  {
+    page_key: "opleidingen",
+    block_key: "niveaus_foundation",
+    kind: "text",
+    omschrijving: "Eén zin bij de Foundation-badge (50 uur)",
+    value: { text: "Eén module van 50 uur afgerond." },
+  },
+  {
+    page_key: "opleidingen",
+    block_key: "niveaus_advanced",
+    kind: "text",
+    omschrijving: "Eén zin bij de Advanced-badge (100 uur)",
+    value: { text: "Twee modules samen, zoals Blok A of Blok B." },
+  },
+  {
+    page_key: "opleidingen",
+    block_key: "niveaus_professional",
+    kind: "text",
+    omschrijving: "Eén zin bij de Professional-badge (200 uur)",
+    value: { text: "Een volledige opleiding van 200 uur, met diploma." },
+  },
+  {
+    page_key: "opleidingen",
+    block_key: "niveaus_knop",
+    kind: "text",
+    omschrijving: "Tekst op de knop naar de uitleg over de Academy",
+    value: {
+      text: "Waar de Academy voor staat en wat het certificaat inhoudt",
+    },
+  },
+  {
+    page_key: "opleidingen",
+    block_key: "niveaus_link",
+    kind: "text",
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/opleidingen/academy" },
+  },
+
+  // ---------------------------------------------------------------------------
+  // Waar de Yoga Company Academy voor staat, en wat het certificaat inhoudt
+  // ---------------------------------------------------------------------------
+  {
+    page_key: "academy",
+    block_key: "titel",
+    kind: "text",
+    omschrijving: "Kop van de pagina",
+    value: { text: "Waar de Yoga Company Academy voor staat" },
+  },
+  {
+    page_key: "academy",
+    block_key: "inleiding",
+    kind: "text",
+    omschrijving: "Inleidende tekst onder de kop",
+    value: {
+      text: "De opleidingstak van YogaCompany: kleine groepen, ervaren docenten, en een certificaat dat laat zien wat je hebt gedaan.",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "beeld",
+    kind: "image",
+    verbergbaar: true,
+    omschrijving: "Foto bij het verhaal; waar hij staat kies je bij de foto",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "academy",
+    block_key: "verhaal",
+    kind: "richtext",
+    omschrijving: "Waar de Academy voor staat",
+    value: {
+      html: "<p>De Yoga Company Academy is de plek binnen YogaCompany waar je het vak leert. Niet in een zaal met veertig mensen, maar in groepen van maximaal twaalf, met docenten die zelf al jaren lesgeven en blijven leren. We werken praktijkgericht: je oefent met echte mensen en echte lichamen, en je krijgt persoonlijke begeleiding.</p><p>Elke opleiding is opgebouwd uit modules van 50 uur. Je volgt ze achter elkaar of verspreid over een langere tijd, en je kunt ze ook los volgen. Zo bouw je stap voor stap op, in je eigen tempo, zonder je meteen aan een hele opleiding te binden.</p>",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "niveaus_titel",
+    kind: "text",
+    omschrijving: "Kop boven de drie niveaus; leeg laten haalt de sectie weg",
+    value: { text: "Drie niveaus" },
+  },
+  {
+    page_key: "academy",
+    block_key: "niveaus_inleiding",
+    kind: "text",
+    omschrijving: "Zin onder die kop",
+    value: {
+      text: "Hoe meer uren je afrondt, hoe verder je komt. Elk niveau heeft zijn eigen certificaat van de Yoga Company Academy.",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "foundation_titel",
+    kind: "text",
+    omschrijving: "Kop naast de Foundation-badge",
+    value: { text: "Foundation · 50 uur" },
+  },
+  {
+    page_key: "academy",
+    block_key: "foundation_tekst",
+    kind: "text",
+    omschrijving: "Wat Foundation betekent",
+    value: {
+      text: "Je hebt één module afgerond en ontvangt het certificaat van die module, met de naam van de module en het aantal uren.",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "advanced_titel",
+    kind: "text",
+    omschrijving: "Kop naast de Advanced-badge",
+    value: { text: "Advanced · 100 uur" },
+  },
+  {
+    page_key: "academy",
+    block_key: "advanced_tekst",
+    kind: "text",
+    omschrijving: "Wat Advanced betekent",
+    value: {
+      text: "Je hebt twee modules samen afgerond: Blok A of Blok B van de Yogaopleiding, of twee andere modules tegelijk. Naast de twee modulecertificaten ontvang je het Advanced-certificaat van 100 uur.",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "professional_titel",
+    kind: "text",
+    omschrijving: "Kop naast de Professional-badge",
+    value: { text: "Professional · 200 uur" },
+  },
+  {
+    page_key: "academy",
+    block_key: "professional_tekst",
+    kind: "text",
+    omschrijving: "Wat Professional betekent",
+    value: {
+      text: "Je hebt een volledige opleiding afgerond. Na de 200-uurs Yogaopleiding en het praktijkexamen ontvang je het diploma Yogadocent 200 uur; na de vier Yin-modules het diploma Yin Yoga Specialist.",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificaat_titel",
+    kind: "text",
+    omschrijving: "Kop boven de uitleg over het certificaat",
+    value: { text: "Wat het certificaat inhoudt" },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificaat_tekst",
+    kind: "richtext",
+    verbergbaar: true,
+    omschrijving:
+      "Wanneer je het certificaat krijgt, wat erop staat en wat het wel en niet is",
+    value: {
+      html: "<p>Je ontvangt het certificaat als je aanwezig was op de lesdagen en de eindopdracht voldoende hebt afgesloten. Op het certificaat staan je naam, de module of opleiding, het aantal uren en de datum.</p><p>Het certificaat wordt uitgegeven door de Yoga Company Academy zelf en ondertekend door Wietske Visser. Het laat zien wat je bij ons hebt gedaan en geleerd. Het is geen door de overheid erkend diploma; een yogaopleiding in Nederland is dat nooit. Wie na de Yogaopleiding wil lesgeven, kan dat met dit diploma bij studio's, sportclubs en organisaties.</p>",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "cta_titel",
+    kind: "text",
+    omschrijving: "Kop van de oproep onderaan; leeg laten haalt de oproep weg",
+    value: { text: "Twijfel je of dit bij je past?" },
+  },
+  {
+    page_key: "academy",
+    block_key: "cta_tekst",
+    kind: "text",
+    omschrijving: "Zin onder die kop",
+    value: {
+      text: "Bel of mail ons, of kom een keer een les meedoen. Dan bespreken we samen waar je begint.",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "cta_knop",
+    kind: "text",
+    omschrijving: "Tekst op de knop",
+    value: { text: "Neem contact op" },
+  },
+  {
+    page_key: "academy",
+    block_key: "cta_link",
+    kind: "text",
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/contact" },
+  },
+  {
     page_key: "lessen",
     block_key: "titel",
     kind: "text",

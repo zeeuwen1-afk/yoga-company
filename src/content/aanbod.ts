@@ -1,3 +1,4 @@
+import type { CertificaatNiveau } from "./niveaus.ts";
 import type { CourseType } from "@/lib/supabase/types";
 
 /**
@@ -50,6 +51,8 @@ export type CursusSeed = {
   locatie?: string;
   maxDeelnemers?: number;
   certificaat?: string;
+  /** Welke badge van de Academy erbij hoort; leeg is geen badge. */
+  certificaatNiveau?: CertificaatNiveau;
   prijsCenten: number;
   digitaleContent: boolean;
   lesmateriaal?: ModuleSeed[];
@@ -218,6 +221,7 @@ const losseModules: CursusSeed[] = yinCurriculum.map((module, index) => ({
   locatie: MODULE_LOCATIE,
   maxDeelnemers: 12,
   certificaat: `Certificaat Yin Yoga niveau ${module.nummer}`,
+  certificaatNiveau: "foundation" as const,
   prijsCenten: MODULE_PRIJS_CENTEN,
   digitaleContent: false,
   sort: 10 + module.nummer,
@@ -276,6 +280,7 @@ const yogaopleidingProducten: CursusSeed[] = [
     type: "opleiding",
     titel: "200-uurs Yogaopleiding",
     slug: "200-uurs-yogaopleiding",
+    certificaatNiveau: "professional",
     samenvatting:
       "Vier modules van 50 uur: Hatha en Vinyasa, anatomie en filosofie, Yin Yoga en het zenuwstelsel. Inclusief praktijkexamen en het diploma Yogadocent 200 uur.",
     beschrijving:
@@ -297,6 +302,7 @@ const yogaopleidingProducten: CursusSeed[] = [
     type: "opleiding",
     titel: "Module 1 — Hatha & Vinyasa",
     slug: "yogaopleiding-module-1-hatha-vinyasa",
+    certificaatNiveau: "foundation",
     samenvatting:
       "50 uur · de actieve basis van de 200-uurs Yogaopleiding. Houdingen en uitlijning, vloeiende sequenties en je eerste les.",
     beschrijving:
@@ -316,6 +322,7 @@ const yogaopleidingProducten: CursusSeed[] = [
     type: "opleiding",
     titel: "Module 2 — Anatomie, Filosofie & Meditatie",
     slug: "yogaopleiding-module-2-anatomie-filosofie-meditatie",
+    certificaatNiveau: "foundation",
     samenvatting:
       "50 uur · het fundament onder de praktijk. Anatomie om veilig les te geven, de filosofie van yoga en het begeleiden van meditatie en pranayama.",
     beschrijving:
@@ -335,17 +342,19 @@ const yogaopleidingProducten: CursusSeed[] = [
     type: "opleiding",
     titel: "Blok A — De actieve basis",
     slug: "yogaopleiding-blok-a",
+    certificaatNiveau: "advanced",
     samenvatting:
       "100 uur · module 1 en 2 samen. € 1.495 in plaats van € 1.590; je bespaart € 95.",
     beschrijving:
-      "Blok A van de 200-uurs Yogaopleiding: module 1 (Hatha & Vinyasa) en module 2 (Anatomie, Filosofie & Meditatie) samen, 100 uur.\n\nJe ontvangt het certificaat van beide modules.",
+      "Blok A van de 200-uurs Yogaopleiding: module 1 (Hatha & Vinyasa) en module 2 (Anatomie, Filosofie & Meditatie) samen, 100 uur.\n\nJe ontvangt het certificaat van beide modules, en daarbovenop het Advanced-certificaat van de Yoga Company Academy voor 100 uur.",
     voorWie:
       "Wie de actieve basis in één keer wil doen, zonder zich meteen aan de volledige opleiding te binden.",
     toelatingseisen: "Een vooropleiding is niet nodig.",
     studiebelasting: "100 uur, verdeeld over twee modules van 50 uur",
     locatie: MODULE_LOCATIE,
     maxDeelnemers: 14,
-    certificaat: "Certificaat per module",
+    certificaat:
+      "Certificaat per module, plus het Advanced-certificaat van 100 uur",
     prijsCenten: BLOK_PRIJS_CENTEN,
     digitaleContent: false,
     sort: 22,
@@ -354,10 +363,11 @@ const yogaopleidingProducten: CursusSeed[] = [
     type: "opleiding",
     titel: "Blok B — De stille verdieping",
     slug: "yogaopleiding-blok-b",
+    certificaatNiveau: "advanced",
     samenvatting:
       "100 uur · module 3 en 4 samen. € 1.495 in plaats van € 1.590; je bespaart € 95.",
     beschrijving:
-      "Blok B van de 200-uurs Yogaopleiding: module 3 (Yin Yoga & het lichaam) en module 4 (Zenuwstelsel & basis meridianen) samen, 100 uur.\n\nDeze twee modules zijn identiek aan niveau 1 en 2 van de Yin Yoga Specialist Opleiding en tellen daarvoor mee.",
+      "Blok B van de 200-uurs Yogaopleiding: module 3 (Yin Yoga & het lichaam) en module 4 (Zenuwstelsel & basis meridianen) samen, 100 uur.\n\nDeze twee modules zijn identiek aan niveau 1 en 2 van de Yin Yoga Specialist Opleiding en tellen daarvoor mee. Je ontvangt het certificaat van beide modules, en daarbovenop het Advanced-certificaat van de Yoga Company Academy voor 100 uur.",
     voorWie:
       "Wie de stille kant van yoga in één keer wil doen, en docenten die Yin aan hun aanbod willen toevoegen.",
     toelatingseisen:
@@ -365,7 +375,8 @@ const yogaopleidingProducten: CursusSeed[] = [
     studiebelasting: "100 uur, verdeeld over twee modules van 50 uur",
     locatie: MODULE_LOCATIE,
     maxDeelnemers: 14,
-    certificaat: "Certificaat per module",
+    certificaat:
+      "Certificaat per module, plus het Advanced-certificaat van 100 uur",
     prijsCenten: BLOK_PRIJS_CENTEN,
     digitaleContent: false,
     sort: 23,
@@ -417,6 +428,7 @@ export const AANBOD: CursusSeed[] = [
     type: "opleiding",
     titel: "200-uurs Yin Yoga Specialist Opleiding",
     slug: "200-uurs-yin-yoga-specialist",
+    certificaatNiveau: "professional",
     samenvatting:
       "Vier modules van 50 uur, van de basis van Yin Yoga naar specialist in herstel en revalidatie. Per module een certificaat Yin Yoga niveau 1 t/m 4; na alle vier de modules het diploma Yin Yoga Specialist.",
     beschrijving:

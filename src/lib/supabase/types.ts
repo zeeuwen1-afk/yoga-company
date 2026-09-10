@@ -107,6 +107,7 @@ export type Course = {
   location: string | null;
   max_participants: number | null;
   certificate_text: string | null;
+  certificate_level: string | null;
   price_cents: number;
   currency: string;
   has_digital_content: boolean;

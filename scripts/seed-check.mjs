@@ -182,6 +182,19 @@ try {
     `Eerst Jij heeft 24 lesonderdelen, drie per week (gevonden: ${eerstJijItems})`,
   );
 
+  const niveaus = await db.query(
+    "select slug, certificate_level from courses where certificate_level is not null order by slug",
+  );
+  controleer(
+    niveaus.rows.length === 10,
+    `tien opleidingen dragen een certificaatniveau (gevonden: ${niveaus.rows.length})`,
+  );
+  controleer(
+    niveaus.rows.find((rij) => rij.slug === "200-uurs-yogaopleiding")
+      ?.certificate_level === "professional",
+    "de 200-uurs Yogaopleiding staat op Professional",
+  );
+
   // De publieke view mag nooit concepten tonen.
   const publiek = await tel(
     "select count(*)::int as n from content_blocks_public where value is not null",

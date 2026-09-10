@@ -98,6 +98,12 @@ const SECTIENAMEN: Record<string, string> = {
   // De vraag-en-antwoordblokken op de veiligheidspagina heten sectie_1_vraag
   // en verder; zonder naam zou de groep gewoon "Sectie" gaan heten.
   sectie: "Vragen en antwoorden",
+  // De Yoga Company Academy: de drie niveaus en wat het certificaat inhoudt.
+  niveaus: "De drie niveaus",
+  foundation: "Niveau Foundation, 50 uur",
+  advanced: "Niveau Advanced, 100 uur",
+  professional: "Niveau Professional, 200 uur",
+  certificaat: "Wat het certificaat inhoudt",
 };
 
 export type Sectie<T> = {

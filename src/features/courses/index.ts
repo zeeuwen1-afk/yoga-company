@@ -11,3 +11,6 @@ export {
 export { formateerPrijs } from "./prijs";
 
 export { CursusKaart, CursusRooster } from "./components/cursus-kaart";
+
+/** De certificaatbadge van de Academy; ook de cms-pagina's tonen hem. */
+export { AcademyBadge } from "./components/academy-badge";

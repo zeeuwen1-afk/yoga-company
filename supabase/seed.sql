@@ -12,7 +12,7 @@
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'opleiding', '200-uurs Yin Yoga Specialist Opleiding', '200-uurs-yin-yoga-specialist',
   'Vier modules van 50 uur, van de basis van Yin Yoga naar specialist in herstel en revalidatie. Per module een certificaat Yin Yoga niveau 1 t/m 4; na alle vier de modules het diploma Yin Yoga Specialist.', 'De 200-uurs Yin Yoga Specialist Opleiding brengt je van de fundamenten van Yin Yoga naar het punt waarop je de vorm kunt inzetten bij herstel en revalidatie.
@@ -24,6 +24,7 @@ We werken in kleine groepen van maximaal twaalf deelnemers. Dat is een bewuste k
   '[{"nummer":1,"titel":"De basis van Yin Yoga","uren":50,"samenvatting":"Je leert waar Yin Yoga vandaan komt, hoe de houdingen werken en wat ze met het lichaam doen.","blokken":[{"titel":"Fundamenten van yin en yang","onderdelen":["Het onderscheid tussen yin en yang in beweging en in rust","Waar de vorm vandaan komt en welke visie eronder ligt"]},{"titel":"Basisprincipes","onderdelen":["De drie principes van een yin-houding","Tijd, diepte en de rol van stilte","Hulpmiddelen inzetten voor verschillende lichamen"]},{"titel":"Houdingen en hun werking","onderdelen":["De kernhoudingen en hun varianten","Werking op bindweefsel, gewrichten en botten","Anatomische verschillen en wat die betekenen voor je lesgeven"]}]},{"nummer":2,"titel":"Het zenuwstelsel & de basis van de meridiaanleer","uren":50,"samenvatting":"Waarom Yin Yoga rust brengt, en de eerste kennismaking met de meridianen.","blokken":[{"titel":"Het zenuwstelsel","onderdelen":["Sympathisch en parasympathisch: spanning en herstel","Wat langdurige stress met het lichaam doet","Hoe een yin-les het herstelvermogen aanspreekt"]},{"titel":"Basis van de meridiaanleer","onderdelen":["Wat meridianen zijn en hoe ze zijn geordend","De verbinding tussen houding en meridiaan","Eerste toepassing in het opbouwen van een les"]}]},{"nummer":3,"titel":"Chinese geneeskunde en Yin Yoga","uren":50,"samenvatting":"Werken met meridianen, de vijf elementen en de orgaanklok.","blokken":[{"titel":"Werken met meridianen","onderdelen":["De meridianen in de praktijk van een yin-les","Houdingen kiezen op basis van wat iemand nodig heeft"]},{"titel":"De elementen","onderdelen":["De vijf elementen en hun onderlinge samenhang","Seizoenen en wat ze vragen"]},{"titel":"De orgaanklok","onderdelen":["Het ritme van de dag en de organen","Een les afstemmen op tijd en seizoen"]}]},{"nummer":4,"titel":"Herstel & revalidatie","uren":50,"samenvatting":"Alle kennis komt samen: je leert Yin Yoga inzetten bij herstel en revalidatie, en persoonlijke lessen maken.","blokken":[{"titel":"Kennis integreren","onderdelen":["De vier modules samenbrengen in één werkwijze","Kijken naar de mens tegenover je, niet naar de houding"]},{"titel":"Herstel en revalidatie","onderdelen":["Yin Yoga bij overbelasting, blessures en langdurige klachten","Grenzen van je vak: wanneer je doorverwijst"]},{"titel":"Persoonlijke lessen maken","onderdelen":["Een programma opbouwen voor één persoon","Begeleiden, bijstellen en opvolgen"]}]}]'::jsonb,
   'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   12, 'Certificaat Yin Yoga niveau 1 t/m 4 per module; diploma Yin Yoga Specialist na alle vier de modules. Modules zijn ook los te volgen',
+  'professional',
   279500, false, true, 1
 )
 on conflict (slug) do update set
@@ -38,6 +39,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -45,7 +47,7 @@ on conflict (slug) do update set
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'opleiding', 'Yin Yoga niveau 1: De basis van Yin Yoga', 'yin-niveau-1-basis',
   'Je leert waar Yin Yoga vandaan komt, hoe de houdingen werken en wat ze met het lichaam doen. Module 1 van 50 uur, af te sluiten met het certificaat Yin Yoga niveau 1.', 'Module 1 van de 200-uurs Yin Yoga Specialist Opleiding, ook los te volgen.
@@ -57,6 +59,7 @@ Je sluit de module af met het certificaat **Yin Yoga niveau 1**. Volg je alle vi
   '[{"nummer":1,"titel":"De basis van Yin Yoga","uren":50,"samenvatting":"Je leert waar Yin Yoga vandaan komt, hoe de houdingen werken en wat ze met het lichaam doen.","blokken":[{"titel":"Fundamenten van yin en yang","onderdelen":["Het onderscheid tussen yin en yang in beweging en in rust","Waar de vorm vandaan komt en welke visie eronder ligt"]},{"titel":"Basisprincipes","onderdelen":["De drie principes van een yin-houding","Tijd, diepte en de rol van stilte","Hulpmiddelen inzetten voor verschillende lichamen"]},{"titel":"Houdingen en hun werking","onderdelen":["De kernhoudingen en hun varianten","Werking op bindweefsel, gewrichten en botten","Anatomische verschillen en wat die betekenen voor je lesgeven"]}]}]'::jsonb,
   'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   12, 'Certificaat Yin Yoga niveau 1',
+  'foundation',
   79500, false, true, 11
 )
 on conflict (slug) do update set
@@ -71,6 +74,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -78,7 +82,7 @@ on conflict (slug) do update set
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'opleiding', 'Yin Yoga niveau 2: Het zenuwstelsel & de basis van de meridiaanleer', 'yin-niveau-2-zenuwstelsel-meridiaanleer',
   'Waarom Yin Yoga rust brengt, en de eerste kennismaking met de meridianen. Module 2 van 50 uur, af te sluiten met het certificaat Yin Yoga niveau 2.', 'Module 2 van de 200-uurs Yin Yoga Specialist Opleiding, ook los te volgen.
@@ -90,6 +94,7 @@ Je sluit de module af met het certificaat **Yin Yoga niveau 2**. Volg je alle vi
   '[{"nummer":2,"titel":"Het zenuwstelsel & de basis van de meridiaanleer","uren":50,"samenvatting":"Waarom Yin Yoga rust brengt, en de eerste kennismaking met de meridianen.","blokken":[{"titel":"Het zenuwstelsel","onderdelen":["Sympathisch en parasympathisch: spanning en herstel","Wat langdurige stress met het lichaam doet","Hoe een yin-les het herstelvermogen aanspreekt"]},{"titel":"Basis van de meridiaanleer","onderdelen":["Wat meridianen zijn en hoe ze zijn geordend","De verbinding tussen houding en meridiaan","Eerste toepassing in het opbouwen van een les"]}]}]'::jsonb,
   'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   12, 'Certificaat Yin Yoga niveau 2',
+  'foundation',
   79500, false, true, 12
 )
 on conflict (slug) do update set
@@ -104,6 +109,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -111,7 +117,7 @@ on conflict (slug) do update set
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'opleiding', 'Yin Yoga niveau 3: Chinese geneeskunde en Yin Yoga', 'yin-niveau-3-chinese-geneeskunde',
   'Werken met meridianen, de vijf elementen en de orgaanklok. Module 3 van 50 uur, af te sluiten met het certificaat Yin Yoga niveau 3.', 'Module 3 van de 200-uurs Yin Yoga Specialist Opleiding, ook los te volgen.
@@ -123,6 +129,7 @@ Je sluit de module af met het certificaat **Yin Yoga niveau 3**. Volg je alle vi
   '[{"nummer":3,"titel":"Chinese geneeskunde en Yin Yoga","uren":50,"samenvatting":"Werken met meridianen, de vijf elementen en de orgaanklok.","blokken":[{"titel":"Werken met meridianen","onderdelen":["De meridianen in de praktijk van een yin-les","Houdingen kiezen op basis van wat iemand nodig heeft"]},{"titel":"De elementen","onderdelen":["De vijf elementen en hun onderlinge samenhang","Seizoenen en wat ze vragen"]},{"titel":"De orgaanklok","onderdelen":["Het ritme van de dag en de organen","Een les afstemmen op tijd en seizoen"]}]}]'::jsonb,
   'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   12, 'Certificaat Yin Yoga niveau 3',
+  'foundation',
   79500, false, true, 13
 )
 on conflict (slug) do update set
@@ -137,6 +144,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -144,7 +152,7 @@ on conflict (slug) do update set
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'opleiding', 'Yin Yoga niveau 4: Herstel & revalidatie', 'yin-niveau-4-herstel-revalidatie',
   'Alle kennis komt samen: je leert Yin Yoga inzetten bij herstel en revalidatie, en persoonlijke lessen maken. Module 4 van 50 uur, af te sluiten met het certificaat Yin Yoga niveau 4.', 'Module 4 van de 200-uurs Yin Yoga Specialist Opleiding, ook los te volgen.
@@ -156,6 +164,7 @@ Je sluit de module af met het certificaat **Yin Yoga niveau 4**. Volg je alle vi
   '[{"nummer":4,"titel":"Herstel & revalidatie","uren":50,"samenvatting":"Alle kennis komt samen: je leert Yin Yoga inzetten bij herstel en revalidatie, en persoonlijke lessen maken.","blokken":[{"titel":"Kennis integreren","onderdelen":["De vier modules samenbrengen in één werkwijze","Kijken naar de mens tegenover je, niet naar de houding"]},{"titel":"Herstel en revalidatie","onderdelen":["Yin Yoga bij overbelasting, blessures en langdurige klachten","Grenzen van je vak: wanneer je doorverwijst"]},{"titel":"Persoonlijke lessen maken","onderdelen":["Een programma opbouwen voor één persoon","Begeleiden, bijstellen en opvolgen"]}]}]'::jsonb,
   'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   12, 'Certificaat Yin Yoga niveau 4',
+  'foundation',
   79500, false, true, 14
 )
 on conflict (slug) do update set
@@ -170,6 +179,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -177,7 +187,7 @@ on conflict (slug) do update set
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'opleiding', '200-uurs Yogaopleiding', '200-uurs-yogaopleiding',
   'Vier modules van 50 uur: Hatha en Vinyasa, anatomie en filosofie, Yin Yoga en het zenuwstelsel. Inclusief praktijkexamen en het diploma Yogadocent 200 uur.', 'De volledige 200-uurs Yogaopleiding: alle vier de modules, het praktijkexamen en de eindopdracht.
@@ -189,6 +199,7 @@ De volledige opleiding kost € 2.795 in plaats van 4 × € 795; je bespaart �
   null,
   '200 uur, verdeeld over vier modules van 50 uur', 'Studio van YogaCompany (adres volgt)',
   14, 'Certificaat per module; diploma Yogadocent 200 uur na alle vier de modules en het praktijkexamen',
+  'professional',
   279500, false, true, 2
 )
 on conflict (slug) do update set
@@ -203,6 +214,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -210,7 +222,7 @@ on conflict (slug) do update set
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'opleiding', 'Module 1 — Hatha & Vinyasa', 'yogaopleiding-module-1-hatha-vinyasa',
   '50 uur · de actieve basis van de 200-uurs Yogaopleiding. Houdingen en uitlijning, vloeiende sequenties en je eerste les.', 'Module 1 van de 200-uurs Yogaopleiding, ook los te volgen.
@@ -222,6 +234,7 @@ Je ontvangt het certificaat Hatha & Vinyasa — 50 uur.',
   null,
   'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   14, 'Certificaat Hatha & Vinyasa — 50 uur',
+  'foundation',
   79500, false, true, 20
 )
 on conflict (slug) do update set
@@ -236,6 +249,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -243,7 +257,7 @@ on conflict (slug) do update set
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'opleiding', 'Module 2 — Anatomie, Filosofie & Meditatie', 'yogaopleiding-module-2-anatomie-filosofie-meditatie',
   '50 uur · het fundament onder de praktijk. Anatomie om veilig les te geven, de filosofie van yoga en het begeleiden van meditatie en pranayama.', 'Module 2 van de 200-uurs Yogaopleiding, ook los te volgen.
@@ -255,6 +269,7 @@ Je ontvangt het certificaat Anatomie, Filosofie & Meditatie — 50 uur.',
   null,
   'Per module: 5 lesdagen (± 32 contacturen) + ± 18 uur zelfstudie en eindopdracht', 'Studio van YogaCompany (adres volgt)',
   14, 'Certificaat Anatomie, Filosofie & Meditatie — 50 uur',
+  'foundation',
   79500, false, true, 21
 )
 on conflict (slug) do update set
@@ -269,6 +284,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -276,16 +292,17 @@ on conflict (slug) do update set
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'opleiding', 'Blok A — De actieve basis', 'yogaopleiding-blok-a',
   '100 uur · module 1 en 2 samen. € 1.495 in plaats van € 1.590; je bespaart € 95.', 'Blok A van de 200-uurs Yogaopleiding: module 1 (Hatha & Vinyasa) en module 2 (Anatomie, Filosofie & Meditatie) samen, 100 uur.
 
-Je ontvangt het certificaat van beide modules.',
+Je ontvangt het certificaat van beide modules, en daarbovenop het Advanced-certificaat van de Yoga Company Academy voor 100 uur.',
   'Wie de actieve basis in één keer wil doen, zonder zich meteen aan de volledige opleiding te binden.', 'Een vooropleiding is niet nodig.',
   null,
   '100 uur, verdeeld over twee modules van 50 uur', 'Studio van YogaCompany (adres volgt)',
-  14, 'Certificaat per module',
+  14, 'Certificaat per module, plus het Advanced-certificaat van 100 uur',
+  'advanced',
   149500, false, true, 22
 )
 on conflict (slug) do update set
@@ -300,6 +317,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -307,16 +325,17 @@ on conflict (slug) do update set
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'opleiding', 'Blok B — De stille verdieping', 'yogaopleiding-blok-b',
   '100 uur · module 3 en 4 samen. € 1.495 in plaats van € 1.590; je bespaart € 95.', 'Blok B van de 200-uurs Yogaopleiding: module 3 (Yin Yoga & het lichaam) en module 4 (Zenuwstelsel & basis meridianen) samen, 100 uur.
 
-Deze twee modules zijn identiek aan niveau 1 en 2 van de Yin Yoga Specialist Opleiding en tellen daarvoor mee.',
+Deze twee modules zijn identiek aan niveau 1 en 2 van de Yin Yoga Specialist Opleiding en tellen daarvoor mee. Je ontvangt het certificaat van beide modules, en daarbovenop het Advanced-certificaat van de Yoga Company Academy voor 100 uur.',
   'Wie de stille kant van yoga in één keer wil doen, en docenten die Yin aan hun aanbod willen toevoegen.', 'Na module 1 + 2, óf rechtstreeks voor ervaren beoefenaars en yogadocenten (na intake).',
   null,
   '100 uur, verdeeld over twee modules van 50 uur', 'Studio van YogaCompany (adres volgt)',
-  14, 'Certificaat per module',
+  14, 'Certificaat per module, plus het Advanced-certificaat van 100 uur',
+  'advanced',
   149500, false, true, 23
 )
 on conflict (slug) do update set
@@ -331,6 +350,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -338,7 +358,7 @@ on conflict (slug) do update set
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'training', 'Eerst Jij: 8-weeks online herstelprogramma', 'eerst-jij',
   'Acht weken online, in je eigen tempo, met begeleiding. Voor wie leeg is en weer wil opbouwen: stap voor stap, zonder te forceren.', 'Eerst Jij is een programma van acht weken voor mensen die op zijn. Uitgeput, oververmoeid, of hersteld verklaard maar nog lang niet de oude.
@@ -350,6 +370,7 @@ Het programma gaat langzaam. Dat is geen tekortkoming maar het uitgangspunt: her
   null,
   'Acht weken, ongeveer twee uur per week. In je eigen tempo te volgen.', 'Online',
   null, 'Geen certificering; dit is een persoonlijk programma.',
+  null,
   79700, true, true, 20
 )
 on conflict (slug) do update set
@@ -364,6 +385,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -371,7 +393,7 @@ on conflict (slug) do update set
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   'training', 'Hormoonyoga-training', 'hormoonyoga',
   'Een praktische training in hormoonyoga: houdingen, ademhaling en ritme, afgestemd op wat het lichaam in verschillende levensfasen vraagt.', 'In deze training leer je hoe je met houdingen, ademhaling en ritme kunt werken aan hormonale balans.
@@ -381,6 +403,7 @@ We kijken naar wat het lichaam in verschillende levensfasen nodig heeft en hoe j
   null,
   'Zie de lesdata; neem gerust contact op voor de planning.', 'Studio van YogaCompany (adres volgt)',
   12, null,
+  null,
   29500, false, true, 21
 )
 on conflict (slug) do update set
@@ -395,6 +418,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;
@@ -1681,6 +1705,156 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('opleidingen', 'beeld', 'image', '{"url":"/beeld/opleidingen-zaal.jpg","alt":"Een zaal met yogamatten en blokken klaargelegd, zonder deelnemers"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('opleidingen', 'niveaus_titel', 'text', '{"text":"Drie niveaus, drie certificaten"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('opleidingen', 'niveaus_tekst', 'text', '{"text":"Elke module van 50 uur sluit je af met een certificaat van de Yoga Company Academy. Twee modules samen brengen je op Advanced, een volledige opleiding op Professional."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('opleidingen', 'niveaus_foundation', 'text', '{"text":"Eén module van 50 uur afgerond."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('opleidingen', 'niveaus_advanced', 'text', '{"text":"Twee modules samen, zoals Blok A of Blok B."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('opleidingen', 'niveaus_professional', 'text', '{"text":"Een volledige opleiding van 200 uur, met diploma."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('opleidingen', 'niveaus_knop', 'text', '{"text":"Waar de Academy voor staat en wat het certificaat inhoudt"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('opleidingen', 'niveaus_link', 'text', '{"text":"/opleidingen/academy"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'titel', 'text', '{"text":"Waar de Yoga Company Academy voor staat"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'inleiding', 'text', '{"text":"De opleidingstak van YogaCompany: kleine groepen, ervaren docenten, en een certificaat dat laat zien wat je hebt gedaan."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'beeld', 'image', '{"url":"","alt":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'verhaal', 'richtext', '{"html":"<p>De Yoga Company Academy is de plek binnen YogaCompany waar je het vak leert. Niet in een zaal met veertig mensen, maar in groepen van maximaal twaalf, met docenten die zelf al jaren lesgeven en blijven leren. We werken praktijkgericht: je oefent met echte mensen en echte lichamen, en je krijgt persoonlijke begeleiding.</p><p>Elke opleiding is opgebouwd uit modules van 50 uur. Je volgt ze achter elkaar of verspreid over een langere tijd, en je kunt ze ook los volgen. Zo bouw je stap voor stap op, in je eigen tempo, zonder je meteen aan een hele opleiding te binden.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'niveaus_titel', 'text', '{"text":"Drie niveaus"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'niveaus_inleiding', 'text', '{"text":"Hoe meer uren je afrondt, hoe verder je komt. Elk niveau heeft zijn eigen certificaat van de Yoga Company Academy."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'foundation_titel', 'text', '{"text":"Foundation · 50 uur"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'foundation_tekst', 'text', '{"text":"Je hebt één module afgerond en ontvangt het certificaat van die module, met de naam van de module en het aantal uren."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'advanced_titel', 'text', '{"text":"Advanced · 100 uur"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'advanced_tekst', 'text', '{"text":"Je hebt twee modules samen afgerond: Blok A of Blok B van de Yogaopleiding, of twee andere modules tegelijk. Naast de twee modulecertificaten ontvang je het Advanced-certificaat van 100 uur."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'professional_titel', 'text', '{"text":"Professional · 200 uur"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'professional_tekst', 'text', '{"text":"Je hebt een volledige opleiding afgerond. Na de 200-uurs Yogaopleiding en het praktijkexamen ontvang je het diploma Yogadocent 200 uur; na de vier Yin-modules het diploma Yin Yoga Specialist."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificaat_titel', 'text', '{"text":"Wat het certificaat inhoudt"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificaat_tekst', 'richtext', '{"html":"<p>Je ontvangt het certificaat als je aanwezig was op de lesdagen en de eindopdracht voldoende hebt afgesloten. Op het certificaat staan je naam, de module of opleiding, het aantal uren en de datum.</p><p>Het certificaat wordt uitgegeven door de Yoga Company Academy zelf en ondertekend door Wietske Visser. Het laat zien wat je bij ons hebt gedaan en geleerd. Het is geen door de overheid erkend diploma; een yogaopleiding in Nederland is dat nooit. Wie na de Yogaopleiding wil lesgeven, kan dat met dit diploma bij studio''s, sportclubs en organisaties.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'cta_titel', 'text', '{"text":"Twijfel je of dit bij je past?"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'cta_tekst', 'text', '{"text":"Bel of mail ons, of kom een keer een les meedoen. Dan bespreken we samen waar je begint."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'cta_knop', 'text', '{"text":"Neem contact op"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'cta_link', 'text', '{"text":"/contact"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

@@ -6,6 +6,8 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { Aanwijzen } from "@/features/cms/components/aanwijzen";
 import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalConceptPagina, kanVoorvertonen } from "@/features/cms";
+import { AcademyInhoud } from "@/features/cms/paginas/academy-inhoud";
+import { NiveausOverzicht } from "@/features/courses/components/niveaus-overzicht";
 import { haalRooster, Rooster } from "@/features/bookings";
 import { HomeInhoud } from "@/features/cms/paginas/home-inhoud";
 import { OrganisatieInhoud } from "@/features/cms/paginas/organisatie-inhoud";
@@ -102,9 +104,12 @@ export default async function VoorbeeldPagina({
       case "sportclubs":
       case "onderwijs":
         return <OrganisatieInhoud pagina={pagina} pageKey={inhoudKey} />;
+      case "academy":
+        return <AcademyInhoud pagina={pagina} />;
       case "opleidingen":
         return (
           <OverzichtInhoud pagina={pagina} pageKey="opleidingen">
+            <NiveausOverzicht pagina={pagina} />
             <CursusRooster cursussen={await haalAanbod("opleiding")} />
           </OverzichtInhoud>
         );

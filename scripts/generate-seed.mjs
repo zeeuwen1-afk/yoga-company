@@ -56,7 +56,7 @@ for (const cursus of AANBOD) {
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
   study_load_text, location, max_participants, certificate_text,
-  price_cents, has_digital_content, is_active, sort
+  certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   ${q(cursus.type)}, ${q(cursus.titel)}, ${q(cursus.slug)},
   ${q(cursus.samenvatting)}, ${q(cursus.beschrijving)},
@@ -64,6 +64,7 @@ insert into courses (
   ${json(cursus.curriculum)},
   ${q(cursus.studiebelasting)}, ${q(cursus.locatie)},
   ${cursus.maxDeelnemers ?? "null"}, ${q(cursus.certificaat)},
+  ${q(cursus.certificaatNiveau)},
   ${cursus.prijsCenten}, ${cursus.digitaleContent}, true, ${cursus.sort}
 )
 on conflict (slug) do update set
@@ -78,6 +79,7 @@ on conflict (slug) do update set
   location = excluded.location,
   max_participants = excluded.max_participants,
   certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
   price_cents = excluded.price_cents,
   has_digital_content = excluded.has_digital_content,
   sort = excluded.sort;`);

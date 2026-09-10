@@ -5,6 +5,7 @@ import { useActionState } from "react";
 import { FormMessage } from "@/components/ui/form-message";
 import { Input, Label, Textarea } from "@/components/ui/input";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { NIVEAU_INFO, NIVEAUS } from "@/content/niveaus";
 import { bewaarCursus, type AanbodResultaat } from "../server/admin-acties";
 import type { Cursus } from "../server/queries";
 
@@ -184,6 +185,29 @@ export function CursusFormulier({
           rows={2}
           defaultValue={cursus?.certificaat ?? ""}
         />
+      </div>
+
+      <div>
+        <Label htmlFor="c-niveau">
+          Certificaatniveau, de badge van de Academy
+        </Label>
+        <select
+          id="c-niveau"
+          name="certificate_level"
+          defaultValue={cursus?.certificaatNiveau ?? ""}
+          className="h-11 w-full rounded-lg border border-line bg-white px-3"
+        >
+          <option value="">Geen badge</option>
+          {NIVEAUS.map((niveau) => (
+            <option key={niveau} value={niveau}>
+              {NIVEAU_INFO[niveau].label}
+            </option>
+          ))}
+        </select>
+        <p className="mt-1 text-sm text-muted">
+          Foundation is één module van 50 uur, Advanced twee modules samen,
+          Professional een volledige opleiding. Trainingen krijgen geen badge.
+        </p>
       </div>
 
       <label className="flex min-h-11 cursor-pointer items-start gap-3">

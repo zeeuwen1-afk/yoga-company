@@ -5,6 +5,7 @@ import {
   type CurriculumModule,
   type CursusSeed,
 } from "@/content/aanbod";
+import { type CertificaatNiveau, leesNiveau } from "@/content/niveaus";
 import { createPublicClient } from "@/lib/supabase/public";
 import type { Course, CourseType } from "@/lib/supabase/types";
 
@@ -30,6 +31,7 @@ export type Cursus = {
   locatie: string | null;
   maxDeelnemers: number | null;
   certificaat: string | null;
+  certificaatNiveau: CertificaatNiveau | null;
   prijsCenten: number;
   digitaleContent: boolean;
 };
@@ -49,6 +51,7 @@ function uitSeed(seed: CursusSeed): Cursus {
     locatie: seed.locatie ?? null,
     maxDeelnemers: seed.maxDeelnemers ?? null,
     certificaat: seed.certificaat ?? null,
+    certificaatNiveau: seed.certificaatNiveau ?? null,
     prijsCenten: seed.prijsCenten,
     digitaleContent: seed.digitaleContent,
   };
@@ -71,6 +74,7 @@ function uitDatabase(rij: Course): Cursus {
     locatie: rij.location,
     maxDeelnemers: rij.max_participants,
     certificaat: rij.certificate_text,
+    certificaatNiveau: leesNiveau(rij.certificate_level),
     prijsCenten: rij.price_cents,
     digitaleContent: rij.has_digital_content,
   };

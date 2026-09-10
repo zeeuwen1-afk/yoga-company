@@ -33,6 +33,7 @@ const navigation: NavItem[] = [
         label: "200-uurs Yin Yoga Specialist",
       },
       { href: "/opleidingen#losse-modules", label: "Losse modules" },
+      { href: "/opleidingen/academy", label: "Waar de Academy voor staat" },
     ],
   },
   {

@@ -74,6 +74,30 @@ test.describe("Landingspagina", () => {
 });
 
 test.describe("Opleidingen", () => {
+  test("de uitleg over de Academy toont de drie niveaus", async ({ page }) => {
+    await page.goto("/opleidingen/academy");
+
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+
+    // De teksten komen uit de site-editor; de drie badges niet. Eén per
+    // niveau, en elk benoemt voor een schermlezer wat het is.
+    await expect(
+      page.getByRole("img", { name: /^Yoga Company Academy / }),
+    ).toHaveCount(3);
+  });
+
+  test("het overzicht verwijst naar de uitleg over de certificaten", async ({
+    page,
+  }) => {
+    await page.goto("/opleidingen");
+
+    // De knoptekst is bewerkbaar; dat er vanaf het overzicht een weg naar de
+    // uitleg is, is de constructie die hier wordt getoetst.
+    await expect(
+      page.locator('main a[href="/opleidingen/academy"]').first(),
+    ).toBeVisible();
+  });
+
   test("het overzicht toont het volledige aanbod met prijzen", async ({
     page,
   }) => {

@@ -5,6 +5,7 @@ import { haalPagina } from "@/features/cms";
 import { OverzichtInhoud } from "@/features/cms/paginas/eenvoudige-paginas";
 import { haalAanbod } from "@/features/courses";
 import { Academie } from "@/features/courses/components/academie";
+import { NiveausOverzicht } from "@/features/courses/components/niveaus-overzicht";
 
 export const revalidate = 300;
 
@@ -24,6 +25,7 @@ export default async function OpleidingenPage() {
   return (
     <>
       <OverzichtInhoud pagina={pagina} pageKey="opleidingen">
+        <NiveausOverzicht pagina={pagina} />
         <Academie cursussen={opleidingen} />
       </OverzichtInhoud>
       <VrijeZone pageKey="opleidingen" />
