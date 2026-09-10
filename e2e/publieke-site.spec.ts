@@ -160,9 +160,10 @@ test.describe("Opleidingen", () => {
       page.getByText("Module 4: Herstel & revalidatie"),
     ).toBeVisible();
 
-    // Praktische gegevens uit §19.
+    // Praktische gegevens uit §19. Exact, want "200 uur" staat sinds de badge
+    // van de Academy ook in het label ernaast en op de badge zelf.
     await expect(page.getByText("maximaal 12 deelnemers")).toBeVisible();
-    await expect(page.getByText("200 uur")).toBeVisible();
+    await expect(page.getByText("200 uur", { exact: true })).toBeVisible();
   });
 
   test("een module opent en toont de onderdelen", async ({ page }) => {
