@@ -13,7 +13,7 @@ const legal = [
 ];
 
 const navigatie = [
-  { href: "/opleidingen", label: "Opleidingen" },
+  { href: "/opleidingen", label: "Yoga Company Academy" },
   { href: "/trainingen", label: "Trainingen" },
   { href: "/lessen", label: "Lessen" },
   { href: "/bedrijfsyoga", label: "Bedrijfsyoga" },

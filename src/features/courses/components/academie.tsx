@@ -7,7 +7,7 @@ import { formateerPrijs } from "../prijs";
 import type { Cursus } from "../server/queries";
 
 /**
- * De YogaCompany Academie: het opleidingsaanbod, gegroepeerd.
+ * De Yoga Company Academy: het opleidingsaanbod, gegroepeerd.
  *
  * Eerst de opleidingen van 200 uur, daarna wat je er los uit kunt volgen. Dat
  * is de volgorde waarin iemand kiest: eerst welke route, dan of hij hem in

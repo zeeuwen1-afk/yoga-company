@@ -373,7 +373,7 @@ const yogaopleidingProducten: CursusSeed[] = [
 ];
 
 /**
- * De YogaCompany Academie: welke opleidingen er zijn, en welke losse modules en
+ * De Yoga Company Academy: welke opleidingen er zijn, en welke losse modules en
  * blokken daaronder vallen.
  *
  * Zonder deze indeling wordt het overzicht een lijst van tien losse kaarten

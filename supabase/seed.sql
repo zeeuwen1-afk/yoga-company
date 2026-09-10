@@ -1668,7 +1668,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('opleidingen', 'titel', 'text', '{"text":"YogaCompany Academy"}'::jsonb)
+values ('opleidingen', 'titel', 'text', '{"text":"Yoga Company Academy"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

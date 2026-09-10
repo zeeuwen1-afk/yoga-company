@@ -2335,7 +2335,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "titel",
     kind: "text",
     omschrijving: "Kop van de opleidingenpagina",
-    value: { text: "YogaCompany Academy" },
+    value: { text: "Yoga Company Academy" },
   },
   {
     page_key: "opleidingen",

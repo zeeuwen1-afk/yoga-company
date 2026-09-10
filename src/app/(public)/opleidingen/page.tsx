@@ -9,9 +9,9 @@ import { Academie } from "@/features/courses/components/academie";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Yogaopleidingen",
+  title: "Yoga Company Academy · yogaopleidingen",
   description:
-    "De 200-uurs Yin Yoga Specialist Opleiding en de vier losse modules. Kleine groepen, certificaat per module, praktijkgericht.",
+    "De 200-uurs Yogaopleiding, de 200-uurs Yin Yoga Specialist Opleiding en de losse modules. Kleine groepen, certificaat per module, praktijkgericht.",
   alternates: { canonical: "/opleidingen" },
 };
 
