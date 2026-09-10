@@ -2,11 +2,13 @@ import Link from "next/link";
 
 import { Sectie } from "@/components/layout/sectie";
 import { CmsKnop } from "@/components/ui/cms-knop";
+import { NIVEAU_INFO } from "@/content/niveaus";
 import { cursusSleutel } from "@/content/vrije-blokken";
 import { VrijeZone, type Pagina } from "@/features/cms";
 import { veiligeLink } from "@/lib/knoplink";
 
 import { formateerPrijs } from "../prijs";
+import { AcademyBadge } from "./academy-badge";
 import type { Cursus } from "../server/queries";
 
 /** Markdown-achtige alinea's uit de database omzetten naar leesbare tekst. */
@@ -222,6 +224,31 @@ export function CursusDetail({
           >
             <div className="rounded-[var(--radius-card)] border border-line p-6">
               <h2 className="text-xl">{pagina.tekst("praktisch_titel")}</h2>
+              {cursus.certificaatNiveau ? (
+                <div className="mt-5 flex items-center gap-4">
+                  <AcademyBadge
+                    niveau={cursus.certificaatNiveau}
+                    className="w-24 shrink-0"
+                  />
+                  <div className="text-sm">
+                    <p className="font-semibold">
+                      {NIVEAU_INFO[cursus.certificaatNiveau].label}
+                    </p>
+                    <p className="text-muted">Yoga Company Academy</p>
+                    {pagina.tekst("praktisch_certificaat_knop") ? (
+                      <Link
+                        href={veiligeLink(
+                          pagina.tekst("praktisch_certificaat_link"),
+                          "/opleidingen/academy",
+                        )}
+                        className="mt-1 inline-block underline underline-offset-4 hover:text-green"
+                      >
+                        {pagina.tekst("praktisch_certificaat_knop")}
+                      </Link>
+                    ) : null}
+                  </div>
+                </div>
+              ) : null}
               <dl className="mt-4">
                 {totaalUren > 0 ? (
                   <Feit

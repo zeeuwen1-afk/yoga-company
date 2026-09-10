@@ -6,6 +6,8 @@ import { Richtext, Sectie } from "@/components/layout/sectie";
 import { CmsKnop } from "@/components/ui/cms-knop";
 
 import { OpleidingGedeeld } from "./opleiding-gedeeld";
+import { AcademyBadge } from "@/features/courses";
+
 import { VrijeZone } from "./vrije-zone";
 import type { Pagina } from "../server/queries";
 
@@ -33,26 +35,35 @@ export function ModuleInhoud({
   return (
     <>
       <Sectie sectie="opening" achtergrond="creme">
-        <div className="max-w-3xl">
-          <nav aria-label="Kruimelpad" className="text-sm">
-            <Link
-              href="/opleidingen/200-uurs-yogaopleiding"
-              className="inline-flex items-center gap-1.5 text-muted underline underline-offset-4 hover:no-underline"
-            >
-              <ArrowLeft className="size-4" aria-hidden />
-              200-uurs Yogaopleiding
-            </Link>
-          </nav>
+        {/* Elke module is 50 uur en dus niveau Foundation; dat ligt vast. */}
+        <div className="flex items-start justify-between gap-8">
+          <div className="max-w-3xl">
+            <nav aria-label="Kruimelpad" className="text-sm">
+              <Link
+                href="/opleidingen/200-uurs-yogaopleiding"
+                className="inline-flex items-center gap-1.5 text-muted underline underline-offset-4 hover:no-underline"
+              >
+                <ArrowLeft className="size-4" aria-hidden />
+                200-uurs Yogaopleiding
+              </Link>
+            </nav>
 
-          {pagina.tekst("label") ? (
-            <p className="mt-6 font-serif text-2xl text-accent">
-              {pagina.tekst("label")}
-            </p>
-          ) : null}
-          <h1 className="mt-2 text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
-          {pagina.tekst("inleiding") ? (
-            <p className="mt-4 text-muted">{pagina.tekst("inleiding")}</p>
-          ) : null}
+            {pagina.tekst("label") ? (
+              <p className="mt-6 font-serif text-2xl text-accent">
+                {pagina.tekst("label")}
+              </p>
+            ) : null}
+            <h1 className="mt-2 text-4xl sm:text-5xl">
+              {pagina.tekst("titel")}
+            </h1>
+            {pagina.tekst("inleiding") ? (
+              <p className="mt-4 text-muted">{pagina.tekst("inleiding")}</p>
+            ) : null}
+          </div>
+          <AcademyBadge
+            niveau="foundation"
+            className="hidden w-32 shrink-0 sm:block lg:w-40"
+          />
         </div>
       </Sectie>
       <VrijeZone pageKey={pagina.pageKey} sectie="opening" />

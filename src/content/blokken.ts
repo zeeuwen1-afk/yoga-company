@@ -928,6 +928,21 @@ const cursusBlokken: BlokSeed[] = [
   },
   {
     page_key: "cursus",
+    block_key: "praktisch_certificaat_knop",
+    kind: "text",
+    omschrijving:
+      "Link onder de badge van de Academy naar de uitleg over de certificaten; leeg laten haalt de link weg",
+    value: { text: "Wat dit certificaat inhoudt" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "praktisch_certificaat_link",
+    kind: "text",
+    omschrijving: "Waar die link heen gaat",
+    value: { text: "/opleidingen/academy" },
+  },
+  {
+    page_key: "cursus",
     block_key: "praktisch_lesdata",
     kind: "text",
     omschrijving: "Naam van de regel met de lesdata",

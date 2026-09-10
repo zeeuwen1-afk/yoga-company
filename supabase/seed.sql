@@ -3024,6 +3024,18 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_certificaat_knop', 'text', '{"text":"Wat dit certificaat inhoudt"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_certificaat_link', 'text', '{"text":"/opleidingen/academy"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('cursus', 'praktisch_lesdata', 'text', '{"text":"Lesdata"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,

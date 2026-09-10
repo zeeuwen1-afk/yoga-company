@@ -86,6 +86,22 @@ test.describe("Opleidingen", () => {
     ).toHaveCount(3);
   });
 
+  test("een opleiding draagt haar badge en wijst naar de uitleg", async ({
+    page,
+  }) => {
+    await page.goto("/opleidingen/yin-niveau-1-basis");
+
+    // Eén module van 50 uur is niveau Foundation. Welk niveau een cursus
+    // heeft staat in beheer; dat het er staat en ergens heen wijst, is de
+    // constructie.
+    await expect(
+      page.getByRole("img", { name: /^Yoga Company Academy Foundation/ }),
+    ).toBeVisible();
+    await expect(
+      page.locator('main a[href="/opleidingen/academy"]').first(),
+    ).toBeVisible();
+  });
+
   test("het overzicht verwijst naar de uitleg over de certificaten", async ({
     page,
   }) => {

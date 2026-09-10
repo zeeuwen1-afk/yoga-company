@@ -7,6 +7,8 @@ import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
 
 import { OpleidingGedeeld } from "./opleiding-gedeeld";
+import { AcademyBadge } from "@/features/courses";
+
 import { VrijeZone } from "./vrije-zone";
 import type { Pagina } from "../server/queries";
 
@@ -174,12 +176,19 @@ export function YogaopleidingInhoud({
       {pagina.html("diploma_tekst") ? (
         <>
           <Sectie sectie="diploma" achtergrond="creme" lijnBoven>
-            <div className="max-w-2xl">
-              <h2 className="text-3xl">{pagina.tekst("diploma_titel")}</h2>
-              <Richtext
-                html={pagina.html("diploma_tekst")}
-                className="mt-6 text-lg"
+            <div className="flex flex-col gap-8 sm:flex-row sm:items-start">
+              {/* De hele opleiding is niveau Professional; dat ligt vast. */}
+              <AcademyBadge
+                niveau="professional"
+                className="w-32 shrink-0 sm:w-40"
               />
+              <div className="max-w-2xl">
+                <h2 className="text-3xl">{pagina.tekst("diploma_titel")}</h2>
+                <Richtext
+                  html={pagina.html("diploma_tekst")}
+                  className="mt-6 text-lg"
+                />
+              </div>
             </div>
           </Sectie>
           <VrijeZone pageKey="yogaopleiding" sectie="diploma" />
