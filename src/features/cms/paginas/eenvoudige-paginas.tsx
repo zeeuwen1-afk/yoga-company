@@ -384,6 +384,29 @@ export function VoorYogadocentenInhoud({ pagina }: { pagina: Pagina }) {
           <VrijeZone pageKey="voor-yogadocenten" sectie="voorwaarden" />
         </>
       ) : null}
+
+      {pagina.tekst("registreren_titel") ? (
+        <>
+          <Sectie sectie="registreren" lijnBoven>
+            <div className="max-w-2xl">
+              <h2 className="text-3xl">{pagina.tekst("registreren_titel")}</h2>
+              <div className="mt-4">
+                <Alineas
+                  tekst={pagina.tekst("registreren_tekst")}
+                  className="text-lg text-muted"
+                />
+              </div>
+              <CmsKnop
+                tekst={pagina.tekst("registreren_knop")}
+                link={pagina.tekst("registreren_link")}
+                terugval="/opleidingen/academy#registreren"
+                className="mt-8"
+              />
+            </div>
+          </Sectie>
+          <VrijeZone pageKey="voor-yogadocenten" sectie="registreren" />
+        </>
+      ) : null}
     </>
   );
 }

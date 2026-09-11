@@ -99,7 +99,7 @@ const VOORWAARDEN = `
 <p>Video's, documenten en teksten in je eigen omgeving zijn persoonlijk. Je mag ze bekijken en gebruiken voor je eigen leerproces, maar niet delen, doorverkopen of openbaar maken. Je toegang loopt zolang de opleiding loopt en daarna nog een redelijke periode; wij laten het weten als daar iets aan verandert.</p>
 
 <h2>8. Certificaten</h2>
-<p>Je ontvangt een certificaat als je de module hebt afgerond: aanwezig bij de lesdagen en de eindopdracht voldoende afgesloten. Rond je alle vier de modules van de Yin Yoga Specialist Opleiding af, dan ontvang je het diploma.</p>
+<p>Je ontvangt het certificaat van een module of opleiding als je minimaal 90% van de contacturen aanwezig was, of het gemiste deel aantoonbaar hebt ingehaald, en de toetsing hebt behaald: bij een module of blok van 50 of 100 uur een praktijktoets en een schriftelijke reflectieopdracht, bij een volledige opleiding van 200 uur een kennistoets en het geven van een volledige les onder observatie. Op het certificaat staan de naam van de opleiding, het aantal uren en de datum. Rond je alle vier de modules van een 200-uurs opleiding af, bij de Yogaopleiding inclusief het praktijkexamen, dan ontvang je het diploma. Het keurmerk van de Yoga Company Academy is een privaat keurmerk van YogaCompany en geen overheidserkenning.</p>
 
 <h2>9. Wat wij van je vragen</h2>
 <p>Yoga is geen medische behandeling. Heb je klachten, een blessure of ben je zwanger, laat het ons dan vóór aanvang weten en overleg zo nodig met je arts. Je blijft zelf verantwoordelijk voor wat je tijdens een les wel en niet doet: luister naar je lichaam en forceer niets.</p>

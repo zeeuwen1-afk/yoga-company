@@ -86,6 +86,39 @@ test.describe("Opleidingen", () => {
     ).toHaveCount(3);
   });
 
+  test("de Academy-pagina heeft de voorwaarden, de opleidersingang en het pdf", async ({
+    page,
+    request,
+  }) => {
+    await page.goto("/opleidingen/academy");
+
+    // De teksten zijn bewerkbaar; de constructie niet: een sectie met de
+    // voorwaarden, een sectie voor opleiders met een formulier dat de velden
+    // heeft die een aanvraag bruikbaar maken, en het pdf dat echt bestaat.
+    await expect(page.locator("#voorwaarden")).toBeVisible();
+    await expect(page.locator("#registreren")).toBeVisible();
+
+    const formulier = page.locator("#registreren form");
+    for (const veld of [
+      "name",
+      "organisatie",
+      "email",
+      "opleiding",
+      "niveau",
+    ]) {
+      await expect(formulier.locator(`[name="${veld}"]`), veld).toHaveCount(1);
+    }
+    await expect(
+      formulier.getByRole("button", { name: /vraag registratie aan/i }),
+    ).toBeVisible();
+
+    const pdf = page.locator('main a[href$=".pdf"]').first();
+    await expect(pdf).toBeVisible();
+    const antwoord = await request.get((await pdf.getAttribute("href")) ?? "");
+    expect(antwoord.status()).toBe(200);
+    expect(antwoord.headers()["content-type"]).toContain("pdf");
+  });
+
   test("een opleiding draagt haar badge en wijst naar de uitleg", async ({
     page,
   }) => {

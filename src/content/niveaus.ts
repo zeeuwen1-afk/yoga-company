@@ -56,6 +56,12 @@ export const NIVEAU_INFO: Record<CertificaatNiveau, NiveauInfo> = {
   },
 };
 
+/** De drie keurmerken zoals een opleider ze in het aanvraagformulier kiest. */
+export const NIVEAU_KEUZES = NIVEAUS.map((niveau) => ({
+  code: NIVEAU_INFO[niveau].letters,
+  label: `${NIVEAU_INFO[niveau].letters} · ${NIVEAU_INFO[niveau].uren} uur`,
+}));
+
 /**
  * Leest een opgeslagen waarde uit. Alles wat geen niveau is wordt null, en
  * null betekent: geen badge. Een tikfout in de database mag nooit een kapotte

@@ -86,3 +86,39 @@ export const aanmeldingSchema = contactSchema.omit({ body: true }).extend({
 });
 
 export type AanmeldingInvoer = z.infer<typeof aanmeldingSchema>;
+
+/**
+ * Een opleider vraagt registratie van zijn opleiding aan bij de Academy.
+ *
+ * De website van de opleider heet "webadres": "website" is de spamval uit
+ * `contactSchema`, en die moet leeg blijven.
+ */
+export const registratieSchema = contactSchema.omit({ body: true }).extend({
+  organisatie: z
+    .string()
+    .trim()
+    .min(2, "Vul de naam van je onderneming of school in")
+    .max(120, "Dit is wel erg lang"),
+  opleiding: z
+    .string()
+    .trim()
+    .min(2, "Vul de naam van de opleiding in")
+    .max(160, "Dit is wel erg lang"),
+  niveau: z.enum(["YAF", "YAA", "YAP"], "Kies een niveau"),
+  plaats: kortVeld(120, "Houd het kort"),
+  webadres: z
+    .string()
+    .trim()
+    .max(200, "Dit adres is wel erg lang")
+    .url("Dit lijkt geen webadres; begin met https://")
+    .optional()
+    .or(z.literal("")),
+  body: z
+    .string()
+    .trim()
+    .max(3000, "Houd het bericht onder de 3000 tekens")
+    .optional()
+    .or(z.literal("")),
+});
+
+export type RegistratieInvoer = z.infer<typeof registratieSchema>;

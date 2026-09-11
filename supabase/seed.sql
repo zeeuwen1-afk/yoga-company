@@ -1716,25 +1716,25 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('opleidingen', 'niveaus_tekst', 'text', '{"text":"Elke module van 50 uur sluit je af met een certificaat van de Yoga Company Academy. Twee modules tegelijk brengen je op Advanced, een volledige opleiding op Professional."}'::jsonb)
+values ('opleidingen', 'niveaus_tekst', 'text', '{"text":"Elke opleiding van de Academy is geregistreerd op het niveau van haar omvang: 50, 100 of 200 uur. Het certificaat dat je na afloop krijgt, draagt dat keurmerk."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('opleidingen', 'niveaus_foundation', 'text', '{"text":"Eén module van 50 uur afgerond."}'::jsonb)
+values ('opleidingen', 'niveaus_foundation', 'text', '{"text":"Een opleiding van 50 uur, zoals één module."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('opleidingen', 'niveaus_advanced', 'text', '{"text":"Twee modules tegelijk, zoals Blok A of Blok B. Komt bovenop de twee modulecertificaten."}'::jsonb)
+values ('opleidingen', 'niveaus_advanced', 'text', '{"text":"Een opleiding van 100 uur, zoals Blok A of Blok B, of twee modules tegelijk. Komt bovenop de modulecertificaten."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('opleidingen', 'niveaus_professional', 'text', '{"text":"Een volledige opleiding van 200 uur, met diploma."}'::jsonb)
+values ('opleidingen', 'niveaus_professional', 'text', '{"text":"Een volledige docentenopleiding van 200 uur, met diploma."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1758,7 +1758,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('academy', 'inleiding', 'text', '{"text":"De opleidingstak van YogaCompany: kleine groepen, ervaren docenten, en een certificaat dat laat zien wat je hebt gedaan."}'::jsonb)
+values ('academy', 'inleiding', 'text', '{"text":"Het keurmerk van YogaCompany voor yogadocentenopleidingen: van onze eigen opleidingen én van zelfstandige docenten en scholen die hun opleiding laten registreren."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1770,7 +1770,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('academy', 'verhaal', 'richtext', '{"html":"<p>De Yoga Company Academy is de plek binnen YogaCompany waar je het vak leert. Niet in een zaal met veertig mensen, maar in groepen van maximaal twaalf, met docenten die zelf al jaren lesgeven en blijven leren. We werken praktijkgericht: je oefent met echte mensen en echte lichamen, en je krijgt persoonlijke begeleiding.</p><p>Elke opleiding is opgebouwd uit modules van 50 uur. Je volgt ze achter elkaar of verspreid over een langere tijd, en je kunt ze ook los volgen. Zo bouw je stap voor stap op, in je eigen tempo, zonder je meteen aan een hele opleiding te binden.</p>"}'::jsonb)
+values ('academy', 'verhaal', 'richtext', '{"html":"<p>De Yoga Company Academy is de plek binnen YogaCompany waar je het vak leert, en het keurmerk waarmee we laten zien wat een opleiding waard is. Niet in een zaal met veertig mensen, maar in groepen van maximaal twaalf, met docenten die zelf al jaren lesgeven en blijven leren. We werken praktijkgericht: je oefent met echte mensen en echte lichamen, en je krijgt persoonlijke begeleiding.</p><p>Dat keurmerk staat ook open voor andere opleiders, met vier uitgangspunten. De leservaring van de opleider staat centraal, niet een papier van 500 uur. Er is geen lidmaatschap en geen jaarlijkse bijdrage, alleen eenmalige registratiekosten per opleiding. Het staat open voor elke stroming en elk instituut. En alleen fysieke opleidingen komen in aanmerking, want yoga leer je door aanwezig te zijn, gezien te worden en gecorrigeerd te worden.</p><p>Elke opleiding is opgebouwd uit modules van 50 uur. Je volgt ze achter elkaar of verspreid over een langere tijd, en je kunt ze ook los volgen. Zo bouw je stap voor stap op, in je eigen tempo.</p>"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1782,43 +1782,43 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('academy', 'niveaus_inleiding', 'text', '{"text":"Hoe meer uren je afrondt, hoe verder je komt. Elk niveau heeft zijn eigen certificaat van de Yoga Company Academy."}'::jsonb)
+values ('academy', 'niveaus_inleiding', 'text', '{"text":"Een opleiding wordt geregistreerd op het niveau van haar omvang: 50, 100 of 200 uur. Het certificaat dat je na afloop krijgt, draagt dat keurmerk."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('academy', 'foundation_titel', 'text', '{"text":"Foundation · 50 uur"}'::jsonb)
+values ('academy', 'foundation_titel', 'text', '{"text":"YAF · Foundation · 50 uur"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('academy', 'foundation_tekst', 'text', '{"text":"Je hebt één module afgerond en ontvangt het certificaat van die module, met de naam van de module en het aantal uren."}'::jsonb)
+values ('academy', 'foundation_tekst', 'text', '{"text":"Een geregistreerde opleiding van 50 uur, zoals één module bij ons. Je sluit af met een praktijktoets en een schriftelijke reflectie, en ontvangt het certificaat van die module."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('academy', 'advanced_titel', 'text', '{"text":"Advanced · 100 uur"}'::jsonb)
+values ('academy', 'advanced_titel', 'text', '{"text":"YAA · Advanced · 100 uur"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('academy', 'advanced_tekst', 'text', '{"text":"Je hebt twee modules samen afgerond: Blok A of Blok B van de Yogaopleiding, of twee andere modules tegelijk. Naast de twee modulecertificaten ontvang je het Advanced-certificaat van 100 uur."}'::jsonb)
+values ('academy', 'advanced_tekst', 'text', '{"text":"Een geregistreerde opleiding van 100 uur, zoals Blok A of Blok B, of twee modules tegelijk. Dezelfde toetsing als bij 50 uur. Naast de modulecertificaten ontvang je het Advanced-certificaat van 100 uur."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('academy', 'professional_titel', 'text', '{"text":"Professional · 200 uur"}'::jsonb)
+values ('academy', 'professional_titel', 'text', '{"text":"YAP · Professional · 200 uur"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('academy', 'professional_tekst', 'text', '{"text":"Je hebt een volledige opleiding afgerond. Na de 200-uurs Yogaopleiding en het praktijkexamen ontvang je het diploma Yogadocent 200 uur; na de vier Yin-modules het diploma Yin Yoga Specialist."}'::jsonb)
+values ('academy', 'professional_tekst', 'text', '{"text":"Een volledige docentenopleiding van 200 uur. Je sluit af met een kennistoets en het geven van een volledige les onder observatie. Na de 200-uurs Yogaopleiding ontvang je het diploma Yogadocent 200 uur; na de vier Yin-modules het diploma Yin Yoga Specialist."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -1830,7 +1830,163 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('academy', 'certificaat_tekst', 'richtext', '{"html":"<p>Je ontvangt het certificaat als je aanwezig was op de lesdagen en de eindopdracht voldoende hebt afgesloten. Op het certificaat staan je naam, de module of opleiding, het aantal uren en de datum.</p><p>Het certificaat wordt uitgegeven door de Yoga Company Academy zelf en ondertekend door Wietske Visser. Het laat zien wat je bij ons hebt gedaan en geleerd. Het is geen door de overheid erkend diploma; een yogaopleiding in Nederland is dat nooit. Wie na de Yogaopleiding wil lesgeven, kan dat met dit diploma bij studio''s, sportclubs en organisaties.</p>"}'::jsonb)
+values ('academy', 'certificaat_tekst', 'richtext', '{"html":"<p>Je ontvangt het certificaat als je minimaal 90% van de contacturen aanwezig was, of het gemiste deel aantoonbaar hebt ingehaald, en de toetsing hebt behaald. Op het certificaat staan de naam van de opleiding, het aantal uren, de datum en het registratienummer van de Academy, en het draagt het keurmerk YAF, YAA of YAP.</p><p>Het certificaat wordt uitgereikt door de opleider die de opleiding geeft; bij onze eigen opleidingen is dat YogaCompany. De registratie is een privaat kwaliteitskeurmerk van YogaCompany: geen overheidserkenning, geen NLQF-inschaling en geen wettelijk beschermde beroepstitel, en het staat los van Yoga Alliance en de VYN. Het keurmerk laat zien dat het curriculum aan de voorwaarden voldoet en dat de opleider beschikt over opleiding en, bovenal, praktijkervaring.</p>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_titel', 'text', '{"text":"Voorwaarden voor certificering"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_inleiding', 'text', '{"text":"Dit is de kern van de voorwaarden waaraan een opleiding en haar opleider moeten voldoen om het keurmerk te dragen. De volledige voorwaarden, versie 1.0 van september 2026, gelden bij elke registratie."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_opleiding_titel', 'text', '{"text":"Waar een opleiding aan moet voldoen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_opleiding', 'richtext', '{"html":"<ul><li>Minimaal 70% van de uren zijn contacturen: fysiek, op locatie, met de opleider erbij. Video en online materiaal mogen alleen de zelfstudie ondersteunen. Een opleiding die deels online is, wordt niet geregistreerd.</li><li>Het curriculum dekt vijf leergebieden, met per niveau minimaal de uren in de tabel hieronder. De resterende uren zijn vrij in te vullen binnen die gebieden.</li></ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_leergebieden', 'richtext', '{"items":[{"gebied":"Techniek, training en praktijk","yaf":"20","yaa":"40","yap":"80"},{"gebied":"Lesmethodiek","yaf":"8","yaa":"18","yap":"35"},{"gebied":"Anatomie en fysiologie","yaf":"6","yaa":"12","yap":"25"},{"gebied":"Filosofie, geschiedenis en ethiek","yaf":"6","yaa":"12","yap":"20"},{"gebied":"Praktijkstage en lesgeven","yaf":"6","yaa":"12","yap":"25"},{"gebied":"Vrij in te vullen binnen de vijf leergebieden","yaf":"4","yaa":"6","yap":"15"},{"gebied":"Totaal","yaf":"50","yaa":"100","yap":"200"}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_opleiding_vervolg', 'richtext', '{"html":"<ul><li>Een opleiding mag uit losse modules bestaan, als het geheel als één opleiding is beschreven en de deelnemer na alle modules het eindcertificaat krijgt.</li><li>Toetsing: bij 50 en 100 uur een praktijktoets (een lesonderdeel geven) en een schriftelijke reflectieopdracht; bij 200 uur een kennistoets, schriftelijk of mondeling, en het geven van een volledige les onder observatie.</li><li>Bij praktijkonderdelen maximaal 16 deelnemers per aanwezige docent.</li><li>Deelnemers krijgen vooraf duidelijke informatie over inhoud, kosten, annulering en toelating, en de opleider heeft een klachtenregeling.</li><li>De opleider houdt de aanwezigheid bij. Wie minder dan 90% van de contacturen aanwezig was, krijgt geen eindcertificaat, tenzij het gemiste deel aantoonbaar is ingehaald.</li></ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_opleider_titel', 'text', '{"text":"Waar de hoofdopleider aan moet voldoen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_opleider', 'richtext', '{"html":"<ul><li>Een afgeronde yogadocentenopleiding van minimaal 200 uur, aantoonbaar met een diploma of certificaat.</li><li>Minimaal 100 uur verdieping: specialisaties, nascholing, trainingen en workshops van minimaal 6 uur per onderdeel. Bij een opleiding met een specialisatie, zoals yin, prenataal of yoga nidra, ligt minimaal 50 uur daarvan op dat vakgebied.</li><li>Minimaal vijf jaar leservaring met gemiddeld minimaal vier lessen per week, binnen de laatste acht jaar; als richtwaarde duizend gegeven lessen. Dit weegt zwaarder dan het papier: bij een registratie van 200 uur komt een beoordelaar een les of lesdag bijwonen.</li><li>De hoofdopleider geeft zelf minimaal 60% van de contacturen, onderschrijft de gedragscode en is verzekerd tegen bedrijfsaansprakelijkheid.</li><li>Co-docenten hebben minimaal een 200-uurs opleiding en twee jaar leservaring, of een vakinhoudelijke kwalificatie voor hun onderdeel, zoals een fysiotherapeut voor anatomie. Gastdocenten die samen minder dan 10% van de contacturen geven, vallen onder de verantwoordelijkheid van de hoofdopleider.</li></ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_gedragscode_titel', 'text', '{"text":"De gedragscode"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_gedragscode', 'richtext', '{"html":"<ul><li>Veiligheid en welzijn van deelnemers gaan voor het programma; niemand wordt gedwongen tot een houding of oefening.</li><li>Fysieke aanpassingen alleen met toestemming; de grenzen van deelnemers worden gerespecteerd.</li><li>Geen medische claims en geen medisch advies buiten de eigen bevoegdheid.</li><li>Eerlijke communicatie over de eigen opleiding, ervaring en bevoegdheden.</li><li>Vertrouwelijke omgang met persoonlijke informatie van deelnemers, volgens de AVG.</li><li>Geen discriminatie, intimidatie of machtsmisbruik, in welke vorm dan ook.</li></ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_slot', 'text', '{"text":"Dit is een samenvatting. De volledige voorwaarden gelden bij elke registratie; daarin staan ook de beoordeling, de kosten, de geldigheid, het gebruik van het keurmerk, de klachtenregeling en de omgang met persoonsgegevens."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_knop', 'text', '{"text":"Download de voorwaarden (pdf)"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'certificering_link', 'text', '{"text":"/documenten/voorwaarden-registratie-yogaopleidingen-v1-0.pdf"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_titel', 'text', '{"text":"Je eigen opleiding laten registreren"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_inleiding', 'text', '{"text":"Geef je als zelfstandige yogadocent of yogaschool een opleiding van 50, 100 of 200 uur, fysiek, en wil je laten zien dat je opleiding en je ervaring ergens aan getoetst zijn? Dan kun je haar laten registreren bij de Yoga Company Academy. Bij welk instituut of in welke stroming je bent opgeleid, maakt niet uit."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_krijgt_titel', 'text', '{"text":"Wat je krijgt"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_krijgt', 'richtext', '{"html":"<ul><li>Het registratiecertificaat en een uniek registratienummer.</li><li>De digitale badge YAF, YAA of YAP, voor je website, je materialen en de certificaten van je deelnemers.</li><li>Een vermelding in het register van de Academy.</li><li>Geen lidmaatschap, geen jaarlijkse bijdrage en geen verplichte nascholing. De registratie geldt voor onbepaalde tijd, zolang je de opleiding aanbiedt en aan de voorwaarden voldoet.</li></ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_stappen_titel', 'text', '{"text":"Zo werkt het"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_stappen', 'richtext', '{"items":[{"titel":"Je vraagt aan","tekst":"Met het formulier hieronder. Daarna stuur je per e-mail: je opleidingsplan (leerdoelen, uren per leergebied, rooster, toetsing, literatuur), je diploma''s en verdiepingscertificaten, een overzicht van je leservaring (waar, wanneer en hoeveel lessen per week, bevestigd door studio''s of onderbouwd met roosters), de kwalificaties van co-docenten, en een bewijs van je bedrijfsaansprakelijkheidsverzekering en KvK-inschrijving."},{"titel":"Je betaalt de registratiekosten","tekst":"Vooraf, op factuur. De beoordeling start zodra de aanvraag compleet is en betaald."},{"titel":"Wij beoordelen binnen 20 werkdagen","tekst":"Ontbreekt er iets of schiet iets tekort, dan krijg je één keer een schriftelijk verzoek om aanvulling of aanpassing, met 30 dagen de tijd. Daarna volgt toekenning of afwijzing."},{"titel":"Bij 200 uur: een gesprek en een lesdag","tekst":"Een beoordelingsgesprek met de hoofdopleider en het bijwonen van een les of lesdag, op jouw locatie in Nederland of België. Reiskosten zijn inbegrepen. Dat praktijkdeel weegt zwaarder dan het papier. Bij 50 en 100 uur doen we dit als het opleidingsplan of het ervaringsoverzicht daar aanleiding toe geeft."},{"titel":"Toekenning of afwijzing","tekst":"Bij toekenning ontvang je het registratiecertificaat, je registratienummer, de badge en de vermelding in het register. Bij afwijzing krijg je een schriftelijke motivering; het beoordelingsdeel van de kosten blijft, de rest krijg je terug, en je kunt binnen twaalf maanden opnieuw aanvragen tegen alleen het beoordelingsdeel."}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_kosten_titel', 'text', '{"text":"Kosten, eenmalig per opleiding, exclusief 21% btw"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_kosten', 'richtext', '{"items":[{"registratie":"YAF · 50 uur","kosten":"€ 395","beoordeling":"€ 195","inbegrepen":"Beoordeling, certificaat, badge en vermelding in het register"},{"registratie":"YAA · 100 uur","kosten":"€ 595","beoordeling":"€ 245","inbegrepen":"Idem"},{"registratie":"YAP · 200 uur","kosten":"€ 895","beoordeling":"€ 345","inbegrepen":"Idem, plus het beoordelingsgesprek, het bijwonen van een lesdag en vermelding als 200-uurs docentenopleiding"}]}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_kosten_voet', 'text', '{"text":"Het beoordelingsdeel dekt de inhoudelijke toetsing en blijft bij afwijzing; de rest krijg je dan terug. Een tweede opleiding: 25% korting, want de hoofdopleider is dan al beoordeeld. Herbeoordeling na een grote wijziging: € 145. Kleine wijzigingen, zoals data, locatie, prijs, co-docenten en literatuur, meld je gratis."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_keurmerk_titel', 'text', '{"text":"Wat je met het keurmerk mag"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_keurmerk', 'text', '{"text":"De badge en de aanduiding ''geregistreerd bij de Yoga Company Academy'' gebruik je alleen voor de opleiding waarvoor de registratie is verleend, met het registratienummer erbij, in de aangeleverde vorm en kleuren. Niet voor lessen, workshops of andere opleidingen. Bij beëindiging haal je het keurmerk van je website, social media en materialen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_formulier_titel', 'text', '{"text":"Registratie aanvragen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('academy', 'registreren_formulier_tekst', 'text', '{"text":"Vul het formulier in. Je hoort binnen twee werkdagen van ons, met het adres waar je de documenten heen stuurt en de factuur voor de registratiekosten."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2022,7 +2178,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('algemene-voorwaarden', 'inhoud', 'richtext', '{"html":"\n<h2>1. Waar deze voorwaarden over gaan</h2>\n<p>Deze voorwaarden gelden voor alle opleidingen, trainingen, lessen en digitale content van YogaCompany.</p>\n\n<h2>2. Inschrijven</h2>\n<p>Je schrijft je in via de website. De inschrijving is definitief zodra we je betaling hebben ontvangen en je van ons een bevestiging per e-mail hebt gekregen. Plaatsing gebeurt op volgorde van betaling; onze groepen zijn klein, dus vol is vol.</p>\n\n<h2>3. Prijzen en betalen</h2>\n<p>Alle genoemde prijzen zijn in euro''s. Betalen kan met iDEAL of creditcard. Betalen in termijnen is in overleg mogelijk; neem daarvoor contact met ons op vóór je inschrijving.</p>\n\n<h2>4. Bedenktijd</h2>\n<p>Schrijf je je als consument online in, dan heb je veertien dagen bedenktijd waarin je zonder opgaaf van reden kunt annuleren. Begint de opleiding binnen die veertien dagen en heb je gevraagd om eerder te starten, dan vervalt de bedenktijd zodra je toegang hebt gekregen tot het lesmateriaal.</p>\n\n<h2>5. Annuleren</h2>\n<ul>\n<li>Meer dan 30 dagen voor aanvang: je krijgt het volledige bedrag terug, minus € 50 administratiekosten.</li>\n<li>Tussen 30 en 14 dagen voor aanvang: je krijgt de helft terug.</li>\n<li>Binnen 14 dagen voor aanvang: geen restitutie. In overleg kun je je plek overdragen aan iemand anders, of doorschuiven naar een volgende groep.</li>\n</ul>\n<p>Word je ziek of overkomt je iets waardoor deelname echt niet gaat, neem dan contact met ons op. We zoeken dan samen naar een oplossing.</p>\n\n<h2>6. Annulering door ons</h2>\n<p>Gaat een opleiding niet door door te weinig aanmeldingen of overmacht, dan krijg je het volledige bedrag terug. Moeten we een lesdag verplaatsen, dan plannen we een vervangende datum.</p>\n\n<h2>7. Digitale content</h2>\n<p>Video''s, documenten en teksten in je eigen omgeving zijn persoonlijk. Je mag ze bekijken en gebruiken voor je eigen leerproces, maar niet delen, doorverkopen of openbaar maken. Je toegang loopt zolang de opleiding loopt en daarna nog een redelijke periode; wij laten het weten als daar iets aan verandert.</p>\n\n<h2>8. Certificaten</h2>\n<p>Je ontvangt een certificaat als je de module hebt afgerond: aanwezig bij de lesdagen en de eindopdracht voldoende afgesloten. Rond je alle vier de modules van de Yin Yoga Specialist Opleiding af, dan ontvang je het diploma.</p>\n\n<h2>9. Wat wij van je vragen</h2>\n<p>Yoga is geen medische behandeling. Heb je klachten, een blessure of ben je zwanger, laat het ons dan vóór aanvang weten en overleg zo nodig met je arts. Je blijft zelf verantwoordelijk voor wat je tijdens een les wel en niet doet: luister naar je lichaam en forceer niets.</p>\n\n<h2>10. Aansprakelijkheid</h2>\n<p>We doen ons werk zorgvuldig. Onze aansprakelijkheid is beperkt tot het bedrag dat je voor de betreffende opleiding hebt betaald, behalve bij opzet of grove nalatigheid van onze kant.</p>\n\n<h2>11. Klachten</h2>\n<p>Ben je ergens niet tevreden over, laat het ons weten via info@yogacompany.eu. We reageren binnen veertien dagen en zoeken samen naar een oplossing.</p>\n\n<h2>12. Toepasselijk recht</h2>\n<p>Op deze voorwaarden is Nederlands recht van toepassing.</p>\n"}'::jsonb)
+values ('algemene-voorwaarden', 'inhoud', 'richtext', '{"html":"\n<h2>1. Waar deze voorwaarden over gaan</h2>\n<p>Deze voorwaarden gelden voor alle opleidingen, trainingen, lessen en digitale content van YogaCompany.</p>\n\n<h2>2. Inschrijven</h2>\n<p>Je schrijft je in via de website. De inschrijving is definitief zodra we je betaling hebben ontvangen en je van ons een bevestiging per e-mail hebt gekregen. Plaatsing gebeurt op volgorde van betaling; onze groepen zijn klein, dus vol is vol.</p>\n\n<h2>3. Prijzen en betalen</h2>\n<p>Alle genoemde prijzen zijn in euro''s. Betalen kan met iDEAL of creditcard. Betalen in termijnen is in overleg mogelijk; neem daarvoor contact met ons op vóór je inschrijving.</p>\n\n<h2>4. Bedenktijd</h2>\n<p>Schrijf je je als consument online in, dan heb je veertien dagen bedenktijd waarin je zonder opgaaf van reden kunt annuleren. Begint de opleiding binnen die veertien dagen en heb je gevraagd om eerder te starten, dan vervalt de bedenktijd zodra je toegang hebt gekregen tot het lesmateriaal.</p>\n\n<h2>5. Annuleren</h2>\n<ul>\n<li>Meer dan 30 dagen voor aanvang: je krijgt het volledige bedrag terug, minus € 50 administratiekosten.</li>\n<li>Tussen 30 en 14 dagen voor aanvang: je krijgt de helft terug.</li>\n<li>Binnen 14 dagen voor aanvang: geen restitutie. In overleg kun je je plek overdragen aan iemand anders, of doorschuiven naar een volgende groep.</li>\n</ul>\n<p>Word je ziek of overkomt je iets waardoor deelname echt niet gaat, neem dan contact met ons op. We zoeken dan samen naar een oplossing.</p>\n\n<h2>6. Annulering door ons</h2>\n<p>Gaat een opleiding niet door door te weinig aanmeldingen of overmacht, dan krijg je het volledige bedrag terug. Moeten we een lesdag verplaatsen, dan plannen we een vervangende datum.</p>\n\n<h2>7. Digitale content</h2>\n<p>Video''s, documenten en teksten in je eigen omgeving zijn persoonlijk. Je mag ze bekijken en gebruiken voor je eigen leerproces, maar niet delen, doorverkopen of openbaar maken. Je toegang loopt zolang de opleiding loopt en daarna nog een redelijke periode; wij laten het weten als daar iets aan verandert.</p>\n\n<h2>8. Certificaten</h2>\n<p>Je ontvangt het certificaat van een module of opleiding als je minimaal 90% van de contacturen aanwezig was, of het gemiste deel aantoonbaar hebt ingehaald, en de toetsing hebt behaald: bij een module of blok van 50 of 100 uur een praktijktoets en een schriftelijke reflectieopdracht, bij een volledige opleiding van 200 uur een kennistoets en het geven van een volledige les onder observatie. Op het certificaat staan de naam van de opleiding, het aantal uren en de datum. Rond je alle vier de modules van een 200-uurs opleiding af, bij de Yogaopleiding inclusief het praktijkexamen, dan ontvang je het diploma. Het keurmerk van de Yoga Company Academy is een privaat keurmerk van YogaCompany en geen overheidserkenning.</p>\n\n<h2>9. Wat wij van je vragen</h2>\n<p>Yoga is geen medische behandeling. Heb je klachten, een blessure of ben je zwanger, laat het ons dan vóór aanvang weten en overleg zo nodig met je arts. Je blijft zelf verantwoordelijk voor wat je tijdens een les wel en niet doet: luister naar je lichaam en forceer niets.</p>\n\n<h2>10. Aansprakelijkheid</h2>\n<p>We doen ons werk zorgvuldig. Onze aansprakelijkheid is beperkt tot het bedrag dat je voor de betreffende opleiding hebt betaald, behalve bij opzet of grove nalatigheid van onze kant.</p>\n\n<h2>11. Klachten</h2>\n<p>Ben je ergens niet tevreden over, laat het ons weten via info@yogacompany.eu. We reageren binnen veertien dagen en zoeken samen naar een oplossing.</p>\n\n<h2>12. Toepasselijk recht</h2>\n<p>Op deze voorwaarden is Nederlands recht van toepassing.</p>\n"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2287,6 +2443,30 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('voor-yogadocenten', 'voorwaarden', 'richtext', '{"html":"\n<ul>\n<li>Je geeft les bij een aangesloten studio en huurt daar zelf je plek in het rooster.</li>\n<li>Je bent ingeschreven bij de Kamer van Koophandel en factureert met btw.</li>\n<li>Je vult je factuurgegevens in de portal in: naam, adres, KvK, btw-nummer en de nummerreeks die je zelf gebruikt.</li>\n<li>Je houdt je aan de prijzen van de studio. Die staan vast; daar valt niet mee te schuiven.</li>\n<li>Je neemt een abonnement op de docentenlaag. Wat dat kost hoor je bij de aansluiting.</li>\n</ul>\n<p>Er komt een verwerkersovereenkomst bij: als een klant van jou bij een collega les volgt, deel je noodzakelijkerwijs zijn naam. Dat hoort op papier te staan, en het staat ook in de privacyverklaring.</p>\n"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'registreren_titel', 'text', '{"text":"Geef je zelf een opleiding?"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'registreren_tekst', 'text', '{"text":"Laat je opleiding van 50, 100 of 200 uur registreren bij de Yoga Company Academy. Eenmalige kosten, geen lidmaatschap, en een keurmerk dat laat zien dat je opleiding én je ervaring getoetst zijn."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'registreren_knop', 'text', '{"text":"Lees de voorwaarden en vraag registratie aan"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('voor-yogadocenten', 'registreren_link', 'text', '{"text":"/opleidingen/academy#registreren"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -3036,7 +3216,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('cursus', 'praktisch_certificaat_voorwaarde', 'text', '{"text":"Je ontvangt het certificaat als je aanwezig was op de lesdagen en de eindopdracht voldoende hebt afgesloten. Volg je twee modules tegelijk, zoals Blok A of Blok B, dan ontvang je daarbovenop het Advanced-certificaat van 100 uur."}'::jsonb)
+values ('cursus', 'praktisch_certificaat_voorwaarde', 'text', '{"text":"Je ontvangt het certificaat als je minimaal 90% van de contacturen aanwezig was, of het gemiste deel hebt ingehaald, en de toetsing hebt behaald: bij 50 en 100 uur een praktijktoets en een schriftelijke reflectie, bij 200 uur een kennistoets en een volledige les onder observatie. Volg je twee modules tegelijk, zoals Blok A of Blok B, dan ontvang je daarbovenop het Advanced-certificaat van 100 uur."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;

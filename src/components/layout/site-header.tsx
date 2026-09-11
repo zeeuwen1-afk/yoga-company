@@ -34,6 +34,10 @@ const navigation: NavItem[] = [
       },
       { href: "/opleidingen#losse-modules", label: "Losse modules" },
       { href: "/opleidingen/academy", label: "Waar de Academy voor staat" },
+      {
+        href: "/opleidingen/academy#registreren",
+        label: "Je opleiding registreren",
+      },
     ],
   },
   {

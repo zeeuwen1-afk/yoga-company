@@ -104,6 +104,8 @@ const SECTIENAMEN: Record<string, string> = {
   advanced: "Niveau Advanced, 100 uur",
   professional: "Niveau Professional, 200 uur",
   certificaat: "Wat het certificaat inhoudt",
+  certificering: "Voorwaarden voor certificering",
+  registreren: "Je eigen opleiding laten registreren",
 };
 
 export type Sectie<T> = {

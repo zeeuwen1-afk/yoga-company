@@ -407,6 +407,37 @@ const docentenBlokken: BlokSeed[] = [
     omschrijving: "Wat een docent nodig heeft om mee te doen",
     value: { html: DOCENTEN_VOORWAARDEN },
   },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "registreren_titel",
+    kind: "text",
+    omschrijving:
+      "Kop van het blok voor docenten die zelf een opleiding geven; leeg laten haalt het blok weg",
+    value: { text: "Geef je zelf een opleiding?" },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "registreren_tekst",
+    kind: "text",
+    omschrijving: "Tekst onder die kop",
+    value: {
+      text: "Laat je opleiding van 50, 100 of 200 uur registreren bij de Yoga Company Academy. Eenmalige kosten, geen lidmaatschap, en een keurmerk dat laat zien dat je opleiding én je ervaring getoetst zijn.",
+    },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "registreren_knop",
+    kind: "text",
+    omschrijving: "Tekst op de knop",
+    value: { text: "Lees de voorwaarden en vraag registratie aan" },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "registreren_link",
+    kind: "text",
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/opleidingen/academy#registreren" },
+  },
 ];
 
 /**
@@ -948,7 +979,7 @@ const cursusBlokken: BlokSeed[] = [
     omschrijving:
       "De voorwaarde voor het certificaat, onder de badge; leeg laten haalt de tekst weg",
     value: {
-      text: "Je ontvangt het certificaat als je aanwezig was op de lesdagen en de eindopdracht voldoende hebt afgesloten. Volg je twee modules tegelijk, zoals Blok A of Blok B, dan ontvang je daarbovenop het Advanced-certificaat van 100 uur.",
+      text: "Je ontvangt het certificaat als je minimaal 90% van de contacturen aanwezig was, of het gemiste deel hebt ingehaald, en de toetsing hebt behaald: bij 50 en 100 uur een praktijktoets en een schriftelijke reflectie, bij 200 uur een kennistoets en een volledige les onder observatie. Volg je twee modules tegelijk, zoals Blok A of Blok B, dan ontvang je daarbovenop het Advanced-certificaat van 100 uur.",
     },
   },
   {
@@ -2395,7 +2426,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Zin onder die kop",
     value: {
-      text: "Elke module van 50 uur sluit je af met een certificaat van de Yoga Company Academy. Twee modules tegelijk brengen je op Advanced, een volledige opleiding op Professional.",
+      text: "Elke opleiding van de Academy is geregistreerd op het niveau van haar omvang: 50, 100 of 200 uur. Het certificaat dat je na afloop krijgt, draagt dat keurmerk.",
     },
   },
   {
@@ -2403,7 +2434,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "niveaus_foundation",
     kind: "text",
     omschrijving: "Eén zin bij de Foundation-badge (50 uur)",
-    value: { text: "Eén module van 50 uur afgerond." },
+    value: { text: "Een opleiding van 50 uur, zoals één module." },
   },
   {
     page_key: "opleidingen",
@@ -2411,7 +2442,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Eén zin bij de Advanced-badge (100 uur)",
     value: {
-      text: "Twee modules tegelijk, zoals Blok A of Blok B. Komt bovenop de twee modulecertificaten.",
+      text: "Een opleiding van 100 uur, zoals Blok A of Blok B, of twee modules tegelijk. Komt bovenop de modulecertificaten.",
     },
   },
   {
@@ -2419,7 +2450,9 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "niveaus_professional",
     kind: "text",
     omschrijving: "Eén zin bij de Professional-badge (200 uur)",
-    value: { text: "Een volledige opleiding van 200 uur, met diploma." },
+    value: {
+      text: "Een volledige docentenopleiding van 200 uur, met diploma.",
+    },
   },
   {
     page_key: "opleidingen",
@@ -2439,7 +2472,8 @@ export const BLOKKEN: BlokSeed[] = [
   },
 
   // ---------------------------------------------------------------------------
-  // Waar de Yoga Company Academy voor staat, en wat het certificaat inhoudt
+  // Waar de Yoga Company Academy voor staat: het keurmerk, de voorwaarden en
+  // de ingang voor opleiders die hun opleiding willen laten registreren
   // ---------------------------------------------------------------------------
   {
     page_key: "academy",
@@ -2454,7 +2488,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Inleidende tekst onder de kop",
     value: {
-      text: "De opleidingstak van YogaCompany: kleine groepen, ervaren docenten, en een certificaat dat laat zien wat je hebt gedaan.",
+      text: "Het keurmerk van YogaCompany voor yogadocentenopleidingen: van onze eigen opleidingen én van zelfstandige docenten en scholen die hun opleiding laten registreren.",
     },
   },
   {
@@ -2471,7 +2505,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "richtext",
     omschrijving: "Waar de Academy voor staat",
     value: {
-      html: "<p>De Yoga Company Academy is de plek binnen YogaCompany waar je het vak leert. Niet in een zaal met veertig mensen, maar in groepen van maximaal twaalf, met docenten die zelf al jaren lesgeven en blijven leren. We werken praktijkgericht: je oefent met echte mensen en echte lichamen, en je krijgt persoonlijke begeleiding.</p><p>Elke opleiding is opgebouwd uit modules van 50 uur. Je volgt ze achter elkaar of verspreid over een langere tijd, en je kunt ze ook los volgen. Zo bouw je stap voor stap op, in je eigen tempo, zonder je meteen aan een hele opleiding te binden.</p>",
+      html: "<p>De Yoga Company Academy is de plek binnen YogaCompany waar je het vak leert, en het keurmerk waarmee we laten zien wat een opleiding waard is. Niet in een zaal met veertig mensen, maar in groepen van maximaal twaalf, met docenten die zelf al jaren lesgeven en blijven leren. We werken praktijkgericht: je oefent met echte mensen en echte lichamen, en je krijgt persoonlijke begeleiding.</p><p>Dat keurmerk staat ook open voor andere opleiders, met vier uitgangspunten. De leservaring van de opleider staat centraal, niet een papier van 500 uur. Er is geen lidmaatschap en geen jaarlijkse bijdrage, alleen eenmalige registratiekosten per opleiding. Het staat open voor elke stroming en elk instituut. En alleen fysieke opleidingen komen in aanmerking, want yoga leer je door aanwezig te zijn, gezien te worden en gecorrigeerd te worden.</p><p>Elke opleiding is opgebouwd uit modules van 50 uur. Je volgt ze achter elkaar of verspreid over een langere tijd, en je kunt ze ook los volgen. Zo bouw je stap voor stap op, in je eigen tempo.</p>",
     },
   },
   {
@@ -2487,7 +2521,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Zin onder die kop",
     value: {
-      text: "Hoe meer uren je afrondt, hoe verder je komt. Elk niveau heeft zijn eigen certificaat van de Yoga Company Academy.",
+      text: "Een opleiding wordt geregistreerd op het niveau van haar omvang: 50, 100 of 200 uur. Het certificaat dat je na afloop krijgt, draagt dat keurmerk.",
     },
   },
   {
@@ -2495,7 +2529,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "foundation_titel",
     kind: "text",
     omschrijving: "Kop naast de Foundation-badge",
-    value: { text: "Foundation · 50 uur" },
+    value: { text: "YAF · Foundation · 50 uur" },
   },
   {
     page_key: "academy",
@@ -2503,7 +2537,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Wat Foundation betekent",
     value: {
-      text: "Je hebt één module afgerond en ontvangt het certificaat van die module, met de naam van de module en het aantal uren.",
+      text: "Een geregistreerde opleiding van 50 uur, zoals één module bij ons. Je sluit af met een praktijktoets en een schriftelijke reflectie, en ontvangt het certificaat van die module.",
     },
   },
   {
@@ -2511,7 +2545,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "advanced_titel",
     kind: "text",
     omschrijving: "Kop naast de Advanced-badge",
-    value: { text: "Advanced · 100 uur" },
+    value: { text: "YAA · Advanced · 100 uur" },
   },
   {
     page_key: "academy",
@@ -2519,7 +2553,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Wat Advanced betekent",
     value: {
-      text: "Je hebt twee modules samen afgerond: Blok A of Blok B van de Yogaopleiding, of twee andere modules tegelijk. Naast de twee modulecertificaten ontvang je het Advanced-certificaat van 100 uur.",
+      text: "Een geregistreerde opleiding van 100 uur, zoals Blok A of Blok B, of twee modules tegelijk. Dezelfde toetsing als bij 50 uur. Naast de modulecertificaten ontvang je het Advanced-certificaat van 100 uur.",
     },
   },
   {
@@ -2527,7 +2561,7 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "professional_titel",
     kind: "text",
     omschrijving: "Kop naast de Professional-badge",
-    value: { text: "Professional · 200 uur" },
+    value: { text: "YAP · Professional · 200 uur" },
   },
   {
     page_key: "academy",
@@ -2535,7 +2569,7 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Wat Professional betekent",
     value: {
-      text: "Je hebt een volledige opleiding afgerond. Na de 200-uurs Yogaopleiding en het praktijkexamen ontvang je het diploma Yogadocent 200 uur; na de vier Yin-modules het diploma Yin Yoga Specialist.",
+      text: "Een volledige docentenopleiding van 200 uur. Je sluit af met een kennistoets en het geven van een volledige les onder observatie. Na de 200-uurs Yogaopleiding ontvang je het diploma Yogadocent 200 uur; na de vier Yin-modules het diploma Yin Yoga Specialist.",
     },
   },
   {
@@ -2553,7 +2587,300 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving:
       "Wanneer je het certificaat krijgt, wat erop staat en wat het wel en niet is",
     value: {
-      html: "<p>Je ontvangt het certificaat als je aanwezig was op de lesdagen en de eindopdracht voldoende hebt afgesloten. Op het certificaat staan je naam, de module of opleiding, het aantal uren en de datum.</p><p>Het certificaat wordt uitgegeven door de Yoga Company Academy zelf en ondertekend door Wietske Visser. Het laat zien wat je bij ons hebt gedaan en geleerd. Het is geen door de overheid erkend diploma; een yogaopleiding in Nederland is dat nooit. Wie na de Yogaopleiding wil lesgeven, kan dat met dit diploma bij studio's, sportclubs en organisaties.</p>",
+      html: "<p>Je ontvangt het certificaat als je minimaal 90% van de contacturen aanwezig was, of het gemiste deel aantoonbaar hebt ingehaald, en de toetsing hebt behaald. Op het certificaat staan de naam van de opleiding, het aantal uren, de datum en het registratienummer van de Academy, en het draagt het keurmerk YAF, YAA of YAP.</p><p>Het certificaat wordt uitgereikt door de opleider die de opleiding geeft; bij onze eigen opleidingen is dat YogaCompany. De registratie is een privaat kwaliteitskeurmerk van YogaCompany: geen overheidserkenning, geen NLQF-inschaling en geen wettelijk beschermde beroepstitel, en het staat los van Yoga Alliance en de VYN. Het keurmerk laat zien dat het curriculum aan de voorwaarden voldoet en dat de opleider beschikt over opleiding en, bovenal, praktijkervaring.</p>",
+    },
+  },
+
+  // De voorwaarden voor certificering, samengevat. Het pdf is de overeenkomst.
+  {
+    page_key: "academy",
+    block_key: "certificering_titel",
+    kind: "text",
+    omschrijving:
+      "Kop boven de voorwaarden voor certificering; leeg laten haalt de sectie weg",
+    value: { text: "Voorwaarden voor certificering" },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_inleiding",
+    kind: "text",
+    omschrijving: "Zin onder die kop",
+    value: {
+      text: "Dit is de kern van de voorwaarden waaraan een opleiding en haar opleider moeten voldoen om het keurmerk te dragen. De volledige voorwaarden, versie 1.0 van september 2026, gelden bij elke registratie.",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_opleiding_titel",
+    kind: "text",
+    omschrijving: "Kop boven de eisen aan de opleiding",
+    value: { text: "Waar een opleiding aan moet voldoen" },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_opleiding",
+    kind: "richtext",
+    omschrijving: "De eisen aan de opleiding, boven de urentabel",
+    value: {
+      html: "<ul><li>Minimaal 70% van de uren zijn contacturen: fysiek, op locatie, met de opleider erbij. Video en online materiaal mogen alleen de zelfstudie ondersteunen. Een opleiding die deels online is, wordt niet geregistreerd.</li><li>Het curriculum dekt vijf leergebieden, met per niveau minimaal de uren in de tabel hieronder. De resterende uren zijn vrij in te vullen binnen die gebieden.</li></ul>",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_leergebieden",
+    lijst: { max: 8, itemNaam: "leergebied" },
+    kind: "richtext",
+    omschrijving:
+      "De urentabel: per leergebied het minimum aantal uren bij 50, 100 en 200 uur",
+    value: {
+      items: [
+        {
+          gebied: "Techniek, training en praktijk",
+          yaf: "20",
+          yaa: "40",
+          yap: "80",
+        },
+        { gebied: "Lesmethodiek", yaf: "8", yaa: "18", yap: "35" },
+        { gebied: "Anatomie en fysiologie", yaf: "6", yaa: "12", yap: "25" },
+        {
+          gebied: "Filosofie, geschiedenis en ethiek",
+          yaf: "6",
+          yaa: "12",
+          yap: "20",
+        },
+        { gebied: "Praktijkstage en lesgeven", yaf: "6", yaa: "12", yap: "25" },
+        {
+          gebied: "Vrij in te vullen binnen de vijf leergebieden",
+          yaf: "4",
+          yaa: "6",
+          yap: "15",
+        },
+        { gebied: "Totaal", yaf: "50", yaa: "100", yap: "200" },
+      ],
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_opleiding_vervolg",
+    kind: "richtext",
+    omschrijving: "De eisen aan de opleiding, onder de urentabel",
+    value: {
+      html: "<ul><li>Een opleiding mag uit losse modules bestaan, als het geheel als één opleiding is beschreven en de deelnemer na alle modules het eindcertificaat krijgt.</li><li>Toetsing: bij 50 en 100 uur een praktijktoets (een lesonderdeel geven) en een schriftelijke reflectieopdracht; bij 200 uur een kennistoets, schriftelijk of mondeling, en het geven van een volledige les onder observatie.</li><li>Bij praktijkonderdelen maximaal 16 deelnemers per aanwezige docent.</li><li>Deelnemers krijgen vooraf duidelijke informatie over inhoud, kosten, annulering en toelating, en de opleider heeft een klachtenregeling.</li><li>De opleider houdt de aanwezigheid bij. Wie minder dan 90% van de contacturen aanwezig was, krijgt geen eindcertificaat, tenzij het gemiste deel aantoonbaar is ingehaald.</li></ul>",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_opleider_titel",
+    kind: "text",
+    omschrijving: "Kop boven de eisen aan de hoofdopleider",
+    value: { text: "Waar de hoofdopleider aan moet voldoen" },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_opleider",
+    kind: "richtext",
+    omschrijving: "De eisen aan de hoofdopleider en de co-docenten",
+    value: {
+      html: "<ul><li>Een afgeronde yogadocentenopleiding van minimaal 200 uur, aantoonbaar met een diploma of certificaat.</li><li>Minimaal 100 uur verdieping: specialisaties, nascholing, trainingen en workshops van minimaal 6 uur per onderdeel. Bij een opleiding met een specialisatie, zoals yin, prenataal of yoga nidra, ligt minimaal 50 uur daarvan op dat vakgebied.</li><li>Minimaal vijf jaar leservaring met gemiddeld minimaal vier lessen per week, binnen de laatste acht jaar; als richtwaarde duizend gegeven lessen. Dit weegt zwaarder dan het papier: bij een registratie van 200 uur komt een beoordelaar een les of lesdag bijwonen.</li><li>De hoofdopleider geeft zelf minimaal 60% van de contacturen, onderschrijft de gedragscode en is verzekerd tegen bedrijfsaansprakelijkheid.</li><li>Co-docenten hebben minimaal een 200-uurs opleiding en twee jaar leservaring, of een vakinhoudelijke kwalificatie voor hun onderdeel, zoals een fysiotherapeut voor anatomie. Gastdocenten die samen minder dan 10% van de contacturen geven, vallen onder de verantwoordelijkheid van de hoofdopleider.</li></ul>",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_gedragscode_titel",
+    kind: "text",
+    omschrijving: "Kop boven de gedragscode",
+    value: { text: "De gedragscode" },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_gedragscode",
+    kind: "richtext",
+    omschrijving: "De gedragscode waaraan opleider en docenten zich houden",
+    value: {
+      html: "<ul><li>Veiligheid en welzijn van deelnemers gaan voor het programma; niemand wordt gedwongen tot een houding of oefening.</li><li>Fysieke aanpassingen alleen met toestemming; de grenzen van deelnemers worden gerespecteerd.</li><li>Geen medische claims en geen medisch advies buiten de eigen bevoegdheid.</li><li>Eerlijke communicatie over de eigen opleiding, ervaring en bevoegdheden.</li><li>Vertrouwelijke omgang met persoonlijke informatie van deelnemers, volgens de AVG.</li><li>Geen discriminatie, intimidatie of machtsmisbruik, in welke vorm dan ook.</li></ul>",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_slot",
+    kind: "text",
+    omschrijving: "Zin onder de samenvatting, boven de knop naar het pdf",
+    value: {
+      text: "Dit is een samenvatting. De volledige voorwaarden gelden bij elke registratie; daarin staan ook de beoordeling, de kosten, de geldigheid, het gebruik van het keurmerk, de klachtenregeling en de omgang met persoonsgegevens.",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_knop",
+    kind: "text",
+    omschrijving: "Tekst op de knop naar het pdf met de volledige voorwaarden",
+    value: { text: "Download de voorwaarden (pdf)" },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_link",
+    kind: "text",
+    omschrijving: "Het adres van het pdf",
+    value: {
+      text: "/documenten/voorwaarden-registratie-yogaopleidingen-v1-0.pdf",
+    },
+  },
+
+  // De ingang voor opleiders die hun eigen opleiding willen laten registreren.
+  {
+    page_key: "academy",
+    block_key: "registreren_titel",
+    kind: "text",
+    omschrijving:
+      "Kop van de sectie voor opleiders; leeg laten haalt de hele sectie weg, ook het formulier",
+    value: { text: "Je eigen opleiding laten registreren" },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_inleiding",
+    kind: "text",
+    omschrijving: "Voor wie de registratie is",
+    value: {
+      text: "Geef je als zelfstandige yogadocent of yogaschool een opleiding van 50, 100 of 200 uur, fysiek, en wil je laten zien dat je opleiding en je ervaring ergens aan getoetst zijn? Dan kun je haar laten registreren bij de Yoga Company Academy. Bij welk instituut of in welke stroming je bent opgeleid, maakt niet uit.",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_krijgt_titel",
+    kind: "text",
+    omschrijving: "Kop boven wat een opleider krijgt",
+    value: { text: "Wat je krijgt" },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_krijgt",
+    kind: "richtext",
+    omschrijving: "Wat een opleider krijgt bij registratie",
+    value: {
+      html: "<ul><li>Het registratiecertificaat en een uniek registratienummer.</li><li>De digitale badge YAF, YAA of YAP, voor je website, je materialen en de certificaten van je deelnemers.</li><li>Een vermelding in het register van de Academy.</li><li>Geen lidmaatschap, geen jaarlijkse bijdrage en geen verplichte nascholing. De registratie geldt voor onbepaalde tijd, zolang je de opleiding aanbiedt en aan de voorwaarden voldoet.</li></ul>",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_stappen_titel",
+    kind: "text",
+    omschrijving: "Kop boven de stappen",
+    value: { text: "Zo werkt het" },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_stappen",
+    lijst: { max: 8, itemNaam: "stap" },
+    kind: "richtext",
+    omschrijving: "De stappen van aanvraag tot toekenning, in volgorde",
+    value: {
+      items: [
+        {
+          titel: "Je vraagt aan",
+          tekst:
+            "Met het formulier hieronder. Daarna stuur je per e-mail: je opleidingsplan (leerdoelen, uren per leergebied, rooster, toetsing, literatuur), je diploma's en verdiepingscertificaten, een overzicht van je leservaring (waar, wanneer en hoeveel lessen per week, bevestigd door studio's of onderbouwd met roosters), de kwalificaties van co-docenten, en een bewijs van je bedrijfsaansprakelijkheidsverzekering en KvK-inschrijving.",
+        },
+        {
+          titel: "Je betaalt de registratiekosten",
+          tekst:
+            "Vooraf, op factuur. De beoordeling start zodra de aanvraag compleet is en betaald.",
+        },
+        {
+          titel: "Wij beoordelen binnen 20 werkdagen",
+          tekst:
+            "Ontbreekt er iets of schiet iets tekort, dan krijg je één keer een schriftelijk verzoek om aanvulling of aanpassing, met 30 dagen de tijd. Daarna volgt toekenning of afwijzing.",
+        },
+        {
+          titel: "Bij 200 uur: een gesprek en een lesdag",
+          tekst:
+            "Een beoordelingsgesprek met de hoofdopleider en het bijwonen van een les of lesdag, op jouw locatie in Nederland of België. Reiskosten zijn inbegrepen. Dat praktijkdeel weegt zwaarder dan het papier. Bij 50 en 100 uur doen we dit als het opleidingsplan of het ervaringsoverzicht daar aanleiding toe geeft.",
+        },
+        {
+          titel: "Toekenning of afwijzing",
+          tekst:
+            "Bij toekenning ontvang je het registratiecertificaat, je registratienummer, de badge en de vermelding in het register. Bij afwijzing krijg je een schriftelijke motivering; het beoordelingsdeel van de kosten blijft, de rest krijg je terug, en je kunt binnen twaalf maanden opnieuw aanvragen tegen alleen het beoordelingsdeel.",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_kosten_titel",
+    kind: "text",
+    omschrijving: "Kop boven de kostentabel",
+    value: { text: "Kosten, eenmalig per opleiding, exclusief 21% btw" },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_kosten",
+    lijst: { max: 5, itemNaam: "regel" },
+    kind: "richtext",
+    omschrijving:
+      "De kostentabel: per niveau de registratiekosten, het beoordelingsdeel en wat erbij zit",
+    value: {
+      items: [
+        {
+          registratie: "YAF · 50 uur",
+          kosten: "€ 395",
+          beoordeling: "€ 195",
+          inbegrepen:
+            "Beoordeling, certificaat, badge en vermelding in het register",
+        },
+        {
+          registratie: "YAA · 100 uur",
+          kosten: "€ 595",
+          beoordeling: "€ 245",
+          inbegrepen: "Idem",
+        },
+        {
+          registratie: "YAP · 200 uur",
+          kosten: "€ 895",
+          beoordeling: "€ 345",
+          inbegrepen:
+            "Idem, plus het beoordelingsgesprek, het bijwonen van een lesdag en vermelding als 200-uurs docentenopleiding",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_kosten_voet",
+    kind: "text",
+    omschrijving: "Tekst onder de kostentabel",
+    value: {
+      text: "Het beoordelingsdeel dekt de inhoudelijke toetsing en blijft bij afwijzing; de rest krijg je dan terug. Een tweede opleiding: 25% korting, want de hoofdopleider is dan al beoordeeld. Herbeoordeling na een grote wijziging: € 145. Kleine wijzigingen, zoals data, locatie, prijs, co-docenten en literatuur, meld je gratis.",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_keurmerk_titel",
+    kind: "text",
+    omschrijving: "Kop boven de regels voor het gebruik van het keurmerk",
+    value: { text: "Wat je met het keurmerk mag" },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_keurmerk",
+    kind: "text",
+    omschrijving: "De regels voor het gebruik van de badge en de aanduiding",
+    value: {
+      text: "De badge en de aanduiding 'geregistreerd bij de Yoga Company Academy' gebruik je alleen voor de opleiding waarvoor de registratie is verleend, met het registratienummer erbij, in de aangeleverde vorm en kleuren. Niet voor lessen, workshops of andere opleidingen. Bij beëindiging haal je het keurmerk van je website, social media en materialen.",
+    },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_formulier_titel",
+    kind: "text",
+    omschrijving: "Kop boven het aanvraagformulier",
+    value: { text: "Registratie aanvragen" },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_formulier_tekst",
+    kind: "text",
+    omschrijving: "Tekst boven het aanvraagformulier",
+    value: {
+      text: "Vul het formulier in. Je hoort binnen twee werkdagen van ons, met het adres waar je de documenten heen stuurt en de factuur voor de registratiekosten.",
     },
   },
   {

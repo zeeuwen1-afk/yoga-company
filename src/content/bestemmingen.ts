@@ -32,6 +32,14 @@ export const BESTEMMINGEN: { groep: string; items: Bestemming[] }[] = [
         label: "Waar de Academy voor staat, en de certificaten",
       },
       {
+        pad: "/opleidingen/academy#voorwaarden",
+        label: "Voorwaarden voor certificering",
+      },
+      {
+        pad: "/opleidingen/academy#registreren",
+        label: "Je opleiding registreren (voor opleiders)",
+      },
+      {
         pad: "/opleidingen/200-uurs-yogaopleiding",
         label: "200-uurs Yogaopleiding",
       },
