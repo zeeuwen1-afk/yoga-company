@@ -222,8 +222,8 @@ const veiligheidBlokken: BlokSeed[] = [
  * De tarievenpagina (§8.2).
  *
  * De hele prijslijst is één lijstblok. Een tarief wijzigen is daarmee één veld
- * aanpassen, en er is geen opmaak die kan sneuvelen. Het zijbalkje naast het
- * weekrooster leest dezelfde lijst — zie `src/content/tarieven.ts`.
+ * aanpassen, en er is geen opmaak die kan sneuvelen. De lijst zelf staat in
+ * `src/content/tarieven.ts`.
  */
 const tarievenBlokken: BlokSeed[] = [
   {
@@ -1475,47 +1475,6 @@ export const BLOKKEN: BlokSeed[] = [
   {
     page_key: "home",
     block_key: "deuren_beeld",
-    kind: "image" as const,
-    verbergbaar: true,
-    omschrijving:
-      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
-    value: { url: "", alt: "" },
-  },
-
-  // Het rooster en de kaarten.
-  {
-    page_key: "home",
-    block_key: "rooster_titel",
-    kind: "text",
-    omschrijving: "Kop boven de eerstvolgende lessen",
-    value: { text: "De eerstvolgende lessen" },
-  },
-  {
-    page_key: "home",
-    block_key: "rooster_inleiding",
-    kind: "text",
-    omschrijving: "Zin onder die kop",
-    value: {
-      text: "Reserveer je plek vooraf. Met een account kost dat één klik en gaat er een strip van je kaart af.",
-    },
-  },
-  {
-    page_key: "home",
-    block_key: "rooster_knop",
-    kind: "text" as const,
-    omschrijving: "Tekst op de knop onder de eerstvolgende lessen",
-    value: { text: "Bekijk het volledige weekrooster" },
-  },
-  {
-    page_key: "home",
-    block_key: "rooster_link",
-    kind: "text" as const,
-    omschrijving: "Waar die knop heen gaat",
-    value: { text: "/lessen" },
-  },
-  {
-    page_key: "home",
-    block_key: "rooster_beeld",
     kind: "image" as const,
     verbergbaar: true,
     omschrijving:
@@ -3672,7 +3631,7 @@ export const BLOKKEN: BlokSeed[] = [
     page_key: "lessen",
     block_key: "inleiding",
     kind: "text",
-    omschrijving: "Inleidende tekst boven het weekrooster",
+    omschrijving: "Inleidende tekst onder de kop",
     value: {
       text: "Wekelijkse lessen in kleine groepen. Kijk wanneer het je uitkomt en boek je plek; met een account gaat dat in één klik.",
     },
@@ -3681,7 +3640,7 @@ export const BLOKKEN: BlokSeed[] = [
     page_key: "lessen",
     block_key: "beeld",
     kind: "image",
-    omschrijving: "Sfeerbeeld boven het weekrooster",
+    omschrijving: "Sfeerbeeld boven aan de pagina",
     value: {
       url: "/beeld/lessen-studio.jpg",
       alt: "Een rustige ruimte met een houten bank, twee zitkussens en een rond raam",

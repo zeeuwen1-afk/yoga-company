@@ -49,7 +49,6 @@ const navigation: NavItem[] = [
     sub: [
       { href: "/workshops", label: "Alle workshops" },
       { href: "/lessen/tarieven#prive", label: "Privéyoga" },
-      { href: "/lessen", label: "Weekrooster" },
       { href: "/lessen/tarieven", label: "Alle tarieven" },
     ],
   },

@@ -439,9 +439,14 @@ test.describe("Tarieven", () => {
     await expect(page).toHaveURL(/\/lessen\/tarieven$/);
   });
 
-  test("het rooster staat er zonder balkje met kaarten naast", async ({
-    page,
-  }) => {
+  /**
+   * De strippenkaarten worden niet meer aangeboden: de lesprijs zit in het
+   * abonnement van de school waar wordt lesgegeven. Er stond een balkje met
+   * kaarten naast het weekrooster; dat rooster is er sinds september 2026
+   * helemaal uit. Wat blijft gelden is dat de kaarten niet terugkomen op de
+   * lessenpagina, want dan zou iemand iets kunnen kopen dat niet bestaat.
+   */
+  test("de lessenpagina biedt geen strippenkaarten aan", async ({ page }) => {
     await page.goto("/lessen");
 
     await expect(

@@ -3,33 +3,26 @@ import type { Metadata } from "next";
 import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalPagina } from "@/features/cms";
 import { OverzichtInhoud } from "@/features/cms/paginas/eenvoudige-paginas";
-import { haalRooster, Rooster } from "@/features/bookings";
 
-// Het rooster verandert zodra iemand boekt, dus korter dan bij het aanbod.
-export const revalidate = 60;
+export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Yogalessen en weekrooster",
+  title: "Yogalessen",
   description:
-    "Het weekrooster van de yogalessen bij YogaCompany. Kleine groepen, boeken kan met een account.",
+    "Waar Wietske Visser lesgeeft, en hoe je een proefles boekt bij die school.",
   alternates: { canonical: "/lessen" },
 };
 
 export default async function LessenPage() {
-  const [pagina, lessen] = await Promise.all([
-    haalPagina("lessen"),
-    haalRooster(),
-  ]);
+  const pagina = await haalPagina("lessen");
 
   return (
     <>
-      <OverzichtInhoud pagina={pagina} pageKey="lessen">
-        {/* Er stond een balkje met strippenkaarten naast het rooster. Die kaarten
-            worden niet meer aangeboden: de lesprijs zit in het abonnement van de
-            school waar wordt lesgegeven. Het rooster krijgt de ruimte die daardoor
-            vrijkomt. */}
-        <Rooster lessen={lessen} />
-      </OverzichtInhoud>
+      {/* Geen weekrooster meer. Er stond nooit een les in — nul lessen, nul
+          boekingen — en de pagina meldde dus alleen dat het rooster leeg was.
+          Wat hier telt is waar Wietske lesgeeft en hoe je daar een proefles
+          boekt; dat staat in de tekst uit de editor. */}
+      <OverzichtInhoud pagina={pagina} pageKey="lessen" />
       <VrijeZone pageKey="lessen" />
     </>
   );

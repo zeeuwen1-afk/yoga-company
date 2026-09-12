@@ -53,7 +53,6 @@ export const BESTEMMINGEN: { groep: string; items: Bestemming[] }[] = [
       { pad: "/lessen/tarieven", label: "Lessen, workshops en privéyoga" },
       { pad: "/lessen/tarieven#workshops", label: "Workshops" },
       { pad: "/lessen/tarieven#prive", label: "Privéyoga" },
-      { pad: "/lessen#rooster", label: "Lessen · het weekrooster" },
     ],
   },
   {

@@ -1,57 +1,53 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Lesrooster", () => {
-  test("de lessenpagina is openbaar en toont het rooster", async ({ page }) => {
+/**
+ * De lessenpagina, en het roosterbeheer dat erachter blijft bestaan.
+ *
+ * Er stond een weekrooster op deze pagina. Dat is er in september 2026
+ * uitgehaald: er heeft nooit een les in gestaan en er is nooit geboekt, dus
+ * het enige wat bezoekers zagen was de melding dat het rooster leeg was. Wat
+ * wel klopt, staat in de tekst: Wietske geeft les bij drie scholen en je boekt
+ * een proefles bij die school.
+ *
+ * Het boekingssysteem zelf staat er nog, in het portaal en in het beheer. Die
+ * twee zijn afgeschermd, en dat hoort zo te blijven: dat is wat de laatste
+ * twee tests hier bewaken.
+ */
+test.describe("Lessenpagina", () => {
+  test("is openbaar en toont haar eigen tekst", async ({ page }) => {
     await page.goto("/lessen");
 
-    // De overzichtspagina's zetten hun kop als h2, net als /opleidingen en
-    // /trainingen; die conventie volgen we hier.
-    await expect(
-      page.getByRole("heading", { name: "Yogalessen", level: 1 }),
-    ).toBeVisible();
-
-    // Staat er niets in het rooster, dan hoort daar een uitleg te staan in
-    // plaats van een leeg scherm.
-    const leeg = page.getByText("Er staan op dit moment geen lessen");
-    const eersteLes = page.locator("main li").first();
-    await expect(leeg.or(eersteLes)).toBeVisible();
+    // De kop komt uit de site-editor en mag veranderen; dát er een kop staat
+    // en dat er tekst onder staat, niet.
+    const kop = page.getByRole("heading", { level: 1 });
+    await expect(kop).toBeVisible();
+    await expect(kop).not.toBeEmpty();
   });
 
-  test("staat in de navigatie van de site", async ({ page }) => {
+  test("belooft geen rooster meer", async ({ page }) => {
+    await page.goto("/lessen");
+
+    // Geen lege roosterstrook, en geen boekknop die nergens heen gaat. Dit is
+    // precies wat er stond toen het rooster nog leeg op de pagina stond.
+    await expect(
+      page.getByText("Er staan op dit moment geen lessen in het rooster"),
+    ).toHaveCount(0);
+    await expect(page.getByRole("link", { name: "Boek een les" })).toHaveCount(
+      0,
+    );
+  });
+
+  test("is bereikbaar vanuit de paginavoet", async ({ page }) => {
     await page.goto("/");
 
-    // De balk heet inmiddels "Workshops"; het weekrooster staat daaronder. Deze
-    // test hing aan de naam van het menu-item en viel om bij het hernoemen.
-    // Wat blijft gelden: het rooster is vanuit de hoofdnavigatie te bereiken.
-    const menu = page.getByRole("navigation", { name: "Hoofdmenu" });
-    const workshops = menu
-      .getByRole("link", { name: "Workshops", exact: true })
-      .first();
+    // Het menu-item Weekrooster is verdwenen; de weg naar de lessenpagina
+    // loopt nu via de voet, waar het aanbod staat.
+    await page
+      .getByRole("contentinfo")
+      .getByRole("link", { name: "Lessen", exact: true })
+      .click();
 
-    if (await workshops.isVisible()) {
-      // Op een breed scherm klapt het submenu open bij hover.
-      await workshops.hover();
-    } else {
-      // Op de telefoon zit het hoofdmenu achter de menuknop.
-      await page.getByRole("button", { name: "Menu openen" }).click();
-    }
-
-    await page.getByRole("link", { name: "Weekrooster" }).first().click();
     await expect(page).toHaveURL(/\/lessen$/);
-  });
-
-  test("boeken vraagt om inloggen zolang je geen account hebt", async ({
-    page,
-  }) => {
-    await page.goto("/lessen");
-
-    const boekKnop = page.getByRole("link", { name: "Boek een les" }).first();
-
-    // Alleen te testen als er een les in het rooster staat.
-    if (await boekKnop.isVisible()) {
-      await boekKnop.click();
-      await expect(page).toHaveURL(/\/inloggen/);
-    }
   });
 
   test("het rooster staat niet in het portaal zonder sessie", async ({

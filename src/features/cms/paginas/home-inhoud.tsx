@@ -7,7 +7,6 @@ import { veiligeLink } from "@/lib/knoplink";
 import { SectieKop } from "@/components/layout/sectie";
 import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { Card, CardContent } from "@/components/ui/card";
-import { formateerTijdvak, type Les } from "@/features/bookings";
 import { CursusRooster, type Cursus } from "@/features/courses";
 import type { Pagina } from "../server/queries";
 import { VrijeZone } from "./vrije-zone";
@@ -191,75 +190,6 @@ function Deuren({ pagina }: { pagina: Pagina }) {
 }
 
 /**
- * De eerstvolgende lessen, met het kaartenbalkje ernaast.
- *
- * Staat er niets in het rooster, dan verdwijnt de hele sectie. Een kop met
- * "geen lessen gevonden" eronder verkoopt niets en roept alleen de vraag op of
- * de studio nog bestaat.
- */
-function Rooster({ pagina, lessen }: { pagina: Pagina; lessen: Les[] }) {
-  if (lessen.length === 0) return null;
-
-  return (
-    <>
-      <SectieBeeld
-        beeld={pagina.beeld("rooster_beeld")}
-        sectie="rooster"
-        achtergrond="creme"
-        lijnBoven
-      >
-        <div className="grid gap-10 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <SectieKop
-              titel={pagina.tekst("rooster_titel")}
-              inleiding={pagina.tekst("rooster_inleiding")}
-            />
-
-            <ul className="mt-8 overflow-hidden rounded-[var(--radius-card)] border border-line bg-white">
-              {lessen.map((les) => (
-                <li
-                  key={les.id}
-                  className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-line p-5 last:border-b-0"
-                >
-                  <div className="min-w-0">
-                    <p className="label-klein">
-                      {formateerTijdvak(les.begintOp, les.duurMinuten)}
-                    </p>
-                    <h3 className="mt-1 text-xl">{les.titel}</h3>
-                    <p className="mt-0.5 text-sm text-muted">{les.locatie}</p>
-                  </div>
-                  <div className="flex shrink-0 items-center gap-4">
-                    <p className="text-sm text-muted">
-                      {les.vrijePlekken > 0
-                        ? `${les.vrijePlekken} ${les.vrijePlekken === 1 ? "plek" : "plekken"} vrij`
-                        : "Vol, wachtlijst"}
-                    </p>
-                    <Link
-                      href="/lessen"
-                      className="inline-flex h-11 items-center rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
-                    >
-                      {les.vrijePlekken > 0 ? "Boek" : "Wachtlijst"}
-                    </Link>
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            <CmsTekstLink
-              tekst={pagina.tekst("rooster_knop")}
-              link={pagina.tekst("rooster_link")}
-              terugval="/lessen"
-              className="mt-6"
-            />
-          </div>
-        </div>
-      </SectieBeeld>
-      <VrijeZone pageKey={"home"} sectie="rooster" />
-    </>
-  );
-}
-
-/**
  * De ingang voor organisaties.
  *
  * Eén blok met drie kaarten, en geen drie extra deuren bovenaan: bij de deuren
@@ -365,11 +295,9 @@ function Inlogdeuren({ pagina }: { pagina: Pagina }) {
 export function HomeInhoud({
   pagina,
   opleidingen,
-  lessen,
 }: {
   pagina: Pagina;
   opleidingen: Cursus[];
-  lessen: Les[];
 }) {
   const redenen = pagina.lijst<Reden>("waarom_punten");
   const ervaringen = pagina.lijst<Ervaring>("testimonials");
@@ -379,7 +307,6 @@ export function HomeInhoud({
       <Banner pagina={pagina} />
       <Hero pagina={pagina} />
       <Deuren pagina={pagina} />
-      <Rooster pagina={pagina} lessen={lessen} />
 
       {redenen.length > 0 ? (
         <>

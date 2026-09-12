@@ -8,7 +8,6 @@ import { VrijeZone } from "@/features/cms/paginas/vrije-zone";
 import { haalConceptPagina, kanVoorvertonen } from "@/features/cms";
 import { AcademyInhoud } from "@/features/cms/paginas/academy-inhoud";
 import { NiveausOverzicht } from "@/features/courses/components/niveaus-overzicht";
-import { haalRooster, Rooster } from "@/features/bookings";
 import { HomeInhoud } from "@/features/cms/paginas/home-inhoud";
 import { OrganisatieInhoud } from "@/features/cms/paginas/organisatie-inhoud";
 import { PortfolioInhoud } from "@/features/cms/paginas/portfolio-inhoud";
@@ -93,9 +92,6 @@ export default async function VoorbeeldPagina({
           <HomeInhoud
             pagina={pagina}
             opleidingen={await haalAanbod("opleiding")}
-            lessen={(await haalRooster(7))
-              .filter((les) => !les.afgelastOp)
-              .slice(0, 4)}
           />
         );
       case "portfolio":
@@ -126,11 +122,7 @@ export default async function VoorbeeldPagina({
           </OverzichtInhoud>
         );
       case "lessen":
-        return (
-          <OverzichtInhoud pagina={pagina} pageKey="lessen">
-            <Rooster lessen={await haalRooster()} />
-          </OverzichtInhoud>
-        );
+        return <OverzichtInhoud pagina={pagina} pageKey="lessen" />;
       case "over-ons":
         return <OverOnsInhoud pagina={pagina} />;
       case "contact":

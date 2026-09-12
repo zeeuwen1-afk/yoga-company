@@ -1227,36 +1227,6 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'rooster_titel', 'text', '{"text":"De eerstvolgende lessen"}'::jsonb)
-on conflict (page_key, block_key) do update set
-  kind = excluded.kind,
-  value = excluded.value;
-
-insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'rooster_inleiding', 'text', '{"text":"Reserveer je plek vooraf. Met een account kost dat één klik en gaat er een strip van je kaart af."}'::jsonb)
-on conflict (page_key, block_key) do update set
-  kind = excluded.kind,
-  value = excluded.value;
-
-insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'rooster_knop', 'text', '{"text":"Bekijk het volledige weekrooster"}'::jsonb)
-on conflict (page_key, block_key) do update set
-  kind = excluded.kind,
-  value = excluded.value;
-
-insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'rooster_link', 'text', '{"text":"/lessen"}'::jsonb)
-on conflict (page_key, block_key) do update set
-  kind = excluded.kind,
-  value = excluded.value;
-
-insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'rooster_beeld', 'image', '{"url":"","alt":""}'::jsonb)
-on conflict (page_key, block_key) do update set
-  kind = excluded.kind,
-  value = excluded.value;
-
-insert into content_blocks (page_key, block_key, kind, value)
 values ('home', 'waarom_titel', 'text', '{"text":"Waarom YogaCompany"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,

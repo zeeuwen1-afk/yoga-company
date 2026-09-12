@@ -38,9 +38,9 @@ export default async function OnzeDocentenPage() {
         <p className="mt-10 max-w-2xl text-muted">
           Er staan op dit moment geen docentenpagina&rsquo;s online.{" "}
           <Link href="/lessen" className="underline hover:text-green">
-            Bekijk het weekrooster
+            Bekijk waar we lesgeven
           </Link>{" "}
-          om te zien welke lessen er zijn.
+          om te zien waar je terecht kunt.
         </p>
       ) : (
         <ul className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">

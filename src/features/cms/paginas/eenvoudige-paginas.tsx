@@ -254,7 +254,12 @@ export function OverzichtInhoud({
   pagina: Pagina;
   /** Nodig om de eigen blokken van déze pagina op te halen. */
   pageKey: string;
-  children: React.ReactNode;
+  /**
+   * Wat er onder de kop komt. Mag weg: de lessenpagina heeft alleen nog haar
+   * tekst, sinds het weekrooster eruit is. Zonder deze keuze bleef daar een
+   * lege strook staan waar het rooster stond.
+   */
+  children?: React.ReactNode;
 }) {
   const beeld = pagina.beeld("beeld");
   const naast = beeld !== null && isNaastElkaar(beeld.layout);
@@ -298,11 +303,13 @@ export function OverzichtInhoud({
             inleiding={pagina.tekst("inleiding")}
           />
         </BeeldAchtergrond>
-        <Sectie>
-          <div id="rooster" className="scroll-mt-24">
-            {children}
-          </div>
-        </Sectie>
+        {children ? (
+          <Sectie>
+            <div id="rooster" className="scroll-mt-24">
+              {children}
+            </div>
+          </Sectie>
+        ) : null}
       </>
     );
   }
@@ -329,12 +336,15 @@ export function OverzichtInhoud({
           </>
         )}
 
-        {/* Het anker waar een knop naartoe kan springen: op /lessen is dit het
-          weekrooster, op /opleidingen en /trainingen het aanbod. Staat als
-          `/lessen#rooster` in de lijst met bestemmingen. */}
-        <div id="rooster" className="mt-12 scroll-mt-24">
-          {children}
-        </div>
+        {/* Het anker waar een knop naartoe kan springen: op /opleidingen,
+          /trainingen en /workshops is dit het aanbod. De lessenpagina heeft
+          sinds het weekrooster eruit is niets onder haar kop, en dan blijft
+          ook het anker weg in plaats van als lege strook achter. */}
+        {children ? (
+          <div id="rooster" className="mt-12 scroll-mt-24">
+            {children}
+          </div>
+        ) : null}
       </Sectie>
       <VrijeZone pageKey={pageKey} sectie="opening" />
     </>

@@ -123,9 +123,9 @@ function MijnLessen({
 
       {lessen.length === 0 ? (
         <p className="mt-4 text-muted">
-          Er staan op dit moment geen lessen in het rooster.{" "}
+          Er staan op dit moment geen lessen ingepland.{" "}
           <Link href="/lessen" className="underline hover:text-green">
-            Bekijk het volledige rooster
+            Bekijk waar we lesgeven
           </Link>
           .
         </p>

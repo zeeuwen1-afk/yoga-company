@@ -31,19 +31,14 @@ export const ELDERS_BEHEERD: Record<string, ElderBeheerd> = {
     href: "/admin/aanbod",
     knop: "Naar Aanbod",
   },
-  lessen: {
-    wat: "Het weekrooster staat hier niet. Losse lessen voeg je toe en haal je weg bij Lessen.",
-    href: "/admin/lessen",
-    knop: "Naar Lessen",
-  },
   "onze-docenten": {
     wat: "De docenten zelf staan hier niet. Elke docent maakt zijn eigen pagina; die verschijnt hier zodra hij hem publiceert.",
     href: "/admin/klanten",
     knop: "Naar Klanten",
   },
   home: {
-    wat: "De eerstvolgende lessen en het aanbod op deze pagina komen uit Lessen en Aanbod. Hier bepaal je de teksten eromheen.",
-    href: "/admin/lessen",
-    knop: "Naar Lessen",
+    wat: "Het aanbod op deze pagina komt uit Aanbod. Hier bepaal je de teksten eromheen.",
+    href: "/admin/aanbod",
+    knop: "Naar Aanbod",
   },
 };
