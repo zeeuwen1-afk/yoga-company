@@ -186,6 +186,15 @@ const veiligheidBlokken: BlokSeed[] = [
   },
   {
     page_key: "veiligheid",
+    block_key: "opening_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij de kop van deze pagina (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "veiligheid",
     block_key: "kern",
     kind: "richtext" as const,
     omschrijving: "De korte versie bovenaan, boven de uitklappers",
@@ -231,6 +240,15 @@ const tarievenBlokken: BlokSeed[] = [
     omschrijving: "Inleidende tekst onder de kop",
     value: { text: TARIEVEN_INLEIDING },
   },
+  {
+    page_key: "tarieven",
+    block_key: "opening_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij de kop van deze pagina (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
 
   // Waar Wietske lesgeeft. De school bepaalt de prijs, dus hier staat een link
   // in plaats van een bedrag.
@@ -257,6 +275,29 @@ const tarievenBlokken: BlokSeed[] = [
       "De lessen die je bij een yogaschool geeft. Per plek: welke les, bij welke school, wanneer, en het webadres van die school. Zet hier geen prijs neer: die bepaalt de school en die verandert zonder dat wij het weten. Laat de lijst leeg en de hele sectie blijft weg.",
     value: { items: LESPLEKKEN as unknown as Record<string, string>[] },
   },
+  {
+    page_key: "tarieven",
+    block_key: "lesplekken_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "lesplekken_tarief",
+    kind: "text" as const,
+    omschrijving: "Wat er staat als een school geen website heeft",
+    value: { text: "Tarief via de school" },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "lesplekken_knop",
+    kind: "text" as const,
+    omschrijving: "Tekst van de link naar de website van de school",
+    value: { text: "Aanmelden en tarieven" },
+  },
 
   // Wat Wietske zelf verkoopt.
   {
@@ -274,6 +315,15 @@ const tarievenBlokken: BlokSeed[] = [
     omschrijving:
       "De workshops die je zelf geeft. Per workshop: naam, duur, prijs en een toelichting.",
     value: { items: WORKSHOPS as unknown as Record<string, string>[] },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "workshops_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
   {
     page_key: "tarieven",
@@ -306,6 +356,15 @@ const tarievenBlokken: BlokSeed[] = [
     omschrijving: "Regel onder de privétarieven, bijvoorbeeld over reiskosten",
     value: { text: PRIVE_VOETNOOT },
   },
+  {
+    page_key: "tarieven",
+    block_key: "prive_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
 
   // Verwijzing naar de organisatiepagina's, waar de eigen tarieven al staan.
   {
@@ -325,6 +384,15 @@ const tarievenBlokken: BlokSeed[] = [
     omschrijving: "Tekst bij de verwijzing naar de organisatiepagina's",
     value: { text: ORGANISATIES_TEKST },
   },
+  {
+    page_key: "tarieven",
+    block_key: "organisaties_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
 
   {
     page_key: "tarieven",
@@ -332,6 +400,15 @@ const tarievenBlokken: BlokSeed[] = [
     kind: "richtext" as const,
     omschrijving: "De afspraken onderaan: bevestigen, afzeggen en ziekte",
     value: { html: TARIEVEN_VOORWAARDEN },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "voorwaarden_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 ];
 
@@ -357,6 +434,15 @@ const docentenBlokken: BlokSeed[] = [
     kind: "text" as const,
     omschrijving: "Inleidende zin onder de kop",
     value: { text: DOCENTEN_INLEIDING },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "opening_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij de kop van deze pagina (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
   {
     page_key: "voor-yogadocenten",
@@ -409,6 +495,15 @@ const docentenBlokken: BlokSeed[] = [
   },
   {
     page_key: "voor-yogadocenten",
+    block_key: "voorwaarden_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "voor-yogadocenten",
     block_key: "registreren_titel",
     kind: "text",
     omschrijving:
@@ -437,6 +532,15 @@ const docentenBlokken: BlokSeed[] = [
     kind: "text",
     omschrijving: "Waar die knop heen gaat",
     value: { text: "/opleidingen/academy#registreren" },
+  },
+  {
+    page_key: "voor-yogadocenten",
+    block_key: "registreren_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 ];
 
@@ -498,6 +602,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
   },
   {
     page_key: "yogaopleiding",
+    block_key: "opening_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij de kop van deze pagina (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "yogaopleiding",
     block_key: "knop_twee",
     kind: "text" as const,
     omschrijving: "Tekst op de tweede knop in de hero",
@@ -515,7 +628,7 @@ const yogaopleidingBlokken: BlokSeed[] = [
     block_key: "beeld",
     kind: "image" as const,
     verbergbaar: true,
-    omschrijving: "Sfeerbeeld boven aan de pagina",
+    omschrijving: "Foto bij het verhaal, onder de kop",
     value: { url: "", alt: "" },
   },
   {
@@ -550,6 +663,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
   },
   {
     page_key: "yogaopleiding",
+    block_key: "modules_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "yogaopleiding",
     block_key: "manieren_titel",
     kind: "text" as const,
     omschrijving: "Kop boven de drie manieren om te volgen",
@@ -561,6 +683,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
     kind: "richtext" as const,
     omschrijving: "Per module, per blok of de volledige opleiding",
     value: { html: OPLEIDING_MANIEREN },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "manieren_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
   {
     page_key: "yogaopleiding",
@@ -578,6 +709,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
   },
   {
     page_key: "yogaopleiding",
+    block_key: "voorwie_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "yogaopleiding",
     block_key: "diploma_titel",
     kind: "text" as const,
     omschrijving: "Kop boven het blok over diploma en certificaten",
@@ -589,6 +729,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
     kind: "richtext" as const,
     omschrijving: "Wat je krijgt bij afronding",
     value: { html: OPLEIDING_DIPLOMA },
+  },
+  {
+    page_key: "yogaopleiding",
+    block_key: "diploma_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
   {
     page_key: "yogaopleiding",
@@ -618,6 +767,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
     omschrijving: "Waar die knop heen gaat",
     value: { text: OPLEIDING_DOORSTROOM_LINK },
   },
+  {
+    page_key: "yogaopleiding",
+    block_key: "doorstroom_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
 
   // --- De gedeelde blokken, op alle vijf de pagina's ------------------------
   {
@@ -645,6 +803,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
   },
   {
     page_key: "yogaopleiding-gedeeld",
+    block_key: "prijzen_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "yogaopleiding-gedeeld",
     block_key: "praktisch_titel",
     kind: "text" as const,
     omschrijving: "Kop boven de praktische informatie",
@@ -659,6 +826,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
   },
   {
     page_key: "yogaopleiding-gedeeld",
+    block_key: "praktisch_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "yogaopleiding-gedeeld",
     block_key: "inschrijven_titel",
     kind: "text" as const,
     omschrijving: "Kop boven de inschrijfstappen",
@@ -670,6 +846,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
     kind: "richtext" as const,
     omschrijving: "De drie stappen en waar je terecht kunt met vragen",
     value: { html: GEDEELD_INSCHRIJVEN },
+  },
+  {
+    page_key: "yogaopleiding-gedeeld",
+    block_key: "inschrijven_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
   {
     page_key: "yogaopleiding-gedeeld",
@@ -707,7 +892,16 @@ const yogaopleidingBlokken: BlokSeed[] = [
       block_key: "beeld",
       kind: "image" as const,
       verbergbaar: true,
-      omschrijving: "Sfeerbeeld boven aan de pagina",
+      omschrijving: "Foto bij het verhaal, onder de kop",
+      value: { url: "", alt: "" },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "opening_beeld",
+      kind: "image" as const,
+      verbergbaar: true,
+      omschrijving:
+        "Foto bij de kop van deze pagina (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
       value: { url: "", alt: "" },
     },
     {
@@ -737,6 +931,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
     },
     {
       page_key: module.pageKey,
+      block_key: "leert_beeld",
+      kind: "image" as const,
+      verbergbaar: true,
+      omschrijving:
+        "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+      value: { url: "", alt: "" },
+    },
+    {
+      page_key: module.pageKey,
       block_key: "programma_titel",
       kind: "text" as const,
       omschrijving: "Kop boven het programma",
@@ -748,6 +951,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
       kind: "richtext" as const,
       omschrijving: "De onderdelen van deze module",
       value: { html: module.programma },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "programma_beeld",
+      kind: "image" as const,
+      verbergbaar: true,
+      omschrijving:
+        "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+      value: { url: "", alt: "" },
     },
     {
       page_key: module.pageKey,
@@ -765,6 +977,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
     },
     {
       page_key: module.pageKey,
+      block_key: "lesdagen_beeld",
+      kind: "image" as const,
+      verbergbaar: true,
+      omschrijving:
+        "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+      value: { url: "", alt: "" },
+    },
+    {
+      page_key: module.pageKey,
       block_key: "afloop_titel",
       kind: "text" as const,
       omschrijving: "Kop boven wat je na de module hebt",
@@ -779,6 +1000,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
     },
     {
       page_key: module.pageKey,
+      block_key: "afloop_beeld",
+      kind: "image" as const,
+      verbergbaar: true,
+      omschrijving:
+        "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+      value: { url: "", alt: "" },
+    },
+    {
+      page_key: module.pageKey,
       block_key: "toelating_titel",
       kind: "text" as const,
       omschrijving: "Kop boven voor wie en toelating",
@@ -790,6 +1020,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
       kind: "text" as const,
       omschrijving: "Voor wie deze module bedoeld is",
       value: { text: module.voorWie },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "toelating_beeld",
+      kind: "image" as const,
+      verbergbaar: true,
+      omschrijving:
+        "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+      value: { url: "", alt: "" },
     },
     {
       page_key: module.pageKey,
@@ -821,6 +1060,15 @@ const yogaopleidingBlokken: BlokSeed[] = [
       kind: "text" as const,
       omschrijving: "De combinatietip onder de prijs",
       value: { text: module.combineer },
+    },
+    {
+      page_key: module.pageKey,
+      block_key: "prijs_beeld",
+      kind: "image" as const,
+      verbergbaar: true,
+      omschrijving:
+        "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+      value: { url: "", alt: "" },
     },
   ]),
 ];
@@ -997,6 +1245,13 @@ const cursusBlokken: BlokSeed[] = [
     omschrijving:
       "Wat er achter Lesdata staat. Leeg laten = die regel verdwijnt.",
     value: { text: "Neem contact op voor de eerstvolgende startdatum." },
+  },
+  {
+    page_key: "cursus",
+    block_key: "praktisch_certificaat_naam",
+    kind: "text" as const,
+    omschrijving: "De naam onder het niveau naast de badge",
+    value: { text: "Yoga Company Academy" },
   },
 
   {
@@ -1210,6 +1465,15 @@ export const BLOKKEN: BlokSeed[] = [
       ],
     },
   },
+  {
+    page_key: "home",
+    block_key: "deuren_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
 
   // Het rooster en de kaarten.
   {
@@ -1241,6 +1505,15 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text" as const,
     omschrijving: "Waar die knop heen gaat",
     value: { text: "/lessen" },
+  },
+  {
+    page_key: "home",
+    block_key: "rooster_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 
   // Waarom, het aanbod, en het bewijs.
@@ -1281,6 +1554,15 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "home",
+    block_key: "waarom_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "home",
     block_key: "aanbod_titel",
     kind: "text",
     omschrijving: "Kop boven de uitgelichte opleidingen",
@@ -1311,6 +1593,15 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "home",
+    block_key: "aanbod_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "home",
     block_key: "testimonials",
     lijst: { max: 9, itemNaam: "ervaring" },
     verbergbaar: true,
@@ -1338,6 +1629,22 @@ export const BLOKKEN: BlokSeed[] = [
         },
       ],
     },
+  },
+  {
+    page_key: "home",
+    block_key: "testimonials_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de ervaringen",
+    value: { text: "Wat deelnemers zeggen" },
+  },
+  {
+    page_key: "home",
+    block_key: "testimonials_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 
   // De twee inlogdeuren, onderaan: eerst de bezoeker overtuigen, dan pas de
@@ -1386,6 +1693,15 @@ export const BLOKKEN: BlokSeed[] = [
         },
       ],
     },
+  },
+  {
+    page_key: "home",
+    block_key: "inlog_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 
   // De ingang voor organisaties. Eén blok met drie kaarten en geen drie extra
@@ -1448,6 +1764,15 @@ export const BLOKKEN: BlokSeed[] = [
       ],
     },
   },
+  {
+    page_key: "home",
+    block_key: "organisaties_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
 
   {
     page_key: "home",
@@ -1478,6 +1803,15 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text" as const,
     omschrijving: "Waar die knop heen gaat",
     value: { text: "/contact" },
+  },
+  {
+    page_key: "home",
+    block_key: "cta_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 
   // ---------------------------------------------------------------------------
@@ -1530,7 +1864,16 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "beeld",
     kind: "image",
     verbergbaar: true,
-    omschrijving: "Sfeerbeeld boven aan de pagina",
+    omschrijving: "Foto bij het verhaal, onder de kop",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "opening_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij de kop van deze pagina (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
     value: { url: "", alt: "" },
   },
   {
@@ -1559,6 +1902,22 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving:
       "Kaarten met doelgroepen. Leeg laten kan; dan verdwijnt het blok.",
     value: { items: [] },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "doelgroepen_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "doelgroepen_label",
+    kind: "text" as const,
+    omschrijving: "Het label op de uitgelichte kaart",
+    value: { text: "Vaak de eerste stap" },
   },
   {
     page_key: "bedrijfsyoga",
@@ -1636,6 +1995,32 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "bedrijfsyoga",
+    block_key: "vormen_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "vormen_label",
+    kind: "text" as const,
+    omschrijving: "Het label op de uitgelichte vorm",
+    value: { text: "Meest gekozen" },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "vormen_voetnoot",
+    kind: "text",
+    verbergbaar: true,
+    omschrijving: "De kleine letters onder de tarieven",
+    value: {
+      text: "Alle bedragen zijn exclusief btw en gelden tot 15 deelnemers; daarboven € 5 per extra deelnemer per sessie. Matten en props nemen we mee. Gratis binnen 20 kilometer van Almere, daarbuiten € 0,35 per gereden kilometer. Reeksen vooraf te voldoen, betaaltermijn 14 dagen.",
+    },
+  },
+  {
+    page_key: "bedrijfsyoga",
     block_key: "praktisch_titel",
     kind: "text",
     omschrijving: "Kop boven de praktische punten",
@@ -1672,6 +2057,15 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "bedrijfsyoga",
+    block_key: "praktisch_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "bedrijfsyoga",
     block_key: "fiscaal",
     kind: "richtext",
     verbergbaar: true,
@@ -1683,13 +2077,10 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "bedrijfsyoga",
-    block_key: "vormen_voetnoot",
-    kind: "text",
-    verbergbaar: true,
-    omschrijving: "De kleine letters onder de tarieven",
-    value: {
-      text: "Alle bedragen zijn exclusief btw en gelden tot 15 deelnemers; daarboven € 5 per extra deelnemer per sessie. Matten en props nemen we mee. Gratis binnen 20 kilometer van Almere, daarbuiten € 0,35 per gereden kilometer. Reeksen vooraf te voldoen, betaaltermijn 14 dagen.",
-    },
+    block_key: "fiscaal_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven het fiscale kader",
+    value: { text: "Wat dit fiscaal betekent" },
   },
   {
     page_key: "bedrijfsyoga",
@@ -1706,6 +2097,15 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       text: "We komen graag eerst een keer langs voor een proefles, zodat jullie weten waar je ja tegen zegt. Laat weten met hoeveel mensen jullie zijn en waar jullie zitten.",
     },
+  },
+  {
+    page_key: "bedrijfsyoga",
+    block_key: "cta_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 
   // ---------------------------------------------------------------------------
@@ -1754,7 +2154,16 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "beeld",
     kind: "image",
     verbergbaar: true,
-    omschrijving: "Sfeerbeeld boven aan de pagina",
+    omschrijving: "Foto bij het verhaal, onder de kop",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "opening_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij de kop van deze pagina (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
     value: { url: "", alt: "" },
   },
   {
@@ -1819,6 +2228,22 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "onderwijs",
+    block_key: "doelgroepen_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "doelgroepen_label",
+    kind: "text" as const,
+    omschrijving: "Het label op de uitgelichte kaart",
+    value: { text: "Vaak de eerste stap" },
+  },
+  {
+    page_key: "onderwijs",
     block_key: "praktisch_titel",
     kind: "text",
     verbergbaar: true,
@@ -1870,6 +2295,15 @@ export const BLOKKEN: BlokSeed[] = [
         },
       ],
     },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "praktisch_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
   {
     page_key: "onderwijs",
@@ -1958,6 +2392,22 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "onderwijs",
+    block_key: "vormen_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "vormen_label",
+    kind: "text" as const,
+    omschrijving: "Het label op de uitgelichte vorm",
+    value: { text: "Meest gekozen" },
+  },
+  {
+    page_key: "onderwijs",
     block_key: "vormen_voetnoot",
     kind: "text",
     verbergbaar: true,
@@ -1982,6 +2432,15 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       text: "Vertel om hoeveel klassen of groepen het gaat en in welke periode het zou moeten vallen, dan stuur ik binnen twee werkdagen een voorstel met een prijs erin.",
     },
+  },
+  {
+    page_key: "onderwijs",
+    block_key: "cta_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 
   // ---------------------------------------------------------------------------
@@ -2030,7 +2489,16 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "beeld",
     kind: "image",
     verbergbaar: true,
-    omschrijving: "Sfeerbeeld boven aan de pagina",
+    omschrijving: "Foto bij het verhaal, onder de kop",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "opening_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij de kop van deze pagina (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
     value: { url: "", alt: "" },
   },
   {
@@ -2083,6 +2551,22 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "sportclubs",
+    block_key: "doelgroepen_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "doelgroepen_label",
+    kind: "text" as const,
+    omschrijving: "Het label op de uitgelichte kaart",
+    value: { text: "Vaak de eerste stap" },
+  },
+  {
+    page_key: "sportclubs",
     block_key: "praktisch_titel",
     kind: "text",
     verbergbaar: true,
@@ -2119,6 +2603,15 @@ export const BLOKKEN: BlokSeed[] = [
         },
       ],
     },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "praktisch_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
   {
     page_key: "sportclubs",
@@ -2207,6 +2700,22 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "sportclubs",
+    block_key: "vormen_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "sportclubs",
+    block_key: "vormen_label",
+    kind: "text" as const,
+    omschrijving: "Het label op de uitgelichte vorm",
+    value: { text: "Meest gekozen" },
+  },
+  {
+    page_key: "sportclubs",
     block_key: "vormen_voetnoot",
     kind: "text",
     verbergbaar: true,
@@ -2232,6 +2741,15 @@ export const BLOKKEN: BlokSeed[] = [
       text: "Laat weten om welk team het gaat en op welke avond jullie trainen, dan stuur ik binnen twee werkdagen een voorstel.",
     },
   },
+  {
+    page_key: "sportclubs",
+    block_key: "cta_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
 
   // ---------------------------------------------------------------------------
   // Portfolio
@@ -2244,6 +2762,13 @@ export const BLOKKEN: BlokSeed[] = [
   // Elke docent kan hetzelfde op zijn eigen pagina, met het bloktype
   // "portfolio" in src/content/docent-blokken.ts.
   // ---------------------------------------------------------------------------
+  {
+    page_key: "portfolio",
+    block_key: "label",
+    kind: "text" as const,
+    omschrijving: "Het kleine woord boven de naam",
+    value: { text: "Portfolio" },
+  },
   {
     page_key: "portfolio",
     block_key: "naam",
@@ -2308,10 +2833,28 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "portfolio",
+    block_key: "ervaring_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "portfolio",
     block_key: "opleiding_titel",
     kind: "text",
     omschrijving: "Kop boven de opleidingen",
     value: { text: "Opleidingen en certificeringen" },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "opleiding_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
   {
     page_key: "portfolio",
@@ -2353,6 +2896,15 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "portfolio",
+    block_key: "specialisaties_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "portfolio",
     block_key: "cta_titel",
     kind: "text",
     verbergbaar: true,
@@ -2381,6 +2933,15 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text" as const,
     omschrijving: "Waar die knop heen gaat",
     value: { text: "/contact" },
+  },
+  {
+    page_key: "portfolio",
+    block_key: "cta_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 
   // ---------------------------------------------------------------------------
@@ -2470,6 +3031,52 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving: "Waar die knop heen gaat",
     value: { text: "/opleidingen/academy" },
   },
+  {
+    page_key: "opleidingen",
+    block_key: "overig_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven aanbod dat bij geen enkele opleiding hoort",
+    value: { text: "Overig aanbod" },
+  },
+  {
+    page_key: "opleidingen",
+    block_key: "losse_uit",
+    kind: "text" as const,
+    omschrijving:
+      "Het woordje voor de naam van de opleiding waar een module uit komt",
+    value: { text: "Uit de" },
+  },
+  {
+    page_key: "opleidingen",
+    block_key: "losse_tekst",
+    kind: "text" as const,
+    omschrijving: "Zin onder die kop",
+    value: {
+      text: "Iedere module is ook los te boeken en wordt afgesloten met een eigen certificaat.",
+    },
+  },
+  {
+    page_key: "opleidingen",
+    block_key: "losse_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de losse modules",
+    value: { text: "Losse modules" },
+  },
+  {
+    page_key: "opleidingen",
+    block_key: "aanbod_per_module",
+    kind: "text" as const,
+    omschrijving:
+      "Achter de prijs van een opleiding die ook per module te volgen is",
+    value: { text: "of per module" },
+  },
+  {
+    page_key: "opleidingen",
+    block_key: "aanbod_knop",
+    kind: "text" as const,
+    omschrijving: "Tekst onder aan elke opleidingskaart",
+    value: { text: "Bekijk de opleiding" },
+  },
 
   // ---------------------------------------------------------------------------
   // Waar de Yoga Company Academy voor staat: het keurmerk, de voorwaarden en
@@ -2501,6 +3108,39 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "academy",
+    block_key: "opening_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij de kop van deze pagina (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "academy",
+    block_key: "sprong_registreren",
+    kind: "text" as const,
+    omschrijving:
+      "Tekst in het sprongmenu onder de kop; leeg laten haalt de link weg",
+    value: { text: "Voor opleiders" },
+  },
+  {
+    page_key: "academy",
+    block_key: "sprong_voorwaarden",
+    kind: "text" as const,
+    omschrijving:
+      "Tekst in het sprongmenu onder de kop; leeg laten haalt de link weg",
+    value: { text: "Voorwaarden" },
+  },
+  {
+    page_key: "academy",
+    block_key: "sprong_niveaus",
+    kind: "text" as const,
+    omschrijving:
+      "Tekst in het sprongmenu onder de kop; leeg laten haalt de link weg",
+    value: { text: "Voor deelnemers" },
+  },
+  {
+    page_key: "academy",
     block_key: "verhaal",
     kind: "richtext",
     omschrijving: "Waar de Academy voor staat",
@@ -2523,6 +3163,15 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       text: "Een opleiding wordt geregistreerd op het niveau van haar omvang: 50, 100 of 200 uur. Het certificaat dat je na afloop krijgt, draagt dat keurmerk.",
     },
+  },
+  {
+    page_key: "academy",
+    block_key: "niveaus_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
   {
     page_key: "academy",
@@ -2589,6 +3238,15 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       html: "<p>Je ontvangt het certificaat als je minimaal 90% van de contacturen aanwezig was, of het gemiste deel aantoonbaar hebt ingehaald, en de toetsing hebt behaald. Op het certificaat staan de naam van de opleiding, het aantal uren, de datum en het registratienummer van de Academy, en het draagt het keurmerk YAF, YAA of YAP.</p><p>Het certificaat wordt uitgereikt door de opleider die de opleiding geeft; bij onze eigen opleidingen is dat YogaCompany. De registratie is een privaat kwaliteitskeurmerk van YogaCompany: geen overheidserkenning, geen NLQF-inschaling en geen wettelijk beschermde beroepstitel, en het staat los van Yoga Alliance en de VYN. Het keurmerk laat zien dat het curriculum aan de voorwaarden voldoet en dat de opleider beschikt over opleiding en, bovenal, praktijkervaring.</p>",
     },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificaat_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 
   // De voorwaarden voor certificering, samengevat. Het pdf is de overeenkomst.
@@ -2724,6 +3382,43 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       text: "/documenten/voorwaarden-registratie-yogaopleidingen-v1-0.pdf",
     },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_kolom_gebied",
+    kind: "text" as const,
+    omschrijving: "Kop van de eerste kolom in de urentabel",
+    value: { text: "Leergebied" },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_kolom_yaf",
+    kind: "text" as const,
+    omschrijving: "Kop van de kolom met de uren voor 50 uur",
+    value: { text: "YAF 50" },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_kolom_yaa",
+    kind: "text" as const,
+    omschrijving: "Kop van de kolom met de uren voor 100 uur",
+    value: { text: "YAA 100" },
+  },
+  {
+    page_key: "academy",
+    block_key: "certificering_kolom_yap",
+    kind: "text" as const,
+    omschrijving: "Kop van de kolom met de uren voor 200 uur",
+    value: { text: "YAP 200" },
   },
 
   // De ingang voor opleiders die hun eigen opleiding willen laten registreren.
@@ -2885,6 +3580,43 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "academy",
+    block_key: "registreren_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_kolom_registratie",
+    kind: "text" as const,
+    omschrijving: "Kop van de eerste kolom in de kostentabel",
+    value: { text: "Registratie" },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_kolom_kosten",
+    kind: "text" as const,
+    omschrijving: "Kop van de kolom met het bedrag",
+    value: { text: "Kosten" },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_kolom_beoordeling",
+    kind: "text" as const,
+    omschrijving: "Kop van de kolom met het beoordelingsdeel",
+    value: { text: "Waarvan beoordeling" },
+  },
+  {
+    page_key: "academy",
+    block_key: "registreren_kolom_inbegrepen",
+    kind: "text" as const,
+    omschrijving: "Kop van de kolom met wat erbij zit",
+    value: { text: "Inbegrepen" },
+  },
+  {
+    page_key: "academy",
     block_key: "cta_titel",
     kind: "text",
     omschrijving: "Kop van de oproep onderaan; leeg laten haalt de oproep weg",
@@ -2912,6 +3644,15 @@ export const BLOKKEN: BlokSeed[] = [
     kind: "text",
     omschrijving: "Waar die knop heen gaat",
     value: { text: "/contact" },
+  },
+  {
+    page_key: "academy",
+    block_key: "cta_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
   {
     page_key: "lessen",
@@ -2978,6 +3719,23 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "over-ons",
+    block_key: "opening_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij de kop van deze pagina (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "over-ons",
+    block_key: "beeld",
+    kind: "image",
+    omschrijving: "Sfeerbeeld boven het verhaal",
+    verbergbaar: true,
+    value: { url: "", alt: "", layout: "onder" },
+  },
+  {
+    page_key: "over-ons",
     block_key: "verhaal",
     kind: "richtext",
     omschrijving: "Het verhaal en de filosofie",
@@ -2987,11 +3745,42 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "over-ons",
-    block_key: "beeld",
-    kind: "image",
-    omschrijving: "Sfeerbeeld boven het verhaal",
+    block_key: "docenten",
+    lijst: { max: 12, itemNaam: "docent" },
+    kind: "richtext",
+    omschrijving: "Korte bio's van de docenten",
+    value: {
+      items: [
+        {
+          naam: "Naam volgt",
+          rol: "Oprichter en hoofddocent",
+          bio: "Korte biografie volgt.",
+          foto: "",
+        },
+        {
+          naam: "Naam volgt",
+          rol: "Docent",
+          bio: "Korte biografie volgt.",
+          foto: "",
+        },
+      ],
+    },
+  },
+  {
+    page_key: "over-ons",
+    block_key: "docenten_beeld",
+    kind: "image" as const,
     verbergbaar: true,
-    value: { url: "", alt: "", layout: "onder" },
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "over-ons",
+    block_key: "docenten_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de docenten",
+    value: { text: "Onze docenten" },
   },
   {
     page_key: "over-ons",
@@ -3025,26 +3814,12 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "over-ons",
-    block_key: "docenten",
-    lijst: { max: 12, itemNaam: "docent" },
-    kind: "richtext",
-    omschrijving: "Korte bio's van de docenten",
-    value: {
-      items: [
-        {
-          naam: "Naam volgt",
-          rol: "Oprichter en hoofddocent",
-          bio: "Korte biografie volgt.",
-          foto: "",
-        },
-        {
-          naam: "Naam volgt",
-          rol: "Docent",
-          bio: "Korte biografie volgt.",
-          foto: "",
-        },
-      ],
-    },
+    block_key: "cta_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 
   // ---------------------------------------------------------------------------
@@ -3065,6 +3840,22 @@ export const BLOKKEN: BlokSeed[] = [
     value: {
       text: "Een vraag over een opleiding, of wil je even overleggen wat past? Stuur ons een bericht; we reageren meestal binnen twee werkdagen.",
     },
+  },
+  {
+    page_key: "contact",
+    block_key: "opening_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij de kop van deze pagina (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "contact",
+    block_key: "rechtstreeks_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de contactgegevens naast het formulier",
+    value: { text: "Rechtstreeks contact" },
   },
   {
     page_key: "contact",
@@ -3125,6 +3916,20 @@ export const BLOKKEN: BlokSeed[] = [
         { label: "KvK", waarde: "KvK-nummer volgt" },
       ],
     },
+  },
+  {
+    page_key: "footer",
+    block_key: "navigatie_juridisch_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de tweede kolom met links",
+    value: { text: "Juridisch" },
+  },
+  {
+    page_key: "footer",
+    block_key: "navigatie_aanbod_titel",
+    kind: "text" as const,
+    omschrijving: "Kop boven de eerste kolom met links",
+    value: { text: "Aanbod" },
   },
 
   ...juridischeBlokken,

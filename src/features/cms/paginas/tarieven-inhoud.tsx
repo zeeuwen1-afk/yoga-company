@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { Richtext, Sectie } from "@/components/layout/sectie";
+import { Richtext } from "@/components/layout/sectie";
+import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { Alineas } from "@/components/ui/alineas";
 import type { Aanbod, Lesplek } from "@/content/tarieven";
 import type { Pagina } from "../server/queries";
@@ -44,7 +45,7 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
   return (
     <>
       <>
-        <Sectie sectie="opening">
+        <SectieBeeld beeld={pagina.beeld("opening_beeld")} sectie="opening">
           <div className="max-w-2xl">
             <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
             <div className="mt-5">
@@ -54,13 +55,18 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
               />
             </div>
           </div>
-        </Sectie>
+        </SectieBeeld>
         <VrijeZone pageKey={"tarieven"} sectie="opening" />
       </>
 
       {lesplekken.length > 0 ? (
         <>
-          <Sectie sectie="lesplekken" achtergrond="zand" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("lesplekken_beeld")}
+            sectie="lesplekken"
+            achtergrond="zand"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("lesplekken_titel")}</h2>
               <div className="mt-4">
@@ -95,15 +101,16 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 text-sm font-semibold underline underline-offset-4 hover:no-underline"
                       >
-                        Aanmelden en tarieven
+                        {pagina.tekst("lesplekken_knop") ||
+                          "Aanmelden en tarieven"}
                         <ArrowUpRight className="size-4" aria-hidden />
                         <span className="sr-only">{` bij ${plek.school || "deze school"}, opent in een nieuw tabblad`}</span>
                       </a>
-                    ) : (
+                    ) : pagina.tekst("lesplekken_tarief") ? (
                       <span className="text-sm text-muted">
-                        Tarief via de school
+                        {pagina.tekst("lesplekken_tarief")}
                       </span>
-                    )}
+                    ) : null}
                   </div>
 
                   {plek.wanneer?.trim() ? (
@@ -114,24 +121,35 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
                 </li>
               ))}
             </ul>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"tarieven"} sectie="lesplekken" />
         </>
       ) : null}
 
       {workshops.length > 0 ? (
         <>
-          <Sectie id="workshops" sectie="workshops" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("workshops_beeld")}
+            id="workshops"
+            sectie="workshops"
+            lijnBoven
+          >
             <h2 className="text-3xl">{pagina.tekst("workshops_titel")}</h2>
             <AanbodLijst regels={workshops} />
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"tarieven"} sectie="workshops" />
         </>
       ) : null}
 
       {prive.length > 0 ? (
         <>
-          <Sectie id="prive" sectie="prive" achtergrond="zand" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("prive_beeld")}
+            id="prive"
+            sectie="prive"
+            achtergrond="zand"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("prive_titel")}</h2>
               <div className="mt-4">
@@ -149,14 +167,18 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
                 {pagina.tekst("prive_voetnoot")}
               </p>
             ) : null}
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"tarieven"} sectie="prive" />
         </>
       ) : null}
 
       {pagina.tekst("organisaties_titel") ? (
         <>
-          <Sectie sectie="organisaties" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("organisaties_beeld")}
+            sectie="organisaties"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("organisaties_titel")}</h2>
               <div className="mt-4">
@@ -178,21 +200,25 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
                 ))}
               </ul>
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"tarieven"} sectie="organisaties" />
         </>
       ) : null}
 
       {pagina.html("voorwaarden") ? (
         <>
-          <Sectie sectie="voorwaarden" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("voorwaarden_beeld")}
+            sectie="voorwaarden"
+            lijnBoven
+          >
             <div className="max-w-2xl rounded-[var(--radius-card)] border border-sand bg-sand-light p-5">
               <Richtext
                 html={pagina.html("voorwaarden")}
                 className="text-[0.975rem]"
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"tarieven"} sectie="voorwaarden" />
         </>
       ) : null}

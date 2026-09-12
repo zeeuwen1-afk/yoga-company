@@ -234,7 +234,11 @@ export function CursusDetail({
                     <p className="font-semibold">
                       {NIVEAU_INFO[cursus.certificaatNiveau].label}
                     </p>
-                    <p className="text-muted">Yoga Company Academy</p>
+                    {pagina.tekst("praktisch_certificaat_naam") ? (
+                      <p className="text-muted">
+                        {pagina.tekst("praktisch_certificaat_naam")}
+                      </p>
+                    ) : null}
                     {pagina.tekst("praktisch_certificaat_knop") ? (
                       <Link
                         href={veiligeLink(

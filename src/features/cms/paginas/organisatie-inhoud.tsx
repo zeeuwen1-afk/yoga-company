@@ -1,7 +1,8 @@
 import { BeeldMetTekst } from "@/components/layout/beeld-met-tekst";
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
-import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
+import { Richtext, SectieKop } from "@/components/layout/sectie";
+import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { AanvraagFormulier } from "../components/aanvraag-formulier";
 import type { Pagina } from "../server/queries";
 import { VrijeZone } from "./vrije-zone";
@@ -50,7 +51,12 @@ export function OrganisatieInhoud({
   return (
     <>
       <>
-        <Sectie sectie="opening" achtergrond="creme" className="!pb-10">
+        <SectieBeeld
+          beeld={pagina.beeld("opening_beeld")}
+          sectie="opening"
+          achtergrond="creme"
+          className="!pb-10"
+        >
           <div className="max-w-2xl">
             {pagina.tekst("label") ? (
               <p className="label-klein">{pagina.tekst("label")}</p>
@@ -71,7 +77,7 @@ export function OrganisatieInhoud({
               className="mt-8"
             />
           </div>
-        </Sectie>
+        </SectieBeeld>
         <VrijeZone pageKey={pageKey} sectie="opening" />
       </>
 
@@ -85,7 +91,8 @@ export function OrganisatieInhoud({
 
       {kaarten.length > 0 ? (
         <>
-          <Sectie
+          <SectieBeeld
+            beeld={pagina.beeld("doelgroepen_beeld")}
             sectie="doelgroepen"
             achtergrond={verhaal ? "creme" : "wit"}
             lijnBoven
@@ -101,9 +108,10 @@ export function OrganisatieInhoud({
                         : "flex h-full flex-col gap-3 rounded-[var(--radius-card)] border border-line bg-background p-7"
                     }
                   >
-                    {aan(kaart.uitgelicht) ? (
+                    {aan(kaart.uitgelicht) &&
+                    pagina.tekst("doelgroepen_label") ? (
                       <p className="label-klein text-ink">
-                        Vaak de eerste stap
+                        {pagina.tekst("doelgroepen_label")}
                       </p>
                     ) : null}
                     <h3 className="text-xl">{kaart.titel}</h3>
@@ -112,14 +120,19 @@ export function OrganisatieInhoud({
                 </li>
               ))}
             </ul>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={pageKey} sectie="doelgroepen" />
         </>
       ) : null}
 
       {regels.length > 0 ? (
         <>
-          <Sectie sectie="praktisch" achtergrond="zand" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("praktisch_beeld")}
+            sectie="praktisch"
+            achtergrond="zand"
+            lijnBoven
+          >
             <SectieKop titel={pagina.tekst("praktisch_titel")} />
             <dl className="mt-8">
               {regels.map((regel, index) => (
@@ -132,14 +145,18 @@ export function OrganisatieInhoud({
                 </div>
               ))}
             </dl>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={pageKey} sectie="praktisch" />
         </>
       ) : null}
 
       {vormen.length > 0 ? (
         <>
-          <Sectie sectie="vormen" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("vormen_beeld")}
+            sectie="vormen"
+            lijnBoven
+          >
             <SectieKop
               titel={pagina.tekst("vormen_titel")}
               inleiding={pagina.tekst("vormen_inleiding")}
@@ -154,8 +171,10 @@ export function OrganisatieInhoud({
                         : "flex h-full flex-col gap-3 rounded-[var(--radius-card)] border border-line bg-background p-7"
                     }
                   >
-                    {aan(vorm.uitgelicht) ? (
-                      <p className="label-klein text-ink">Meest gekozen</p>
+                    {aan(vorm.uitgelicht) && pagina.tekst("vormen_label") ? (
+                      <p className="label-klein text-ink">
+                        {pagina.tekst("vormen_label")}
+                      </p>
                     ) : null}
                     <h3 className="text-xl">{vorm.naam}</h3>
                     {vorm.duur ? (
@@ -183,20 +202,29 @@ export function OrganisatieInhoud({
               nog niet heeft gezien, heeft er niets aan. */}
             {pagina.html("fiscaal") ? (
               <div className="mt-10 max-w-3xl rounded-[var(--radius-card)] border border-line bg-background p-6">
-                <p className="mb-3 label-klein">Wat dit fiscaal betekent</p>
+                {pagina.tekst("fiscaal_titel") ? (
+                  <p className="mb-3 label-klein">
+                    {pagina.tekst("fiscaal_titel")}
+                  </p>
+                ) : null}
                 <Richtext
                   html={pagina.html("fiscaal")}
                   className="text-[0.975rem] text-muted"
                 />
               </div>
             ) : null}
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={pageKey} sectie="vormen" />
         </>
       ) : null}
 
       <>
-        <Sectie sectie="cta" achtergrond="creme" lijnBoven>
+        <SectieBeeld
+          beeld={pagina.beeld("cta_beeld")}
+          sectie="cta"
+          achtergrond="creme"
+          lijnBoven
+        >
           <div id="aanvraag" className="grid gap-10 lg:grid-cols-2">
             <div className="max-w-xl">
               <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
@@ -206,7 +234,7 @@ export function OrganisatieInhoud({
             </div>
             <AanvraagFormulier pageKey={pageKey} />
           </div>
-        </Sectie>
+        </SectieBeeld>
         <VrijeZone pageKey={pageKey} sectie="cta" />
       </>
     </>

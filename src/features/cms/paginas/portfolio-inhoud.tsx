@@ -5,6 +5,7 @@ import { BeeldAchtergrond } from "@/components/layout/beeld-achtergrond";
 import { isAchtergrond, isNaastElkaar } from "@/lib/beeldlayout";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
+import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import type { Pagina } from "../server/queries";
 import { VrijeZone } from "./vrije-zone";
 
@@ -31,7 +32,9 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
 
   const kop = (
     <>
-      <p className="label-klein">Portfolio</p>
+      {pagina.tekst("label") ? (
+        <p className="label-klein">{pagina.tekst("label")}</p>
+      ) : null}
       <h1 className="mt-3 text-4xl sm:text-5xl">{pagina.tekst("naam")}</h1>
       <p className="mt-3 text-lg text-muted">{pagina.tekst("rol")}</p>
       <Richtext html={pagina.html("intro")} className="mt-8 text-lg" />
@@ -87,7 +90,11 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
 
       {ervaring.length > 0 ? (
         <>
-          <Sectie sectie="ervaring" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("ervaring_beeld")}
+            sectie="ervaring"
+            lijnBoven
+          >
             <SectieKop titel={pagina.tekst("ervaring_titel")} />
             <ol className="mt-10 space-y-8">
               {ervaring.map((regel, index) => (
@@ -112,14 +119,19 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
                 </li>
               ))}
             </ol>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"portfolio"} sectie="ervaring" />
         </>
       ) : null}
 
       {opleidingen.length > 0 ? (
         <>
-          <Sectie sectie="opleiding" achtergrond="creme" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("opleiding_beeld")}
+            sectie="opleiding"
+            achtergrond="creme"
+            lijnBoven
+          >
             <SectieKop titel={pagina.tekst("opleiding_titel")} />
             <ul className="mt-10 space-y-4">
               {opleidingen.map((regel, index) => (
@@ -139,14 +151,18 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
                 </li>
               ))}
             </ul>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"portfolio"} sectie="opleiding" />
         </>
       ) : null}
 
       {specialisaties.length > 0 ? (
         <>
-          <Sectie sectie="specialisaties" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("specialisaties_beeld")}
+            sectie="specialisaties"
+            lijnBoven
+          >
             <SectieKop titel={pagina.tekst("specialisaties_titel")} />
             <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
               {specialisaties.map((regel, index) => (
@@ -158,14 +174,19 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
                 </li>
               ))}
             </ul>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"portfolio"} sectie="specialisaties" />
         </>
       ) : null}
 
       {pagina.tekst("cta_titel") ? (
         <>
-          <Sectie sectie="cta" achtergrond="zand" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("cta_beeld")}
+            sectie="cta"
+            achtergrond="zand"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
               <div className="mt-4">
@@ -181,7 +202,7 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
                 className="mt-8"
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"portfolio"} sectie="cta" />
         </>
       ) : null}

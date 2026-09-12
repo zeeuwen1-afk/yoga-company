@@ -60,7 +60,9 @@ export async function SiteFooter({
         </div>
 
         <div>
-          <p className="text-sm font-semibold text-cream">Aanbod</p>
+          <p className="text-sm font-semibold text-cream">
+            {pagina.tekst("navigatie_aanbod_titel")}
+          </p>
           <ul className="mt-2 space-y-1 text-sm">
             {navigatie.map((item) => (
               <li key={item.href}>
@@ -76,7 +78,9 @@ export async function SiteFooter({
         </div>
 
         <div>
-          <p className="text-sm font-semibold text-cream">Juridisch</p>
+          <p className="text-sm font-semibold text-cream">
+            {pagina.tekst("navigatie_juridisch_titel")}
+          </p>
           <ul className="mt-2 space-y-1 text-sm">
             {legal.map((item) => (
               <li key={item.href}>

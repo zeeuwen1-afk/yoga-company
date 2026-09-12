@@ -7,6 +7,7 @@ import { isAchtergrond, isNaastElkaar } from "@/lib/beeldlayout";
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
+import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { VEILIGHEID_SECTIES } from "@/content/veiligheid";
 import { ContactFormulier } from "../components/contact-formulier";
 import type { Pagina } from "../server/queries";
@@ -29,11 +30,15 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
   return (
     <>
       <>
-        <Sectie sectie="opening" achtergrond="creme">
+        <SectieBeeld
+          beeld={pagina.beeld("opening_beeld")}
+          sectie="opening"
+          achtergrond="creme"
+        >
           <div className="max-w-2xl">
             <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
           </div>
-        </Sectie>
+        </SectieBeeld>
         <VrijeZone pageKey={"over-ons"} sectie="opening" />
       </>
 
@@ -45,8 +50,12 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
       />
 
       {docenten.length > 0 ? (
-        <Sectie lijnBoven>
-          <SectieKop titel="Onze docenten" />
+        <SectieBeeld
+          beeld={pagina.beeld("docenten_beeld")}
+          sectie="docenten"
+          lijnBoven
+        >
+          <SectieKop titel={pagina.tekst("docenten_titel")} />
           <ul className="mt-10 grid gap-8 sm:grid-cols-2">
             {docenten.map((docent, index) => (
               <li key={index} className="flex gap-5">
@@ -72,12 +81,17 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
               </li>
             ))}
           </ul>
-        </Sectie>
+        </SectieBeeld>
       ) : null}
 
       {pagina.tekst("cta_titel") ? (
         <>
-          <Sectie sectie="cta" achtergrond="zand" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("cta_beeld")}
+            sectie="cta"
+            achtergrond="zand"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
               <div className="mt-4">
@@ -93,7 +107,7 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
                 className="mt-8"
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"over-ons"} sectie="cta" />
         </>
       ) : null}
@@ -106,7 +120,7 @@ export function ContactInhoud({ pagina }: { pagina: Pagina }) {
 
   return (
     <>
-      <Sectie sectie="opening">
+      <SectieBeeld beeld={pagina.beeld("opening_beeld")} sectie="opening">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,32rem)_1fr]">
           <div>
             <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
@@ -125,7 +139,11 @@ export function ContactInhoud({ pagina }: { pagina: Pagina }) {
           {gegevens.length > 0 ? (
             <aside className="lg:pt-24">
               <div className="rounded-[var(--radius-card)] border border-line bg-cream p-6">
-                <h2 className="text-xl">Rechtstreeks contact</h2>
+                {pagina.tekst("rechtstreeks_titel") ? (
+                  <h2 className="text-xl">
+                    {pagina.tekst("rechtstreeks_titel")}
+                  </h2>
+                ) : null}
                 <dl className="mt-4 space-y-3">
                   {gegevens.map((gegeven) => (
                     <div key={gegeven.label}>
@@ -138,7 +156,7 @@ export function ContactInhoud({ pagina }: { pagina: Pagina }) {
             </aside>
           ) : null}
         </div>
-      </Sectie>
+      </SectieBeeld>
       <VrijeZone pageKey={"contact"} sectie="opening" />
     </>
   );
@@ -179,7 +197,7 @@ export function JuridischeInhoud({ pagina }: { pagina: Pagina }) {
 export function VeiligheidInhoud({ pagina }: { pagina: Pagina }) {
   return (
     <>
-      <Sectie sectie="opening">
+      <SectieBeeld beeld={pagina.beeld("opening_beeld")} sectie="opening">
         <div className="max-w-2xl">
           <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
           <div className="mt-5">
@@ -222,7 +240,7 @@ export function VeiligheidInhoud({ pagina }: { pagina: Pagina }) {
             })}
           </div>
         </div>
-      </Sectie>
+      </SectieBeeld>
       <VrijeZone pageKey={"veiligheid"} sectie="opening" />
     </>
   );
@@ -333,7 +351,7 @@ export function OverzichtInhoud({
 export function VoorYogadocentenInhoud({ pagina }: { pagina: Pagina }) {
   return (
     <>
-      <Sectie sectie="opening">
+      <SectieBeeld beeld={pagina.beeld("opening_beeld")} sectie="opening">
         <div className="max-w-2xl">
           {pagina.tekst("locatie") ? (
             <p className="text-sm tracking-[0.14em] text-muted uppercase">
@@ -367,12 +385,17 @@ export function VoorYogadocentenInhoud({ pagina }: { pagina: Pagina }) {
             />
           </div>
         </div>
-      </Sectie>
+      </SectieBeeld>
       <VrijeZone pageKey="voor-yogadocenten" sectie="opening" />
 
       {pagina.html("voorwaarden") ? (
         <>
-          <Sectie sectie="voorwaarden" achtergrond="zand" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("voorwaarden_beeld")}
+            sectie="voorwaarden"
+            achtergrond="zand"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("voorwaarden_titel")}</h2>
               <Richtext
@@ -380,14 +403,18 @@ export function VoorYogadocentenInhoud({ pagina }: { pagina: Pagina }) {
                 className="mt-4 text-[0.975rem]"
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey="voor-yogadocenten" sectie="voorwaarden" />
         </>
       ) : null}
 
       {pagina.tekst("registreren_titel") ? (
         <>
-          <Sectie sectie="registreren" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("registreren_beeld")}
+            sectie="registreren"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("registreren_titel")}</h2>
               <div className="mt-4">
@@ -403,7 +430,7 @@ export function VoorYogadocentenInhoud({ pagina }: { pagina: Pagina }) {
                 className="mt-8"
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey="voor-yogadocenten" sectie="registreren" />
         </>
       ) : null}

@@ -23,16 +23,30 @@ import type { Waas } from "@/lib/beeldlayout";
 export function BeeldAchtergrond({
   beeld,
   sectie,
+  id,
+  volleBreedte = false,
   children,
 }: {
   beeld: { url: string; alt: string; focus: string; waas: Waas };
   sectie?: string;
+  /** Anker voor knoppen die naar deze sectie springen. */
+  id?: string;
+  /**
+   * Een sectie met een raster van kaarten heeft de hele breedte nodig; de
+   * kop van een pagina juist niet, die leest het best op leesbreedte.
+   */
+  volleBreedte?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <section
+      id={id}
       data-sectie={sectie}
-      className="relative isolate overflow-hidden bg-petrol-deep"
+      className={
+        id
+          ? "relative isolate scroll-mt-24 overflow-hidden bg-petrol-deep"
+          : "relative isolate overflow-hidden bg-petrol-deep"
+      }
     >
       <Image
         src={beeld.url}
@@ -52,7 +66,11 @@ export function BeeldAchtergrond({
       />
 
       <div className="relative mx-auto flex min-h-[22rem] max-w-6xl items-center px-4 py-16 sm:min-h-[26rem] sm:px-6 sm:py-20">
-        <div className="max-w-2xl">{children}</div>
+        {volleBreedte ? (
+          <div className="w-full">{children}</div>
+        ) : (
+          <div className="max-w-2xl">{children}</div>
+        )}
       </div>
     </section>
   );

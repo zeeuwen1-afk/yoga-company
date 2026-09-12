@@ -1,4 +1,5 @@
 import { Richtext, Sectie } from "@/components/layout/sectie";
+import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { AanmeldFormulier } from "../components/aanmeld-formulier";
 import { VrijeZone } from "./vrije-zone";
 import type { Pagina } from "../server/queries";
@@ -42,7 +43,12 @@ export function OpleidingGedeeld({
     <>
       {prijzen.length > 0 ? (
         <>
-          <Sectie sectie="prijzen" achtergrond="zand" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("prijzen_beeld")}
+            sectie="prijzen"
+            achtergrond="zand"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("prijzen_titel")}</h2>
             </div>
@@ -105,14 +111,18 @@ export function OpleidingGedeeld({
               html={pagina.html("prijzen_voet")}
               className="mt-8 max-w-2xl text-[0.975rem]"
             />
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey="yogaopleiding-gedeeld" sectie="prijzen" />
         </>
       ) : null}
 
       {pagina.html("praktisch_tekst") ? (
         <>
-          <Sectie sectie="praktisch" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("praktisch_beeld")}
+            sectie="praktisch"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("praktisch_titel")}</h2>
               <Richtext
@@ -120,14 +130,19 @@ export function OpleidingGedeeld({
                 className="mt-6 text-lg"
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey="yogaopleiding-gedeeld" sectie="praktisch" />
         </>
       ) : null}
 
       {pagina.html("inschrijven_tekst") ? (
         <>
-          <Sectie sectie="inschrijven" achtergrond="creme" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("inschrijven_beeld")}
+            sectie="inschrijven"
+            achtergrond="creme"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("inschrijven_titel")}</h2>
               <Richtext
@@ -144,7 +159,7 @@ export function OpleidingGedeeld({
                 gekozen={gekozenVariant}
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey="yogaopleiding-gedeeld" sectie="inschrijven" />
         </>
       ) : null}

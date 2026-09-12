@@ -2,7 +2,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { BeeldMetTekst } from "@/components/layout/beeld-met-tekst";
-import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
+import { Richtext, SectieKop } from "@/components/layout/sectie";
+import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
 
@@ -45,7 +46,11 @@ export function YogaopleidingInhoud({
 
   return (
     <>
-      <Sectie sectie="opening" achtergrond="creme">
+      <SectieBeeld
+        beeld={pagina.beeld("opening_beeld")}
+        sectie="opening"
+        achtergrond="creme"
+      >
         <div className="max-w-3xl">
           <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
           {pagina.tekst("subtitel") ? (
@@ -76,7 +81,7 @@ export function YogaopleidingInhoud({
             />
           </div>
         </div>
-      </Sectie>
+      </SectieBeeld>
       <VrijeZone pageKey="yogaopleiding" sectie="opening" />
 
       <BeeldMetTekst
@@ -90,7 +95,13 @@ export function YogaopleidingInhoud({
 
       {modules.length > 0 ? (
         <>
-          <Sectie id="modules" sectie="modules" achtergrond="zand" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("modules_beeld")}
+            id="modules"
+            sectie="modules"
+            achtergrond="zand"
+            lijnBoven
+          >
             <SectieKop titel={pagina.tekst("modules_titel")} />
             <ul className="mt-10 grid gap-6 md:grid-cols-2">
               {modules.map((module, index) => {
@@ -136,14 +147,18 @@ export function YogaopleidingInhoud({
                 );
               })}
             </ul>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey="yogaopleiding" sectie="modules" />
         </>
       ) : null}
 
       {pagina.html("manieren_tekst") ? (
         <>
-          <Sectie sectie="manieren" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("manieren_beeld")}
+            sectie="manieren"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("manieren_titel")}</h2>
               <Richtext
@@ -151,7 +166,7 @@ export function YogaopleidingInhoud({
                 className="mt-6 text-lg"
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey="yogaopleiding" sectie="manieren" />
         </>
       ) : null}
@@ -160,7 +175,11 @@ export function YogaopleidingInhoud({
 
       {pagina.html("voorwie_tekst") ? (
         <>
-          <Sectie sectie="voorwie" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("voorwie_beeld")}
+            sectie="voorwie"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("voorwie_titel")}</h2>
               <Richtext
@@ -168,14 +187,19 @@ export function YogaopleidingInhoud({
                 className="mt-6 text-lg"
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey="yogaopleiding" sectie="voorwie" />
         </>
       ) : null}
 
       {pagina.html("diploma_tekst") ? (
         <>
-          <Sectie sectie="diploma" achtergrond="creme" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("diploma_beeld")}
+            sectie="diploma"
+            achtergrond="creme"
+            lijnBoven
+          >
             <div className="flex flex-col gap-8 sm:flex-row sm:items-start">
               {/* De hele opleiding is niveau Professional; dat ligt vast. */}
               <AcademyBadge
@@ -190,14 +214,18 @@ export function YogaopleidingInhoud({
                 />
               </div>
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey="yogaopleiding" sectie="diploma" />
         </>
       ) : null}
 
       {pagina.html("doorstroom_tekst") ? (
         <>
-          <Sectie sectie="doorstroom" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("doorstroom_beeld")}
+            sectie="doorstroom"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("doorstroom_titel")}</h2>
               <Richtext
@@ -212,7 +240,7 @@ export function YogaopleidingInhoud({
                 className="mt-8"
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey="yogaopleiding" sectie="doorstroom" />
         </>
       ) : null}

@@ -2,7 +2,8 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 import { BeeldMetTekst } from "@/components/layout/beeld-met-tekst";
-import { Richtext, Sectie } from "@/components/layout/sectie";
+import { Richtext } from "@/components/layout/sectie";
+import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { CmsKnop } from "@/components/ui/cms-knop";
 
 import { OpleidingGedeeld } from "./opleiding-gedeeld";
@@ -34,7 +35,11 @@ export function ModuleInhoud({
 
   return (
     <>
-      <Sectie sectie="opening" achtergrond="creme">
+      <SectieBeeld
+        beeld={pagina.beeld("opening_beeld")}
+        sectie="opening"
+        achtergrond="creme"
+      >
         {/* Elke module is 50 uur en dus niveau Foundation; dat ligt vast. */}
         <div className="flex items-start justify-between gap-8">
           <div className="max-w-3xl">
@@ -65,7 +70,7 @@ export function ModuleInhoud({
             className="hidden w-32 shrink-0 sm:block lg:w-40"
           />
         </div>
-      </Sectie>
+      </SectieBeeld>
       <VrijeZone pageKey={pagina.pageKey} sectie="opening" />
 
       <BeeldMetTekst
@@ -109,19 +114,28 @@ export function ModuleInhoud({
 
       {pagina.tekst("toelating_tekst") ? (
         <>
-          <Sectie sectie="toelating" achtergrond="creme" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("toelating_beeld")}
+            sectie="toelating"
+            achtergrond="creme"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("toelating_titel")}</h2>
               <p className="mt-6 text-lg">{pagina.tekst("toelating_tekst")}</p>
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={pagina.pageKey} sectie="toelating" />
         </>
       ) : null}
 
       {pagina.tekst("prijs") ? (
         <>
-          <Sectie sectie="prijs" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("prijs_beeld")}
+            sectie="prijs"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <p className="font-serif text-4xl">{pagina.tekst("prijs")}</p>
               <CmsKnop
@@ -136,7 +150,7 @@ export function ModuleInhoud({
                 </p>
               ) : null}
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={pagina.pageKey} sectie="prijs" />
         </>
       ) : null}
@@ -170,12 +184,17 @@ function Onderdeel({
 
   return (
     <>
-      <Sectie sectie={sectie} achtergrond={achtergrond} lijnBoven>
+      <SectieBeeld
+        beeld={pagina.beeld(`${sectie}_beeld`)}
+        sectie={sectie}
+        achtergrond={achtergrond}
+        lijnBoven
+      >
         <div className="max-w-2xl">
           {titel ? <h2 className="text-3xl">{titel}</h2> : null}
           <Richtext html={html} className="mt-6 text-lg" />
         </div>
-      </Sectie>
+      </SectieBeeld>
       <VrijeZone pageKey={pagina.pageKey} sectie={sectie} />
     </>
   );

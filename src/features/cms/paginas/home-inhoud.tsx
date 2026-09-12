@@ -4,7 +4,8 @@ import Link from "next/link";
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop, CmsTekstLink } from "@/components/ui/cms-knop";
 import { veiligeLink } from "@/lib/knoplink";
-import { Sectie, SectieKop } from "@/components/layout/sectie";
+import { SectieKop } from "@/components/layout/sectie";
+import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { Card, CardContent } from "@/components/ui/card";
 import { formateerTijdvak, type Les } from "@/features/bookings";
 import { CursusRooster, type Cursus } from "@/features/courses";
@@ -149,7 +150,7 @@ function Deuren({ pagina }: { pagina: Pagina }) {
 
   return (
     <>
-      <Sectie sectie="deuren">
+      <SectieBeeld beeld={pagina.beeld("deuren_beeld")} sectie="deuren">
         <SectieKop
           titel={pagina.tekst("deuren_titel")}
           inleiding={pagina.tekst("deuren_inleiding")}
@@ -183,7 +184,7 @@ function Deuren({ pagina }: { pagina: Pagina }) {
             </li>
           ))}
         </ul>
-      </Sectie>
+      </SectieBeeld>
       <VrijeZone pageKey={"home"} sectie="deuren" />
     </>
   );
@@ -201,7 +202,12 @@ function Rooster({ pagina, lessen }: { pagina: Pagina; lessen: Les[] }) {
 
   return (
     <>
-      <Sectie sectie="rooster" achtergrond="creme" lijnBoven>
+      <SectieBeeld
+        beeld={pagina.beeld("rooster_beeld")}
+        sectie="rooster"
+        achtergrond="creme"
+        lijnBoven
+      >
         <div className="grid gap-10 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <SectieKop
@@ -247,7 +253,7 @@ function Rooster({ pagina, lessen }: { pagina: Pagina; lessen: Les[] }) {
             />
           </div>
         </div>
-      </Sectie>
+      </SectieBeeld>
       <VrijeZone pageKey={"home"} sectie="rooster" />
     </>
   );
@@ -266,7 +272,8 @@ function Organisaties({ pagina }: { pagina: Pagina }) {
 
   return (
     <>
-      <Sectie
+      <SectieBeeld
+        beeld={pagina.beeld("organisaties_beeld")}
         id="voor-organisaties"
         sectie="organisaties"
         achtergrond="creme"
@@ -302,7 +309,7 @@ function Organisaties({ pagina }: { pagina: Pagina }) {
             </li>
           ))}
         </ul>
-      </Sectie>
+      </SectieBeeld>
       <VrijeZone pageKey={"home"} sectie="organisaties" />
     </>
   );
@@ -314,9 +321,11 @@ function Inlogdeuren({ pagina }: { pagina: Pagina }) {
 
   return (
     <>
-      <section
-        data-sectie="inlog"
-        className="border-t border-line bg-petrol-deep px-4 py-16 sm:px-6 sm:py-20"
+      <SectieBeeld
+        beeld={pagina.beeld("inlog_beeld")}
+        sectie="inlog"
+        lijnBoven
+        className="bg-petrol-deep"
       >
         <div className="mx-auto max-w-6xl">
           <SectieKop
@@ -347,7 +356,7 @@ function Inlogdeuren({ pagina }: { pagina: Pagina }) {
             ))}
           </ul>
         </div>
-      </section>
+      </SectieBeeld>
       <VrijeZone pageKey="home" sectie="inlog" />
     </>
   );
@@ -374,7 +383,7 @@ export function HomeInhoud({
 
       {redenen.length > 0 ? (
         <>
-          <Sectie sectie="waarom">
+          <SectieBeeld beeld={pagina.beeld("waarom_beeld")} sectie="waarom">
             <SectieKop titel={pagina.tekst("waarom_titel")} />
             <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
               {redenen.map((reden) => (
@@ -386,13 +395,18 @@ export function HomeInhoud({
                 </li>
               ))}
             </ul>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"home"} sectie="waarom" />
         </>
       ) : null}
 
       <>
-        <Sectie sectie="aanbod" achtergrond="creme" lijnBoven>
+        <SectieBeeld
+          beeld={pagina.beeld("aanbod_beeld")}
+          sectie="aanbod"
+          achtergrond="creme"
+          lijnBoven
+        >
           <SectieKop
             titel={pagina.tekst("aanbod_titel")}
             inleiding={pagina.tekst("aanbod_inleiding")}
@@ -406,14 +420,17 @@ export function HomeInhoud({
             terugval="/opleidingen"
             className="mt-8"
           />
-        </Sectie>
+        </SectieBeeld>
         <VrijeZone pageKey={"home"} sectie="aanbod" />
       </>
 
       {ervaringen.length > 0 ? (
         <>
-          <Sectie sectie="testimonials">
-            <SectieKop titel="Wat deelnemers zeggen" />
+          <SectieBeeld
+            beeld={pagina.beeld("testimonials_beeld")}
+            sectie="testimonials"
+          >
+            <SectieKop titel={pagina.tekst("testimonials_titel")} />
             <ul className="mt-10 grid gap-6 md:grid-cols-3">
               {ervaringen.map((ervaring, index) => (
                 <li key={index}>
@@ -429,7 +446,7 @@ export function HomeInhoud({
                 </li>
               ))}
             </ul>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={"home"} sectie="testimonials" />
         </>
       ) : null}
@@ -439,7 +456,12 @@ export function HomeInhoud({
       <Inlogdeuren pagina={pagina} />
 
       <>
-        <Sectie sectie="cta" achtergrond="zand" lijnBoven>
+        <SectieBeeld
+          beeld={pagina.beeld("cta_beeld")}
+          sectie="cta"
+          achtergrond="zand"
+          lijnBoven
+        >
           <div className="max-w-2xl">
             <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
             <div className="mt-4">
@@ -455,7 +477,7 @@ export function HomeInhoud({
               className="mt-8"
             />
           </div>
-        </Sectie>
+        </SectieBeeld>
         <VrijeZone pageKey={"home"} sectie="cta" />
       </>
     </>

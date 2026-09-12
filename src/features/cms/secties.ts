@@ -29,8 +29,11 @@ const OPENING = new Set([
   "subtitel",
   "intro",
   "inleiding",
+  "uitleg",
   "knop",
   "knop_link",
+  "knop_twee",
+  "knop_twee_link",
   "beeld",
   "foto",
   "portret",
@@ -69,6 +72,7 @@ const SECTIENAMEN: Record<string, string> = {
   workshops: "Workshops",
   prive: "Privéyoga",
   voorwaarden: "Afspraken",
+  voorwie: "Voor wie",
   docenten: "Docenten",
   partners: "Partners",
   bedrijfsgegevens: "Bedrijfsgegevens",
@@ -106,6 +110,11 @@ const SECTIENAMEN: Record<string, string> = {
   certificaat: "Wat het certificaat inhoudt",
   certificering: "Voorwaarden voor certificering",
   registreren: "Je eigen opleiding laten registreren",
+  sprong: "Sprongmenu onder de kop",
+  losse: "Losse modules",
+  overig: "Overig aanbod",
+  rechtstreeks: "Rechtstreeks contact",
+  navigatie: "Koppen boven de kolommen",
 };
 
 export type Sectie<T> = {

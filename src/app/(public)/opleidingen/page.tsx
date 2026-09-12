@@ -26,7 +26,7 @@ export default async function OpleidingenPage() {
     <>
       <OverzichtInhoud pagina={pagina} pageKey="opleidingen">
         <NiveausOverzicht pagina={pagina} />
-        <Academie cursussen={opleidingen} />
+        <Academie cursussen={opleidingen} pagina={pagina} />
       </OverzichtInhoud>
       <VrijeZone pageKey="opleidingen" />
     </>

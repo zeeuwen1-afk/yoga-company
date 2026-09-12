@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { ACADEMIE, EIGEN_PAGINA } from "@/content/aanbod";
+import type { Pagina } from "@/features/cms";
 
 import { formateerPrijs } from "../prijs";
 import type { Cursus } from "../server/queries";
@@ -23,7 +24,14 @@ import type { Cursus } from "../server/queries";
  * cursus raakt daardoor nooit zoek doordat iemand vergeet hem in de indeling te
  * zetten.
  */
-export function Academie({ cursussen }: { cursussen: Cursus[] }) {
+export function Academie({
+  cursussen,
+  pagina,
+}: {
+  cursussen: Cursus[];
+  /** De teksten om het aanbod heen, uit de site-editor. */
+  pagina: Pagina;
+}) {
   const opSlug = new Map(cursussen.map((cursus) => [cursus.slug, cursus]));
   const ondergebracht = new Set<string>();
 
@@ -66,17 +74,19 @@ export function Academie({ cursussen }: { cursussen: Cursus[] }) {
 
               <p className="mt-5 font-semibold tabular-nums">
                 {formateerPrijs(opleiding.prijsCenten)}
-                {onderdelen.length > 0 ? (
+                {onderdelen.length > 0 && pagina.tekst("aanbod_per_module") ? (
                   <span className="font-normal text-muted">
-                    {" · of per module"}
+                    {` · ${pagina.tekst("aanbod_per_module")}`}
                   </span>
                 ) : null}
               </p>
 
-              <p className="mt-4 inline-flex items-center gap-1.5 font-semibold underline underline-offset-4">
-                Bekijk de opleiding
-                <ArrowRight className="size-4" aria-hidden />
-              </p>
+              {pagina.tekst("aanbod_knop") ? (
+                <p className="mt-4 inline-flex items-center gap-1.5 font-semibold underline underline-offset-4">
+                  {pagina.tekst("aanbod_knop")}
+                  <ArrowRight className="size-4" aria-hidden />
+                </p>
+              ) : null}
             </article>
           );
         })}
@@ -85,11 +95,12 @@ export function Academie({ cursussen }: { cursussen: Cursus[] }) {
       {/* --- Wat je er los uit kunt volgen ------------------------------ */}
       {heeftOnderdelen ? (
         <div id="losse-modules" className="scroll-mt-24">
-          <h3 className="text-2xl">Losse modules</h3>
-          <p className="mt-2 max-w-2xl text-muted">
-            Iedere module is ook los te boeken en wordt afgesloten met een eigen
-            certificaat.
-          </p>
+          <h3 className="text-2xl">{pagina.tekst("losse_titel")}</h3>
+          {pagina.tekst("losse_tekst") ? (
+            <p className="mt-2 max-w-2xl text-muted">
+              {pagina.tekst("losse_tekst")}
+            </p>
+          ) : null}
 
           <div className="mt-8 space-y-8">
             {groepen
@@ -97,7 +108,7 @@ export function Academie({ cursussen }: { cursussen: Cursus[] }) {
               .map(({ opleiding, onderdelen }) => (
                 <div key={opleiding.slug}>
                   <h4 className="label-klein text-muted">
-                    Uit de {opleiding.titel}
+                    {pagina.tekst("losse_uit")} {opleiding.titel}
                   </h4>
                   <ul className="mt-3 divide-y divide-line border-y border-line">
                     {onderdelen.map((onderdeel) => (
@@ -125,7 +136,7 @@ export function Academie({ cursussen }: { cursussen: Cursus[] }) {
 
       {los.length > 0 ? (
         <div>
-          <h3 className="text-2xl">Overig aanbod</h3>
+          <h3 className="text-2xl">{pagina.tekst("overig_titel")}</h3>
           <ul className="mt-4 divide-y divide-line border-y border-line">
             {los.map((cursus) => (
               <li

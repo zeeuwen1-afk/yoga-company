@@ -1,7 +1,8 @@
 import Link from "next/link";
 
 import { BeeldMetTekst } from "@/components/layout/beeld-met-tekst";
-import { Richtext, Sectie } from "@/components/layout/sectie";
+import { Richtext } from "@/components/layout/sectie";
+import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { NIVEAUS } from "@/content/niveaus";
@@ -50,10 +51,19 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
   // Het sprongmenu toont alleen de delen die er zijn; een link naar een
   // weggehaalde sectie springt nergens heen.
   const sprongen = [
-    heeftNiveaus ? { href: "#niveaus", label: "Voor deelnemers" } : null,
-    heeftCertificering ? { href: "#voorwaarden", label: "Voorwaarden" } : null,
-    heeftRegistreren ? { href: "#registreren", label: "Voor opleiders" } : null,
-  ].filter((sprong) => sprong !== null);
+    heeftNiveaus
+      ? { href: "#niveaus", label: pagina.tekst("sprong_niveaus") }
+      : null,
+    heeftCertificering
+      ? { href: "#voorwaarden", label: pagina.tekst("sprong_voorwaarden") }
+      : null,
+    heeftRegistreren
+      ? { href: "#registreren", label: pagina.tekst("sprong_registreren") }
+      : null,
+  ].filter(
+    (sprong): sprong is { href: string; label: string } =>
+      sprong !== null && sprong.label.trim() !== "",
+  );
 
   const leergebieden = pagina
     .lijst<Leergebied>("certificering_leergebieden")
@@ -77,7 +87,11 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
 
   return (
     <>
-      <Sectie sectie="opening" achtergrond="creme">
+      <SectieBeeld
+        beeld={pagina.beeld("opening_beeld")}
+        sectie="opening"
+        achtergrond="creme"
+      >
         <div className="max-w-3xl">
           <nav aria-label="Kruimelpad" className="text-sm text-muted">
             <Link href="/opleidingen" className="underline hover:text-green">
@@ -110,7 +124,7 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
             </nav>
           ) : null}
         </div>
-      </Sectie>
+      </SectieBeeld>
       <VrijeZone pageKey={pagina.pageKey} sectie="opening" />
 
       <BeeldMetTekst
@@ -124,7 +138,13 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
 
       {heeftNiveaus ? (
         <>
-          <Sectie id="niveaus" sectie="niveaus" achtergrond="creme" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("niveaus_beeld")}
+            id="niveaus"
+            sectie="niveaus"
+            achtergrond="creme"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("niveaus_titel")}</h2>
               {pagina.tekst("niveaus_inleiding") ? (
@@ -158,14 +178,15 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
                 </li>
               ))}
             </ul>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={pagina.pageKey} sectie="niveaus" />
         </>
       ) : null}
 
       {pagina.html("certificaat_tekst") ? (
         <>
-          <Sectie
+          <SectieBeeld
+            beeld={pagina.beeld("certificaat_beeld")}
             id="certificaat"
             sectie="certificaat"
             achtergrond="zand"
@@ -178,14 +199,19 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
                 className="mt-6 text-lg"
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={pagina.pageKey} sectie="certificaat" />
         </>
       ) : null}
 
       {heeftCertificering ? (
         <>
-          <Sectie id="voorwaarden" sectie="certificering" lijnBoven>
+          <SectieBeeld
+            beeld={pagina.beeld("certificering_beeld")}
+            id="voorwaarden"
+            sectie="certificering"
+            lijnBoven
+          >
             <div className="max-w-2xl">
               <h2 className="text-3xl">
                 {pagina.tekst("certificering_titel")}
@@ -209,16 +235,17 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
                     <thead>
                       <tr className="border-b border-line">
                         <th scope="col" className="py-2 pr-4 font-semibold">
-                          Leergebied
+                          {pagina.tekst("certificering_kolom_gebied") ||
+                            "Leergebied"}
                         </th>
                         <th scope="col" className="py-2 pr-4 font-semibold">
-                          YAF 50
+                          {pagina.tekst("certificering_kolom_yaf") || "YAF 50"}
                         </th>
                         <th scope="col" className="py-2 pr-4 font-semibold">
-                          YAA 100
+                          {pagina.tekst("certificering_kolom_yaa") || "YAA 100"}
                         </th>
                         <th scope="col" className="py-2 font-semibold">
-                          YAP 200
+                          {pagina.tekst("certificering_kolom_yap") || "YAP 200"}
                         </th>
                       </tr>
                     </thead>
@@ -262,14 +289,15 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
               ) : null}
               {pdfKnop}
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={pagina.pageKey} sectie="certificering" />
         </>
       ) : null}
 
       {heeftRegistreren ? (
         <>
-          <Sectie
+          <SectieBeeld
+            beeld={pagina.beeld("registreren_beeld")}
             id="registreren"
             sectie="registreren"
             achtergrond="creme"
@@ -322,16 +350,20 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
                       <thead>
                         <tr className="border-b border-line">
                           <th scope="col" className="py-2 pr-4 font-semibold">
-                            Registratie
+                            {pagina.tekst("registreren_kolom_registratie") ||
+                              "Registratie"}
                           </th>
                           <th scope="col" className="py-2 pr-4 font-semibold">
-                            Kosten
+                            {pagina.tekst("registreren_kolom_kosten") ||
+                              "Kosten"}
                           </th>
                           <th scope="col" className="py-2 pr-4 font-semibold">
-                            Waarvan beoordeling
+                            {pagina.tekst("registreren_kolom_beoordeling") ||
+                              "Waarvan beoordeling"}
                           </th>
                           <th scope="col" className="py-2 font-semibold">
-                            Inbegrepen
+                            {pagina.tekst("registreren_kolom_inbegrepen") ||
+                              "Inbegrepen"}
                           </th>
                         </tr>
                       </thead>
@@ -387,14 +419,14 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
 
               {pdfKnop}
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={pagina.pageKey} sectie="registreren" />
         </>
       ) : null}
 
       {pagina.tekst("cta_titel") ? (
         <>
-          <Sectie sectie="cta" lijnBoven>
+          <SectieBeeld beeld={pagina.beeld("cta_beeld")} sectie="cta" lijnBoven>
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
               {pagina.tekst("cta_tekst") ? (
@@ -412,7 +444,7 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
                 className="mt-8"
               />
             </div>
-          </Sectie>
+          </SectieBeeld>
           <VrijeZone pageKey={pagina.pageKey} sectie="cta" />
         </>
       ) : null}
