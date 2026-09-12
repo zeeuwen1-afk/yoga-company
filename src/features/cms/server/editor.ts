@@ -2,6 +2,7 @@ import "server-only";
 
 import { BLOKKEN, type BlokSeed } from "@/content/blokken";
 import { EIGEN_PAGINA } from "@/content/aanbod";
+import { cursusPad, SOORT_INFO } from "@/content/soorten";
 import { cursusSleutel } from "@/content/vrije-blokken";
 import { haalAanbod } from "@/features/courses";
 import { isLinkBlok } from "../link-blok";
@@ -76,6 +77,7 @@ const PAGINA_NAMEN: Record<string, { titel: string; pad: string }> = {
     pad: "/opleidingen/academy",
   },
   trainingen: { titel: "Trainingen", pad: "/trainingen" },
+  workshops: { titel: "Workshops", pad: "/workshops" },
   lessen: { titel: "Lessen", pad: "/lessen" },
   bedrijfsyoga: { titel: "Bedrijfsyoga", pad: "/bedrijfsyoga" },
   sportclubs: { titel: "Sportclubs", pad: "/sportclubs" },
@@ -283,8 +285,8 @@ async function cursusPaginas(
     .filter((cursus) => !(cursus.slug in EIGEN_PAGINA))
     .map((cursus) => ({
       pageKey: cursusSleutel(cursus.slug),
-      titel: `${cursus.type === "opleiding" ? "Opleiding" : "Training"} · ${cursus.titel}`,
-      pad: `/${cursus.type === "opleiding" ? "opleidingen" : "trainingen"}/${cursus.slug}`,
+      titel: `${SOORT_INFO[cursus.type].enkelvoud} · ${cursus.titel}`,
+      pad: cursusPad(cursus.type, cursus.slug),
       blokken: [],
       aantalConcepten: vrijeConcepten.get(cursusSleutel(cursus.slug)) ?? 0,
     }));

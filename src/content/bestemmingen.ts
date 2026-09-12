@@ -48,6 +48,7 @@ export const BESTEMMINGEN: { groep: string; items: Bestemming[] }[] = [
         label: "Yin Yoga Specialist Opleiding",
       },
       { pad: "/trainingen", label: "Trainingen" },
+      { pad: "/workshops", label: "Workshops" },
       { pad: "/lessen", label: "Lessen" },
       { pad: "/lessen/tarieven", label: "Lessen, workshops en privéyoga" },
       { pad: "/lessen/tarieven#workshops", label: "Workshops" },

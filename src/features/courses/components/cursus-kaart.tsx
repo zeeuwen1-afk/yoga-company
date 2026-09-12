@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cursusPad, SOORT_INFO } from "@/content/soorten";
 import { formateerPrijs } from "../prijs";
 import type { Cursus } from "../server/queries";
 
@@ -13,7 +14,6 @@ export function CursusKaart({
   /** Bedrag dat een bundel scheelt ten opzichte van de losse modules (§7.1). */
   kortingCenten?: number | null;
 }) {
-  const pad = cursus.type === "opleiding" ? "/opleidingen" : "/trainingen";
   const uren = cursus.curriculum.reduce(
     (totaal, module) => totaal + module.uren,
     0,
@@ -29,13 +29,13 @@ export function CursusKaart({
     >
       <CardHeader>
         <p className="text-sm font-semibold text-muted">
-          {cursus.type === "opleiding" ? "Opleiding" : "Training"}
+          {SOORT_INFO[cursus.type].enkelvoud}
           {uren > 0 ? ` · ${uren} uur` : null}
           {cursus.locatie === "Online" ? " · online" : null}
         </p>
         <CardTitle>
           <Link
-            href={`${pad}/${cursus.slug}`}
+            href={cursusPad(cursus.type, cursus.slug)}
             className="transition-colors hover:text-green"
           >
             {/* De hele kaart klikbaar maken via een uitgerekte link, zodat er

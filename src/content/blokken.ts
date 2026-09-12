@@ -1107,6 +1107,13 @@ const cursusBlokken: BlokSeed[] = [
   },
   {
     page_key: "cursus",
+    block_key: "kop_kruimel_workshop",
+    kind: "text",
+    omschrijving: "Terugverwijzing bovenaan een workshoppagina",
+    value: { text: "Workshops" },
+  },
+  {
+    page_key: "cursus",
     block_key: "kop_prijs_toelichting",
     kind: "text",
     verbergbaar: true,
@@ -3704,6 +3711,36 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving: "Inleidende tekst boven het overzicht",
     value: {
       text: "Kortere programma's, gericht op één onderwerp. Online of in de studio.",
+    },
+  },
+
+  // ---------------------------------------------------------------------------
+  // Workshops: het overzicht. Elke workshop zelf is aanbod en staat onder
+  // Beheer → Aanbod, met een eigen pagina en eigen foto's.
+  // ---------------------------------------------------------------------------
+  {
+    page_key: "workshops",
+    block_key: "titel",
+    kind: "text",
+    omschrijving: "Kop van de workshoppagina",
+    value: { text: "Workshops" },
+  },
+  {
+    page_key: "workshops",
+    block_key: "beeld",
+    kind: "image",
+    verbergbaar: true,
+    omschrijving:
+      "Sfeerbeeld boven het overzicht (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
+  },
+  {
+    page_key: "workshops",
+    block_key: "inleiding",
+    kind: "text",
+    omschrijving: "Inleidende tekst boven het overzicht",
+    value: {
+      text: "Losse workshops en dagprogramma's, in kleine groepen. Je hoeft geen opleiding te volgen om mee te doen.",
     },
   },
 

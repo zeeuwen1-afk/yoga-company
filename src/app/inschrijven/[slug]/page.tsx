@@ -1,3 +1,4 @@
+import { soortPad } from "@/content/soorten";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
@@ -37,8 +38,7 @@ export default async function InschrijvenPage({
     redirect(`/inloggen?vervolg=${encodeURIComponent(`/inschrijven/${slug}`)}`);
   }
 
-  const overzichtPad =
-    cursus.type === "opleiding" ? "/opleidingen" : "/trainingen";
+  const overzichtPad = soortPad(cursus.type);
 
   // De sleutel blijft server-side; de pagina geeft alleen door dát er een
   // betaalkoppeling is, zodat de knop de juiste tekst kan tonen (§7.1).

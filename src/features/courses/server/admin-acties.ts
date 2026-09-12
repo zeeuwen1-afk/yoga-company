@@ -1,6 +1,7 @@
 "use server";
 
 import { NIVEAUS } from "@/content/niveaus";
+import { SOORTEN } from "@/content/soorten";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -56,7 +57,7 @@ function ververs(slug?: string) {
 
 const cursusSchema = z.object({
   id: z.uuid().optional().or(z.literal("")),
-  type: z.enum(["opleiding", "training"]),
+  type: z.enum(SOORTEN),
   title: z.string().trim().min(2, "Vul een titel in").max(200),
   slug: z
     .string()

@@ -1,0 +1,13 @@
+-- Workshops worden een eigen soort aanbod, naast opleidingen en trainingen.
+--
+-- Waarom niet als regel in de prijslijst, waar ze stonden: een workshop van
+-- een hele dag heeft een programma, een prijs met wat erbij zit, en een
+-- verhaal van twintig regels. Dat past niet in het toelichtingsveld van een
+-- prijsregel, dat voor één zin is gemaakt. Als eigen soort krijgt een workshop
+-- een eigen pagina, eigen foto's en een aanmeldformulier, met dezelfde
+-- machinerie als een training.
+--
+-- Alleen de waarde toevoegen, en hem in deze migratie niet gebruiken:
+-- Postgres staat een nieuwe enumwaarde niet toe in dezelfde transactie waarin
+-- hij wordt toegevoegd. Bestaande rijen blijven ongemoeid.
+alter type course_type add value if not exists 'workshop';

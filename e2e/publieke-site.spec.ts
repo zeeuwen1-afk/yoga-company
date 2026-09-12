@@ -73,6 +73,46 @@ test.describe("Landingspagina", () => {
   });
 });
 
+test.describe("Workshops", () => {
+  /**
+   * Workshops stonden als regel in de prijslijst op de tarievenpagina. De
+   * menuknop "Workshops" wees naar een anker halverwege die pagina, dus wie
+   * erop klikte kwam midden in een lijst met bedragen uit. Nu is het een
+   * eigen overzicht met een pagina per workshop.
+   *
+   * Wat hier wordt getoetst is de constructie, niet de inhoud: dat het
+   * overzicht bestaat met een kop erboven, en dat de balk er echt naartoe
+   * wijst. Welke workshops erop staan bepaalt de beheerder.
+   */
+  test("het overzicht bestaat en de balk wijst ernaartoe", async ({ page }) => {
+    await page.goto("/workshops");
+
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+
+    // Op een telefoon zit de balk achter de menuknop, dus eerst openklappen.
+    const knop = page
+      .getByRole("navigation", { name: "Hoofdmenu" })
+      .getByRole("link", { name: "Workshops", exact: true });
+
+    if (!(await knop.isVisible())) {
+      await page.getByRole("button", { name: "Menu openen" }).click();
+    }
+
+    // De zichtbare link, en niet de eerste in de opbouw: de balk staat twee
+    // keer in de pagina, een brede en een voor de telefoon, en de andere is
+    // altijd verborgen. Zonder `:visible` toetste deze test op een telefoon de
+    // verborgen variant, en dat zegt niets over de weg naar de workshops.
+    await expect(
+      page.locator('header a[href="/workshops"]:visible').first(),
+    ).toBeVisible();
+  });
+
+  test("staat in de sitemap", async ({ request }) => {
+    const xml = await (await request.get("/sitemap.xml")).text();
+    expect(xml).toContain("/workshops");
+  });
+});
+
 test.describe("Opleidingen", () => {
   test("de uitleg over de Academy toont de drie niveaus", async ({ page }) => {
     await page.goto("/opleidingen/academy");

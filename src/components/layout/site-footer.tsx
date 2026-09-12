@@ -15,6 +15,7 @@ const legal = [
 const navigatie = [
   { href: "/opleidingen", label: "Yoga Company Academy" },
   { href: "/trainingen", label: "Trainingen" },
+  { href: "/workshops", label: "Workshops" },
   { href: "/lessen", label: "Lessen" },
   { href: "/bedrijfsyoga", label: "Bedrijfsyoga" },
   { href: "/sportclubs", label: "Sportclubs" },

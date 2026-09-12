@@ -119,6 +119,12 @@ export default async function VoorbeeldPagina({
             <CursusRooster cursussen={await haalAanbod("training")} />
           </OverzichtInhoud>
         );
+      case "workshops":
+        return (
+          <OverzichtInhoud pagina={pagina} pageKey="workshops">
+            <CursusRooster cursussen={await haalAanbod("workshop")} />
+          </OverzichtInhoud>
+        );
       case "lessen":
         return (
           <OverzichtInhoud pagina={pagina} pageKey="lessen">

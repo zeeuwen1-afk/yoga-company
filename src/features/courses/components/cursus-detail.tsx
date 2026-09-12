@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Sectie } from "@/components/layout/sectie";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { NIVEAU_INFO } from "@/content/niveaus";
+import { SOORT_INFO } from "@/content/soorten";
 import { cursusSleutel } from "@/content/vrije-blokken";
 import { VrijeZone, type Pagina } from "@/features/cms";
 import { veiligeLink } from "@/lib/knoplink";
@@ -67,13 +68,12 @@ export function CursusDetail({
   concept?: boolean;
 }) {
   const vrijeSleutel = cursusSleutel(cursus.slug);
-  const isOpleiding = cursus.type === "opleiding";
-  const overzichtPad = isOpleiding ? "/opleidingen" : "/trainingen";
-
-  const kruimel =
-    pagina.tekst(
-      isOpleiding ? "kop_kruimel_opleiding" : "kop_kruimel_training",
-    ) || (isOpleiding ? "Opleidingen" : "Trainingen");
+  // Waar deze cursus hoort, en hoe de weg terug heet. Dit stond als
+  // `opleiding of anders training` in de code; bij een derde soort wees dat
+  // een workshop naar de trainingen zonder dat iets faalde.
+  const soort = SOORT_INFO[cursus.type];
+  const overzichtPad = soort.pad;
+  const kruimel = pagina.tekst(soort.kruimelBlok) || soort.meervoud;
 
   const totaalUren = cursus.curriculum.reduce(
     (totaal, module) => totaal + module.uren,

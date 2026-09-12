@@ -468,6 +468,25 @@ export const AANBOD: CursusSeed[] = [
     lesmateriaal: eerstJijLesmateriaal,
     sort: 20,
   },
+  // --- Workshops -----------------------------------------------------------
+  // Een workshop van een hele dag met een programma en een prijs met wat erbij
+  // zit. Stond eerst als regel in de prijslijst op de tarievenpagina, waar het
+  // verhaal in het toelichtingsveld van één regel werd platgeslagen.
+  {
+    type: "workshop",
+    titel: "The Art of Slowing Down",
+    slug: "the-art-of-slowing-down",
+    samenvatting:
+      "Een dag uit je hoofd, terug in je lijf. Een eendaagse yogatraining over vertragen: bewegen vanuit gevoel, je zenuwstelsel begrijpen, een Yin Deep Dive en Yoga Nidra.",
+    beschrijving:
+      "Een dag uit je hoofd, terug in je lijf.\n\nJe weet hoe het werkt: doorgaan, presteren, altijd aan. En ergens weet je dat vertragen goed voor je zou zijn.\nMaar zodra je stilstaat, wordt het onrustig. Dat is geen falen. Dat is je zenuwstelsel.\n\nThe Art of Slowing Down is een eendaagse yogatraining waarin je leert hoe je van doen naar voelen beweegt, en waarom dat soms zo lastig is. Geen lange yogales, maar een dag met opbouw: bewegen, begrijpen, verdiepen, integreren.\n\nWat je doet:\nBewegen vanuit gevoel, niet vanuit hoe het eruitziet, maar vanuit wat je voelt.\n\nJe zenuwstelsel begrijpen:\nWat stress in je lichaam doet en hoe je met adem en yoga kunt reguleren. Praktisch en direct toepasbaar.\n\nYin Deep Dive: ruimte maken in heupen, rug, schouders en nek. Met de vraag: wat houd ik vast, en waar kan ik verzachten?\n\nYoga Nidra: een diepe ontspanning waarin alles van de dag samenkomt.\n\nReflectie: journaling en delen, in een kleine, veilige groep.\n\nWat je meeneemt: Gedurende de dag bouw je je eigen slow down-ritueel van 10 minuten. Vijf bouwstenen, helemaal van jou, voor elke dag.\nDaarbij ontvang je een werkboek, de audio van de Yoga Nidra en zeven dagen lang een korte mail om het vol te houden.",
+    studiebelasting:
+      "Eén dag, van 10:00 tot 17:00. Inclusief thee, koffie, lunch en werkboek.",
+    prijsCenten: 12500,
+    digitaleContent: false,
+    sort: 1,
+  },
+
   {
     type: "training",
     titel: "Hormoonyoga-training",

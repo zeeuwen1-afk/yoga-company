@@ -6,6 +6,7 @@ import { FormMessage } from "@/components/ui/form-message";
 import { Input, Label, Textarea } from "@/components/ui/input";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { NIVEAU_INFO, NIVEAUS } from "@/content/niveaus";
+import { SOORT_INFO, SOORTEN } from "@/content/soorten";
 import { bewaarCursus, type AanbodResultaat } from "../server/admin-acties";
 import type { Cursus } from "../server/queries";
 
@@ -43,8 +44,11 @@ export function CursusFormulier({
             defaultValue={cursus?.type ?? "opleiding"}
             className="h-11 w-full rounded-lg border border-line bg-white px-3"
           >
-            <option value="opleiding">Opleiding</option>
-            <option value="training">Training</option>
+            {SOORTEN.map((soort) => (
+              <option key={soort} value={soort}>
+                {SOORT_INFO[soort].enkelvoud}
+              </option>
+            ))}
           </select>
         </div>
         <div>

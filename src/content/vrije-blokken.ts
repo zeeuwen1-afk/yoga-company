@@ -105,6 +105,7 @@ export const PAGINAS_MET_VRIJE_BLOKKEN = [
   "opleidingen",
   "academy",
   "trainingen",
+  "workshops",
   "lessen",
   "tarieven",
   "contact",

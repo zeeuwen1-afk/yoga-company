@@ -4,6 +4,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { BLOKKEN } from "@/content/blokken";
+import { SOORT_INFO, SOORTEN } from "@/content/soorten";
 
 /**
  * Elke tekst die de cursuspagina uit de editor haalt, moet daar ook te vinden
@@ -27,12 +28,21 @@ describe("de teksten van de cursuspagina", () => {
   );
   const bron = readFileSync(bestand, "utf8");
 
-  // Ook de sleutels die achter een keuze staan — de kruimel verschilt per
-  // soort cursus — tellen mee. Daarom eerst het hele argument pakken en daar
-  // pas de tekst uit halen.
-  const gebruikt = [...bron.matchAll(/pagina\.(?:tekst|html)\(([^)]*)\)/g)]
+  // Ook de sleutels die achter een keuze staan tellen mee. Daarom eerst het
+  // hele argument pakken en daar pas de tekst uit halen.
+  const letterlijk = [...bron.matchAll(/pagina\.(?:tekst|html)\(([^)]*)\)/g)]
     .flatMap((aanroep) => [...aanroep[1]!.matchAll(/"([a-z0-9_]+)"/g)])
     .map((treffer) => treffer[1]!);
+
+  // De kruimel terug naar het overzicht verschilt per soort cursus. Die stond
+  // als keuze in het component en is sinds workshops een derde soort werden
+  // een opzoeking in de soortentabel. De sleutel staat dus niet meer in de
+  // bron, maar de bewaking hoort te blijven: elk kruimelveld moet bestaan, en
+  // elk kruimelveld moet ergens vandaan gelezen worden.
+  const gebruikt = [
+    ...letterlijk,
+    ...SOORTEN.map((soort) => SOORT_INFO[soort].kruimelBlok),
+  ];
 
   const beschikbaar = new Set(
     BLOKKEN.filter((blok) => blok.page_key === "cursus").map(

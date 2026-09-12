@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { JURIDISCHE_TEKSTEN } from "@/content/juridisch";
+import { cursusPad } from "@/content/soorten";
 import { MODULEPAGINAS } from "@/content/yogaopleiding-200";
 import { haalAanbod } from "@/features/courses";
 import { haalDocentenlijst } from "@/features/docentpagina/server/queries";
@@ -21,6 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
     { url: `${basis}/trainingen`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${basis}/workshops`, changeFrequency: "monthly", priority: 0.8 },
     {
       url: `${basis}/bedrijfsyoga`,
       changeFrequency: "monthly",
@@ -55,7 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const aanbod: MetadataRoute.Sitemap = cursussen.map((cursus) => ({
-    url: `${basis}/${cursus.type === "opleiding" ? "opleidingen" : "trainingen"}/${cursus.slug}`,
+    url: `${basis}${cursusPad(cursus.type, cursus.slug)}`,
     changeFrequency: "monthly",
     priority: 0.8,
   }));

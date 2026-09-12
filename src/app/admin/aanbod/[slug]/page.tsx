@@ -1,3 +1,4 @@
+import { soortPad } from "@/content/soorten";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -36,8 +37,7 @@ export default async function AanbodBewerkenPage({
 
   if (!rij || !cursus) notFound();
 
-  const publiekPad =
-    cursus.type === "opleiding" ? "/opleidingen" : "/trainingen";
+  const publiekPad = soortPad(cursus.type);
 
   return (
     <>

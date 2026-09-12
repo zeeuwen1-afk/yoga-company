@@ -1,3 +1,4 @@
+import { SOORT_INFO } from "@/content/soorten";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Plus } from "lucide-react";
@@ -57,7 +58,7 @@ export default async function AanbodPage() {
                       {cursus.title}
                     </Link>
                     <p className="text-sm text-muted">
-                      {cursus.type === "opleiding" ? "Opleiding" : "Training"} ·{" "}
+                      {SOORT_INFO[cursus.type].enkelvoud} ·{" "}
                       {formateerPrijs(cursus.price_cents)}
                       {cursus.has_digital_content
                         ? " · met lesmateriaal"

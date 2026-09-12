@@ -1,3 +1,4 @@
+import { cursusPad } from "@/content/soorten";
 import { publicEnv } from "@/lib/env";
 import type { Cursus } from "../server/queries";
 
@@ -8,8 +9,7 @@ import type { Cursus } from "../server/queries";
  */
 export function CursusJsonLd({ cursus }: { cursus: Cursus }) {
   const basis = publicEnv().NEXT_PUBLIC_SITE_URL;
-  const pad = cursus.type === "opleiding" ? "opleidingen" : "trainingen";
-  const url = `${basis}/${pad}/${cursus.slug}`;
+  const url = `${basis}${cursusPad(cursus.type, cursus.slug)}`;
   const online = cursus.locatie === "Online";
 
   const data = {

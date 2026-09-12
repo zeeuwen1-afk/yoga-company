@@ -41,13 +41,13 @@ const navigation: NavItem[] = [
     ],
   },
   {
-    // De workshops staan op de tarievenpagina, samen met de lessen en
-    // privéyoga. Het weekrooster staat bewust nog in dit menu: zonder die regel
-    // is het rooster vanuit de balk niet meer te bereiken.
-    href: "/lessen/tarieven#workshops",
+    // Workshops hebben sinds september 2026 hun eigen pagina, met een pagina
+    // per workshop eronder. De knop wees eerst naar een stukje halverwege de
+    // tarievenpagina; wie erop klikte kwam midden in een prijslijst uit.
+    href: "/workshops",
     label: "Workshops",
     sub: [
-      { href: "/lessen/tarieven#workshops", label: "Workshops" },
+      { href: "/workshops", label: "Alle workshops" },
       { href: "/lessen/tarieven#prive", label: "Privéyoga" },
       { href: "/lessen", label: "Weekrooster" },
       { href: "/lessen/tarieven", label: "Alle tarieven" },

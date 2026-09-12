@@ -9,7 +9,7 @@
  */
 
 export type UserRole = "admin" | "klant";
-export type CourseType = "opleiding" | "training";
+export type CourseType = "opleiding" | "training" | "workshop";
 export type EnrollmentStatus =
   "in_afwachting" | "betaald" | "geannuleerd" | "afgerond";
 export type RequestKind =

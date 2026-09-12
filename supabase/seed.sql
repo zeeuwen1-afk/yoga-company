@@ -395,6 +395,57 @@ insert into courses (
   study_load_text, location, max_participants, certificate_text,
   certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
+  'workshop', 'The Art of Slowing Down', 'the-art-of-slowing-down',
+  'Een dag uit je hoofd, terug in je lijf. Een eendaagse yogatraining over vertragen: bewegen vanuit gevoel, je zenuwstelsel begrijpen, een Yin Deep Dive en Yoga Nidra.', 'Een dag uit je hoofd, terug in je lijf.
+
+Je weet hoe het werkt: doorgaan, presteren, altijd aan. En ergens weet je dat vertragen goed voor je zou zijn.
+Maar zodra je stilstaat, wordt het onrustig. Dat is geen falen. Dat is je zenuwstelsel.
+
+The Art of Slowing Down is een eendaagse yogatraining waarin je leert hoe je van doen naar voelen beweegt, en waarom dat soms zo lastig is. Geen lange yogales, maar een dag met opbouw: bewegen, begrijpen, verdiepen, integreren.
+
+Wat je doet:
+Bewegen vanuit gevoel, niet vanuit hoe het eruitziet, maar vanuit wat je voelt.
+
+Je zenuwstelsel begrijpen:
+Wat stress in je lichaam doet en hoe je met adem en yoga kunt reguleren. Praktisch en direct toepasbaar.
+
+Yin Deep Dive: ruimte maken in heupen, rug, schouders en nek. Met de vraag: wat houd ik vast, en waar kan ik verzachten?
+
+Yoga Nidra: een diepe ontspanning waarin alles van de dag samenkomt.
+
+Reflectie: journaling en delen, in een kleine, veilige groep.
+
+Wat je meeneemt: Gedurende de dag bouw je je eigen slow down-ritueel van 10 minuten. Vijf bouwstenen, helemaal van jou, voor elke dag.
+Daarbij ontvang je een werkboek, de audio van de Yoga Nidra en zeven dagen lang een korte mail om het vol te houden.',
+  null, null,
+  null,
+  'Eén dag, van 10:00 tot 17:00. Inclusief thee, koffie, lunch en werkboek.', null,
+  null, null,
+  null,
+  12500, false, true, 1
+)
+on conflict (slug) do update set
+  type = excluded.type,
+  title = excluded.title,
+  summary = excluded.summary,
+  description = excluded.description,
+  audience = excluded.audience,
+  requirements = excluded.requirements,
+  curriculum = excluded.curriculum,
+  study_load_text = excluded.study_load_text,
+  location = excluded.location,
+  max_participants = excluded.max_participants,
+  certificate_text = excluded.certificate_text,
+  certificate_level = excluded.certificate_level,
+  price_cents = excluded.price_cents,
+  has_digital_content = excluded.has_digital_content,
+  sort = excluded.sort;
+
+insert into courses (
+  type, title, slug, summary, description, audience, requirements, curriculum,
+  study_load_text, location, max_participants, certificate_text,
+  certificate_level, price_cents, has_digital_content, is_active, sort
+) values (
   'training', 'Hormoonyoga-training', 'hormoonyoga',
   'Een praktische training in hormoonyoga: houdingen, ademhaling en ritme, afgestemd op wat het lichaam in verschillende levensfasen vraagt.', 'In deze training leer je hoe je met houdingen, ademhaling en ritme kunt werken aan hormonale balans.
 
@@ -2406,6 +2457,24 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('workshops', 'titel', 'text', '{"text":"Workshops"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('workshops', 'beeld', 'image', '{"url":"","alt":""}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('workshops', 'inleiding', 'text', '{"text":"Losse workshops en dagprogramma''s, in kleine groepen. Je hoeft geen opleiding te volgen om mee te doen."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('over-ons', 'titel', 'text', '{"text":"Over YogaCompany"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
@@ -3817,6 +3886,12 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('cursus', 'kop_kruimel_training', 'text', '{"text":"Trainingen"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'kop_kruimel_workshop', 'text', '{"text":"Workshops"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
