@@ -51,7 +51,6 @@ export const BESTEMMINGEN: { groep: string; items: Bestemming[] }[] = [
       { pad: "/workshops", label: "Workshops" },
       { pad: "/lessen", label: "Lessen" },
       { pad: "/lessen/tarieven", label: "Lessen, workshops en privéyoga" },
-      { pad: "/lessen/tarieven#workshops", label: "Workshops" },
       { pad: "/lessen/tarieven#prive", label: "Privéyoga" },
     ],
   },

@@ -1,12 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  alsBedrag,
-  PRIVE,
-  PRODUCTEN,
-  WORKSHOPS,
-  type Aanbod,
-} from "./tarieven";
+import { alsBedrag, PRIVE, PRODUCTEN, type Aanbod } from "./tarieven";
 
 /**
  * Er stond hier een test die bewaakte dat de prijzen op de tarievenpagina exact
@@ -14,7 +8,7 @@ import {
  * juist zolang die twee hetzelfde waren.
  *
  * Sinds de pagina iets anders toont dan de software verkoopt — lessen bij een
- * yogaschool, workshops en privéyoga, in plaats van kaarten — bestaat die
+ * yogaschool en privéyoga, in plaats van kaarten — bestaat die
  * koppeling niet meer, en zou zo'n test alleen nog omvallen zonder dat er iets
  * mis is.
  *
@@ -24,7 +18,7 @@ import {
  */
 
 describe("wat op de tarievenpagina staat", () => {
-  const alleRegels: Aanbod[] = [...WORKSHOPS, ...PRIVE];
+  const alleRegels: Aanbod[] = [...PRIVE];
 
   it("geeft elk aanbod een naam, een duur en een bedrag", () => {
     for (const regel of alleRegels) {

@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Richtext } from "@/components/layout/sectie";
 import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { Alineas } from "@/components/ui/alineas";
+import { CmsKnop } from "@/components/ui/cms-knop";
 import type { Aanbod, Lesplek } from "@/content/tarieven";
 import type { Pagina } from "../server/queries";
 import { VrijeZone } from "./vrije-zone";
@@ -35,9 +36,6 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
   const lesplekken = pagina
     .lijst<Lesplek>("lesplekken")
     .filter((plek) => gevuld([plek.les, plek.school]));
-  const workshops = pagina
-    .lijst<Aanbod>("workshops")
-    .filter((regel) => gevuld([regel.naam]));
   const prive = pagina
     .lijst<Aanbod>("prive")
     .filter((regel) => gevuld([regel.naam]));
@@ -126,7 +124,11 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
         </>
       ) : null}
 
-      {workshops.length > 0 ? (
+      {/* De workshops zelf staan sinds september 2026 op /workshops, met een
+          pagina per workshop. Hier blijft een verwijzing staan: het adres
+          /lessen/tarieven#workshops stond in het menu en kan bij mensen in een
+          bladwijzer staan, en dat hoort ergens uit te komen. */}
+      {pagina.tekst("workshops_titel") ? (
         <>
           <SectieBeeld
             beeld={pagina.beeld("workshops_beeld")}
@@ -134,8 +136,24 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
             sectie="workshops"
             lijnBoven
           >
-            <h2 className="text-3xl">{pagina.tekst("workshops_titel")}</h2>
-            <AanbodLijst regels={workshops} />
+            <div className="max-w-2xl">
+              <h2 className="text-3xl">{pagina.tekst("workshops_titel")}</h2>
+              {pagina.tekst("workshops_tekst") ? (
+                <div className="mt-4">
+                  <Alineas
+                    tekst={pagina.tekst("workshops_tekst")}
+                    className="text-lg text-muted"
+                  />
+                </div>
+              ) : null}
+              <CmsKnop
+                tekst={pagina.tekst("workshops_knop")}
+                link={pagina.tekst("workshops_link")}
+                terugval="/workshops"
+                variant="omlijnd"
+                className="mt-6"
+              />
+            </div>
           </SectieBeeld>
           <VrijeZone pageKey={"tarieven"} sectie="workshops" />
         </>

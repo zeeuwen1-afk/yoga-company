@@ -30,7 +30,6 @@ import {
   TARIEVEN_INLEIDING,
   TARIEVEN_TITEL,
   TARIEVEN_VOORWAARDEN,
-  WORKSHOPS,
   WORKSHOPS_TITEL,
 } from "./tarieven.ts";
 import {
@@ -309,12 +308,26 @@ const tarievenBlokken: BlokSeed[] = [
   },
   {
     page_key: "tarieven",
-    block_key: "workshops",
-    lijst: { max: 8, itemNaam: "workshop" },
-    kind: "richtext" as const,
-    omschrijving:
-      "De workshops die je zelf geeft. Per workshop: naam, duur, prijs en een toelichting.",
-    value: { items: WORKSHOPS as unknown as Record<string, string>[] },
+    block_key: "workshops_tekst",
+    kind: "text" as const,
+    omschrijving: "Zin onder die kop, boven de knop naar de workshops",
+    value: {
+      text: "De workshops staan op een eigen pagina, met per workshop het programma, de tijden en wat erbij zit.",
+    },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "workshops_knop",
+    kind: "text" as const,
+    omschrijving: "Tekst op de knop naar de workshops",
+    value: { text: "Bekijk de workshops" },
+  },
+  {
+    page_key: "tarieven",
+    block_key: "workshops_link",
+    kind: "text" as const,
+    omschrijving: "Waar die knop heen gaat",
+    value: { text: "/workshops" },
   },
   {
     page_key: "tarieven",

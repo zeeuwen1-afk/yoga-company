@@ -24,7 +24,7 @@
 export const TARIEVEN_TITEL = "Lessen, workshops en privéyoga";
 
 export const TARIEVEN_OMSCHRIJVING =
-  "Wat een les, workshop of privésessie bij YogaCompany kost, en waar je je aanmeldt.";
+  "Wat een les of privésessie bij YogaCompany kost, en waar je je aanmeldt. De workshops staan op hun eigen pagina.";
 
 export const TARIEVEN_INLEIDING = `Wat het kost hangt ervan af waar je meedoet.
 
@@ -61,27 +61,6 @@ export type Aanbod = {
 };
 
 export const WORKSHOPS_TITEL = "Workshops";
-
-export const WORKSHOPS: Aanbod[] = [
-  {
-    naam: "Yin & ademhaling",
-    duur: "2 uur",
-    prijs: "€ 35",
-    toelichting: "Per persoon, in een kleine groep.",
-  },
-  {
-    naam: "Verdieping: zenuwstelsel en herstel",
-    duur: "3 uur",
-    prijs: "€ 47,50",
-    toelichting: "Per persoon. Ook geschikt als bijscholing voor docenten.",
-  },
-  {
-    naam: "Workshop op locatie, besloten groep",
-    duur: "2 uur",
-    prijs: "vanaf € 275",
-    toelichting: "Tot twaalf deelnemers, op aanvraag. Reiskosten in overleg.",
-  },
-];
 
 export const PRIVE_TITEL = "Privéyoga";
 

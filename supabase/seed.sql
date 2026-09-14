@@ -2811,7 +2811,19 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'workshops', 'richtext', '{"items":[{"naam":"Yin & ademhaling","duur":"2 uur","prijs":"€ 35","toelichting":"Per persoon, in een kleine groep."},{"naam":"Verdieping: zenuwstelsel en herstel","duur":"3 uur","prijs":"€ 47,50","toelichting":"Per persoon. Ook geschikt als bijscholing voor docenten."},{"naam":"Workshop op locatie, besloten groep","duur":"2 uur","prijs":"vanaf € 275","toelichting":"Tot twaalf deelnemers, op aanvraag. Reiskosten in overleg."}]}'::jsonb)
+values ('tarieven', 'workshops_tekst', 'text', '{"text":"De workshops staan op een eigen pagina, met per workshop het programma, de tijden en wat erbij zit."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'workshops_knop', 'text', '{"text":"Bekijk de workshops"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('tarieven', 'workshops_link', 'text', '{"text":"/workshops"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
