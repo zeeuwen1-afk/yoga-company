@@ -3,6 +3,7 @@ import type { BlockKind } from "@/lib/supabase/types";
 // Met extensie, zodat dit bestand ook rechtstreeks door Node te draaien is
 // voor `pnpm db:generate-seed`.
 import { JURIDISCHE_TEKSTEN } from "./juridisch.ts";
+import { alsRegels, VASTE_BALK } from "./menubalk.ts";
 import {
   VEILIGHEID_INLEIDING,
   VEILIGHEID_KERN,
@@ -3883,6 +3884,25 @@ export const BLOKKEN: BlokSeed[] = [
 
   // ---------------------------------------------------------------------------
   // Paginavoet
+  // ---------------------------------------------------------------------------
+  // De menubalk
+  //
+  // De ingangen staan in `menubalk.ts`, en die lijst is hier plat geslagen tot
+  // de regels die de beheerder in het scherm ziet. Eén bron dus: wijzigt de
+  // vaste balk, dan wijzigt de startinhoud mee. Zou de startinhoud hier zijn
+  // uitgeschreven, dan liepen ze na de eerste wijziging uit elkaar en toonde
+  // de site iets anders dan wat er in de editor staat.
+  // ---------------------------------------------------------------------------
+  {
+    page_key: "menubalk",
+    block_key: "ingangen",
+    lijst: { max: 20, itemNaam: "ingang" },
+    kind: "richtext" as const,
+    omschrijving:
+      'De ingangen van de menubalk, van links naar rechts. Per regel: de titel, waar hij heen gaat, en onder welke ingang hij hangt. Laat "valt onder" leeg om hem in de balk zelf te zetten; vul je er de titel van een andere ingang in, dan komt hij in het uitklapmenu daaronder. Meer dan zeven ingangen in de balk zelf passen niet naast het logo en de knoppen. Maak je de lijst leeg, dan toont de site de vaste balk.',
+    value: { items: alsRegels(VASTE_BALK) },
+  },
+
   // ---------------------------------------------------------------------------
   {
     page_key: "footer",

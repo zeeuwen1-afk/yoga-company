@@ -95,6 +95,9 @@ const EEN_REGEL = new Set([
 const EEN_REGEL_PRECIES = new Set([
   // Staat achter het bedrag op een kaart: "€ 795 · of per module".
   "aanbod_per_module",
+  // In de menubalk: onder welke ingang deze regel hangt. Dat is de titel van
+  // een andere ingang, en dus nooit meer dan één regel.
+  "onder",
 ]);
 
 /** Is dit veld bedoeld voor één regel? */

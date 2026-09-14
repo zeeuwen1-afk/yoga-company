@@ -115,6 +115,9 @@ const SECTIENAMEN: Record<string, string> = {
   overig: "Overig aanbod",
   rechtstreeks: "Rechtstreeks contact",
   navigatie: "Koppen boven de kolommen",
+  // De menubalk: één lijst, maar zonder naam zou de sectie "Ingangen" gaan
+  // heten en dat zegt niet waar je naar kijkt.
+  ingangen: "De ingangen van de balk",
 };
 
 export type Sectie<T> = {

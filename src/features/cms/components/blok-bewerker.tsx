@@ -68,7 +68,10 @@ const VELD_LABEL: Record<string, string> = {
   uitgelicht: 'Uitgelicht als "meest gekozen"? (ja of leeg)',
   rail: "In het zijbalkje bij het rooster? (ja of leeg)",
   knop: "Tekst op de knop",
-  href: "Waar de knop heen gaat, bijvoorbeeld /lessen",
+  // Niet "waar de knop heen gaat": ditzelfde veld draagt ook de ingangen van
+  // de menubalk, en dat zijn geen knoppen.
+  href: "Waar hij heen gaat, bijvoorbeeld /lessen",
+  onder: "Valt onder — leeg laten voor een ingang in de balk zelf",
   logo: "Logo",
   website: "Webadres, bijvoorbeeld https://…",
 };

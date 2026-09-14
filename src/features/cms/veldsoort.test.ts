@@ -17,6 +17,8 @@ describe("velden die één regel zijn", () => {
     "opleidingen_beeld",
     // Een uitzondering op de naam: staat achter een bedrag op één regel.
     "aanbod_per_module",
+    // In de menubalk: de titel van de ingang waar een regel onder hangt.
+    "onder",
   ])("%s krijgt één regel", (sleutel) => {
     expect(isEenRegel(sleutel)).toBe(true);
   });

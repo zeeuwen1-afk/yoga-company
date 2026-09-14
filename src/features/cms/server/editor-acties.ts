@@ -54,8 +54,12 @@ const GEEN_RECHTEN: EditorResultaat = {
 function verversPagina(pageKey: string) {
   const naam = paginaNaam(pageKey);
   revalidatePath(naam.pad);
-  // De paginavoet staat op elke pagina, dus die verversen we in het geheel.
-  if (pageKey === "footer") revalidatePath("/", "layout");
+  // De balk en de paginavoet staan op elke pagina, dus die verversen we in het
+  // geheel. Alleen het pad hierboven zou de startpagina bijwerken en de andere
+  // vijftig laten staan met het oude menu erboven.
+  if (pageKey === "footer" || pageKey === "menubalk") {
+    revalidatePath("/", "layout");
+  }
 
   // De vaste teksten staan op élke opleidings- en trainingspagina; die zijn
   // allemaal statisch gebouwd, dus één pad verversen zou de rest laten staan.

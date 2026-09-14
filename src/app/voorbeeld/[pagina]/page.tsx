@@ -58,14 +58,17 @@ export default async function VoorbeeldPagina({
   // van déze cursus hangen wél aan de sleutel zelf.
   const slug = cursusSlug(pageKey);
 
-  // De paginavoet staat op elke pagina; bewerk je die, dan tonen we hem in de
-  // context van de startpagina.
-  const inhoudKey =
-    pageKey === "footer" ? "home" : slug !== null ? "cursus" : pageKey;
-  const vrijeKey = pageKey === "footer" ? "home" : pageKey;
+  // De menubalk en de paginavoet staan op elke pagina en hebben er zelf geen.
+  // Bewerk je die, dan tonen we ze in de context van de startpagina.
+  const omheen = pageKey === "footer" || pageKey === "menubalk";
+  const inhoudKey = omheen ? "home" : slug !== null ? "cursus" : pageKey;
+  const vrijeKey = omheen ? "home" : pageKey;
 
-  const [pagina, voetPagina] = await Promise.all([
+  // De balk en de voet krijgen hun concept apart mee: anders zou je in de
+  // voorvertoning de gepubliceerde balk zien terwijl je hem zit te bewerken.
+  const [pagina, menuPagina, voetPagina] = await Promise.all([
     haalConceptPagina(inhoudKey),
+    haalConceptPagina("menubalk"),
     haalConceptPagina("footer"),
   ]);
 
@@ -169,7 +172,7 @@ export default async function VoorbeeldPagina({
       {/* Vangt klikken op en stuurt de sectie naar het bewerkscherm ernaast.
           Staat deze pagina los in een tabblad, dan doet het niets. */}
       <Aanwijzen />
-      <SiteHeader />
+      <SiteHeader pagina={menuPagina} />
       <main className="flex-1">
         {await inhoud()}
         {/* In de voorvertoning tellen ook de blokken mee die nog niet zijn

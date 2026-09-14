@@ -86,6 +86,9 @@ const PAGINA_NAMEN: Record<string, { titel: string; pad: string }> = {
   "over-ons": { titel: "Over ons", pad: "/over-ons" },
   contact: { titel: "Contact", pad: "/contact" },
   footer: { titel: "Paginavoet", pad: "/" },
+  // De balk bovenaan staat op elke pagina; het pad wijst naar de startpagina,
+  // want daar zie je een wijziging even goed als elders.
+  menubalk: { titel: "Menubalk", pad: "/" },
   privacyverklaring: {
     titel: "Privacyverklaring",
     pad: "/privacyverklaring",
