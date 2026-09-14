@@ -134,6 +134,16 @@ describe("de startinhoud en het vangnet zijn dezelfde balk", () => {
     expect(VASTE_BALK).toHaveLength(7);
   });
 
+  it("zet de twee ingangen met een uitklapmenu vooraan, naast elkaar", () => {
+    // De enige twee ingangen die openklappen horen bij elkaar te staan. Met
+    // losse links ertussen gaat de balk op twee plekken open en moet je per
+    // ingang uitproberen of er iets onder zit.
+    const heeftMenu = VASTE_BALK.map((ingang) => Boolean(ingang.sub));
+
+    expect(heeftMenu.filter(Boolean)).toHaveLength(2);
+    expect(heeftMenu.slice(0, 2)).toEqual([true, true]);
+  });
+
   it("gaat heen en weer zonder iets te verliezen", () => {
     expect(bouwMenu(alsRegels(VASTE_BALK))).toEqual(VASTE_BALK);
   });

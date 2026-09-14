@@ -64,19 +64,16 @@ export const VASTE_BALK: MenuIngang[] = [
       },
     ],
   },
-  // Workshops hebben sinds september 2026 hun eigen pagina, met een pagina per
-  // workshop eronder. Het uitklapmenu eronder is weg: het bevatte één regel
-  // naar diezelfde pagina, één naar privéyoga en één naar de tarieven. Dat is
-  // een menu dat je moet openklappen om te ontdekken dat je er niets aan hebt.
-  { href: "/workshops", label: "Workshops" },
-  // Privéyoga stond onder Workshops en was daar niet te vinden voor wie er
-  // juist voor kwam. Het adres wijst naar het stuk over privéyoga op de
-  // tarievenpagina; dat is waar de tarieven staan.
-  { href: "/lessen/tarieven#prive", label: "Privéyoga" },
   {
     // Eén ingang voor de drie markten waar niet de deelnemer betaalt maar zijn
     // werkgever, club of school. Drie losse items zouden de balk overladen en
     // ze op één hoop gooien met het aanbod waar iemand zelf voor kiest.
+    //
+    // Staat naast de Academy, en niet verderop tussen de losse pagina's: dit
+    // zijn de enige twee ingangen die openklappen. Naast elkaar vormen ze één
+    // strook waar de balk opengaat. Stonden er losse links tussen, dan opende
+    // het menu op twee plekken en moest je per ingang uitproberen of er iets
+    // onder zat.
     href: "/bedrijfsyoga",
     label: "Voor organisaties",
     sub: [
@@ -86,6 +83,16 @@ export const VASTE_BALK: MenuIngang[] = [
     ],
   },
   // Hierna de losse pagina's, zonder uitklapmenu.
+  //
+  // Workshops hebben sinds september 2026 hun eigen pagina, met een pagina per
+  // workshop eronder. Het uitklapmenu eronder is weg: het bevatte één regel
+  // naar diezelfde pagina, één naar privéyoga en één naar de tarieven. Dat is
+  // een menu dat je moet openklappen om te ontdekken dat je er niets aan hebt.
+  { href: "/workshops", label: "Workshops" },
+  // Privéyoga stond onder Workshops en was daar niet te vinden voor wie er
+  // juist voor kwam. Het adres wijst naar het stuk over privéyoga op de
+  // tarievenpagina; dat is waar de tarieven staan.
+  { href: "/lessen/tarieven#prive", label: "Privéyoga" },
   { href: "/trainingen", label: "Trainingen" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },
