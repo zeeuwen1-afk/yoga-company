@@ -169,7 +169,7 @@ function Deuren({ pagina }: { pagina: Pagina }) {
                       {deur.titel}
                     </Link>
                   </h3>
-                  <p className="flex-1 text-[0.975rem] text-muted">
+                  <p className="flex-1 text-[0.975rem] whitespace-pre-line text-muted">
                     {deur.tekst}
                   </p>
                   {deur.prijs ? (
@@ -225,7 +225,7 @@ function Organisaties({ pagina }: { pagina: Pagina }) {
                       {ingang.titel}
                     </Link>
                   </h3>
-                  <p className="flex-1 text-[0.975rem] text-muted">
+                  <p className="flex-1 text-[0.975rem] whitespace-pre-line text-muted">
                     {ingang.tekst}
                   </p>
                   {ingang.prijs ? (
@@ -268,7 +268,7 @@ function Inlogdeuren({ pagina }: { pagina: Pagina }) {
                 <div className="flex h-full flex-col gap-3 rounded-[var(--radius-card)] border border-line bg-petrol p-8">
                   <p className="label-klein text-accent-light">{deur.label}</p>
                   <h3 className="text-2xl">{deur.titel}</h3>
-                  <p className="flex-1 text-[0.975rem] text-muted">
+                  <p className="flex-1 text-[0.975rem] whitespace-pre-line text-muted">
                     {deur.tekst}
                   </p>
                   <Link
@@ -316,7 +316,7 @@ export function HomeInhoud({
               {redenen.map((reden) => (
                 <li key={reden.titel} className="border-t border-line pt-5">
                   <h3 className="text-lg">{reden.titel}</h3>
-                  <p className="mt-1.5 text-[0.975rem] text-muted">
+                  <p className="mt-1.5 text-[0.975rem] whitespace-pre-line text-muted">
                     {reden.tekst}
                   </p>
                 </li>
@@ -362,7 +362,7 @@ export function HomeInhoud({
               {ervaringen.map((ervaring, index) => (
                 <li key={index}>
                   <figure className="h-full rounded-[var(--radius-card)] border-l-2 border-accent bg-petrol-card p-6">
-                    <blockquote className="font-serif text-lg text-cream">
+                    <blockquote className="font-serif text-lg whitespace-pre-line text-cream">
                       &ldquo;{ervaring.citaat}&rdquo;
                     </blockquote>
                     <figcaption className="mt-4 text-sm text-muted">

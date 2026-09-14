@@ -47,7 +47,7 @@ export function CursusKaart({
       </CardHeader>
 
       <CardContent className="flex flex-1 flex-col">
-        <p className="text-sm">{cursus.samenvatting}</p>
+        <p className="text-sm whitespace-pre-line">{cursus.samenvatting}</p>
 
         <dl className="mt-5 flex flex-wrap items-baseline gap-x-6 gap-y-1 border-t border-line pt-4">
           <div>

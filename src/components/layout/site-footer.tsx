@@ -55,7 +55,7 @@ export async function SiteFooter({
             height={326}
             className="h-10 w-auto"
           />
-          <p className="mt-4 max-w-xs text-sm text-muted">
+          <p className="mt-4 max-w-xs text-sm whitespace-pre-line text-muted">
             {pagina.tekst("over")}
           </p>
         </div>

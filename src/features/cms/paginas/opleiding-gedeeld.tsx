@@ -166,7 +166,7 @@ export function OpleidingGedeeld({
 
       {pagina.tekst("disclaimer") ? (
         <Sectie sectie="disclaimer" lijnBoven className="!py-8">
-          <p className="max-w-3xl text-sm text-muted">
+          <p className="max-w-3xl text-sm whitespace-pre-line text-muted">
             {pagina.tekst("disclaimer")}
           </p>
         </Sectie>

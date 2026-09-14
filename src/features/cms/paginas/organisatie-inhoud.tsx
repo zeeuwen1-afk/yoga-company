@@ -115,7 +115,9 @@ export function OrganisatieInhoud({
                       </p>
                     ) : null}
                     <h3 className="text-xl">{kaart.titel}</h3>
-                    <p className="text-[0.975rem] text-muted">{kaart.tekst}</p>
+                    <p className="text-[0.975rem] whitespace-pre-line text-muted">
+                      {kaart.tekst}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -141,7 +143,9 @@ export function OrganisatieInhoud({
                   className="grid gap-1 border-t border-sand py-4 sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-8"
                 >
                   <dt className="text-[0.975rem] text-muted">{regel.titel}</dt>
-                  <dd className="text-[0.975rem]">{regel.tekst}</dd>
+                  <dd className="text-[0.975rem] whitespace-pre-line">
+                    {regel.tekst}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -180,7 +184,7 @@ export function OrganisatieInhoud({
                     {vorm.duur ? (
                       <p className="text-sm text-muted">{vorm.duur}</p>
                     ) : null}
-                    <p className="flex-1 text-[0.975rem] text-muted">
+                    <p className="flex-1 text-[0.975rem] whitespace-pre-line text-muted">
                       {vorm.tekst}
                     </p>
                     {vorm.prijs ? (
@@ -193,7 +197,7 @@ export function OrganisatieInhoud({
               ))}
             </ul>
             {pagina.tekst("vormen_voetnoot") ? (
-              <p className="mt-8 max-w-3xl text-sm text-muted">
+              <p className="mt-8 max-w-3xl text-sm whitespace-pre-line text-muted">
                 {pagina.tekst("vormen_voetnoot")}
               </p>
             ) : null}
@@ -228,7 +232,7 @@ export function OrganisatieInhoud({
           <div id="aanvraag" className="grid gap-10 lg:grid-cols-2">
             <div className="max-w-xl">
               <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
-              <p className="mt-4 text-lg text-muted">
+              <p className="mt-4 text-lg whitespace-pre-line text-muted">
                 {pagina.tekst("cta_tekst")}
               </p>
             </div>

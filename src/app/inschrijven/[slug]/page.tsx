@@ -71,7 +71,9 @@ export default async function InschrijvenPage({
 
           <div className="mt-8 rounded-[var(--radius-card)] border border-line p-6">
             <h2 className="text-xl">{cursus.titel}</h2>
-            <p className="mt-2 text-sm text-muted">{cursus.samenvatting}</p>
+            <p className="mt-2 text-sm whitespace-pre-line text-muted">
+              {cursus.samenvatting}
+            </p>
 
             <dl className="mt-5 border-t border-line pt-4">
               <div className="flex items-baseline justify-between gap-4">

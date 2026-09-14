@@ -55,7 +55,7 @@ export default async function MijnOpleidingenPage() {
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div className="min-w-0">
                         <h2 className="text-xl">{opleiding.titel}</h2>
-                        <p className="mt-1 text-sm text-muted">
+                        <p className="mt-1 text-sm whitespace-pre-line text-muted">
                           {opleiding.samenvatting}
                         </p>
                       </div>

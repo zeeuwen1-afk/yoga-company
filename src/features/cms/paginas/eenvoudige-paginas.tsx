@@ -76,7 +76,9 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
                 <div>
                   <h3 className="text-lg">{docent.naam}</h3>
                   <p className="text-sm text-muted">{docent.rol}</p>
-                  <p className="mt-2 text-[0.975rem]">{docent.bio}</p>
+                  <p className="mt-2 text-[0.975rem] whitespace-pre-line">
+                    {docent.bio}
+                  </p>
                 </div>
               </li>
             ))}

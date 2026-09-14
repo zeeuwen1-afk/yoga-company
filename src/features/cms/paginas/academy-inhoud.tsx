@@ -283,7 +283,7 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
               </Onderdeel>
 
               {pagina.tekst("certificering_slot") ? (
-                <p className="mt-8 text-[0.975rem] text-muted">
+                <p className="mt-8 text-[0.975rem] whitespace-pre-line text-muted">
                   {pagina.tekst("certificering_slot")}
                 </p>
               ) : null}
@@ -332,7 +332,7 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
                         <div>
                           <p className="font-semibold">{stap.titel}</p>
                           {stap.tekst ? (
-                            <p className="mt-1 text-[0.975rem] text-muted">
+                            <p className="mt-1 text-[0.975rem] whitespace-pre-line text-muted">
                               {stap.tekst}
                             </p>
                           ) : null}
@@ -389,7 +389,7 @@ export function AcademyInhoud({ pagina }: { pagina: Pagina }) {
                     </table>
                   </div>
                   {pagina.tekst("registreren_kosten_voet") ? (
-                    <p className="mt-4 text-[0.975rem] text-muted">
+                    <p className="mt-4 text-[0.975rem] whitespace-pre-line text-muted">
                       {pagina.tekst("registreren_kosten_voet")}
                     </p>
                   ) : null}

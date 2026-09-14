@@ -70,7 +70,9 @@ export function Academie({
                   {opleiding.titel}
                 </Link>
               </h3>
-              <p className="mt-3 flex-1 text-muted">{opleiding.samenvatting}</p>
+              <p className="mt-3 flex-1 whitespace-pre-line text-muted">
+                {opleiding.samenvatting}
+              </p>
 
               <p className="mt-5 font-semibold tabular-nums">
                 {formateerPrijs(opleiding.prijsCenten)}
@@ -97,7 +99,7 @@ export function Academie({
         <div id="losse-modules" className="scroll-mt-24">
           <h3 className="text-2xl">{pagina.tekst("losse_titel")}</h3>
           {pagina.tekst("losse_tekst") ? (
-            <p className="mt-2 max-w-2xl text-muted">
+            <p className="mt-2 max-w-2xl whitespace-pre-line text-muted">
               {pagina.tekst("losse_tekst")}
             </p>
           ) : null}

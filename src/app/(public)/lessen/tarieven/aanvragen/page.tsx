@@ -51,7 +51,9 @@ export default async function KaartAanvragenPage({
         <div className="mt-8 rounded-[var(--radius-card)] border border-line p-6">
           <h2 className="text-xl">{tarief.naam}</h2>
           {tarief.toelichting ? (
-            <p className="mt-1 text-sm text-muted">{tarief.toelichting}</p>
+            <p className="mt-1 text-sm whitespace-pre-line text-muted">
+              {tarief.toelichting}
+            </p>
           ) : null}
 
           <dl className="mt-5 space-y-2 border-t border-line pt-4">

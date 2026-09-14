@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Sectie } from "@/components/layout/sectie";
 import { CmsKnop } from "@/components/ui/cms-knop";
+import { Alineas } from "@/components/ui/alineas";
 import { NIVEAU_INFO } from "@/content/niveaus";
 import { SOORT_INFO } from "@/content/soorten";
 import { cursusSleutel } from "@/content/vrije-blokken";
@@ -12,18 +13,16 @@ import { formateerPrijs } from "../prijs";
 import { AcademyBadge } from "./academy-badge";
 import type { Cursus } from "../server/queries";
 
-/** Markdown-achtige alinea's uit de database omzetten naar leesbare tekst. */
-function Alineas({ tekst }: { tekst: string }) {
-  return (
-    <div className="space-y-4">
-      {tekst
-        .split("\n\n")
-        .filter(Boolean)
-        .map((alinea, index) => (
-          <p key={index}>{alinea.replaceAll("**", "")}</p>
-        ))}
-    </div>
-  );
+/**
+ * De sterretjes weg waarmee ooit vet werd bedoeld.
+ *
+ * In de beschrijvingen van de opleidingen staat markdown: `**Yin Yoga niveau
+ * 1**`. De pagina toont geen markdown, dus zonder dit staan de sterretjes
+ * letterlijk op het scherm. Ze uit de database halen is inhoud van de
+ * beheerder aanpassen; ze hier verbergen is dat niet.
+ */
+function zonderSterretjes(tekst: string): string {
+  return tekst.replaceAll("**", "");
 }
 
 function Feit({ label, waarde }: { label: string; waarde: string }) {
@@ -96,9 +95,12 @@ export function CursusDetail({
           <div className="mt-4 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <h1 className="max-w-3xl text-4xl sm:text-5xl">{cursus.titel}</h1>
-              <p className="mt-5 max-w-2xl text-lg text-muted">
-                {cursus.samenvatting}
-              </p>
+              <div className="mt-5 max-w-2xl">
+                <Alineas
+                  tekst={zonderSterretjes(cursus.samenvatting)}
+                  className="text-lg text-muted"
+                />
+              </div>
             </div>
 
             <div className="rounded-[var(--radius-card)] border border-sand bg-sand-light p-6 lg:w-72">
@@ -106,7 +108,7 @@ export function CursusDetail({
                 {formateerPrijs(cursus.prijsCenten)}
               </p>
               {pagina.tekst("kop_prijs_toelichting") ? (
-                <p className="mt-1 text-sm text-muted">
+                <p className="mt-1 text-sm whitespace-pre-line text-muted">
                   {pagina.tekst("kop_prijs_toelichting")}
                 </p>
               ) : null}
@@ -135,7 +137,7 @@ export function CursusDetail({
         <div className="grid gap-12 lg:grid-cols-[1fr_20rem]">
           {/* Hoofdtekst --------------------------------------------------- */}
           <div className="max-w-2xl">
-            <Alineas tekst={cursus.beschrijving} />
+            <Alineas tekst={zonderSterretjes(cursus.beschrijving)} />
 
             {cursus.voorWie && pagina.tekst("verhaal_voorwie_titel") ? (
               <>
@@ -187,7 +189,10 @@ export function CursusDetail({
                       </summary>
 
                       <div className="border-t border-line p-5">
-                        <p className="text-muted">{module.samenvatting}</p>
+                        <Alineas
+                          tekst={zonderSterretjes(module.samenvatting)}
+                          className="text-muted"
+                        />
                         <ul className="mt-5 space-y-4">
                           {module.blokken.map((blok, plek) => (
                             // Een opsomming zonder kopje erboven mag; dan blijft
@@ -255,7 +260,7 @@ export function CursusDetail({
               ) : null}
               {cursus.certificaatNiveau &&
               pagina.tekst("praktisch_certificaat_voorwaarde") ? (
-                <p className="mt-4 text-sm text-muted">
+                <p className="mt-4 text-sm whitespace-pre-line text-muted">
                   {pagina.tekst("praktisch_certificaat_voorwaarde")}
                 </p>
               ) : null}
@@ -303,7 +308,7 @@ export function CursusDetail({
           <div className="max-w-2xl">
             <h2 className="text-3xl">{slotTitel}</h2>
             {pagina.tekst("slot_tekst") ? (
-              <p className="mt-4 text-lg text-muted">
+              <p className="mt-4 text-lg whitespace-pre-line text-muted">
                 {pagina.tekst("slot_tekst")}
               </p>
             ) : null}
@@ -374,7 +379,7 @@ function VerwantePaginas({ slug }: { slug: string }) {
             >
               {regel.label}
             </Link>
-            <span className="block text-sm text-muted">
+            <span className="block text-sm whitespace-pre-line text-muted">
               {regel.toelichting}
             </span>
           </li>

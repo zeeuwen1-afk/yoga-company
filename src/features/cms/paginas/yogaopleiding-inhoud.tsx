@@ -54,7 +54,12 @@ export function YogaopleidingInhoud({
         <div className="max-w-3xl">
           <h1 className="text-4xl sm:text-5xl">{pagina.tekst("titel")}</h1>
           {pagina.tekst("subtitel") ? (
-            <p className="mt-4 text-xl text-ink">{pagina.tekst("subtitel")}</p>
+            <div className="mt-4">
+              <Alineas
+                tekst={pagina.tekst("subtitel")}
+                className="text-xl text-ink"
+              />
+            </div>
           ) : null}
           <div className="mt-6">
             <Alineas
@@ -63,7 +68,7 @@ export function YogaopleidingInhoud({
             />
           </div>
           {pagina.tekst("kenmerken") ? (
-            <p className="mt-6 font-serif text-lg text-accent">
+            <p className="mt-6 font-serif text-lg whitespace-pre-line text-accent">
               {pagina.tekst("kenmerken")}
             </p>
           ) : null}
@@ -135,7 +140,9 @@ export function YogaopleidingInhoud({
                           module.titel
                         )}
                       </h3>
-                      <p className="mt-3 flex-1 text-muted">{module.tekst}</p>
+                      <p className="mt-3 flex-1 whitespace-pre-line text-muted">
+                        {module.tekst}
+                      </p>
                       {pad ? (
                         <p className="mt-5 inline-flex items-center gap-1.5 font-semibold underline underline-offset-4">
                           {module.knop || "Lees meer"}

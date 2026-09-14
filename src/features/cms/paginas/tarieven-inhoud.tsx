@@ -163,7 +163,7 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
             <AanbodLijst regels={prive} />
 
             {pagina.tekst("prive_voetnoot") ? (
-              <p className="mt-5 max-w-2xl text-sm text-muted">
+              <p className="mt-5 max-w-2xl text-sm whitespace-pre-line text-muted">
                 {pagina.tekst("prive_voetnoot")}
               </p>
             ) : null}

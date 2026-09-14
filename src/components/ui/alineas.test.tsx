@@ -9,6 +9,31 @@ import { Alineas } from "./alineas";
  */
 
 describe("Alineas", () => {
+  /**
+   * Wat een browser werkelijk opstuurt.
+   *
+   * Een tekstvak in Safari of Chrome stuurt Windows-regelovergangen: `\r\n`,
+   * niet `\n`. Dat is geen randgeval maar het gewone geval. Een eigen kopie van
+   * deze component op de cursuspagina splitste op exact "\n\n" en vond in een
+   * tekst van 2931 tekens met veertien alinea's er dus precies één: alles op
+   * één hoop. De beheerder zag zijn alinea's in het bewerkscherm wél staan en
+   * op de pagina niet, en er was niets dat uitlegde waarom.
+   */
+  it("herkent alinea's die met Windows-regelovergangen zijn getypt", () => {
+    render(<Alineas tekst={"Eerste.\r\n\r\nTweede.\r\n\r\nDerde."} />);
+
+    expect(screen.getAllByText(/Eerste|Tweede|Derde/)).toHaveLength(3);
+  });
+
+  it("houdt een enkele Windows-regelovergang binnen dezelfde alinea", () => {
+    const { container } = render(
+      <Alineas tekst={"Bovenste regel.\r\nOnderste regel."} />,
+    );
+
+    expect(container.querySelectorAll("p")).toHaveLength(1);
+    expect(container.querySelector("p")).toHaveClass("whitespace-pre-line");
+  });
+
   it("maakt van elke witregel een eigen alinea", () => {
     const { container } = render(
       <Alineas tekst={"Eerste alinea.\n\nTweede alinea.\n\nDerde."} />,

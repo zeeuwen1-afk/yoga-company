@@ -348,7 +348,9 @@ function Portfolioblok({ inhoud }: { inhoud: Record<string, unknown> }) {
                 <p className="mt-0.5 text-sm text-sand">{regel.waar}</p>
               ) : null}
               {regel.tekst ? (
-                <p className="mt-2 text-[0.975rem] text-muted">{regel.tekst}</p>
+                <p className="mt-2 text-[0.975rem] whitespace-pre-line text-muted">
+                  {regel.tekst}
+                </p>
               ) : null}
             </div>
           </li>

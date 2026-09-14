@@ -24,7 +24,7 @@ export function NiveausOverzicht({ pagina }: { pagina: Pagina }) {
     <div data-sectie="niveaus" className="mb-14 border-b border-line pb-14">
       <h2 className="text-2xl sm:text-3xl">{titel}</h2>
       {pagina.tekst("niveaus_tekst") ? (
-        <p className="mt-3 max-w-2xl text-muted">
+        <p className="mt-3 max-w-2xl whitespace-pre-line text-muted">
           {pagina.tekst("niveaus_tekst")}
         </p>
       ) : null}
@@ -38,7 +38,7 @@ export function NiveausOverzicht({ pagina }: { pagina: Pagina }) {
                 {NIVEAU_INFO[niveau].label}
               </h3>
               {pagina.tekst(`niveaus_${niveau}`) ? (
-                <p className="mt-1 text-[0.975rem] text-muted">
+                <p className="mt-1 text-[0.975rem] whitespace-pre-line text-muted">
                   {pagina.tekst(`niveaus_${niveau}`)}
                 </p>
               ) : null}

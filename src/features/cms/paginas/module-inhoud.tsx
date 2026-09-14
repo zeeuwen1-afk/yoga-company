@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { BeeldMetTekst } from "@/components/layout/beeld-met-tekst";
 import { Richtext } from "@/components/layout/sectie";
 import { SectieBeeld } from "@/components/layout/sectie-beeld";
+import { Alineas } from "@/components/ui/alineas";
 import { CmsKnop } from "@/components/ui/cms-knop";
 
 import { OpleidingGedeeld } from "./opleiding-gedeeld";
@@ -62,7 +63,12 @@ export function ModuleInhoud({
               {pagina.tekst("titel")}
             </h1>
             {pagina.tekst("inleiding") ? (
-              <p className="mt-4 text-muted">{pagina.tekst("inleiding")}</p>
+              <div className="mt-4">
+                <Alineas
+                  tekst={pagina.tekst("inleiding")}
+                  className="text-muted"
+                />
+              </div>
             ) : null}
           </div>
           <AcademyBadge
@@ -122,7 +128,12 @@ export function ModuleInhoud({
           >
             <div className="max-w-2xl">
               <h2 className="text-3xl">{pagina.tekst("toelating_titel")}</h2>
-              <p className="mt-6 text-lg">{pagina.tekst("toelating_tekst")}</p>
+              <div className="mt-6">
+                <Alineas
+                  tekst={pagina.tekst("toelating_tekst")}
+                  className="text-lg"
+                />
+              </div>
             </div>
           </SectieBeeld>
           <VrijeZone pageKey={pagina.pageKey} sectie="toelating" />
@@ -145,7 +156,7 @@ export function ModuleInhoud({
                 className="mt-6"
               />
               {pagina.tekst("prijs_voet") ? (
-                <p className="mt-4 text-muted italic">
+                <p className="mt-4 whitespace-pre-line text-muted italic">
                   {pagina.tekst("prijs_voet")}
                 </p>
               ) : null}

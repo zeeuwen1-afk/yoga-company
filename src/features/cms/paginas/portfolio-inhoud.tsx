@@ -111,7 +111,7 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
                       <p className="mt-0.5 text-sm text-sand">{regel.waar}</p>
                     ) : null}
                     {regel.tekst ? (
-                      <p className="mt-2 text-[0.975rem] text-muted">
+                      <p className="mt-2 text-[0.975rem] whitespace-pre-line text-muted">
                         {regel.tekst}
                       </p>
                     ) : null}
@@ -168,7 +168,7 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
               {specialisaties.map((regel, index) => (
                 <li key={index} className="border-t border-line pt-5">
                   <h3 className="text-lg">{regel.titel}</h3>
-                  <p className="mt-1.5 text-[0.975rem] text-muted">
+                  <p className="mt-1.5 text-[0.975rem] whitespace-pre-line text-muted">
                     {regel.tekst}
                   </p>
                 </li>
