@@ -40,18 +40,15 @@ const navigation: NavItem[] = [
       },
     ],
   },
-  {
-    // Workshops hebben sinds september 2026 hun eigen pagina, met een pagina
-    // per workshop eronder. De knop wees eerst naar een stukje halverwege de
-    // tarievenpagina; wie erop klikte kwam midden in een prijslijst uit.
-    href: "/workshops",
-    label: "Workshops",
-    sub: [
-      { href: "/workshops", label: "Alle workshops" },
-      { href: "/lessen/tarieven#prive", label: "Privéyoga" },
-      { href: "/lessen/tarieven", label: "Alle tarieven" },
-    ],
-  },
+  // Workshops hebben sinds september 2026 hun eigen pagina, met een pagina per
+  // workshop eronder. Het uitklapmenu eronder is weg: het bevatte één regel
+  // naar diezelfde pagina, één naar privéyoga en één naar de tarieven. Dat is
+  // een menu dat je moet openklappen om te ontdekken dat je er niets aan hebt.
+  { href: "/workshops", label: "Workshops" },
+  // Privéyoga stond onder Workshops en was daar niet te vinden voor wie er
+  // juist voor kwam. Het adres wijst naar het stuk over privéyoga op de
+  // tarievenpagina; dat is waar de tarieven staan.
+  { href: "/lessen/tarieven#prive", label: "Privéyoga" },
   {
     // Eén ingang voor de drie markten waar niet de deelnemer betaalt maar zijn
     // werkgever, club of school. Drie losse items zouden de balk overladen en
@@ -64,15 +61,14 @@ const navigation: NavItem[] = [
       { href: "/onderwijs", label: "Onderwijs" },
     ],
   },
-  // De drie items hierboven hebben een uitklapmenu en staan daarom bij elkaar.
-  // De losse pagina's volgen daarna: een pijltje tussen twee gewone items maakt
-  // de balk onrustig, omdat het oog het als een grens leest die er niet is.
+  // Hierna de losse pagina's, zonder uitklapmenu.
   { href: "/trainingen", label: "Trainingen" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },
   // "Veiligheid" stond hier ook; die staat nu in de paginavoet bij de
   // juridische pagina's. Dat is een pagina waar iemand bewust naartoe gaat, en
-  // hij kostte een van de zes plekken die de balk aankan.
+  // hij kostte een van de plekken die de balk aankan. Zeven ingangen is het
+  // maximum: daarboven knelt de balk ook op een breed scherm.
 ];
 
 export function SiteHeader() {
@@ -100,13 +96,15 @@ export function SiteHeader() {
           />
         </Link>
 
-        {/* Pas vanaf een breed scherm, en niet meer vanaf een tablet. Zes items
-            waaronder "Yoga Company Academy" en "Voor organisaties" passen niet
-            op 768 pixels; daar zou de balk gaan knellen of omvallen. Tussen 768
-            en 1024 doet de menuknop het werk, en die was er al. */}
+        {/* Pas vanaf 1280 pixels. Op 1024 brak de balk al vóór er een ingang
+            bijkwam: "Yoga Company Academy" viel daar over drie regels, "Voor
+            organisaties" en "Over ons" over twee, en het menu had 74 pixels
+            nodig in een balk van 64. Met zeven ingangen is 1054 pixels aan
+            woorden nodig, en dat past pas naast het logo en de twee knoppen
+            vanaf 1280. Daaronder doet de menuknop het werk, en die was er al. */}
         <nav
           aria-label="Hoofdmenu"
-          className="hidden items-center gap-6 lg:flex"
+          className="hidden items-center gap-6 xl:flex"
         >
           {navigation.map((item) =>
             item.sub ? (
@@ -171,7 +169,7 @@ export function SiteHeader() {
           aria-expanded={open}
           aria-controls="mobiel-menu"
           aria-label={open ? "Menu sluiten" : "Menu openen"}
-          className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-green-dark lg:hidden"
+          className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-green-dark xl:hidden"
         >
           {open ? <X className="size-6" /> : <Menu className="size-6" />}
         </button>
@@ -180,7 +178,7 @@ export function SiteHeader() {
       <div
         id="mobiel-menu"
         hidden={!open}
-        className={cn("border-t border-line bg-cream lg:hidden")}
+        className={cn("border-t border-line bg-cream xl:hidden")}
       >
         <nav aria-label="Mobiel menu" className="flex flex-col px-4 py-2">
           {navigation.map((item) => (

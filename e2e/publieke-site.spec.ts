@@ -417,26 +417,23 @@ test.describe("Tarieven", () => {
     await expect(page.getByText("24 uur")).toBeVisible();
   });
 
-  test("is bereikbaar via het menu onder Workshops", async ({ page }) => {
+  test("is bereikbaar via Privéyoga in de balk", async ({ page }) => {
     await page.goto("/");
 
-    // Het menu-item heette "Lessen" en heet nu "Workshops"; de tarieven staan
-    // er nog steeds onder. Deze test hing aan de naam en viel om bij het
-    // hernoemen, terwijl er niets stuk was.
-    const menu = page
-      .getByRole("navigation", { name: "Hoofdmenu" })
-      .getByRole("link", { name: "Workshops", exact: true })
-      .first();
+    // De tarieven stonden in een uitklapmenu onder Workshops, als regel "Alle
+    // tarieven". Dat menu is weg: Privéyoga is nu een eigen ingang en wijst
+    // naar dezelfde pagina. Deze test hing eerder aan de naam van het
+    // menu-item en viel om bij elke hernoeming; hij gaat nu op het adres af.
+    const link = 'header a[href="/lessen/tarieven#prive"]:visible';
 
-    if (await menu.isVisible()) {
-      // Op een breed scherm klapt het submenu open bij hover.
-      await menu.hover();
-    } else {
+    // Op een telefoon zit de balk achter de menuknop.
+    if ((await page.locator(link).count()) === 0) {
       await page.getByRole("button", { name: "Menu openen" }).click();
     }
 
-    await page.getByRole("link", { name: "Alle tarieven" }).first().click();
-    await expect(page).toHaveURL(/\/lessen\/tarieven$/);
+    await page.locator(link).first().click();
+    await expect(page).toHaveURL(/\/lessen\/tarieven/);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   });
 
   /**

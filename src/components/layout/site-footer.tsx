@@ -17,6 +17,7 @@ const navigatie = [
   { href: "/trainingen", label: "Trainingen" },
   { href: "/workshops", label: "Workshops" },
   { href: "/lessen", label: "Lessen" },
+  { href: "/lessen/tarieven", label: "Tarieven" },
   { href: "/bedrijfsyoga", label: "Bedrijfsyoga" },
   { href: "/sportclubs", label: "Sportclubs" },
   { href: "/onderwijs", label: "Onderwijs" },
