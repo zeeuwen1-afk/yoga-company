@@ -1,12 +1,13 @@
 import Link from "next/link";
 
 import { Sectie } from "@/components/layout/sectie";
+import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { Alineas } from "@/components/ui/alineas";
 import { NIVEAU_INFO } from "@/content/niveaus";
 import { SOORT_INFO } from "@/content/soorten";
 import { cursusSleutel } from "@/content/vrije-blokken";
-import { VrijeZone, type Pagina } from "@/features/cms";
+import { AanmeldFormulier, VrijeZone, type Pagina } from "@/features/cms";
 import { veiligeLink } from "@/lib/knoplink";
 
 import { formateerPrijs } from "../prijs";
@@ -112,8 +113,19 @@ export function CursusDetail({
                   {pagina.tekst("kop_prijs_toelichting")}
                 </p>
               ) : null}
+              {/* Naar het aanmeldformulier onderaan deze pagina, en niet
+                  naar /inschrijven. Die route vraagt eerst een account en
+                  daarna een betaling; wie net besloten heeft dat hij mee wil
+                  doen krijgt dan een inlogscherm te zien, en dat is het moment
+                  waarop mensen afhaken. De opleidingspagina's gingen hier al
+                  om; de cursus- en workshoppagina's waren achtergebleven. De
+                  bestemming staat in de editor, dus de route via het portaal
+                  is terug te zetten zonder code. */}
               <Link
-                href={`/inschrijven/${cursus.slug}`}
+                href={veiligeLink(
+                  pagina.tekst("kop_inschrijf_link"),
+                  "#aanmelden",
+                )}
                 className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-lg bg-primary font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
               >
                 {pagina.tekst("kop_inschrijf_knop") || "Inschrijven"}
@@ -291,9 +303,15 @@ export function CursusDetail({
                   label={pagina.tekst("praktisch_certificaat")}
                   waarde={cursus.certificaat ?? ""}
                 />
+                {/* De data van deze ene cursus, en anders de algemene regel
+                    die voor alle cursussen geldt. Andersom zou één workshop
+                    met een datum diezelfde datum onder elke opleiding zetten,
+                    want die tekst is gedeeld. */}
                 <Feit
                   label={pagina.tekst("praktisch_lesdata")}
-                  waarde={pagina.tekst("praktisch_lesdata_tekst")}
+                  waarde={
+                    cursus.lesdata || pagina.tekst("praktisch_lesdata_tekst")
+                  }
                 />
               </dl>
             </div>
@@ -302,6 +320,37 @@ export function CursusDetail({
       </Sectie>
 
       <VrijeZone pageKey={vrijeSleutel} sectie="verhaal" concept={concept} />
+
+      {/* Aanmelden ------------------------------------------------------- */}
+      <SectieBeeld
+        beeld={pagina.beeld("aanmelden_beeld")}
+        sectie="aanmelden"
+        achtergrond="creme"
+        lijnBoven
+      >
+        {pagina.tekst("aanmelden_titel") ? (
+          <div className="max-w-2xl">
+            <h2 className="text-3xl">{pagina.tekst("aanmelden_titel")}</h2>
+            {pagina.tekst("aanmelden_tekst") ? (
+              <p className="mt-4 text-lg whitespace-pre-line text-muted">
+                {pagina.tekst("aanmelden_tekst")}
+              </p>
+            ) : null}
+          </div>
+        ) : null}
+
+        {/* Het anker waar de knop bovenaan naartoe springt. */}
+        <div id="aanmelden" className="mt-10 max-w-2xl scroll-mt-24">
+          {/* Eén keuze in de lijst: je meldt je aan voor deze cursus. Het veld
+              blijft staan omdat het de onderwerpregel van de mail vult, zodat
+              een aanmelding in het beheer meteen te plaatsen is. De titel wordt
+              afgekapt op de lengte die de controle toelaat. */}
+          <AanmeldFormulier
+            onderwerp={cursus.titel.slice(0, 60)}
+            varianten={[cursus.titel.slice(0, 120)]}
+          />
+        </div>
+      </SectieBeeld>
 
       {slotTitel ? (
         <Sectie sectie="slot" achtergrond="zand" lijnBoven>

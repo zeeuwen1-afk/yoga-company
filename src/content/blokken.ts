@@ -1144,6 +1144,16 @@ const cursusBlokken: BlokSeed[] = [
   },
   {
     page_key: "cursus",
+    block_key: "kop_inschrijf_link",
+    kind: "text" as const,
+    omschrijving:
+      "Waar de inschrijfknop heen gaat. Standaard springt hij naar het aanmeldformulier onderaan dezelfde pagina. Wil je in plaats daarvan de route met een account en direct betalen, vul dan /inschrijven/ in met het webadres van de cursus erachter.",
+    // Niet naar /inschrijven: die route vraagt eerst een account en daarna een
+    // betaling, en dat is precies waar een bezoeker afhaakt.
+    value: { text: "#aanmelden" },
+  },
+  {
+    page_key: "cursus",
     block_key: "kop_vraag_knop",
     kind: "text",
     verbergbaar: true,
@@ -1273,6 +1283,33 @@ const cursusBlokken: BlokSeed[] = [
     kind: "text" as const,
     omschrijving: "De naam onder het niveau naast de badge",
     value: { text: "Yoga Company Academy" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "aanmelden_titel",
+    kind: "text" as const,
+    omschrijving:
+      "Kop boven het aanmeldformulier onderaan elke cursuspagina. Leeg laten haalt de kop weg; het formulier blijft staan.",
+    value: { text: "Meld je aan" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "aanmelden_tekst",
+    kind: "text" as const,
+    verbergbaar: true,
+    omschrijving: "Zin onder die kop, boven het formulier",
+    value: {
+      text: "Je vult je gegevens in en wij nemen contact op met de data, de locatie en hoe je je plek definitief maakt. Je hoeft hier geen account voor te maken en je betaalt nog niets.",
+    },
+  },
+  {
+    page_key: "cursus",
+    block_key: "aanmelden_beeld",
+    kind: "image" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Foto bij deze sectie (niet verplicht). Bij de foto kies je of hij erboven, ernaast, eronder of als achtergrond onder de tekst staat.",
+    value: { url: "", alt: "" },
   },
 
   {

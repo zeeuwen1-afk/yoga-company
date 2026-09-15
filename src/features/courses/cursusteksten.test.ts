@@ -30,7 +30,14 @@ describe("de teksten van de cursuspagina", () => {
 
   // Ook de sleutels die achter een keuze staan tellen mee. Daarom eerst het
   // hele argument pakken en daar pas de tekst uit halen.
-  const letterlijk = [...bron.matchAll(/pagina\.(?:tekst|html)\(([^)]*)\)/g)]
+  //
+  // `beeld` staat er sinds de sectie met het aanmeldformulier bij. Een foto
+  // wordt op dezelfde manier uit de editor gelezen als een tekst, alleen met
+  // een andere functie; zonder dat hier zag de test een fotoveld aan voor een
+  // blok dat de pagina nergens toont.
+  const letterlijk = [
+    ...bron.matchAll(/pagina\.(?:tekst|html|beeld)\(([^)]*)\)/g),
+  ]
     .flatMap((aanroep) => [...aanroep[1]!.matchAll(/"([a-z0-9_]+)"/g)])
     .map((treffer) => treffer[1]!);
 

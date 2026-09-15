@@ -48,6 +48,13 @@ export type CursusSeed = {
   toelatingseisen?: string;
   curriculum?: CurriculumModule[];
   studiebelasting?: string;
+  /**
+   * Wanneer de cursus plaatsvindt: "zondag 25 oktober, 10:00-17:00" of "vier
+   * zondagen vanaf 12 januari". Vrije tekst, want het is vaker een reeks of
+   * een dagdeel dan één datum. Leeg laten en de pagina toont de algemene regel
+   * uit de gedeelde cursusteksten.
+   */
+  lesdata?: string;
   locatie?: string;
   maxDeelnemers?: number;
   certificaat?: string;

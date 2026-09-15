@@ -55,14 +55,14 @@ for (const cursus of AANBOD) {
   regels.push(`
 insert into courses (
   type, title, slug, summary, description, audience, requirements, curriculum,
-  study_load_text, location, max_participants, certificate_text,
+  study_load_text, dates_text, location, max_participants, certificate_text,
   certificate_level, price_cents, has_digital_content, is_active, sort
 ) values (
   ${q(cursus.type)}, ${q(cursus.titel)}, ${q(cursus.slug)},
   ${q(cursus.samenvatting)}, ${q(cursus.beschrijving)},
   ${q(cursus.voorWie)}, ${q(cursus.toelatingseisen)},
   ${json(cursus.curriculum)},
-  ${q(cursus.studiebelasting)}, ${q(cursus.locatie)},
+  ${q(cursus.studiebelasting)}, ${q(cursus.lesdata)}, ${q(cursus.locatie)},
   ${cursus.maxDeelnemers ?? "null"}, ${q(cursus.certificaat)},
   ${q(cursus.certificaatNiveau)},
   ${cursus.prijsCenten}, ${cursus.digitaleContent}, true, ${cursus.sort}

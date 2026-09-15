@@ -20,14 +20,26 @@ test.describe("Inschrijven", () => {
     ).toBeVisible();
   });
 
-  test("de detailpagina wijst naar de inschrijfpagina", async ({ page }) => {
+  /**
+   * De knop bij de prijs wees hiervoor naar /inschrijven. Die route vraagt
+   * eerst een account en daarna een betaling, en het inlogscherm daartussen is
+   * precies waar mensen afhaken. Hij springt nu naar het aanmeldformulier op
+   * dezelfde pagina; de route zelf blijft bestaan en blijft afgeschermd, wat de
+   * test hierboven vastlegt.
+   */
+  test("de detailpagina wijst naar het aanmeldformulier", async ({ page }) => {
     await page.goto("/opleidingen/200-uurs-yin-yoga-specialist");
 
-    const knop = page.getByRole("link", { name: "Inschrijven" });
-    await expect(knop).toHaveAttribute(
-      "href",
-      "/inschrijven/200-uurs-yin-yoga-specialist",
-    );
+    const knop = page
+      .locator('[data-sectie="kop"]')
+      .getByRole("link", { name: "Inschrijven" });
+    await expect(knop).toHaveAttribute("href", "#aanmelden");
+
+    // En daar staat ook echt een formulier, want een knop die naar een anker
+    // springt dat niet bestaat doet niets en meldt niets.
+    const formulier = page.locator("#aanmelden");
+    await expect(formulier).toBeVisible();
+    await expect(formulier.locator('[name="email"]')).toHaveCount(1);
   });
 
   test("een onbekende opleiding kent geen inschrijfpagina", async ({

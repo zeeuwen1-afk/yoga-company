@@ -28,6 +28,8 @@ export type Cursus = {
   toelatingseisen: string | null;
   curriculum: CurriculumModule[];
   studiebelasting: string | null;
+  /** Wanneer de cursus plaatsvindt, als vrije tekst. */
+  lesdata: string | null;
   locatie: string | null;
   maxDeelnemers: number | null;
   certificaat: string | null;
@@ -48,6 +50,7 @@ function uitSeed(seed: CursusSeed): Cursus {
     toelatingseisen: seed.toelatingseisen ?? null,
     curriculum: seed.curriculum ?? [],
     studiebelasting: seed.studiebelasting ?? null,
+    lesdata: seed.lesdata ?? null,
     locatie: seed.locatie ?? null,
     maxDeelnemers: seed.maxDeelnemers ?? null,
     certificaat: seed.certificaat ?? null,
@@ -71,6 +74,7 @@ function uitDatabase(rij: Course): Cursus {
       ? (rij.curriculum as unknown as CurriculumModule[])
       : [],
     studiebelasting: rij.study_load_text,
+    lesdata: rij.dates_text,
     locatie: rij.location,
     maxDeelnemers: rij.max_participants,
     certificaat: rij.certificate_text,

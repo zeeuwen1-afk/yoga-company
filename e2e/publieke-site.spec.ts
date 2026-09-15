@@ -111,6 +111,40 @@ test.describe("Workshops", () => {
     const xml = await (await request.get("/sitemap.xml")).text();
     expect(xml).toContain("/workshops");
   });
+
+  /**
+   * De knop bovenaan wees naar /inschrijven, en die route stuurt iedereen
+   * zonder account eerst naar een inlogscherm. Voor een eendaagse workshop is
+   * dat het einde van de aanmelding. Er staat nu een formulier op de pagina
+   * zelf, net als op de opleidingspagina's.
+   */
+  test("op een workshoppagina meld je je aan zonder account", async ({
+    page,
+  }) => {
+    await page.goto("/workshops");
+
+    const eerste = page.locator('main a[href^="/workshops/"]').first();
+    test.skip(
+      (await eerste.count()) === 0,
+      "er staat op dit moment geen workshop op de site",
+    );
+
+    await eerste.click();
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+
+    // De knop bij de prijs springt naar het formulier op deze pagina.
+    await expect(
+      page.locator('[data-sectie="kop"] a[href="#aanmelden"]').first(),
+    ).toBeVisible();
+
+    const formulier = page.locator("#aanmelden");
+    await expect(formulier).toBeVisible();
+    await expect(formulier.locator('[name="name"]')).toHaveCount(1);
+    await expect(formulier.locator('[name="email"]')).toHaveCount(1);
+    await expect(
+      formulier.getByRole("button", { name: /meld je aan/i }),
+    ).toBeVisible();
+  });
 });
 
 test.describe("Opleidingen", () => {

@@ -104,6 +104,7 @@ export type Course = {
   requirements: string | null;
   curriculum: Json | null;
   study_load_text: string | null;
+  dates_text: string | null;
   location: string | null;
   max_participants: number | null;
   certificate_text: string | null;

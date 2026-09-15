@@ -139,6 +139,20 @@ export function CursusFormulier({
         </div>
       </div>
 
+      <div>
+        <Label htmlFor="c-data">Data en tijden</Label>
+        <Input
+          id="c-data"
+          name="dates_text"
+          defaultValue={cursus?.lesdata ?? ""}
+          placeholder="Bijvoorbeeld: zondag 25 oktober, 10:00-17:00"
+        />
+        <p className="mt-1.5 text-sm text-muted">
+          Komt op de pagina te staan bij Lesdata. Laat je dit leeg, dan toont de
+          pagina de algemene regel die voor alle cursussen geldt.
+        </p>
+      </div>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <Label htmlFor="c-studiebelasting">Studiebelasting</Label>
