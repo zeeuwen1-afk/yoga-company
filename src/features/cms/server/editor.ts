@@ -99,7 +99,10 @@ const PAGINA_NAMEN: Record<string, { titel: string; pad: string }> = {
   },
   cookies: { titel: "Cookies", pad: "/cookies" },
   veiligheid: { titel: "Veiligheid en privacy", pad: "/veiligheid" },
-  tarieven: { titel: "Tarieven", pad: "/lessen/tarieven" },
+  // De blokken heten nog `tarieven`; de pagina heet sinds september 2026
+  // Privéyoga en staat op een eigen adres. De sleutel hernoemen zou betekenen
+  // dat alle ingevulde teksten opnieuw getypt moeten worden.
+  tarieven: { titel: "Privéyoga", pad: "/priveyoga" },
   "voor-yogadocenten": {
     titel: "Voor yogadocenten",
     pad: "/voor-yogadocenten",

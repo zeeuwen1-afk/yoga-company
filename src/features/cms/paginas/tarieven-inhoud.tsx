@@ -124,10 +124,12 @@ export function TarievenInhoud({ pagina }: { pagina: Pagina }) {
         </>
       ) : null}
 
-      {/* De workshops zelf staan sinds september 2026 op /workshops, met een
-          pagina per workshop. Hier blijft een verwijzing staan: het adres
-          /lessen/tarieven#workshops stond in het menu en kan bij mensen in een
-          bladwijzer staan, en dat hoort ergens uit te komen. */}
+      {/* Het blok staat er alleen nog als de beheerder een kop invult, en die
+          is leeg. De pagina gaat sinds september 2026 alleen over privéyoga;
+          een blok dat enkel doorverwijst naar de workshops hoort daar niet
+          meer op. Het blijft in de code staan zodat het terug te zetten is
+          door een kop in te vullen — weghalen zou ook de tekst en de knop
+          weggooien die de beheerder zelf heeft geschreven. */}
       {pagina.tekst("workshops_titel") ? (
         <>
           <SectieBeeld

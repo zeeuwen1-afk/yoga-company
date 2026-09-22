@@ -406,11 +406,11 @@ test.describe("Juridische pagina's", () => {
   });
 });
 
-test.describe("Tarieven", () => {
+test.describe("Privéyoga", () => {
   test("toont wat Wietske zelf aanbiedt, met een bedrag erbij", async ({
     page,
   }) => {
-    await page.goto("/lessen/tarieven");
+    await page.goto("/priveyoga");
 
     // Alles op deze pagina komt uit de site-editor en mag veranderen: de kop,
     // de namen van de workshops, de bedragen. Deze test noemde er twee bij naam
@@ -435,7 +435,7 @@ test.describe("Tarieven", () => {
     // De software bestaat nog, maar de kaarten worden niet meer verkocht: de
     // lesprijs zit in het abonnement van de school waar wordt lesgegeven.
     // Blijft hier een kaart staan, dan verkoopt de site iets wat niet bestaat.
-    await page.goto("/lessen/tarieven");
+    await page.goto("/priveyoga");
 
     await expect(page.getByText("strippenkaart", { exact: false })).toHaveCount(
       0,
@@ -446,7 +446,7 @@ test.describe("Tarieven", () => {
   });
 
   test("noemt de annuleringsregel op de pagina zelf", async ({ page }) => {
-    await page.goto("/lessen/tarieven");
+    await page.goto("/priveyoga");
 
     await expect(page.getByText("24 uur")).toBeVisible();
   });
@@ -458,7 +458,7 @@ test.describe("Tarieven", () => {
     // tarieven". Dat menu is weg: Privéyoga is nu een eigen ingang en wijst
     // naar dezelfde pagina. Deze test hing eerder aan de naam van het
     // menu-item en viel om bij elke hernoeming; hij gaat nu op het adres af.
-    const link = 'header a[href="/lessen/tarieven#prive"]:visible';
+    const link = 'header a[href="/priveyoga"]:visible';
 
     // Op een telefoon zit de balk achter de menuknop.
     if ((await page.locator(link).count()) === 0) {
@@ -466,7 +466,7 @@ test.describe("Tarieven", () => {
     }
 
     await page.locator(link).first().click();
-    await expect(page).toHaveURL(/\/lessen\/tarieven/);
+    await expect(page).toHaveURL(/\/priveyoga/);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   });
 
@@ -685,7 +685,7 @@ test.describe("SEO", () => {
     expect(xml).toMatch(/\/trainingen(\/|<)/);
     expect(xml).toContain("/privacyverklaring");
     expect(xml).toContain("/veiligheid");
-    expect(xml).toContain("/lessen/tarieven");
+    expect(xml).toContain("/priveyoga");
     expect(xml).toContain("/voor-yogadocenten");
     expect(xml).toContain("/onze-docenten");
   });

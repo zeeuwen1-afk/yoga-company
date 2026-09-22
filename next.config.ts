@@ -107,6 +107,28 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
+
+  /**
+   * Adressen die verhuisd zijn.
+   *
+   * De tarievenpagina ging in september 2026 alleen nog over privéyoga en
+   * verhuisde daarom naar /priveyoga. Het oude adres stond in de menubalk, in
+   * de paginavoet en in de sitemap, en kan bij bezoekers in een bladwijzer
+   * staan. Permanent, zodat zoekmachines de verhuizing overnemen in plaats van
+   * beide adressen te blijven bezoeken.
+   *
+   * /lessen/tarieven/aanvragen valt hier bewust buiten: dat is een eigen route
+   * en een exacte bron raakt alleen het pad zelf, niet wat eronder hangt.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/lessen/tarieven",
+        destination: "/priveyoga",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

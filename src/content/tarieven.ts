@@ -21,14 +21,18 @@
  * nieuwe school komt, staat het klaar.
  */
 
-export const TARIEVEN_TITEL = "Lessen, workshops en privéyoga";
+/**
+ * De pagina ging tot september 2026 over lessen, workshops én privéyoga. Wat
+ * overbleef is wat Wietske zelf aanbiedt: privéyoga, met de prijzen erbij. De
+ * lessen bij yogascholen en de workshops staan elders.
+ */
+export const TARIEVEN_TITEL = "Privéyoga";
 
 export const TARIEVEN_OMSCHRIJVING =
-  "Wat een les of privésessie bij YogaCompany kost, en waar je je aanmeldt. De workshops staan op hun eigen pagina.";
+  "Privéyoga bij jou thuis of op een rustige plek, alleen of met z'n tweeën. Wat het kost en hoe het werkt.";
 
-export const TARIEVEN_INLEIDING = `Wat het kost hangt ervan af waar je meedoet.
-
-Bij een yogaschool loopt het via hun tarief: je meldt je daar aan en betaalt daar. Wat ik zelf aanbied staat eronder, met de prijs erbij.`;
+export const TARIEVEN_INLEIDING =
+  "Alleen of met z'n tweeën, bij jou thuis of op een rustige plek.";
 
 /** Een les die Wietske bij een yogaschool geeft. De school bepaalt de prijs. */
 export type Lesplek = {
@@ -60,13 +64,21 @@ export type Aanbod = {
   toelichting: string;
 };
 
-export const WORKSHOPS_TITEL = "Workshops";
+/**
+ * Leeg, en daardoor staat het blok er niet. De workshops hebben sinds
+ * september 2026 hun eigen pagina met een pagina per workshop; een blok dat
+ * alleen doorverwijst hoort niet op een pagina over privéyoga. De tekst en de
+ * knop hieronder blijven staan, zodat het blok terug te zetten is door hier
+ * weer een kop in te vullen.
+ */
+export const WORKSHOPS_TITEL = "";
 
-export const PRIVE_TITEL = "Privéyoga";
+/** Niet "Privéyoga": dat is de titel van de pagina zelf geworden. */
+export const PRIVE_TITEL = "Wat het kost";
 
-export const PRIVE_INLEIDING = `Alleen of met z'n tweeën, bij jou thuis of op een rustige plek.
-
-Maximaal twee personen, en dat is een keuze: bij privéyoga kijk ik mee en corrigeer ik waar het nodig is. Bij drie mensen kan dat niet meer, en dan is het een gewone les met minder deelnemers.`;
+// De eerste zin staat nu bovenaan de pagina, onder de titel.
+export const PRIVE_INLEIDING =
+  "Maximaal twee personen, en dat is een keuze: bij privéyoga kijk ik mee en corrigeer ik waar het nodig is. Bij drie mensen kan dat niet meer, en dan is het een gewone les met minder deelnemers.";
 
 export const PRIVE: Aanbod[] = [
   {
@@ -98,7 +110,12 @@ export const PRIVE: Aanbod[] = [
 export const PRIVE_VOETNOOT =
   "Binnen Almere zijn reiskosten inbegrepen. Daarbuiten reken ik € 0,23 per kilometer, vooraf afgesproken.";
 
-export const ORGANISATIES_TITEL = "Voor bedrijven, sportclubs en onderwijs";
+/**
+ * Ook leeg. Bedrijven, sportclubs en onderwijs hebben elk een eigen pagina en
+ * staan in de menubalk onder "Voor organisaties"; drie knoppen daarheen op een
+ * pagina over privéyoga voegden niets toe.
+ */
+export const ORGANISATIES_TITEL = "";
 
 export const ORGANISATIES_TEKST = `Voor organisaties gelden aparte tarieven, afgestemd op de groep en het aantal sessies.
 
@@ -127,10 +144,9 @@ export type Tarief = {
 export const TARIEVEN_VOORWAARDEN = `
 <h3>Afspraken</h3>
 <ul>
-  <li>Een privéles of workshop is definitief zodra je een bevestiging per e-mail hebt.</li>
+  <li>Een privéles is definitief zodra je een bevestiging per e-mail hebt.</li>
   <li>Afzeggen kan kosteloos tot 24 uur van tevoren. Daarna breng ik de sessie in rekening, omdat de tijd dan niet meer te vullen is.</li>
   <li>Word ik ziek, dan verplaatsen we of je krijgt je geld terug. Jouw keuze.</li>
-  <li>Voor lessen bij een yogaschool gelden de voorwaarden van die school.</li>
 </ul>
 `;
 

@@ -90,9 +90,10 @@ export const VASTE_BALK: MenuIngang[] = [
   // een menu dat je moet openklappen om te ontdekken dat je er niets aan hebt.
   { href: "/workshops", label: "Workshops" },
   // Privéyoga stond onder Workshops en was daar niet te vinden voor wie er
-  // juist voor kwam. Het adres wijst naar het stuk over privéyoga op de
-  // tarievenpagina; dat is waar de tarieven staan.
-  { href: "/lessen/tarieven#prive", label: "Privéyoga" },
+  // juist voor kwam. Sinds september 2026 heeft het een eigen pagina; daarvoor
+  // wees deze ingang naar een stuk van de tarievenpagina, die ook over lessen
+  // en workshops ging.
+  { href: "/priveyoga", label: "Privéyoga" },
   { href: "/trainingen", label: "Trainingen" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },

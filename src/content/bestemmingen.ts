@@ -1,7 +1,7 @@
 /**
  * Waar een knop heen kan wijzen.
  *
- * Een leeg tekstveld waarin je `/lessen/tarieven` moet typen is geen bewerkbare
+ * Een leeg tekstveld waarin je `/priveyoga` moet typen is geen bewerkbare
  * knop maar een raadspelletje: je moet weten hoe de adressen heten, en één
  * typfout levert een 404 op zonder dat iemand het merkt. Deze lijst wordt in de
  * site-editor naast het veld getoond, zodat je een bestemming aanklikt in
@@ -50,8 +50,7 @@ export const BESTEMMINGEN: { groep: string; items: Bestemming[] }[] = [
       { pad: "/trainingen", label: "Trainingen" },
       { pad: "/workshops", label: "Workshops" },
       { pad: "/lessen", label: "Lessen" },
-      { pad: "/lessen/tarieven", label: "Lessen, workshops en privéyoga" },
-      { pad: "/lessen/tarieven#prive", label: "Privéyoga" },
+      { pad: "/priveyoga", label: "Privéyoga" },
     ],
   },
   {

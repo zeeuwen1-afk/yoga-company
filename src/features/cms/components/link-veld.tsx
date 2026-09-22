@@ -11,7 +11,7 @@ import { veiligeLink } from "@/lib/knoplink";
  * Het veld waarin de bestemming van een knop wordt ingevuld.
  *
  * Een kaal tekstveld zou hier betekenen dat je uit je hoofd moet weten dat de
- * tarievenpagina op `/lessen/tarieven` staat en niet op `/tarieven`. Eén letter
+ * privéyogapagina op `/priveyoga` staat en niet op `/prive-yoga`. Eén letter
  * mis en de knop leidt naar een 404, zonder dat er iets over klaagt.
  *
  * Daarom staan de bestaande pagina's eronder als knopjes. Aanklikken vult het

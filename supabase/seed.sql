@@ -1155,7 +1155,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('home', 'hero_titel', 'text', '{"text":"Van je eerste les tot je eigen lespraktijk."}'::jsonb)
+values ('home', 'hero_titel', 'text', '{"text":"YogaCompany"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2469,7 +2469,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('over-ons', 'docenten', 'richtext', '{"items":[{"naam":"Naam volgt","rol":"Oprichter en hoofddocent","bio":"Korte biografie volgt.","foto":""},{"naam":"Naam volgt","rol":"Docent","bio":"Korte biografie volgt.","foto":""}]}'::jsonb)
+values ('over-ons', 'docenten', 'richtext', '{"items":[{"naam":"Naam volgt","rol":"Oprichter en hoofddocent","bio":"Korte biografie volgt.","foto":"","link":"/portfolio"},{"naam":"Naam volgt","rol":"Docent","bio":"Korte biografie volgt.","foto":"","link":""}]}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2547,7 +2547,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('menubalk', 'ingangen', 'richtext', '{"items":[{"titel":"Yoga Company Academy","href":"/opleidingen","onder":""},{"titel":"200-uurs Yogaopleiding","href":"/opleidingen/200-uurs-yogaopleiding","onder":"Yoga Company Academy"},{"titel":"200-uurs Yin Yoga Specialist","href":"/opleidingen/200-uurs-yin-yoga-specialist","onder":"Yoga Company Academy"},{"titel":"Losse modules","href":"/opleidingen#losse-modules","onder":"Yoga Company Academy"},{"titel":"Waar de Academy voor staat","href":"/opleidingen/academy","onder":"Yoga Company Academy"},{"titel":"Je opleiding registreren","href":"/opleidingen/academy#registreren","onder":"Yoga Company Academy"},{"titel":"Voor organisaties","href":"/bedrijfsyoga","onder":""},{"titel":"Bedrijven","href":"/bedrijfsyoga","onder":"Voor organisaties"},{"titel":"Sportclubs","href":"/sportclubs","onder":"Voor organisaties"},{"titel":"Onderwijs","href":"/onderwijs","onder":"Voor organisaties"},{"titel":"Workshops","href":"/workshops","onder":""},{"titel":"Privéyoga","href":"/lessen/tarieven#prive","onder":""},{"titel":"Trainingen","href":"/trainingen","onder":""},{"titel":"Over ons","href":"/over-ons","onder":""},{"titel":"Contact","href":"/contact","onder":""}]}'::jsonb)
+values ('menubalk', 'ingangen', 'richtext', '{"items":[{"titel":"Yoga Company Academy","href":"/opleidingen","onder":""},{"titel":"200-uurs Yogaopleiding","href":"/opleidingen/200-uurs-yogaopleiding","onder":"Yoga Company Academy"},{"titel":"200-uurs Yin Yoga Specialist","href":"/opleidingen/200-uurs-yin-yoga-specialist","onder":"Yoga Company Academy"},{"titel":"Losse modules","href":"/opleidingen#losse-modules","onder":"Yoga Company Academy"},{"titel":"Waar de Academy voor staat","href":"/opleidingen/academy","onder":"Yoga Company Academy"},{"titel":"Je opleiding registreren","href":"/opleidingen/academy#registreren","onder":"Yoga Company Academy"},{"titel":"Voor organisaties","href":"/bedrijfsyoga","onder":""},{"titel":"Bedrijven","href":"/bedrijfsyoga","onder":"Voor organisaties"},{"titel":"Sportclubs","href":"/sportclubs","onder":"Voor organisaties"},{"titel":"Onderwijs","href":"/onderwijs","onder":"Voor organisaties"},{"titel":"Workshops","href":"/workshops","onder":""},{"titel":"Privéyoga","href":"/priveyoga","onder":""},{"titel":"Trainingen","href":"/trainingen","onder":""},{"titel":"Over ons","href":"/over-ons","onder":""},{"titel":"Contact","href":"/contact","onder":""}]}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2757,13 +2757,13 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'titel', 'text', '{"text":"Lessen, workshops en privéyoga"}'::jsonb)
+values ('tarieven', 'titel', 'text', '{"text":"Privéyoga"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'inleiding', 'text', '{"text":"Wat het kost hangt ervan af waar je meedoet.\n\nBij een yogaschool loopt het via hun tarief: je meldt je daar aan en betaalt daar. Wat ik zelf aanbied staat eronder, met de prijs erbij."}'::jsonb)
+values ('tarieven', 'inleiding', 'text', '{"text":"Alleen of met z''n tweeën, bij jou thuis of op een rustige plek."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2811,7 +2811,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'workshops_titel', 'text', '{"text":"Workshops"}'::jsonb)
+values ('tarieven', 'workshops_titel', 'text', '{"text":""}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2841,13 +2841,13 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'prive_titel', 'text', '{"text":"Privéyoga"}'::jsonb)
+values ('tarieven', 'prive_titel', 'text', '{"text":"Wat het kost"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'prive_inleiding', 'text', '{"text":"Alleen of met z''n tweeën, bij jou thuis of op een rustige plek.\n\nMaximaal twee personen, en dat is een keuze: bij privéyoga kijk ik mee en corrigeer ik waar het nodig is. Bij drie mensen kan dat niet meer, en dan is het een gewone les met minder deelnemers."}'::jsonb)
+values ('tarieven', 'prive_inleiding', 'text', '{"text":"Maximaal twee personen, en dat is een keuze: bij privéyoga kijk ik mee en corrigeer ik waar het nodig is. Bij drie mensen kan dat niet meer, en dan is het een gewone les met minder deelnemers."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2871,7 +2871,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'organisaties_titel', 'text', '{"text":"Voor bedrijven, sportclubs en onderwijs"}'::jsonb)
+values ('tarieven', 'organisaties_titel', 'text', '{"text":""}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -2889,7 +2889,7 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
-values ('tarieven', 'voorwaarden', 'richtext', '{"html":"\n<h3>Afspraken</h3>\n<ul>\n  <li>Een privéles of workshop is definitief zodra je een bevestiging per e-mail hebt.</li>\n  <li>Afzeggen kan kosteloos tot 24 uur van tevoren. Daarna breng ik de sessie in rekening, omdat de tijd dan niet meer te vullen is.</li>\n  <li>Word ik ziek, dan verplaatsen we of je krijgt je geld terug. Jouw keuze.</li>\n  <li>Voor lessen bij een yogaschool gelden de voorwaarden van die school.</li>\n</ul>\n"}'::jsonb)
+values ('tarieven', 'voorwaarden', 'richtext', '{"html":"\n<h3>Afspraken</h3>\n<ul>\n  <li>Een privéles is definitief zodra je een bevestiging per e-mail hebt.</li>\n  <li>Afzeggen kan kosteloos tot 24 uur van tevoren. Daarna breng ik de sessie in rekening, omdat de tijd dan niet meer te vullen is.</li>\n  <li>Word ik ziek, dan verplaatsen we of je krijgt je geld terug. Jouw keuze.</li>\n</ul>\n"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
