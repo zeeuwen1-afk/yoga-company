@@ -73,7 +73,7 @@ function KopPortret({ inhoud }: { inhoud: Record<string, unknown> }) {
             {tekst(inhoud, "knop_een") ? (
               <Link
                 href="/lessen"
-                className="inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+                className="inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
               >
                 {tekst(inhoud, "knop_een")}
               </Link>
@@ -153,7 +153,7 @@ function MijnLessen({
               </p>
               <Link
                 href="/lessen"
-                className="mt-4 inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+                className="mt-4 inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
               >
                 Boeken
               </Link>

@@ -33,7 +33,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1F4D58",
+  // De kleur van de browserbalk op een telefoon; moet de paginaondergrond
+  // volgen, anders staat er een streep van het oude petrol boven de site.
+  themeColor: "#17353D",
 };
 
 export default function RootLayout({

@@ -26,7 +26,7 @@ export function KaartKnop({ index }: { index: number }) {
         <div className="flex flex-wrap gap-3">
           <Link
             href="/portaal/aanvragen"
-            className="inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+            className="inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
           >
             Naar mijn aanvragen
           </Link>

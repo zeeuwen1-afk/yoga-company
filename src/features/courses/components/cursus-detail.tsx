@@ -126,7 +126,7 @@ export function CursusDetail({
                   pagina.tekst("kop_inschrijf_link"),
                   "#aanmelden",
                 )}
-                className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-lg bg-primary font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+                className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-lg bg-primary font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
               >
                 {pagina.tekst("kop_inschrijf_knop") || "Inschrijven"}
               </Link>

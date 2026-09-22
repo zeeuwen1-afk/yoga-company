@@ -41,7 +41,7 @@ export function CmsKnop({
   const opmaak = cn(
     "inline-flex h-12 items-center rounded-lg px-7 font-semibold transition-colors",
     variant === "vol"
-      ? "bg-primary text-primary-foreground hover:bg-accent-light"
+      ? "bg-primary text-primary-foreground hover:bg-primary-hover"
       : "border border-line hover:bg-hover",
     className,
   );

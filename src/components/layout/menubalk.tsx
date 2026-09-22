@@ -102,7 +102,7 @@ export function Menubalk({ items }: { items: MenuIngang[] }) {
           </Link>
           <Link
             href="/inloggen"
-            className="inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+            className="inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
           >
             Inloggen
           </Link>

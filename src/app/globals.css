@@ -22,30 +22,31 @@
 
 @theme {
   /* --- De vier uit het beeld ------------------------------------------- */
-  --color-petrol: #1f4d58; /* de hoofdachtergrond */
+  --color-petrol: #17353d; /* de hoofdachtergrond */
   --color-paper-warm: #fcfaf6; /* warm wit */
   --color-sand: #deccaa; /* zand */
-  --color-accent: #ea976e; /* abrikoos */
+  --color-accent: #d9be9c; /* zand-accent, waar eerst abrikoos stond */
 
   /* --- Wat daaruit volgt ------------------------------------------------ */
-  --color-petrol-deep: #133b45; /* voettekst en de waas over de herofoto */
-  --color-petrol-card: #275965; /* kaarten en panelen op een petrol vlak */
-  --color-petrol-line: #3d7683; /* decoratieve lijn op donker */
-  --color-accent-light: #f0a87f; /* kleine tekst en links op donker (4,69:1) */
-  --color-accent-deep: #9e4e2b; /* links en tekst op licht (5,63:1) */
-  --color-accent-foreground: #133b45; /* tekst op een abrikoos vlak (6,10:1) */
+  --color-petrol-deep: #0f272d; /* voettekst en de waas over de herofoto */
+  --color-petrol-card: #1f4650; /* kaarten en panelen op een petrol vlak */
+  --color-petrol-line: #2b4c55; /* decoratieve lijn op donker */
+  --color-accent-light: #e6d2b8; /* kleine tekst en links op donker (8,85:1) */
+  --color-accent-deep: #8a5533; /* links en tekst op licht (5,88:1) */
+  --color-accent-foreground: #17353d; /* tekst op een zandvlak (7,31:1) */
   --color-sand-light: #f3ebdc; /* rustige lichte sectie */
   --color-ink-dark: #16323a; /* bodytekst op licht (12,98:1) */
   --color-muted-dark: #4e6970; /* bijschrift op licht (5,63:1) */
 
-  /* Waarschuwing: --color-accent op wit haalt 2,20:1. Als kleine tekst op een
-   * licht vlak is die kleur onbruikbaar; daar hoort --color-accent-deep. */
+  /* Waarschuwing: --color-accent is zand en haalt op wit 1,58:1. Als tekst op
+   * een licht vlak is die kleur onbruikbaar; daar hoort --color-accent-deep.
+   * Dat gold voor het abrikoos hiervoor al, en voor zand des te meer. */
 
   /* Het vlak dat oplicht als je ergens overheen gaat. Eén token, twee
    * betekenissen: op donker iets lichter dan de kaart eronder, op een licht
    * eiland het zachte zand. Zonder token zou elke hover of onleesbaar zijn op
    * donker, of onzichtbaar op licht. */
-  --color-hover: #2f6674;
+  --color-hover: #22434c;
 
   --color-error: #c4523c;
   --color-success: #3e6b4f;
@@ -71,6 +72,12 @@
 
   --color-primary: var(--color-accent);
   --color-primary-foreground: var(--color-accent-foreground);
+  /* De vulling waarnaar een knop oplicht als je erover gaat. Stond als
+   * `hover:bg-primary-hover` in drieëntwintig bestanden, en dat brak zodra de
+   * knop op een licht vlak donker werd: hij sprong dan van donker petrol naar
+   * lichtzand met warm witte letters erop. Nu is het een token, en zetten de
+   * lichte eilanden hem mee om. */
+  --color-primary-hover: var(--color-accent-light);
   --color-secondary: var(--color-sand);
   --color-secondary-foreground: var(--color-petrol-deep);
   --color-border: var(--color-line);
@@ -145,6 +152,11 @@
     --color-cream: var(--color-paper-warm);
     --color-ring: var(--color-petrol);
     --color-hover: var(--color-sand-light);
+    /* Zand op crème is geen knop meer, alleen een lichte vlek. Op een licht
+     * eiland is de gevulde knop daarom petrol met warm witte letters. */
+    --color-primary: var(--color-petrol);
+    --color-primary-foreground: var(--color-paper-warm);
+    --color-primary-hover: var(--color-petrol-card);
     color: var(--color-foreground);
   }
 
@@ -162,8 +174,11 @@
     --color-line-strong: #8fa9ae;
     --color-green: var(--color-accent-light);
     --color-green-dark: var(--color-paper-warm);
-    --color-hover: #2f6674;
+    --color-hover: #22434c;
     --color-ring: var(--color-accent-light);
+    --color-primary: var(--color-accent);
+    --color-primary-foreground: var(--color-accent-foreground);
+    --color-primary-hover: var(--color-accent-light);
     color: var(--color-foreground);
   }
 
@@ -188,20 +203,30 @@
  * linkerkant altijd donker genoeg voor warm witte tekst, en laat de rechterkant
  * van het beeld vrij. Op een smal scherm gaat hij over de hele foto, want daar
  * staat de tekst er middenop.
+ *
+ * In september 2026 is hij lichter gezet: van een goed gekozen foto was vrijwel
+ * niets meer te zien. Opnieuw doorgerekend met warm wit op de diepe petrol over
+ * een spierwitte foto, het slechtste geval dat er is:
+ *
+ *   smal scherm   88% naar 80%   10,33 : 1  en  7,86 : 1
+ *   breed scherm  84% naar 76%    9,02 : 1  en  6,86 : 1
+ *
+ * De tekst loopt op een breed scherm tot ongeveer 48% van de breedte, en daar
+ * zit het verloop nog boven de 5 : 1. De staart van 18% draagt geen tekst.
  * -------------------------------------------------------------------------- */
 @utility hero-waas {
   background: linear-gradient(
     180deg,
-    rgba(19, 59, 69, 0.93) 0%,
-    rgba(19, 59, 69, 0.88) 100%
+    rgba(15, 39, 45, 0.88) 0%,
+    rgba(15, 39, 45, 0.8) 100%
   );
 
   @media (width >= 48rem) {
     background: linear-gradient(
       100deg,
-      rgba(19, 59, 69, 0.94) 0%,
-      rgba(19, 59, 69, 0.86) 38%,
-      rgba(31, 77, 88, 0.34) 100%
+      rgba(15, 39, 45, 0.84) 0%,
+      rgba(15, 39, 45, 0.76) 42%,
+      rgba(23, 53, 61, 0.18) 100%
     );
   }
 }
@@ -217,18 +242,18 @@
  * De dekking is doorgerekend met crèmewit op petrol over een spierwitte foto,
  * het slechtste geval dat er is:
  *
- *   75%  5,42 : 1   ruim boven de grens van 4,5 : 1
- *   88%  7,86 : 1   voor een onrustige foto
+ *   72%  5,99 : 1   ruim boven de grens van 4,5 : 1
+ *   84%  9,02 : 1   voor een onrustige foto
  *
  * Verlaag deze waarden niet zonder opnieuw te rekenen; bij 65% zit je op
- * 4,05 : 1 en dan is de kop op een lichte lucht niet meer te lezen.
+ * 4,76 : 1 en daaronder is de kop op een lichte lucht niet meer te lezen.
  * -------------------------------------------------------------------------- */
 @utility beeld-waas {
-  background: rgba(19, 59, 69, 0.75);
+  background: rgba(15, 39, 45, 0.72);
 }
 
 @utility beeld-waas-donkerder {
-  background: rgba(19, 59, 69, 0.88);
+  background: rgba(15, 39, 45, 0.84);
 }
 
 /* Labels in kleinkapitaal-stijl met ruime letterafstand. */

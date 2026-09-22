@@ -55,7 +55,7 @@ export default async function MijnPaginaPage() {
             </p>
             <Link
               href="/contact"
-              className="mt-4 inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+              className="mt-4 inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
             >
               Neem contact op
             </Link>

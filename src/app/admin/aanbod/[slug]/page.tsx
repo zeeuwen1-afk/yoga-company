@@ -54,7 +54,7 @@ export default async function AanbodBewerkenPage({
             </Link>
             <Link
               href={`/admin/aanbod/${cursus.slug}/content`}
-              className="inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+              className="inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
             >
               Lesmateriaal
             </Link>

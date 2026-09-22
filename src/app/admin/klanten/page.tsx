@@ -100,7 +100,7 @@ export default async function KlantenPage({
 
         <button
           type="submit"
-          className="h-11 rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+          className="h-11 rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
         >
           Filteren
         </button>

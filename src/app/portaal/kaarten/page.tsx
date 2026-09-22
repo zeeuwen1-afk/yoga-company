@@ -52,7 +52,7 @@ export default async function KaartenPage() {
           </p>
           <Link
             href="/lessen/tarieven"
-            className="mt-6 inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+            className="mt-6 inline-flex h-11 items-center rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
           >
             Bekijk de tarieven
           </Link>

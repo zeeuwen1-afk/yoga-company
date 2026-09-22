@@ -29,8 +29,9 @@ test.describe("Fundament", () => {
     });
     // --color-foreground = #FCFAF6 (warm wit op donker)
     expect(kleur).toBe("rgb(252, 250, 246)");
-    // --color-paper = #1F4D58 (petrol)
-    expect(achtergrond).toBe("rgb(31, 77, 88)");
+    // --color-paper = #17353D (petrol). Was #1F4D58; in september 2026 dieper
+    // en minder blauw gezet, omdat de site te hard aankwam.
+    expect(achtergrond).toBe("rgb(23, 53, 61)");
   });
 
   /**

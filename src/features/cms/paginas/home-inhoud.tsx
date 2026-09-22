@@ -202,11 +202,15 @@ function Organisaties({ pagina }: { pagina: Pagina }) {
 
   return (
     <>
+      {/* Geen crèmestrook meer. De startpagina wisselde zeven keer van
+          ondergrond — donker, licht, donker, licht — en elke wissel vraagt
+          opnieuw aandacht. Er is er nog één over, bij het aanbod hieronder;
+          die draagt het commerciële hart van de pagina en mag daarom opvallen.
+          De scheiding hier doet `lijnBoven`. */}
       <SectieBeeld
         beeld={pagina.beeld("organisaties_beeld")}
         id="voor-organisaties"
         sectie="organisaties"
-        achtergrond="creme"
         lijnBoven
       >
         <SectieKop
@@ -275,7 +279,7 @@ function Inlogdeuren({ pagina }: { pagina: Pagina }) {
                     href={veiligeLink(deur.href, "/")}
                     className={
                       index === 0
-                        ? "mt-2 inline-flex h-12 w-fit items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+                        ? "mt-2 inline-flex h-12 w-fit items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
                         : "mt-2 inline-flex h-12 w-fit items-center rounded-lg border border-line-strong px-7 font-semibold text-cream transition-colors hover:bg-hover"
                     }
                   >
@@ -383,12 +387,8 @@ export function HomeInhoud({
       <Inlogdeuren pagina={pagina} />
 
       <>
-        <SectieBeeld
-          beeld={pagina.beeld("cta_beeld")}
-          sectie="cta"
-          achtergrond="zand"
-          lijnBoven
-        >
+        {/* Ook deze strook is niet langer zand; zie de toelichting hierboven. */}
+        <SectieBeeld beeld={pagina.beeld("cta_beeld")} sectie="cta" lijnBoven>
           <div className="max-w-2xl">
             <h2 className="text-3xl">{pagina.tekst("cta_titel")}</h2>
             <div className="mt-4">

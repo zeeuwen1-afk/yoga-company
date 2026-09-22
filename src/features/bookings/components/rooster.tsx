@@ -79,7 +79,7 @@ function LesKaart({
           ) : (
             <Link
               href={`/inloggen?volgende=${encodeURIComponent("/portaal/lessen")}`}
-              className="inline-flex h-11 items-center rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+              className="inline-flex h-11 items-center rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
             >
               Boek een les
             </Link>

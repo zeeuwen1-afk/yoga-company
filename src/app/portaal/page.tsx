@@ -113,7 +113,7 @@ export default async function PortaalDashboard() {
             </p>
             <Link
               href={`/portaal/opleidingen/${laatst.cursusSlug}/${laatst.itemId}`}
-              className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+              className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
             >
               <PlayCircle className="size-5" aria-hidden />
               Verder gaan

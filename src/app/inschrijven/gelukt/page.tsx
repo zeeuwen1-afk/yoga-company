@@ -82,7 +82,7 @@ export default async function InschrijvingGeluktPage() {
             <div className="mt-9 flex flex-wrap gap-3">
               <Link
                 href="/portaal"
-                className="inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+                className="inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
               >
                 Naar mijn omgeving
               </Link>

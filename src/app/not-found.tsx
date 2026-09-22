@@ -29,7 +29,7 @@ export default function NotFound() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/"
-                className="inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-accent-light"
+                className="inline-flex h-12 items-center rounded-lg bg-primary px-7 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
               >
                 Naar de startpagina
               </Link>
