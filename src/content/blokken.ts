@@ -1402,8 +1402,9 @@ export const BLOKKEN: BlokSeed[] = [
     page_key: "home",
     block_key: "hero_titel",
     kind: "text",
-    omschrijving: "Grote kop bovenaan de startpagina",
-    value: { text: "Van je eerste les tot je eigen lespraktijk." },
+    omschrijving:
+      "De naam bij het logo bovenaan de startpagina. Daar stond een grote kop; sinds september 2026 staat er het logo. Deze tekst is wat een schermlezer voorleest en wat een zoekmachine als kop van de pagina ziet, dus leeg laten kan niet.",
+    value: { text: "YogaCompany" },
   },
   {
     page_key: "home",
@@ -3795,7 +3796,8 @@ export const BLOKKEN: BlokSeed[] = [
     block_key: "docenten",
     lijst: { max: 12, itemNaam: "docent" },
     kind: "richtext",
-    omschrijving: "Korte bio's van de docenten",
+    omschrijving:
+      "Korte bio's van de docenten. Vul je bij een docent een adres in, dan wordt de hele kaart aanklikbaar — handig om vanaf het portret naar een portfoliopagina te wijzen. Laat het leeg en de kaart blijft gewoon tekst.",
     value: {
       items: [
         {
@@ -3803,12 +3805,14 @@ export const BLOKKEN: BlokSeed[] = [
           rol: "Oprichter en hoofddocent",
           bio: "Korte biografie volgt.",
           foto: "",
+          link: "/portfolio",
         },
         {
           naam: "Naam volgt",
           rol: "Docent",
           bio: "Korte biografie volgt.",
           foto: "",
+          link: "",
         },
       ],
     },

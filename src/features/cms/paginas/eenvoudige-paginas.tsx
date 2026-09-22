@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
 import { BeeldMetTekst } from "@/components/layout/beeld-met-tekst";
 import { BeeldAchtergrond } from "@/components/layout/beeld-achtergrond";
@@ -9,6 +10,7 @@ import { CmsKnop } from "@/components/ui/cms-knop";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { VEILIGHEID_SECTIES } from "@/content/veiligheid";
+import { veiligeLink } from "@/lib/knoplink";
 import { ContactFormulier } from "../components/contact-formulier";
 import type { Pagina } from "../server/queries";
 import { VrijeZone } from "./vrije-zone";
@@ -20,8 +22,73 @@ import { VrijeZone } from "./vrije-zone";
  * dezelfde opmaak kan tonen met de concepten erin (§14).
  */
 
-type Docent = { naam: string; rol: string; bio: string; foto: string };
+type Docent = {
+  naam: string;
+  rol: string;
+  bio: string;
+  foto: string;
+  /** Waar de kaart heen gaat als je erop drukt. Leeg = geen link. */
+  link: string;
+};
 type Gegeven = { label: string; waarde: string };
+
+/**
+ * Eén docent op de pagina Over ons.
+ *
+ * Staat er een adres in het veld "link", dan wordt de hele kaart aanklikbaar —
+ * foto, naam en bio. Dat is bedoeld voor wie een eigen portfoliopagina heeft:
+ * de bezoeker die op het portret drukt, komt bij de loopbaan uit.
+ *
+ * Een foto die stiekem een link is, is een verstopte functie. Daarom staat er
+ * een pijl achter de naam en krijgt de naam een streep zodra je erover gaat;
+ * zonder die twee tekens zou niemand erop drukken.
+ */
+function DocentKaart({ docent }: { docent: Docent }) {
+  const portret = docent.foto ? (
+    <Image
+      src={docent.foto}
+      alt={`Portret van ${docent.naam}`}
+      width={192}
+      height={192}
+      className="size-24 shrink-0 rounded-full border border-line object-cover"
+    />
+  ) : (
+    <div
+      aria-hidden
+      className="size-24 shrink-0 rounded-full border border-line bg-sand"
+    />
+  );
+
+  const inhoud = (
+    <>
+      {portret}
+      <div>
+        <h3 className="text-lg">
+          {docent.naam}
+          {docent.link ? (
+            <ArrowRight
+              aria-hidden
+              className="ml-1.5 inline size-4 align-baseline text-green"
+            />
+          ) : null}
+        </h3>
+        <p className="text-sm text-muted">{docent.rol}</p>
+        <p className="mt-2 text-[0.975rem] whitespace-pre-line">{docent.bio}</p>
+      </div>
+    </>
+  );
+
+  if (!docent.link) return <div className="flex gap-5">{inhoud}</div>;
+
+  return (
+    <Link
+      href={veiligeLink(docent.link, "/portfolio")}
+      className="group flex gap-5 [&_h3]:underline-offset-4 [&_h3]:group-hover:underline"
+    >
+      {inhoud}
+    </Link>
+  );
+}
 
 export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
   const docenten = pagina.lijst<Docent>("docenten");
@@ -58,28 +125,8 @@ export function OverOnsInhoud({ pagina }: { pagina: Pagina }) {
           <SectieKop titel={pagina.tekst("docenten_titel")} />
           <ul className="mt-10 grid gap-8 sm:grid-cols-2">
             {docenten.map((docent, index) => (
-              <li key={index} className="flex gap-5">
-                {docent.foto ? (
-                  <Image
-                    src={docent.foto}
-                    alt={`Portret van ${docent.naam}`}
-                    width={96}
-                    height={96}
-                    className="size-24 shrink-0 rounded-full border border-line object-cover"
-                  />
-                ) : (
-                  <div
-                    aria-hidden
-                    className="size-24 shrink-0 rounded-full border border-line bg-sand"
-                  />
-                )}
-                <div>
-                  <h3 className="text-lg">{docent.naam}</h3>
-                  <p className="text-sm text-muted">{docent.rol}</p>
-                  <p className="mt-2 text-[0.975rem] whitespace-pre-line">
-                    {docent.bio}
-                  </p>
-                </div>
+              <li key={index}>
+                <DocentKaart docent={docent} />
               </li>
             ))}
           </ul>

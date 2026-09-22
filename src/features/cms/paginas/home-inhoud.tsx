@@ -108,9 +108,28 @@ function Hero({ pagina }: { pagina: Pagina }) {
                 {bovenkop}
               </p>
             ) : null}
-            <div className="mt-5 h-0.5 w-16 bg-accent" aria-hidden />
-            <h1 className="mt-7 text-4xl text-cream sm:text-5xl lg:text-6xl">
-              {pagina.tekst("hero_titel")}
+            {/* Het streepje hoort bij de bovenkop; zonder die regel zou het
+                los boven het logo hangen. */}
+            {bovenkop ? (
+              <div className="mt-5 h-0.5 w-16 bg-accent" aria-hidden />
+            ) : null}
+            {/* Het merk zelf in plaats van een zin. Een kop die het bedrijf
+                nog eens in woorden uitlegt naast een logo dat hetzelfde zegt,
+                is twee keer hetzelfde; dit is rustiger en herkenbaarder.
+
+                Het blijft een h1, want elke pagina heeft er één nodig voor
+                zoekmachines en schermlezers. De naam die zo'n lezer voorleest
+                komt uit `hero_titel`, dus dat veld doet nog steeds iets — het
+                is alleen niet langer zichtbare tekst. */}
+            <h1 className="mt-7">
+              <Image
+                src="/brand/logo-gestapeld-donker.png"
+                alt={pagina.tekst("hero_titel") || "YogaCompany"}
+                width={1200}
+                height={876}
+                priority
+                className="h-auto w-44 sm:w-52 lg:w-60"
+              />
             </h1>
             <div className="mt-6 max-w-xl">
               <Alineas
