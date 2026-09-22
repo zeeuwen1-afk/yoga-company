@@ -12,9 +12,15 @@ test.describe("Fundament", () => {
     // Niet de letterlijke kop: die staat in de site-editor en de eigenaar mag
     // hem wijzigen zonder dat er een test omvalt. Wat wél vastligt is dát er
     // precies één H1 is, en dat hij niet leeg is.
+    // De kop van de startpagina is sinds september 2026 het logo en geen
+    // geschreven zin meer. Een h1 met alleen een afbeelding erin bevat geen
+    // tekst, dus `not.toBeEmpty()` sloeg aan terwijl er niets mis was. Wat de
+    // eis altijd al was, blijft staan: er is precies één kop en die heeft een
+    // naam. Die naam komt nu uit het alt-attribuut van het logo, en dat is ook
+    // wat een schermlezer voorleest.
     const kop = page.getByRole("heading", { level: 1 });
     await expect(kop).toHaveCount(1);
-    await expect(kop).not.toBeEmpty();
+    await expect(kop).toHaveAccessibleName(/\S/);
 
     await expect(page.getByRole("contentinfo")).toContainText("YogaCompany");
     await expect(page.locator("html")).toHaveAttribute("lang", "nl");

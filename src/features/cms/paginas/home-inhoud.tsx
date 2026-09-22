@@ -123,12 +123,12 @@ function Hero({ pagina }: { pagina: Pagina }) {
                 is alleen niet langer zichtbare tekst. */}
             <h1 className="mt-7">
               <Image
-                src="/brand/logo-gestapeld-donker.png"
+                src="/brand/logo-horizontaal-donker.png"
                 alt={pagina.tekst("hero_titel") || "YogaCompany"}
                 width={1200}
-                height={876}
+                height={326}
                 priority
-                className="h-auto w-44 sm:w-52 lg:w-60"
+                className="h-auto w-72 sm:w-80 lg:w-96"
               />
             </h1>
             <div className="mt-6 max-w-xl">
