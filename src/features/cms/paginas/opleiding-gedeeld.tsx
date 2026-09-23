@@ -1,5 +1,6 @@
 import { Richtext, Sectie } from "@/components/layout/sectie";
 import { SectieBeeld } from "@/components/layout/sectie-beeld";
+import { Keurmerk } from "@/components/ui/keurmerk";
 import { AanmeldFormulier } from "../components/aanmeld-formulier";
 import { VrijeZone } from "./vrije-zone";
 import type { Pagina } from "../server/queries";
@@ -28,8 +29,19 @@ export function OpleidingGedeeld({
   pagina,
   onderwerp,
   gekozenVariant,
+  yacep = false,
 }: {
   pagina: Pagina;
+  /**
+   * Toont de regel over bij- en nascholing onder de praktische informatie.
+   *
+   * Alleen de vier modulepagina's zetten dit aan. Die zijn elk 50 uur, en dat
+   * is wat een geregistreerde docent kan opvoeren; de pagina van de hele
+   * opleiding van 200 uur is iets anders en hoort die regel niet te dragen.
+   * Deze blokken staan één keer in de editor en worden op vijf pagina's
+   * getoond, dus zonder deze schakelaar stond hij er ook op de vijfde.
+   */
+  yacep?: boolean;
   /** Van welke pagina een aanmelding komt; staat bovenaan het bericht. */
   onderwerp: string;
   /** Wat er in het formulier voorgeselecteerd staat. */
@@ -129,6 +141,14 @@ export function OpleidingGedeeld({
                 html={pagina.html("praktisch_tekst")}
                 className="mt-6 text-lg"
               />
+              {yacep && pagina.tekst("praktisch_yacep") ? (
+                <div className="mt-8 flex items-start gap-4 border-t border-line pt-6">
+                  <Keurmerk merk="yacep" className="w-16 shrink-0 sm:w-20" />
+                  <p className="text-sm whitespace-pre-line text-muted">
+                    {pagina.tekst("praktisch_yacep")}
+                  </p>
+                </div>
+              ) : null}
             </div>
           </SectieBeeld>
           <VrijeZone pageKey="yogaopleiding-gedeeld" sectie="praktisch" />

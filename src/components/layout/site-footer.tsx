@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Keurmerk } from "@/components/ui/keurmerk";
 import { haalPagina, type Pagina } from "@/features/cms";
 
 const legal = [
@@ -112,6 +113,31 @@ export async function SiteFooter({
       {/* Partners staan bewust onderaan en klein. Wie ze zoekt vindt ze op elke
           pagina; wie ze niet zoekt wordt er niet mee lastiggevallen. Vertrouwen
           bouw je met aanwezigheid, niet met formaat. */}
+      {/* De twee registraties van Wietske bij Yoga Alliance. Bewust hier en
+          niet bij de Academy: die heeft een eigen keurmerk, en de twee door
+          elkaar zetten zou de indruk wekken dat de certificaten van de Academy
+          van Yoga Alliance komen. */}
+      {pagina.tekst("keurmerk_titel") ? (
+        <div className="border-t border-petrol-line">
+          <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+            <h2 className="text-sm tracking-[0.12em] text-muted uppercase">
+              {pagina.tekst("keurmerk_titel")}
+            </h2>
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-4">
+              <div className="flex items-center gap-4">
+                <Keurmerk merk="e-ryt-200" className="w-16 sm:w-20" />
+                <Keurmerk merk="yacep" className="w-16 sm:w-20" />
+              </div>
+              {pagina.tekst("keurmerk_tekst") ? (
+                <p className="max-w-md text-sm whitespace-pre-line text-muted">
+                  {pagina.tekst("keurmerk_tekst")}
+                </p>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       {partners.length > 0 ? (
         <div className="border-t border-petrol-line">
           <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">

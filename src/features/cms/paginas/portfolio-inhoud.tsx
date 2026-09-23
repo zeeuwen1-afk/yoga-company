@@ -4,6 +4,7 @@ import { Alineas } from "@/components/ui/alineas";
 import { BeeldAchtergrond } from "@/components/layout/beeld-achtergrond";
 import { isAchtergrond, isNaastElkaar } from "@/lib/beeldlayout";
 import { CmsKnop } from "@/components/ui/cms-knop";
+import { Keurmerk } from "@/components/ui/keurmerk";
 import { Richtext, Sectie, SectieKop } from "@/components/layout/sectie";
 import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import type { Pagina } from "../server/queries";
@@ -37,6 +38,15 @@ export function PortfolioInhoud({ pagina }: { pagina: Pagina }) {
       ) : null}
       <h1 className="mt-3 text-4xl sm:text-5xl">{pagina.tekst("naam")}</h1>
       <p className="mt-3 text-lg text-muted">{pagina.tekst("rol")}</p>
+      {pagina.tekst("keurmerk") ? (
+        <div className="mt-6 flex flex-wrap items-center gap-4">
+          <Keurmerk merk="e-ryt-200" className="w-16" />
+          <Keurmerk merk="yacep" className="w-16" />
+          <p className="max-w-xs text-sm whitespace-pre-line text-muted">
+            {pagina.tekst("keurmerk")}
+          </p>
+        </div>
+      ) : null}
       <Richtext html={pagina.html("intro")} className="mt-8 text-lg" />
     </>
   );

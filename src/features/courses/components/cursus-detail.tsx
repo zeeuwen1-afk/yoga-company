@@ -4,6 +4,7 @@ import { Sectie } from "@/components/layout/sectie";
 import { SectieBeeld } from "@/components/layout/sectie-beeld";
 import { CmsKnop } from "@/components/ui/cms-knop";
 import { Alineas } from "@/components/ui/alineas";
+import { Keurmerk } from "@/components/ui/keurmerk";
 import { NIVEAU_INFO } from "@/content/niveaus";
 import { SOORT_INFO } from "@/content/soorten";
 import { cursusSleutel } from "@/content/vrije-blokken";
@@ -276,6 +277,19 @@ export function CursusDetail({
                   {pagina.tekst("praktisch_certificaat_voorwaarde")}
                 </p>
               ) : null}
+              {/* Alleen bij Foundation: dat is het niveau van 50 uur, en dat
+                  is wat als bij- en nascholing meetelt. Op een opleiding van
+                  100 of 200 uur hoort deze regel niet. */}
+              {cursus.certificaatNiveau === "foundation" &&
+              pagina.tekst("praktisch_yacep") ? (
+                <div className="mt-5 flex items-start gap-4 border-t border-line pt-5">
+                  <Keurmerk merk="yacep" className="w-16 shrink-0" />
+                  <p className="text-sm whitespace-pre-line text-muted">
+                    {pagina.tekst("praktisch_yacep")}
+                  </p>
+                </div>
+              ) : null}
+
               <dl className="mt-4">
                 {totaalUren > 0 ? (
                   <Feit

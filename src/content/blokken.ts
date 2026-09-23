@@ -840,6 +840,17 @@ const yogaopleidingBlokken: BlokSeed[] = [
   },
   {
     page_key: "yogaopleiding-gedeeld",
+    block_key: "praktisch_yacep",
+    kind: "text" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Regel over YACEP onder de praktische informatie. Staat alleen op de vier modulepagina's en niet op de pagina van de hele opleiding: die is 200 uur en geen bij- en nascholing van 50 uur. Leeg laten haalt de regel en het beeldmerk weg.",
+    value: {
+      text: "Deze module van 50 uur wordt gegeven door een Yoga Alliance Continuing Education Provider. Sta je bij Yoga Alliance ingeschreven, dan kun je deze uren daar opvoeren als bij- en nascholing.",
+    },
+  },
+  {
+    page_key: "yogaopleiding-gedeeld",
     block_key: "praktisch_beeld",
     kind: "image" as const,
     verbergbaar: true,
@@ -1283,6 +1294,17 @@ const cursusBlokken: BlokSeed[] = [
     kind: "text" as const,
     omschrijving: "De naam onder het niveau naast de badge",
     value: { text: "Yoga Company Academy" },
+  },
+  {
+    page_key: "cursus",
+    block_key: "praktisch_yacep",
+    kind: "text" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Regel over YACEP bij het praktische blok. Staat alleen op cursussen met het niveau Foundation, want dat zijn de opleidingen van 50 uur. Leeg laten haalt de regel en het beeldmerk weg.",
+    value: {
+      text: "Deze opleiding van 50 uur wordt gegeven door een Yoga Alliance Continuing Education Provider. Sta je bij Yoga Alliance ingeschreven, dan kun je deze uren daar opvoeren als bij- en nascholing.",
+    },
   },
   {
     page_key: "cursus",
@@ -2803,6 +2825,17 @@ export const BLOKKEN: BlokSeed[] = [
   },
   {
     page_key: "portfolio",
+    block_key: "keurmerk",
+    kind: "text" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Regel onder je rol, naast de twee beeldmerken van Yoga Alliance. Leeg laten haalt de regel en de beeldmerken weg.",
+    value: {
+      text: "Geregistreerd bij Yoga Alliance als E-RYT 200 en erkend als Continuing Education Provider.",
+    },
+  },
+  {
+    page_key: "portfolio",
     block_key: "foto",
     kind: "image",
     verbergbaar: true,
@@ -3952,6 +3985,25 @@ export const BLOKKEN: BlokSeed[] = [
     omschrijving: "Korte zin over YogaCompany in de paginavoet",
     value: {
       text: "Opleidingsinstituut voor yoga. Opleidingen, trainingen en yogalessen.",
+    },
+  },
+  {
+    page_key: "footer",
+    block_key: "keurmerk_titel",
+    kind: "text" as const,
+    verbergbaar: true,
+    omschrijving:
+      "Kopje boven de keurmerken van Yoga Alliance in de paginavoet. Leeg laten haalt de hele strook weg, inclusief de twee beeldmerken.",
+    value: { text: "Geregistreerd bij Yoga Alliance" },
+  },
+  {
+    page_key: "footer",
+    block_key: "keurmerk_tekst",
+    kind: "text" as const,
+    verbergbaar: true,
+    omschrijving: "Zin naast de twee beeldmerken",
+    value: {
+      text: "Wietske Visser staat bij Yoga Alliance geregistreerd als E-RYT 200, Registered Experienced Yoga Teacher, en is erkend als Continuing Education Provider.",
     },
   },
   {

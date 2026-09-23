@@ -172,6 +172,7 @@ export function ModuleInhoud({
         // De variant uit de prijstabel die bij deze module hoort. Komt iemand
         // van de modulepagina, dan staat die alvast goed in het formulier.
         gekozenVariant={pagina.tekst("titel")}
+        yacep
       />
     </>
   );

@@ -1833,6 +1833,12 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('portfolio', 'keurmerk', 'text', '{"text":"Geregistreerd bij Yoga Alliance als E-RYT 200 en erkend als Continuing Education Provider."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('portfolio', 'foto', 'image', '{"url":"","alt":"","layout":"rechts"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
@@ -2559,6 +2565,18 @@ on conflict (page_key, block_key) do update set
   value = excluded.value;
 
 insert into content_blocks (page_key, block_key, kind, value)
+values ('footer', 'keurmerk_titel', 'text', '{"text":"Geregistreerd bij Yoga Alliance"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('footer', 'keurmerk_tekst', 'text', '{"text":"Wietske Visser staat bij Yoga Alliance geregistreerd als E-RYT 200, Registered Experienced Yoga Teacher, en is erkend als Continuing Education Provider."}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
 values ('footer', 'partners_titel', 'text', '{"text":"Samenwerkingen en partners"}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
@@ -3208,6 +3226,12 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('yogaopleiding-gedeeld', 'praktisch_tekst', 'richtext', '{"html":"<ul>\n<li><strong>Locatie &amp; groep</strong> — fysiek, in een bewust kleine groep van maximaal 14 deelnemers.</li>\n<li><strong>Per module</strong> — 5 lesdagen op locatie (09:30–17:30) · 2 live online avondsessies · online leeromgeving met videolessen en opdrachten. Samen 50 begeleide opleidingsuren.</li>\n<li><strong>Ritme</strong> — 5 lesdagen verspreid over ± 6 weken, zodat er ruimte is voor eigen beoefening tussen de lesdagen (reken op ± 5 uur per module).</li>\n<li><strong>Lesmateriaal</strong> — per module een uitgebreide syllabus en toegang tot de online leeromgeving.</li>\n<li><strong>Data</strong> — de actuele lesdata vind je hieronder / op de inschrijfpagina. Praktische informatie en de locatie ontvang je bij inschrijving.</li>\n</ul>"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('yogaopleiding-gedeeld', 'praktisch_yacep', 'text', '{"text":"Deze module van 50 uur wordt gegeven door een Yoga Alliance Continuing Education Provider. Sta je bij Yoga Alliance ingeschreven, dan kun je deze uren daar opvoeren als bij- en nascholing."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
@@ -4000,6 +4024,12 @@ on conflict (page_key, block_key) do update set
 
 insert into content_blocks (page_key, block_key, kind, value)
 values ('cursus', 'praktisch_certificaat_naam', 'text', '{"text":"Yoga Company Academy"}'::jsonb)
+on conflict (page_key, block_key) do update set
+  kind = excluded.kind,
+  value = excluded.value;
+
+insert into content_blocks (page_key, block_key, kind, value)
+values ('cursus', 'praktisch_yacep', 'text', '{"text":"Deze opleiding van 50 uur wordt gegeven door een Yoga Alliance Continuing Education Provider. Sta je bij Yoga Alliance ingeschreven, dan kun je deze uren daar opvoeren als bij- en nascholing."}'::jsonb)
 on conflict (page_key, block_key) do update set
   kind = excluded.kind,
   value = excluded.value;
